@@ -42,7 +42,8 @@ buildscript {
         ]
         firebaseDependencies = [
                 analytics  : "com.google.firebase:firebase-analytics-ktx:21.3.0",
-                crashlytics: "com.google.firebase:firebase-crashlytics-ktx:18.3.7"
+                crashlytics: "com.google.firebase:firebase-crashlytics-ktx:18.3.7",
+                auth       : "com.google.firebase:firebase-auth-ktx:22.0.0"
         ]
         accompanist = [
                 systemUiController: "com.google.accompanist:accompanist-systemuicontroller:0.10.0"

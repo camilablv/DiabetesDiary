@@ -52,6 +52,8 @@ android {
 
 dependencies {
 
+    implementation project(":core:designsystem")
+
     // Android X
     implementation androidxDependencies.coreKtx
     implementation androidxDependencies.lifecycleRuntime

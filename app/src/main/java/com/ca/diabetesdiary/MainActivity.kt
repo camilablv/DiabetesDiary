@@ -9,14 +9,16 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.ca.diabetesdiary.ui.theme.DiabetesDiaryTheme
+import androidx.compose.ui.unit.sp
+import com.ca.designsystem.theme.DiaryTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DiabetesDiaryTheme {
+            DiaryTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -31,13 +33,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+    Text(text = "Hello $name!", color = Color.Black, fontSize = 24.sp)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    DiabetesDiaryTheme {
+    DiaryTheme {
         Greeting("Android")
     }
 }
