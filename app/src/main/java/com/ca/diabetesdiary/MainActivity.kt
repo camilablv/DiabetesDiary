@@ -12,7 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.ca.designsystem.theme.DiaryTheme
+import com.ca.getstarted.navigation.GetStartedNavHost
+import com.ca.home.navigation.MainNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +30,22 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    val isLoggedIn = false
+                    val startDestination = if (isLoggedIn) "home" else "getStarted"
+                    val navHostController = rememberNavController()
+                    NavHost(navController = navHostController, startDestination = startDestination) {
+                        composable("home") {
+                            MainNavHost(navController = rememberNavController())
+                        }
+                        composable("getStarted") {
+                            GetStartedNavHost(
+                                navController = rememberNavController(),
+                                onComplete = {
+                                    navHostController.navigate("home")
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -32,14 +53,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!", color = Color.Black, fontSize = 24.sp)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    DiaryTheme {
-        Greeting("Android")
-    }
+fun AppNavHost(
+    navHostController: NavHostController,
+    startDestination: String
+) {
+    GetStartedNavHost(
+        navController = navHostController,
+        onComplete = {}
+    )
 }

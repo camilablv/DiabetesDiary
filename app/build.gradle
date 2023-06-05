@@ -53,6 +53,8 @@ android {
 dependencies {
 
     implementation project(":core:designsystem")
+    implementation project(":features:home")
+    implementation project(":features:getstarted")
 
     // Android X
     implementation androidxDependencies.coreKtx

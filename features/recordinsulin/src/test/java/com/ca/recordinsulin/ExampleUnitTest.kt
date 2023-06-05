@@ -1,4 +1,4 @@
-package com.ca.record_insulin
+package com.ca.recordinsulin
 
 import org.junit.Test
 
