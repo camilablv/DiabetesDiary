@@ -1,9 +1,7 @@
 package com.ca.home.presentation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,22 +11,31 @@ import androidx.compose.ui.graphics.Color
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToRecordGlucoseScreen: () -> Unit,
+    navigateToRecordInsulinScreen: () -> Unit
+) {
 
     Scaffold {
-        Box(
+        Column(
             modifier = Modifier
                 .padding(it)
-                .fillMaxSize()
-                .background(Color.Blue)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Home",
                 style = Theme.typography.headlineMedium,
-                modifier = Modifier
-                    .align(Alignment.Center),
+                modifier = Modifier,
                 color = Color.Black
             )
+            Button(onClick = { navigateToRecordGlucoseScreen() }) {
+                Text("Record Glucose")
+            }
+            Button(onClick = { navigateToRecordInsulinScreen() }) {
+                Text("Record Insulin")
+            }
         }
     }
 }

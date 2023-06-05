@@ -31,4 +31,4 @@ fun RecordGlucoseScreen() {
             )
         }
     }
-}
+} 

@@ -1,22 +1,17 @@
 package com.ca.home.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.navigation
 import com.ca.home.presentation.HomeScreen
-import com.ca.recordglucose.presentation.RecordGlucoseScreen
-import com.ca.recordinsulin.presentation.RecordInsulinScreen
 import com.ca.settings.presentation.SettingsScreen
 
 @Composable
@@ -47,37 +42,20 @@ fun MainNavHost(navController: NavHostController) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
-            Modifier.padding(innerPadding)
+            startDestination = Route.Home.route,
+            modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) {
-                HomeScreen()
-                Button(onClick = { navController.navigate(Screen.Glucose.List.route) }) {
-                    Text("Glucose")
-                }
+            composable(Route.Home.route) {
+                HomeScreen(
+                    navigateToRecordGlucoseScreen = { navController.navigate(Route.Glucose.List.route) },
+                    navigateToRecordInsulinScreen = { navController.navigate(Route.Insulin.List.route) }
+                )
             }
-            composable(Screen.Settings.route) {
+            composable(Route.Settings.route) {
                 SettingsScreen()
             }
-            navigation(
-                startDestination = Screen.Glucose.Record.route,
-                route = Screen.Glucose.route
-            ) {
-                composable(Screen.Glucose.Record.route) {
-                    RecordGlucoseScreen()
-                }
-                composable(Screen.Glucose.List.route) {
-                    RecordGlucoseScreen()
-                }
-            }
-            navigation(
-                startDestination = Screen.Insulin.Record.route,
-                route = Screen.Insulin.route
-            ) {
-                composable(Screen.Insulin.Record.route) {
-                    RecordInsulinScreen()
-                }
-            }
+            glucoseGraph()
+            insulinGraph()
         }
     }
 }
