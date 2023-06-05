@@ -17,7 +17,8 @@ buildscript {
                 coreKtx          : "androidx.core:core-ktx:1.9.0",
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
                 viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0",
-                dataStore        : "androidx.datastore:datastore:1.0.0"
+                dataStore        : "androidx.datastore:datastore:1.0.0",
+                splashScreen     : "androidx.core:core-splashscreen:1.0.0"
         ]
         composeDependencies = [
                 ui               : "androidx.compose.ui:ui:$composeVersion",

@@ -5,7 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.ca.recordinsulin.presentation.RecordInsulinScreen
 
-fun NavGraphBuilder.insulinGraph() {
+internal fun NavGraphBuilder.insulinGraph() {
     navigation(
         startDestination = Route.Insulin.Record.route,
         route = Route.Insulin.route
