@@ -12,7 +12,6 @@ import com.ca.designsystem.theme.Theme
 
 @Composable
 fun GetStartedScreen(
-    navigateToSignInScreen: () -> Unit,
     navigateToOnBoardingScreen: () -> Unit
 ) {
 
@@ -33,7 +32,7 @@ fun GetStartedScreen(
             Button(onClick = { navigateToOnBoardingScreen() }) {
                 Text("OnBoarding")
             }
-            Button(onClick = { navigateToSignInScreen() }) {
+            Button(onClick = {}) {
                 Text("Sign In With Google")
             }
         }

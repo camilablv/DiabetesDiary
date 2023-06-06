@@ -12,7 +12,8 @@ import com.ca.designsystem.theme.Theme
 
 @Composable
 fun OnBoardingScreen(
-    toHome: () -> Unit
+    toHome: () -> Unit,
+    signInAnonymously: () -> Unit
 ) {
     Scaffold {
         Column(
@@ -28,7 +29,12 @@ fun OnBoardingScreen(
                 modifier = Modifier,
                 color = Theme.colors.onBackground
             )
-            Button(onClick = { toHome() }) {
+            Button(
+                onClick = {
+                    signInAnonymously()
+                    toHome()
+                }
+            ) {
                 Text(
                     text = "To Home",
                     style = Theme.typography.headlineMedium,

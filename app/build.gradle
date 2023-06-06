@@ -84,4 +84,5 @@ dependencies {
     // Firebase
     implementation firebaseDependencies.analytics
     implementation firebaseDependencies.crashlytics
+    implementation firebaseDependencies.auth
 }
