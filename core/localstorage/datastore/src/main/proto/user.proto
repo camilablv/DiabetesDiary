@@ -1,0 +1,9 @@
+
+syntax = "proto3";
+option java_package = "com.ca.diabetesdiary";
+option java_multiple_files = true;
+
+
+message UserPreferences {
+  string id = 1;
+}

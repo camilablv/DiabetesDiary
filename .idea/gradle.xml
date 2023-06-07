@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/authentication" />
             <option value="$PROJECT_DIR$/core/designsystem" />
+            <option value="$PROJECT_DIR$/core/localstorage" />
+            <option value="$PROJECT_DIR$/core/localstorage/datastore" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/designsystem" />
             <option value="$PROJECT_DIR$/features" />

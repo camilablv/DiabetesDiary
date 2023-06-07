@@ -49,6 +49,9 @@ buildscript {
         accompanist = [
                 systemUiController: "com.google.accompanist:accompanist-systemuicontroller:0.10.0"
         ]
+        protobufDependencies = [
+                protobuf: "com.google.protobuf:protobuf-javalite:3.18.0"
+        ]
     }
 
     repositories {
