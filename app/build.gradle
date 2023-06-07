@@ -86,4 +86,7 @@ dependencies {
     implementation firebaseDependencies.analytics
     implementation firebaseDependencies.crashlytics
     implementation firebaseDependencies.auth
+
+    // Protobuf
+    implementation protobufDependencies.protobuf
 }

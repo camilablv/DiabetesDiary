@@ -12,7 +12,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
 import javax.inject.Singleton
+
+private const val DATA_STORE_FILE_NAME = "user_preferences.pb"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,9 +31,8 @@ class DataStoreModule {
         serializer: Serializer<UserPreferences>
     ): DataStore<UserPreferences> {
         return DataStoreFactory.create(
-            serializer = serializer
-        ) {
-            context.dataStoreFile("user_preferences.pb")
-        }
+            serializer = serializer,
+            produceFile = { context.dataStoreFile(DATA_STORE_FILE_NAME) }
+        )
     }
 }

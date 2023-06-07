@@ -10,4 +10,9 @@ class MainRepository @Inject constructor(
     context: Context
 ) {
 
+    suspend fun updateId(id: String) {
+        userPrefsStore.updateData {
+            it.toBuilder().setId(id).build()
+        }
+    }
 }
