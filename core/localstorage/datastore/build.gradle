@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
     id "com.google.protobuf" version "0.9.3"
 }
 
@@ -33,10 +34,13 @@ android {
 
 dependencies {
 
+    // DataStore
     implementation androidxDependencies.dataStore
     implementation protobufDependencies.protobuf
-//    implementation  "androidx.datastore:datastore:1.0.0"
-//    implementation  "com.google.protobuf:protobuf-javalite:3.18.0"
+
+    // Hilt
+    implementation hiltDependencies.hilt
+    kapt hiltDependencies.kapt
 }
 
 protobuf {
