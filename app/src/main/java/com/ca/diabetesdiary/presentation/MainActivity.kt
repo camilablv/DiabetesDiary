@@ -15,21 +15,15 @@ import com.ca.designsystem.theme.Theme
 import com.ca.diabetesdiary.navigation.Route
 import com.ca.getstarted.navigation.GetStartedNavHost
 import com.ca.home.navigation.MainNavHost
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var auth: FirebaseAuth
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        auth = Firebase.auth
 
         setContent {
             DiaryTheme {
@@ -37,10 +31,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Theme.colors.background
                 ) {
-                    val isUserLoggedIn = auth.currentUser != null
-                    val startDestination = if (isUserLoggedIn) Route.Home.route else Route.GetStarted.route
+                    val startDestination =
+                        if (viewModel.isUserSignedIn()) Route.Home.route else Route.GetStarted.route
                     val navHostController = rememberNavController()
-                    NavHost(navController = navHostController, startDestination = startDestination) {
+                    NavHost(
+                        navController = navHostController,
+                        startDestination = startDestination
+                    ) {
                         composable(Route.Home.route) {
                             MainNavHost(navController = rememberNavController())
                         }
@@ -52,14 +49,7 @@ class MainActivity : ComponentActivity() {
                                         popUpTo(Route.GetStarted.route) { inclusive = true }
                                     }
                                 },
-                                signInAnonymously = {
-                                    auth.signInAnonymously().addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            val id = task.result.user?.uid ?: ""
-                                            viewModel.updateUserId(id)
-                                        }
-                                    }
-                                }
+                                signInAnonymously = { viewModel.signInAnonymously() }
                             )
                         }
                     }

@@ -56,6 +56,7 @@ dependencies {
     implementation project(":features:home")
     implementation project(":features:getstarted")
     implementation project(":core:localstorage:datastore")
+    implementation project(":core:authentication")
 
     // Android X
     implementation androidxDependencies.coreKtx
