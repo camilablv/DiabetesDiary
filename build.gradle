@@ -1,10 +1,75 @@
 buildscript {
     ext {
-        compose_ui_version = '1.2.0'
+        kotlinVersion = "1.8.0"
+        composeVersion = '1.4.3'
+        composeCompilerVersion = '1.4.0'
+        apolloVersion = "3.6.2"
+        hiltVersion = "2.44"
+        composeNavigationVersion = "2.5.3"
+        lifecycleVersion = "2.5.0"
+
+        gradleDependencies = [
+                compileSdk: 33,
+                targetSdk : 33,
+                minSdk    : 28
+        ]
+        androidxDependencies = [
+                coreKtx          : "androidx.core:core-ktx:1.9.0",
+                lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
+                viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0",
+                dataStore        : "androidx.datastore:datastore:1.0.0",
+                splashScreen     : "androidx.core:core-splashscreen:1.0.0"
+        ]
+        composeDependencies = [
+                ui               : "androidx.compose.ui:ui:$composeVersion",
+                uiTooling        : "androidx.compose.ui:ui-tooling:$composeVersion",
+                uiToolingPreview : "androidx.compose.ui:ui-tooling-preview:$composeVersion",
+                material         : "androidx.compose.material:material:$composeVersion",
+                runtime          : "androidx.compose.runtime:runtime:$composeVersion",
+                foundation       : "androidx.compose.foundation:foundation:$composeVersion",
+                foundationLayout : "androidx.compose.foundation:foundation-layout:$composeVersion",
+                activity         : "androidx.activity:activity-compose:1.7.2",
+                viewModel        : "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion",
+                navigation       : "androidx.navigation:navigation-compose:$composeNavigationVersion",
+                constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+        ]
+        hiltDependencies = [
+                hilt             : "com.google.dagger:hilt-android:$hiltVersion",
+                kapt             : "com.google.dagger:hilt-compiler:$hiltVersion",
+                navigationCompose: "androidx.hilt:hilt-navigation-compose:1.0.0"
+        ]
+        network = [
+                apollo : "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
+        ]
+        firebaseDependencies = [
+                analytics  : "com.google.firebase:firebase-analytics-ktx:21.3.0",
+                crashlytics: "com.google.firebase:firebase-crashlytics-ktx:18.3.7",
+                auth       : "com.google.firebase:firebase-auth-ktx:22.0.0"
+        ]
+        accompanist = [
+                systemUiController: "com.google.accompanist:accompanist-systemuicontroller:0.10.0"
+        ]
+        protobufDependencies = [
+                protobuf: "com.google.protobuf:protobuf-javalite:3.18.0"
+        ]
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.google.gms:google-services:4.3.15'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
+    }
+}
+
 plugins {
     id 'com.android.application' version '7.4.1' apply false
     id 'com.android.library' version '7.4.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+    id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
