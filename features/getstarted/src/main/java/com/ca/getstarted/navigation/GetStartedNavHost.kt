@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ca.authentication.presentation.AuthScreen
 import com.ca.getstarted.presentation.GetStartedScreen
 import com.ca.onboarding.presentation.OnBoardingScreen
 
@@ -21,6 +22,9 @@ fun GetStartedNavHost(
         }
         composable(Route.OnBoarding.route) {
             OnBoardingScreen(onComplete, signInAnonymously)
+        }
+        composable(Route.Auth.route) {
+            AuthScreen()
         }
     }
 }

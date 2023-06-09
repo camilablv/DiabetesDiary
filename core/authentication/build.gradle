@@ -36,4 +36,6 @@ dependencies {
     implementation firebaseDependencies.analytics
     implementation firebaseDependencies.crashlytics
     implementation firebaseDependencies.auth
+
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 }
