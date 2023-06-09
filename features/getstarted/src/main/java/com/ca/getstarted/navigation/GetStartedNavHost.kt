@@ -18,10 +18,14 @@ fun GetStartedNavHost(
         composable(Route.GetStarted.route) {
             GetStartedScreen(
                 navigateToOnBoardingScreen = { navController.navigate(Route.OnBoarding.route) },
+                navigateToAuthScreen = { navController.navigate(Route.Auth.route) }
             )
         }
         composable(Route.OnBoarding.route) {
-            OnBoardingScreen(onComplete, signInAnonymously)
+            OnBoardingScreen(
+                onComplete,
+                signInAnonymously
+            )
         }
         composable(Route.Auth.route) {
             AuthScreen()

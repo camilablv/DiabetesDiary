@@ -20,4 +20,7 @@ class AuthModule {
     @Provides
     fun provideAuthRepository(authenticationProvider: GoogleAuthenticationProvider) =
         AuthRepositoryImpl(authenticationProvider)
+
+    @Provides
+    fun provideGoogleAuthProvider() = GoogleAuthenticationProvider()
 }

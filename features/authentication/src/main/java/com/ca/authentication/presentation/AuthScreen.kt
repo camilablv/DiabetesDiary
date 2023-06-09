@@ -12,10 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun AuthScreen() {
+fun AuthScreen(
+    viewModel: AuthViewModel = hiltViewModel()
+) {
 
     val googleAuthLauncher = rememberLauncherForActivityResult(GoogleAuthResult()) {
 
