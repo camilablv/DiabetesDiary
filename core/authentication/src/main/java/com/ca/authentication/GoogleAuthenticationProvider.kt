@@ -1,9 +1,5 @@
 package com.ca.authentication
 
-import android.content.Context
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -20,12 +16,15 @@ class GoogleAuthenticationProvider : AuthProvider() {
         }
     }
 
-    fun linkWithGoogle(token: String) {
+    fun linkWithGoogle(
+        token: String,
+        onSuccess: () -> Unit
+    ) {
         val credential = credential(token)
         auth.currentUser!!.linkWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-
+                    onSuccess()
                 } else {
 
                 }

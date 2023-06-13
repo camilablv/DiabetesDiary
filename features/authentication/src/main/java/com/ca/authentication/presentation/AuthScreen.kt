@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ca.authentication.GoogleAuthenticationProvider
+import com.ca.authentication.GoogleAuthResultContract
 import com.ca.designsystem.theme.Theme
 
 @Composable

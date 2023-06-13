@@ -41,6 +41,8 @@ dependencies {
     implementation firebaseDependencies.crashlytics
     implementation firebaseDependencies.auth
 
+    implementation composeDependencies.activity
+
     // Play Services
     implementation playServicesDependencies.auth
 }
