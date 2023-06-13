@@ -10,5 +10,8 @@ class AuthViewModel @Inject constructor(
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase
 ) : ViewModel() {
 
+    fun singInWithGoogle() {
+        signInWithGoogleUseCase()
+    }
 
 }

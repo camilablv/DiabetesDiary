@@ -20,7 +20,7 @@ fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel()
 ) {
 
-    val googleAuthLauncher = rememberLauncherForActivityResult(GoogleAuthResult()) {
+    val googleAuthLauncher = rememberLauncherForActivityResult(GoogleAuthResultContract()) {
 
     }
 

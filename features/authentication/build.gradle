@@ -18,12 +18,12 @@ android {
 
     buildTypes {
         debug{
-            buildConfigField('String', 'GOOGLE_AUTH_TOKEN', GOOGLE_AUTH_TOKEN)
+            buildConfigField('String', 'GOOGLE_CLIENT_ID', GOOGLE_CLIENT_ID)
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'GOOGLE_AUTH_TOKEN', GOOGLE_AUTH_TOKEN)
+            buildConfigField('String', 'GOOGLE_CLIENT_ID', GOOGLE_CLIENT_ID)
         }
     }
     compileOptions {
@@ -71,7 +71,8 @@ dependencies {
     implementation firebaseDependencies.crashlytics
     implementation firebaseDependencies.auth
 
-    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    // Play Services
+    implementation playServicesDependencies.auth
 
     // Hilt
     implementation hiltDependencies.hilt
