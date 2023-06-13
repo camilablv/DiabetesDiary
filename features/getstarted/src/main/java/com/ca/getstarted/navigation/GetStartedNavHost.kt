@@ -28,7 +28,9 @@ fun GetStartedNavHost(
             )
         }
         composable(Route.Auth.route) {
-            AuthScreen()
+            AuthScreen(
+                onComplete = onComplete
+            )
         }
     }
 }

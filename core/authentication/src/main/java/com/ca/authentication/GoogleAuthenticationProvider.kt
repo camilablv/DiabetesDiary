@@ -1,6 +1,9 @@
 package com.ca.authentication
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -10,16 +13,17 @@ class GoogleAuthenticationProvider : AuthProvider() {
         return GoogleAuthProvider.getCredential("", null)
     }
 
-    fun signInWithGoogle() {
-        val signInOptions = BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-            .setSupported(true)
-            .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
-            .setFilterByAuthorizedAccounts(true)
-            .build()
+    fun signInClient(context: Context): GoogleSignInClient {
+        val googleSignInOptions = signInOptions()
+        return GoogleSignIn.getClient(context, googleSignInOptions)
+    }
 
-        val signInRequest = BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(signInOptions)
-            .setAutoSelectEnabled(true)
+    private fun signInOptions(): GoogleSignInOptions {
+        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(BuildConfig.GOOGLE_CLIENT_ID)
+            .requestId()
+            .requestProfile()
+            .requestEmail()
             .build()
     }
 }

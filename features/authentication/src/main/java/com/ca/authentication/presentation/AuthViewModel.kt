@@ -1,17 +1,20 @@
 package com.ca.authentication.presentation
 
 import androidx.lifecycle.ViewModel
-import com.ca.authentication.domain.usecase.SignInWithGoogleUseCase
+import androidx.lifecycle.viewModelScope
+import com.ca.authentication.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val signInWithGoogleUseCase: SignInWithGoogleUseCase
+    private val repository: AuthRepository
 ) : ViewModel() {
 
-    fun singInWithGoogle() {
-        signInWithGoogleUseCase()
+    fun saveGoogleToken(token: String) {
+        viewModelScope.launch {
+            repository.saveToken(token)
+        }
     }
-
 }

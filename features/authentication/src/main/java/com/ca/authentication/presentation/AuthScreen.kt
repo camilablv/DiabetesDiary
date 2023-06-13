@@ -13,15 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ca.authentication.GoogleAuthenticationProvider
 import com.ca.designsystem.theme.Theme
 
 @Composable
 fun AuthScreen(
-    viewModel: AuthViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel(),
+    onComplete: () -> Unit
 ) {
 
     val googleAuthLauncher = rememberLauncherForActivityResult(GoogleAuthResultContract()) {
-
+        viewModel.saveGoogleToken(it)
+        onComplete()
     }
 
     Scaffold {
@@ -38,7 +41,9 @@ fun AuthScreen(
                 modifier = Modifier,
                 color = Color.Black
             )
-            Button(onClick = { googleAuthLauncher.launch(Unit) }) {
+            Button(
+                onClick = { googleAuthLauncher.launch(GoogleAuthenticationProvider()) }
+            ) {
                 Text("Sign In With Google")
             }
         }
