@@ -22,10 +22,17 @@ fun AuthScreen(
     onComplete: () -> Unit
 ) {
 
-    val googleAuthLauncher = rememberLauncherForActivityResult(GoogleAuthResultContract()) {
-        viewModel.saveGoogleToken(it)
-        onComplete()
-    }
+    val googleAuthLauncher =
+        rememberLauncherForActivityResult(GoogleAuthResultContract()) { result ->
+            result
+                .onSuccess { token ->
+                    viewModel.signInWithGoogle(token)
+                    onComplete()
+                }
+                .onFailure {
+                    //todo show error message
+                }
+        }
 
     Scaffold {
         Column(
@@ -42,7 +49,7 @@ fun AuthScreen(
                 color = Color.Black
             )
             Button(
-                onClick = { googleAuthLauncher.launch(GoogleAuthenticationProvider()) }
+                onClick = { googleAuthLauncher.launch(Unit) }
             ) {
                 Text("Sign In With Google")
             }

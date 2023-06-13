@@ -14,8 +14,10 @@ import dagger.hilt.components.SingletonComponent
 class AuthModule {
 
     @Provides
-    fun provideAuthRepository(userPreferencesDataStore: DataStore<UserPreferences>) =
-        AuthRepositoryImpl(userPreferencesDataStore)
+    fun provideAuthRepository(
+        googleAuthenticationProvider: GoogleAuthenticationProvider,
+        userPreferencesDataStore: DataStore<UserPreferences>
+    ) = AuthRepositoryImpl(googleAuthenticationProvider, userPreferencesDataStore)
 
     @Provides
     fun provideGoogleAuthProvider() = GoogleAuthenticationProvider()

@@ -9,21 +9,26 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class GoogleAuthenticationProvider : AuthProvider() {
 
-    fun getCredential(): AuthCredential {
-        return GoogleAuthProvider.getCredential("", null)
+    private fun credential(idToken: String): AuthCredential {
+        return GoogleAuthProvider.getCredential(idToken, null)
     }
 
-    fun signInClient(context: Context): GoogleSignInClient {
-        val googleSignInOptions = signInOptions()
-        return GoogleSignIn.getClient(context, googleSignInOptions)
+    fun signInWithGoogle(token: String) {
+        val credential = credential(token)
+        auth.signInWithCredential(credential).addOnCompleteListener {
+
+        }
     }
 
-    private fun signInOptions(): GoogleSignInOptions {
-        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(BuildConfig.GOOGLE_CLIENT_ID)
-            .requestId()
-            .requestProfile()
-            .requestEmail()
-            .build()
+    fun linkWithGoogle(token: String) {
+        val credential = credential(token)
+        auth.currentUser!!.linkWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                } else {
+
+                }
+            }
     }
 }

@@ -12,9 +12,9 @@ class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
 
-    fun saveGoogleToken(token: String) {
+    fun signInWithGoogle(token: String) {
         viewModelScope.launch {
-            repository.saveToken(token)
+            repository.signInWithGoogle(token)
         }
     }
 }
