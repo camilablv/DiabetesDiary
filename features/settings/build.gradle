@@ -39,6 +39,8 @@ android {
 
 dependencies {
     implementation project(":core:designsystem")
+    implementation project(":core:localstorage:datastore")
+    implementation project(":core:authentication")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -58,9 +60,14 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
 
     // Hilt
     implementation hiltDependencies.hilt
     implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
+
+    // DataStore
+    implementation androidxDependencies.dataStore
+    implementation protobufDependencies.protobuf
 }

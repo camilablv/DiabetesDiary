@@ -31,7 +31,8 @@ buildscript {
                 activity         : "androidx.activity:activity-compose:1.7.2",
                 viewModel        : "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion",
                 navigation       : "androidx.navigation:navigation-compose:$composeNavigationVersion",
-                constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+                constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1",
+                lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.0"
         ]
         hiltDependencies = [
                 hilt             : "com.google.dagger:hilt-android:$hiltVersion",
@@ -51,6 +52,9 @@ buildscript {
         ]
         protobufDependencies = [
                 protobuf: "com.google.protobuf:protobuf-javalite:3.18.0"
+        ]
+        playServicesDependencies = [
+                auth: "com.google.android.gms:play-services-auth:20.5.0"
         ]
     }
 
