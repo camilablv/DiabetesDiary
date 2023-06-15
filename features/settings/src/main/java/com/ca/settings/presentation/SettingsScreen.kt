@@ -24,8 +24,8 @@ fun SettingsScreen(
     val googleAuthLauncher =
         rememberLauncherForActivityResult(GoogleAuthResultContract()) { result ->
             result
-                .onSuccess { token ->
-                    viewModel.linkGoogleAccount(token)
+                .onSuccess { userData ->
+                    viewModel.linkGoogleAccount(userData.idToken)
                 }
                 .onFailure {
                     //todo show error message

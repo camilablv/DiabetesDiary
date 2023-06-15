@@ -40,7 +40,8 @@ buildscript {
                 navigationCompose: "androidx.hilt:hilt-navigation-compose:1.0.0"
         ]
         network = [
-                apollo : "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
+                apolloRuntime : "com.apollographql.apollo3:apollo-runtime:$apolloVersion",
+                apolloApi     : "com.apollographql.apollo3:apollo-api:$apolloVersion"
         ]
         firebaseDependencies = [
                 analytics  : "com.google.firebase:firebase-analytics-ktx:21.3.0",
