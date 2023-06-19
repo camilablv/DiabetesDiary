@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.components.ScrollableCounter
 import com.ca.settings.domain.model.Insulin
 
 @Composable
@@ -19,7 +20,9 @@ fun AddInsulinItem(
     var insulinName by remember { mutableStateOf("") }
     var defaultDosage by remember { mutableStateOf("") }
 
-    Row {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         Box(
             modifier = Modifier
                 .background(Color.Yellow, CircleShape)
@@ -36,16 +39,18 @@ fun AddInsulinItem(
                 .width(100.dp)
         )
 
-        OutlinedTextField(
-            value = defaultDosage,
-            onValueChange = {
-                defaultDosage = it
-            },
-            modifier = Modifier
-                .height(48.dp)
-                .width(100.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-        )
+//        OutlinedTextField(
+//            value = defaultDosage,
+//            onValueChange = {
+//                defaultDosage = it
+//            },
+//            modifier = Modifier
+//                .height(48.dp)
+//                .width(100.dp),
+//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+//        )
+
+        ScrollableCounter(count = 10)
 
     }
 }
