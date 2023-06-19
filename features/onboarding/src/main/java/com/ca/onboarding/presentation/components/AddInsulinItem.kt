@@ -20,15 +20,7 @@ fun AddInsulinItem(
     var insulinName by remember { mutableStateOf("") }
     var defaultDosage by remember { mutableStateOf("") }
 
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .background(Color.Yellow, CircleShape)
-                .size(40.dp)
-        )
-
+    Column {
         OutlinedTextField(
             value = insulinName,
             onValueChange = {
@@ -36,21 +28,21 @@ fun AddInsulinItem(
             },
             modifier = Modifier
                 .height(48.dp)
-                .width(100.dp)
+                .fillMaxWidth()
         )
 
-//        OutlinedTextField(
-//            value = defaultDosage,
-//            onValueChange = {
-//                defaultDosage = it
-//            },
-//            modifier = Modifier
-//                .height(48.dp)
-//                .width(100.dp),
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-//        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(Color.Yellow, CircleShape)
+                    .size(40.dp)
+            )
 
-        ScrollableCounter(count = 10)
-
+            ScrollableCounter()
+        }
     }
+
+
 }
