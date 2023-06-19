@@ -12,6 +12,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.theme.*
 import com.ca.settings.domain.model.GlucoseUnits
 import kotlinx.coroutines.GlobalScope
@@ -28,9 +31,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnBoardingScreen(
     toHome: () -> Unit,
-    signInAnonymously: () -> Unit
+    signInAnonymously: () -> Unit,
+    viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val pagerState = rememberPagerState()
+
 
     Scaffold { paddingValues ->
         OnBoardingPager(
@@ -38,7 +43,8 @@ fun OnBoardingScreen(
             pagerState = pagerState,
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxSize()
+                .fillMaxSize(),
+            viewModel
         )
     }
 }
@@ -48,10 +54,12 @@ fun OnBoardingScreen(
 fun OnBoardingPager(
     pages: List<Unit>,
     pagerState: PagerState,
-    modifier: Modifier
+    modifier: Modifier,
+    viewModel: OnBoardingViewModel
 ) {
 
     val scope = rememberCoroutineScope()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -83,15 +91,12 @@ fun OnBoardingPager(
                 }
                 1 -> {
                     ChooseGlucoseUnitsPage(
-                        defaultUnit = GlucoseUnits.MMOL_PER_L.unit,
-                        select = {  }
+                        defaultUnit = viewState.units.unit,
+                        select = { viewModel.updateGlucoseUnits(it) }
                     )
                 }
                 2 -> {
-                    Text(text = "Page 3",
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
+                    AddInsulinPage()
                 }
                 3 -> {
                     Text(text = "Page 4",

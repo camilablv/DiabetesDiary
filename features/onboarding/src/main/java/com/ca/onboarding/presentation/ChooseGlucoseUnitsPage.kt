@@ -57,7 +57,7 @@ fun ChooseGlucoseUnitsPage(
                     enabled = true,
                     colors = RadioButtonDefaults.colors(
                         selectedColor = Theme.colors.primary,
-                        unselectedColor = Color.White
+                        unselectedColor = Color.Gray
                     ),
                     modifier = Modifier
                         .size(30.dp)

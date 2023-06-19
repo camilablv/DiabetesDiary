@@ -14,7 +14,7 @@ message Settings {
 
   message Insulin {
     string name = 1;
-    int32 color = 2;
+    string color = 2;
     int32 default_dosage = 3;
   }
 }

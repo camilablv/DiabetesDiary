@@ -59,6 +59,7 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
 
     // Hilt
     implementation hiltDependencies.hilt
