@@ -3,7 +3,6 @@ package com.ca.authentication.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.authentication.domain.repository.AuthRepository
-import com.ca.authentication.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +18,9 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun createUser(userData: UserData) {
-        repository.createUser(userData)
+    fun createUser(idToken: String) {
+        viewModelScope.launch {
+            repository.createUser(idToken)
+        }
     }
 }

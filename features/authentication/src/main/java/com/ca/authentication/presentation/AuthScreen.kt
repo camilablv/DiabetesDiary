@@ -25,9 +25,9 @@ fun AuthScreen(
     val googleAuthLauncher =
         rememberLauncherForActivityResult(GoogleAuthResultContract()) { result ->
             result
-                .onSuccess { userData ->
-                    viewModel.signInWithGoogle(userData.idToken)
-                    viewModel.createUser(userData)
+                .onSuccess { token ->
+                    viewModel.signInWithGoogle(token)
+                    viewModel.createUser(token)
                     onComplete()
                 }
                 .onFailure {
