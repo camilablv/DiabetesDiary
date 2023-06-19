@@ -1,6 +1,9 @@
 package com.ca.getstarted.presentation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -11,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun GetStartedScreen(
+fun WelcomeScreen(
     navigateToOnBoardingScreen: () -> Unit,
     navigateToAuthScreen: () -> Unit
 ) {
@@ -25,7 +28,7 @@ fun GetStartedScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Get Started",
+                text = "Welcome",
                 style = Theme.typography.headlineMedium,
                 modifier = Modifier,
                 color = Color.Black
