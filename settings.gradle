@@ -14,3 +14,16 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DiabetesDiary"
 include ':app'
+include ':designsystem'
+include ':core:network'
+include ':core:designsystem'
+include ':features:recordinsulin'
+include ':features:recordglucose'
+include ':features:settings'
+include ':features:home'
+include ':features:onboarding'
+include ':features:getstarted'
+include ':features:authentication'
+include ':core:authentication'
+include ':core:localstorage:datastore'
+include ':core:schema'

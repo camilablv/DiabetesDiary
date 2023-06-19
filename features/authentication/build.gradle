@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.ca.auth'
+    compileSdk gradleDependencies.compileSdk
+
+    defaultConfig {
+        minSdk gradleDependencies.minSdk
+        targetSdk gradleDependencies.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug{
+            buildConfigField('String', 'GOOGLE_CLIENT_ID', GOOGLE_CLIENT_ID)
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'GOOGLE_CLIENT_ID', GOOGLE_CLIENT_ID)
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion composeCompilerVersion
+    }
+}
+
+dependencies {
+    implementation project(":core:designsystem")
+    implementation project(":core:localstorage:datastore")
+    implementation project(":core:authentication")
+    implementation project(":core:schema")
+    implementation project(":core:network")
+
+    // Android X
+    implementation androidxDependencies.coreKtx
+    implementation androidxDependencies.lifecycleRuntime
+    implementation androidxDependencies.viewModel
+    implementation androidxDependencies.dataStore
+    implementation androidxDependencies.splashScreen
+
+    // Jetpack Compose
+    implementation composeDependencies.ui
+    implementation composeDependencies.uiTooling
+    implementation composeDependencies.uiToolingPreview
+    implementation composeDependencies.material
+    implementation composeDependencies.runtime
+    implementation composeDependencies.foundation
+    implementation composeDependencies.foundationLayout
+    implementation composeDependencies.activity
+    implementation composeDependencies.viewModel
+    implementation composeDependencies.navigation
+    implementation composeDependencies.constraintLayout
+
+    // Firebase
+    implementation firebaseDependencies.analytics
+    implementation firebaseDependencies.crashlytics
+    implementation firebaseDependencies.auth
+
+    // Play Services
+    implementation playServicesDependencies.auth
+
+    // Hilt
+    implementation hiltDependencies.hilt
+    implementation hiltDependencies.navigationCompose
+    kapt hiltDependencies.kapt
+
+    // DataStore
+    implementation androidxDependencies.dataStore
+    implementation protobufDependencies.protobuf
+
+    //Network
+    implementation network.apolloRuntime
+}

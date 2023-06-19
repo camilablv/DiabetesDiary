@@ -1,0 +1,9 @@
+
+mutation CreateSessionByGoogleIdToken($idToken: String!) {
+    session: createSessionByGoogleIdToken(idToken: $idToken) {
+        token
+        user {
+            email
+        }
+    }
+}
