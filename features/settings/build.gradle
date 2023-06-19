@@ -41,6 +41,7 @@ dependencies {
     implementation project(":core:designsystem")
     implementation project(":core:localstorage:datastore")
     implementation project(":core:authentication")
+    implementation project(":core:network")
 
     // Android X
     implementation androidxDependencies.coreKtx

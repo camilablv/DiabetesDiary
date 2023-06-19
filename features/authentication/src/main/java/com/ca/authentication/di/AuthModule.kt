@@ -2,10 +2,11 @@ package com.ca.authentication.di
 
 import androidx.datastore.core.DataStore
 import com.apollographql.apollo3.ApolloClient
-import com.ca.authentication.GoogleAuthenticationProvider
+import com.ca.authentication.FirebaseAuthProvider
 import com.ca.authentication.data.repository.AuthRepositoryImpl
-import com.ca.authentication.data.network.NetworkClient
 import com.ca.datastore.UserPreferences
+import com.ca.network.api.NetworkClient
+import com.ca.network.error.NetworkErrorHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,18 +14,16 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AuthModule {
+internal class AuthModule {
 
     @Provides
     fun provideAuthRepository(
-        googleAuthenticationProvider: GoogleAuthenticationProvider,
+        authProvider: FirebaseAuthProvider,
         userPreferencesDataStore: DataStore<UserPreferences>,
         networkClient: NetworkClient
-    ) = AuthRepositoryImpl(googleAuthenticationProvider, userPreferencesDataStore, networkClient)
+    ) = AuthRepositoryImpl(authProvider, userPreferencesDataStore, networkClient)
 
     @Provides
-    fun provideGoogleAuthProvider() = GoogleAuthenticationProvider()
-
-    @Provides
-    fun provideNetworkClient(apolloClient: ApolloClient) = NetworkClient(apolloClient)
+    fun provideNetworkClient(apolloClient: ApolloClient, errorHandler: NetworkErrorHandler) =
+        NetworkClient(apolloClient, errorHandler)
 }

@@ -37,6 +37,8 @@ android {
 
 dependencies {
 
+    implementation project(":core:schema")
+
     //Network
     implementation network.apolloRuntime
 

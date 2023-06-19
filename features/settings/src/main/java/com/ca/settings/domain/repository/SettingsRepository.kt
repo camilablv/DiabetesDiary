@@ -2,6 +2,6 @@ package com.ca.settings.domain.repository
 
 interface SettingsRepository {
 
-    fun linkWithGoogleAccount(token: String, onSuccess: () -> Unit)
-    fun isAnonymousSignInMethod(): Boolean
+    val isAnonymousSignInMethod: Boolean
+    suspend fun linkWithGoogleAccount(token: String, onSuccess: () -> Unit)
 }
