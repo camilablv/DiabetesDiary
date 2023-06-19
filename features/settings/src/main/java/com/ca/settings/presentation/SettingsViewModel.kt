@@ -27,6 +27,7 @@ class SettingsViewModel @Inject constructor(
             repository.linkWithGoogleAccount(token) {
                 _viewState.update { it.copy(isAnonymousSignInMethod = false) }
             }
+            repository.createSession(token)
         }
     }
 

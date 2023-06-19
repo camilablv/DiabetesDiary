@@ -9,22 +9,24 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authProvider: FirebaseAuthProvider,
-    private val userPrefsStore: DataStore<UserPreferences>,
+    private val dataStore: DataStore<UserPreferences>,
     private val networkClient: NetworkClient
     ) : AuthRepository {
 
-    override suspend fun createUser(idToken: String) {
-        networkClient.createUser(idToken)
+    override suspend fun createSession(idToken: String) {
+        networkClient.createSession(idToken).onSuccess { data ->
+            data.session?.let { session ->
+                dataStore.updateData { prefs ->
+                    prefs.toBuilder()
+                        .setAuthToken(session.token)
+                        .setEmail(session.user?.email)
+                        .build()
+                }
+            }
+        }
     }
 
     override suspend fun signInWithGoogle(token: String) {
         authProvider.signInWithGoogle(token)
-        saveToken(token)
-    }
-
-    override suspend fun saveToken(token: String) {
-        userPrefsStore.updateData {
-            it.toBuilder().setAuthToken(token).build()
-        }
     }
 }

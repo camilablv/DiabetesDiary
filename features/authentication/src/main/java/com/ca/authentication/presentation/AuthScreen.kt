@@ -27,7 +27,6 @@ fun AuthScreen(
             result
                 .onSuccess { token ->
                     viewModel.signInWithGoogle(token)
-                    viewModel.createUser(token)
                     onComplete()
                 }
                 .onFailure {

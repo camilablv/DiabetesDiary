@@ -10,7 +10,7 @@ class NetworkClient @Inject constructor(
     private val errorHandler: NetworkErrorHandler
 ) {
 
-    suspend fun createUser(idToken: String): Result<CreateSessionByGoogleIdTokenMutation.Data> {
+    suspend fun createSession(idToken: String): Result<CreateSessionByGoogleIdTokenMutation.Data> {
         return errorHandler.withErrorHandler {
             return@withErrorHandler apolloClient
                 .mutation(CreateSessionByGoogleIdTokenMutation(idToken))

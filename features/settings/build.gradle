@@ -71,4 +71,7 @@ dependencies {
     // DataStore
     implementation androidxDependencies.dataStore
     implementation protobufDependencies.protobuf
+
+    // Apollo
+    implementation network.apolloRuntime
 }
