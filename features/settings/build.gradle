@@ -41,6 +41,8 @@ dependencies {
     implementation project(":core:designsystem")
     implementation project(":core:localstorage:datastore")
     implementation project(":core:authentication")
+    implementation project(":core:network")
+    implementation project(":core:schema")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -70,4 +72,7 @@ dependencies {
     // DataStore
     implementation androidxDependencies.dataStore
     implementation protobufDependencies.protobuf
+
+    // Apollo
+    implementation network.apolloRuntime
 }

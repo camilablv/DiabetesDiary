@@ -24,7 +24,7 @@ class GoogleAuthResultContract : ActivityResultContract<Unit, Result<String>>() 
             .getSignedInAccountFromIntent(intent)
             .runCatching {
                 getResult(ApiException::class.java).idToken
-                    ?: throw IllegalStateException("Auth token not found, try later")
+                    ?: throw IllegalStateException("IdToken not found, try later")
             }
     }
 }

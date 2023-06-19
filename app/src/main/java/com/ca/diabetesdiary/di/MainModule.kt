@@ -1,7 +1,7 @@
 package com.ca.diabetesdiary.di
 
 import androidx.datastore.core.DataStore
-import com.ca.authentication.AnonymousAuthProvider
+import com.ca.authentication.FirebaseAuthProvider
 import com.ca.datastore.UserPreferences
 import com.ca.diabetesdiary.data.repository.MainRepository
 import dagger.Module
@@ -15,11 +15,12 @@ class MainModule {
 
     @Provides
     fun provideMainRepository(
-        userPreferencesDataStore: DataStore<UserPreferences>
+        userPreferencesDataStore: DataStore<UserPreferences>,
+        authProvider: FirebaseAuthProvider
     ): MainRepository {
         return MainRepository(
             userPrefsStore = userPreferencesDataStore,
-            authProvider = AnonymousAuthProvider()
+            authProvider = authProvider
         )
     }
 }

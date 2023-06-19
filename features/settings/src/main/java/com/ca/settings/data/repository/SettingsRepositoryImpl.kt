@@ -1,19 +1,38 @@
 package com.ca.settings.data.repository
 
-import com.ca.authentication.GoogleAuthenticationProvider
+import androidx.datastore.core.DataStore
+import com.ca.authentication.FirebaseAuthProvider
+import com.ca.datastore.UserPreferences
+import com.ca.network.api.NetworkClient
 import com.ca.settings.domain.repository.SettingsRepository
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
-    private val googleAuthProvider: GoogleAuthenticationProvider
+    private val authProvider: FirebaseAuthProvider,
+    private val networkClient: NetworkClient,
+    private val dataStore: DataStore<UserPreferences>
 ) : SettingsRepository {
+
+    override val isAnonymousSignInMethod: Boolean
+        get() = authProvider.isAnonymousSignInMethod
 
     override fun linkWithGoogleAccount(
         token: String,
         onSuccess: () -> Unit
     ) {
-        googleAuthProvider.linkWithGoogle(token, onSuccess)
+        authProvider.linkWithGoogle(token, onSuccess)
     }
 
-    override fun isAnonymousSignInMethod(): Boolean = googleAuthProvider.signInMethod()
+    override suspend fun createSession(token: String) {
+        networkClient.createSession(token).onSuccess { data ->
+            data.session?.let { session ->
+                dataStore.updateData { prefs ->
+                    prefs.toBuilder()
+                        .setAuthToken(session.token)
+                        .setEmail(session.user?.email)
+                        .build()
+                }
+            }
+        }
+    }
 }

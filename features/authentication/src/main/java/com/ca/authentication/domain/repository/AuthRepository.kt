@@ -1,7 +1,7 @@
 package com.ca.authentication.domain.repository
 
-interface AuthRepository {
 
+interface AuthRepository {
+    suspend fun createSession(idToken: String)
     suspend fun signInWithGoogle(token: String)
-    suspend fun saveToken(token: String)
 }

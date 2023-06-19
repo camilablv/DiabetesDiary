@@ -1,11 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    id("com.apollographql.apollo3").version("3.6.2")
 }
 
 android {
-    namespace 'com.ca.network'
+    namespace 'com.ca.schema'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
@@ -17,13 +17,9 @@ android {
     }
 
     buildTypes {
-        debug{
-            buildConfigField('String', 'AUTH_TOKEN', AUTH_TOKEN)
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'AUTH_TOKEN', AUTH_TOKEN)
         }
     }
     compileOptions {
@@ -33,16 +29,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    apollo {
+        packageName.set("com.ca")
+    }
 }
 
 dependencies {
 
-    implementation project(":core:schema")
-
     //Network
-    implementation network.apolloRuntime
-
-    // Hilt
-    implementation hiltDependencies.hilt
-    kapt hiltDependencies.kapt
+    implementation network.apolloApi
 }
