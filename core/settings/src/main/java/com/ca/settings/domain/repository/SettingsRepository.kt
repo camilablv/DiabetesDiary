@@ -4,7 +4,6 @@ import com.ca.data.model.GlucoseUnits
 import com.ca.data.model.Insulin
 
 interface SettingsRepository {
-
     val isAnonymousSignInMethod: Boolean
     fun linkWithGoogleAccount(token: String, onSuccess: () -> Unit)
     suspend fun createSession(token: String)

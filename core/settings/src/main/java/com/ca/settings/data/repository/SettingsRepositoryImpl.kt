@@ -6,7 +6,6 @@ import com.ca.data.model.Insulin
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
 import com.ca.network.api.NetworkClient
-import com.ca.settings.domain.repository.SettingsRepository
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
@@ -14,7 +13,7 @@ class SettingsRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
     private val userPreferencesDataStore: UserDataStore,
     private val settingsDataStore: SettingsDataStore
-) : SettingsRepository {
+) : com.ca.settings.domain.repository.SettingsRepository {
 
     override val isAnonymousSignInMethod: Boolean
         get() = authProvider.isAnonymousSignInMethod
