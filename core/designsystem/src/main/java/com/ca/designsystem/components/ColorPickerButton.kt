@@ -31,7 +31,6 @@ fun ColorPickerButton(
         modifier = modifier
             .background(color, CircleShape)
             .border(1.dp, Color.Black, CircleShape)
-            .size(48.dp)
             .clickable {
                 pickerState.show()
             }

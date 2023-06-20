@@ -83,11 +83,11 @@ fun OnBoardingPager(
         ) { page ->
             when(page) {
                 0 -> {
-                    Text(
-                        text = "Page 1",
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
+                    AddInsulinPage(
+                        viewState.insulins
+                    ) {
+                        viewModel.addInsulin(it)
+                    }
                 }
                 1 -> {
                     ChooseGlucoseUnitsPage(
@@ -96,7 +96,11 @@ fun OnBoardingPager(
                     )
                 }
                 2 -> {
-                    AddInsulinPage()
+                    Text(
+                        text = "Page 3",
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
                 3 -> {
                     Text(text = "Page 4",
