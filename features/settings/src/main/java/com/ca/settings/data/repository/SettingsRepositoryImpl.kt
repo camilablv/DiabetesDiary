@@ -1,19 +1,19 @@
 package com.ca.settings.data.repository
 
-import androidx.datastore.core.DataStore
 import com.ca.authentication.FirebaseAuthProvider
-import com.ca.datastore.Settings
-import com.ca.datastore.UserPreferences
+import com.ca.data.model.GlucoseUnits
+import com.ca.data.model.Insulin
+import com.ca.datastore.SettingsDataStore
+import com.ca.datastore.UserDataStore
 import com.ca.network.api.NetworkClient
-import com.ca.settings.domain.model.GlucoseUnits
 import com.ca.settings.domain.repository.SettingsRepository
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
     private val authProvider: FirebaseAuthProvider,
     private val networkClient: NetworkClient,
-    private val userPreferencesDataStore: DataStore<UserPreferences>,
-    private val settingsDataStore: DataStore<Settings>
+    private val userPreferencesDataStore: UserDataStore,
+    private val settingsDataStore: SettingsDataStore
 ) : SettingsRepository {
 
     override val isAnonymousSignInMethod: Boolean
@@ -30,36 +30,20 @@ class SettingsRepositoryImpl @Inject constructor(
     override suspend fun createSession(token: String) {
         networkClient.createSession(token).onSuccess { data ->
             data.session?.let { session ->
-                userPreferencesDataStore.updateData { prefs ->
-                    prefs.toBuilder()
-                        .setAuthToken(session.token)
-                        .setEmail(session.user?.email)
-                        .build()
-                }
+                userPreferencesDataStore.updateUserData(
+                    token = session.token,
+                    email = session.user?.email
+                )
             }
         }
     }
 
     override suspend fun updateGlucoseUnits(units: GlucoseUnits) {
-        settingsDataStore.updateData {
-            it.toBuilder()
-                .setUnit(Settings.GlucoseUnit.valueOf(units.name))
-                .build()
-        }
+        settingsDataStore.updateGlucoseUnits(units)
     }
 
-    override suspend fun addInsulin(name: String, color: String, defaultDosage: Int) {
-        settingsDataStore.updateData {
-            it.toBuilder()
-                .addInsulins(
-                    Settings.Insulin.newBuilder()
-                        .setName(name)
-                        .setColor(color)
-                        .setDefaultDosage(defaultDosage)
-                        .build()
-                )
-                .build()
-        }
+    override suspend fun addInsulin(insulin: Insulin) {
+        settingsDataStore.addInsulin(insulin)
     }
 
     override suspend fun updateInsulin(

@@ -3,12 +3,11 @@ package com.ca.datastore.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.core.Serializer
 import androidx.datastore.dataStoreFile
 import com.ca.datastore.Settings
 import com.ca.datastore.UserPreferences
-import com.ca.datastore.data.SettingsSerializer
-import com.ca.datastore.data.UserSerializer
+import com.ca.datastore.SettingsSerializer
+import com.ca.datastore.UserSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,17 +22,11 @@ private const val DATA_STORE_SETTINGS_FILE_NAME = "settings.pb"
 @InstallIn(SingletonComponent::class)
 class DataStoreModule {
 
-    @Provides
-    fun provideUserSerializer(): Serializer<UserPreferences> = UserSerializer
-
-    @Provides
-    fun provideSettingsSerializer(): Serializer<Settings> = SettingsSerializer
-
     @Singleton
     @Provides
     fun provideUserPreferencesDataStore(
         @ApplicationContext context: Context,
-        serializer: Serializer<UserPreferences>
+        serializer: UserSerializer
     ): DataStore<UserPreferences> {
         return DataStoreFactory.create(
             serializer = serializer,
@@ -45,7 +38,7 @@ class DataStoreModule {
     @Provides
     fun provideSettingsDataStore(
         @ApplicationContext context: Context,
-        serializer: Serializer<Settings>
+        serializer: SettingsSerializer
     ): DataStore<Settings> {
         return DataStoreFactory.create(
             serializer = serializer,

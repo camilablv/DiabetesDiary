@@ -34,7 +34,6 @@ fun ColorPicker(
         colorChooser(
             colors = ColorPalette.Primary,
             initialSelection = ColorPalette.Primary.indexOf(color),
-
         ) {
             selectedColor = it
         }

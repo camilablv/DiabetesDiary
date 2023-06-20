@@ -2,8 +2,8 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.settings.domain.model.GlucoseUnits
-import com.ca.settings.domain.model.Insulin
+import com.ca.data.model.GlucoseUnits
+import com.ca.data.model.Insulin
 import com.ca.settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +29,7 @@ class OnBoardingViewModel @Inject constructor(
 
     fun addInsulin(insulin: Insulin) {
         viewModelScope.launch {
-            repository.addInsulin(insulin.name, insulin.color.toString(), insulin.defaultDosage)
+            repository.addInsulin(insulin)
             _viewState.update { _viewState.value.copy(insulins = _viewState.value.insulins.plus(insulin)) }
         }
     }

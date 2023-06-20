@@ -11,9 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.ca.common.utils.toHex
 import com.ca.designsystem.components.ColorPickerButton
 import com.ca.designsystem.components.ScrollableCounter
-import com.ca.settings.domain.model.Insulin
+import com.ca.data.model.Insulin
 import com.vanpra.composematerialdialogs.color.ColorPalette
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 
@@ -67,7 +68,7 @@ fun AddInsulinButton(
                 onClick = {
                     val insulin = Insulin(
                         name = insulinName,
-                        color = insulinColor,
+                        color = insulinColor.toHex(),
                         defaultDosage = 50
                     )
                     add(insulin)
@@ -76,7 +77,5 @@ fun AddInsulinButton(
                 Text(text = "Add")
             }
         }
-
-
     }
 }

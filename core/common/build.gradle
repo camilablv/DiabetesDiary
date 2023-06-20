@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ca.designsystem'
+    namespace 'com.ca.common'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
@@ -28,29 +28,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion composeCompilerVersion
-    }
 }
 
 dependencies {
-    implementation project(":core:data")
-    implementation project(":core:common")
 
-    // Jetpack Compose
     implementation composeDependencies.ui
     implementation composeDependencies.uiTooling
     implementation composeDependencies.uiToolingPreview
     implementation composeDependencies.material
-    implementation composeDependencies.runtime
-    implementation composeDependencies.foundation
-    implementation composeDependencies.foundationLayout
-    implementation composeDependencies.activity
-    implementation composeDependencies.viewModel
-    implementation composeDependencies.navigation
-    implementation composeDependencies.constraintLayout
-    implementation "io.github.vanpra.compose-material-dialogs:color:0.9.0"
 }

@@ -1,13 +1,13 @@
-package com.ca.datastore.data
+package com.ca.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.ca.datastore.UserPreferences
 import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
+import javax.inject.Inject
 
-object UserSerializer : Serializer<UserPreferences>{
+class UserSerializer @Inject constructor(): Serializer<UserPreferences>{
     override val defaultValue: UserPreferences
         get() = UserPreferences.getDefaultInstance()
 

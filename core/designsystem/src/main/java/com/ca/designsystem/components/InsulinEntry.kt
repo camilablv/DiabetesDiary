@@ -11,12 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.ca.common.utils.colorFromHex
 import com.ca.designsystem.theme.Theme
 
 @Composable
 fun InsulinEntry(
     name: String,
-    color: Color,
+    color: String,
     defaultDosage: String
 ) {
 
@@ -26,7 +27,7 @@ fun InsulinEntry(
             .fillMaxWidth(),
         shape = Theme.shapes.medium,
         elevation = Theme.elevations.default,
-        backgroundColor = color
+        backgroundColor = colorFromHex(color)
     ) {
         Row(
             modifier = Modifier
@@ -37,7 +38,7 @@ fun InsulinEntry(
             Box(
                 modifier = Modifier
                     .border(1.dp, Color.Black, CircleShape)
-                    .background(color = color)
+                    .background(color = colorFromHex(color))
             )
 
             Text(

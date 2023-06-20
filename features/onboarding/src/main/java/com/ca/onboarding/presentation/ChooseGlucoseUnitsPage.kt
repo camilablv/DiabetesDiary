@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.ca.data.model.GlucoseUnits
 import com.ca.designsystem.theme.Theme
-import com.ca.settings.domain.model.GlucoseUnits
 
 @Composable
 fun ChooseGlucoseUnitsPage(
@@ -35,7 +35,7 @@ fun ChooseGlucoseUnitsPage(
             style = Theme.typography.headlineLarge
         )
 
-        GlucoseUnits.units.forEach {
+        com.ca.data.model.GlucoseUnits.units.forEach {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

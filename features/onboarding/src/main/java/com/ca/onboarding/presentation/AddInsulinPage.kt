@@ -1,6 +1,5 @@
 package com.ca.onboarding.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,13 +7,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
+import com.ca.data.model.Insulin
 import com.ca.designsystem.components.InsulinEntry
 import com.ca.designsystem.theme.Theme
 import com.ca.onboarding.presentation.components.AddInsulinButton
-import com.ca.settings.domain.model.Insulin
 
 @Composable
 fun AddInsulinPage(

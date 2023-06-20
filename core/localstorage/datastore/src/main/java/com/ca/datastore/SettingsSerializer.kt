@@ -1,13 +1,13 @@
-package com.ca.datastore.data
+package com.ca.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.ca.datastore.Settings
 import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
+import javax.inject.Inject
 
-object SettingsSerializer : Serializer<Settings> {
+class SettingsSerializer @Inject constructor() : Serializer<Settings> {
 
     override val defaultValue: Settings
         get() = Settings.getDefaultInstance()
