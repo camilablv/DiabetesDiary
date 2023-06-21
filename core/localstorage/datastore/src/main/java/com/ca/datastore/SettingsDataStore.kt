@@ -1,8 +1,8 @@
 package com.ca.datastore
 
 import androidx.datastore.core.DataStore
-import com.ca.data.model.GlucoseUnits
-import com.ca.data.model.Insulin
+import com.ca.domain.model.GlucoseUnits
+import com.ca.domain.model.Insulin
 import javax.inject.Inject
 
 class SettingsDataStore @Inject constructor(

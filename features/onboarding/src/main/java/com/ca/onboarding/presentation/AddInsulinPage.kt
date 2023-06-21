@@ -8,7 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ca.data.model.Insulin
+import com.ca.domain.model.Insulin
 import com.ca.designsystem.components.InsulinEntry
 import com.ca.designsystem.theme.Theme
 import com.ca.onboarding.presentation.components.AddInsulinButton

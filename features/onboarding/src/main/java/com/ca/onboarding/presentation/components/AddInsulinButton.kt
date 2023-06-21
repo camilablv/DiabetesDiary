@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.common.utils.toHex
 import com.ca.designsystem.components.ColorPickerButton
 import com.ca.designsystem.components.ScrollableCounter
-import com.ca.data.model.Insulin
+import com.ca.domain.model.Insulin
 import com.vanpra.composematerialdialogs.color.ColorPalette
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 

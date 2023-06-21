@@ -2,8 +2,8 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.data.model.GlucoseUnits
-import com.ca.data.model.Insulin
+import com.ca.domain.model.GlucoseUnits
+import com.ca.domain.model.Insulin
 import com.ca.settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,7 +1,7 @@
 package com.ca.datastore
 
-import com.ca.data.model.GlucoseUnits
-import com.ca.data.model.Insulin
+import com.ca.domain.model.GlucoseUnits
+import com.ca.domain.model.Insulin
 
 fun Settings.insulins(): List<Insulin> {
     return insulinsList.map {

@@ -43,7 +43,7 @@ dependencies {
     implementation project(":core:authentication")
     implementation project(":core:network")
     implementation project(":core:schema")
-    implementation project(":core:data")
+    implementation project(':core:domain')
     implementation project(":core:settings")
 
     // Android X

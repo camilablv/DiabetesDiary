@@ -1,8 +1,8 @@
 package com.ca.settings.data.repository
 
 import com.ca.authentication.FirebaseAuthProvider
-import com.ca.data.model.GlucoseUnits
-import com.ca.data.model.Insulin
+import com.ca.domain.model.GlucoseUnits
+import com.ca.domain.model.Insulin
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
 import com.ca.network.api.NetworkClient
