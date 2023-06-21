@@ -37,12 +37,12 @@ class SettingsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateGlucoseUnits(units: GlucoseUnits) {
-        settingsDataStore.updateGlucoseUnits(units)
+    override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits {
+        return settingsDataStore.updateGlucoseUnits(units)
     }
 
-    override suspend fun addInsulin(insulin: Insulin) {
-        settingsDataStore.addInsulin(insulin)
+    override suspend fun addInsulin(insulin: Insulin): List<Insulin> {
+        return settingsDataStore.addInsulin(insulin)
     }
 
     override suspend fun updateInsulin(

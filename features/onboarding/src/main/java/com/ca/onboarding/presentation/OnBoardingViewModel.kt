@@ -22,15 +22,15 @@ class OnBoardingViewModel @Inject constructor(
 
     fun updateGlucoseUnits(units: GlucoseUnits) {
         viewModelScope.launch {
-            repository.updateGlucoseUnits(units)
+            val unit = repository.updateGlucoseUnits(units)
+            _viewState.update { _viewState.value.copy(units = unit) }
         }
-        _viewState.update { _viewState.value.copy(units = units) }
     }
 
     fun addInsulin(insulin: Insulin) {
         viewModelScope.launch {
-            repository.addInsulin(insulin)
-            _viewState.update { _viewState.value.copy(insulins = _viewState.value.insulins.plus(insulin)) }
+            val insulins = repository.addInsulin(insulin)
+            _viewState.update { _viewState.value.copy(insulins = insulins) }
         }
     }
 }
