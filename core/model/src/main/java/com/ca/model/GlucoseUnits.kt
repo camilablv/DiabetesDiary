@@ -1,4 +1,4 @@
-package com.ca.domain.model
+package com.ca.model
 
 enum class GlucoseUnits(val unit: String) {
     MG_PER_DL("mg/dL"),

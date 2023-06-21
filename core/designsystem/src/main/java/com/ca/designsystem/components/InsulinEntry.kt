@@ -13,12 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.colorFromHex
 import com.ca.designsystem.theme.Theme
+import com.ca.model.Insulin
 
 @Composable
 fun InsulinEntry(
-    name: String,
-    color: String,
-    defaultDosage: String
+    insulin: Insulin
 ) {
 
     Card(
@@ -27,7 +26,7 @@ fun InsulinEntry(
             .fillMaxWidth(),
         shape = Theme.shapes.medium,
         elevation = Theme.elevations.default,
-        backgroundColor = colorFromHex(color)
+        backgroundColor = colorFromHex(insulin.color)
     ) {
         Row(
             modifier = Modifier
@@ -38,16 +37,16 @@ fun InsulinEntry(
             Box(
                 modifier = Modifier
                     .border(1.dp, Color.Black, CircleShape)
-                    .background(color = colorFromHex(color))
+                    .background(color = colorFromHex(insulin.color))
             )
 
             Text(
-                text = name,
+                text = insulin.name,
                 style = Theme.typography.bodyLarge
             )
 
             Text(
-                text = defaultDosage,
+                text = insulin.defaultDosage.toString(),
                 style = Theme.typography.bodyLarge
             )
         }

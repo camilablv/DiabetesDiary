@@ -1,4 +1,4 @@
-package com.ca.domain.model
+package com.ca.model
 
 data class Insulin(
     val name: String,

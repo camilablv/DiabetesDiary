@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/localstorage" />
             <option value="$PROJECT_DIR$/core/localstorage/datastore" />
+            <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/schema" />
             <option value="$PROJECT_DIR$/core/settings" />

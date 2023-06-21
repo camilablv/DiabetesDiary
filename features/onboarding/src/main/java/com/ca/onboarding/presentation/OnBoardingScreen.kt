@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.theme.*
+import com.ca.onboarding.presentation.onboardingpages.*
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

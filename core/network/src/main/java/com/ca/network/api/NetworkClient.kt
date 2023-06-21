@@ -5,7 +5,7 @@ import com.apollographql.apollo3.api.Optional
 import com.ca.CreateInsulinMutation
 import com.ca.CreateSessionByGoogleIdTokenMutation
 import com.ca.UpdateGlucoseUnitMutation
-import com.ca.domain.model.GlucoseUnits
+import com.ca.model.GlucoseUnits
 import com.ca.network.error.NetworkErrorHandler
 import com.ca.type.BloodGlucoseUnits
 import com.ca.type.SettingsInput

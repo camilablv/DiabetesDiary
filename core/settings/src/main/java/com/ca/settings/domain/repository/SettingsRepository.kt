@@ -1,7 +1,7 @@
 package com.ca.settings.domain.repository
 
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
 
 interface SettingsRepository {
     val isAnonymousSignInMethod: Boolean

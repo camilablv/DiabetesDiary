@@ -2,9 +2,10 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
-import com.ca.settings.domain.repository.SettingsRepository
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
+import com.ca.domain.AddInsulinUseCase
+import com.ca.domain.UpdateGlucoseUnitUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
-    private val repository: SettingsRepository
+    private val updateGlucoseUnitUseCase: UpdateGlucoseUnitUseCase,
+    private val addInsulinUseCase: AddInsulinUseCase
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(OnBoardingViewState())
@@ -22,14 +24,14 @@ class OnBoardingViewModel @Inject constructor(
 
     fun updateGlucoseUnits(units: GlucoseUnits) {
         viewModelScope.launch {
-            val unit = repository.updateGlucoseUnits(units)
+            val unit = updateGlucoseUnitUseCase.invoke(units)
             _viewState.update { _viewState.value.copy(units = unit) }
         }
     }
 
     fun addInsulin(insulin: Insulin) {
         viewModelScope.launch {
-            val insulins = repository.addInsulin(insulin)
+            val insulins = addInsulinUseCase.invoke(insulin)
             _viewState.update { _viewState.value.copy(insulins = insulins) }
         }
     }

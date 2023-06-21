@@ -14,8 +14,8 @@ fun GetStartedNavHost(
     onComplete: () -> Unit,
     signInAnonymously: () -> Unit
 ) {
-    NavHost(navController = navController, startDestination = Route.Auth.route) {
-        composable(Route.GetStarted.route) {
+    NavHost(navController = navController, startDestination = Route.OnBoarding.route) {
+        composable(Route.Welcome.route) {
             WelcomeScreen(
                 navigateToOnBoardingScreen = { navController.navigate(Route.OnBoarding.route) },
                 navigateToAuthScreen = { navController.navigate(Route.Auth.route) }
