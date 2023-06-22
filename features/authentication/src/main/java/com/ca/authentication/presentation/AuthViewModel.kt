@@ -14,8 +14,9 @@ class AuthViewModel @Inject constructor(
 
     fun signInWithGoogle(token: String) {
         viewModelScope.launch {
-            repository.signInWithGoogle(token)
-            repository.createSession(token)
+            repository.createSession(token) {
+                repository.signInWithGoogle(token)
+            }
         }
     }
 }

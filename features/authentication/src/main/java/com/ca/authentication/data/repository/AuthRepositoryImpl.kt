@@ -13,8 +13,10 @@ class AuthRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient
     ) : AuthRepository {
 
-    override suspend fun createSession(idToken: String) {
+    override suspend fun createSession(idToken: String, onSuccess: suspend () -> Unit) {
         networkClient.createSession(idToken).onSuccess { data ->
+            onSuccess()
+
             data.session?.let { session ->
                 dataStore.updateData { prefs ->
                     prefs.toBuilder()

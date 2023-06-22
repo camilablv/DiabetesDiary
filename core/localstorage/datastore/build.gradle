@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-
+    implementation project(':core:model')
     // DataStore
     implementation androidxDependencies.dataStore
     implementation protobufDependencies.protobuf

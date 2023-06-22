@@ -32,7 +32,8 @@ buildscript {
                 viewModel        : "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion",
                 navigation       : "androidx.navigation:navigation-compose:$composeNavigationVersion",
                 constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1",
-                lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.0"
+                lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.0",
+                material3        : "androidx.compose.material3:material3:1.1.0"
         ]
         hiltDependencies = [
                 hilt             : "com.google.dagger:hilt-android:$hiltVersion",

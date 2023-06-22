@@ -1,0 +1,21 @@
+
+syntax = "proto3";
+option java_package = "com.ca.datastore";
+option java_multiple_files = true;
+
+message Settings {
+  GlucoseUnit unit = 1;
+  repeated Insulin insulins = 2;
+
+  enum GlucoseUnit {
+      MG_PER_DL = 0;
+      MMOL_PER_L = 1;
+  }
+
+  message Insulin {
+    string name = 1;
+    string color = 2;
+    int32 default_dosage = 3;
+  }
+}
+
