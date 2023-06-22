@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.toHex
 import com.ca.designsystem.components.ColorPickerButton
-import com.ca.designsystem.components.ScrollableCounter
+import com.ca.designsystem.components.Counter
 import com.ca.model.Insulin
 import com.vanpra.composematerialdialogs.color.ColorPalette
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
@@ -23,7 +23,7 @@ fun AddInsulinButton(
     add: (Insulin) -> Unit
 ) {
     var insulinName by remember { mutableStateOf("") }
-    var defaultDosage by remember { mutableStateOf("") }
+    var defaultDosage by remember { mutableStateOf(0) }
     var insulinColor by remember { mutableStateOf(ColorPalette.Primary[12]) }
     val dialogState = rememberMaterialDialogState()
 
@@ -62,14 +62,20 @@ fun AddInsulinButton(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            ScrollableCounter()
+            Counter(
+                value = defaultDosage,
+                increment = { defaultDosage++ },
+                decrement = { defaultDosage-- },
+                modifier = Modifier,
+                onValueChanged = { defaultDosage = it.toInt() }
+            )
 
             Button(
                 onClick = {
                     val insulin = Insulin(
                         name = insulinName,
                         color = insulinColor.toHex(),
-                        defaultDosage = 50
+                        defaultDosage = defaultDosage
                     )
                     add(insulin)
                 }

@@ -25,7 +25,7 @@ fun AddInsulinPage(
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Text(
-            text = "Add Insulin Type",
+            text = "Add Insulin",
             style = Theme.typography.headlineLarge,
             modifier = Modifier
                 .weight(1f)
