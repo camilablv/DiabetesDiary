@@ -2,11 +2,10 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id "com.google.protobuf" version "0.9.3"
 }
 
 android {
-    namespace 'com.ca.datastore'
+    namespace 'com.ca.settingscore'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
@@ -33,31 +32,25 @@ android {
 }
 
 dependencies {
+
+    implementation project(":core:datastore")
+    implementation project(":core:authentication")
+    implementation project(":core:network")
+    implementation project(":core:schema")
     implementation project(':core:model')
-    // DataStore
-    implementation androidxDependencies.dataStore
-    implementation protobufDependencies.protobuf
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // Hilt
     implementation hiltDependencies.hilt
+    implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
-}
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.18.0"
-    }
-
-    // Generates the java Protobuf-lite code for the Protobufs in this project. See
-    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
-    // for more information.
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                java {
-                    option 'lite'
-                }
-            }
-        }
-    }
+    // Apollo
+    implementation network.apolloRuntime
 }

@@ -55,7 +55,7 @@ dependencies {
     implementation project(":core:designsystem")
     implementation project(":features:home")
     implementation project(":features:getstarted")
-    implementation project(":core:localstorage:datastore")
+    implementation project(":core:datastore")
     implementation project(":core:authentication")
 
     // Android X
@@ -77,6 +77,7 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
 
     // Hilt
     implementation hiltDependencies.hilt

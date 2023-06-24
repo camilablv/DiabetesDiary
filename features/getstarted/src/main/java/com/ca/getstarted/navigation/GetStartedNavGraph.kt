@@ -1,20 +1,23 @@
 package com.ca.getstarted.navigation
 
-import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.ca.authentication.presentation.AuthScreen
 import com.ca.getstarted.presentation.WelcomeScreen
 import com.ca.onboarding.presentation.OnBoardingScreen
 
-@Composable
-fun GetStartedNavHost(
+fun NavGraphBuilder.getStartedNavGraph(
     navController: NavHostController,
+    route: String,
     onComplete: () -> Unit,
     signInAnonymously: () -> Unit
 ) {
-    NavHost(navController = navController, startDestination = Route.Welcome.route) {
+    navigation(
+        startDestination = Route.Welcome.route,
+        route = route
+    ) {
         composable(Route.Welcome.route) {
             WelcomeScreen(
                 navigateToOnBoardingScreen = { navController.navigate(Route.OnBoarding.route) },
@@ -23,7 +26,7 @@ fun GetStartedNavHost(
         }
         composable(Route.OnBoarding.route) {
             OnBoardingScreen(
-                onComplete,
+                onComplete ,
                 signInAnonymously
             )
         }

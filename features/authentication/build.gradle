@@ -43,7 +43,7 @@ android {
 
 dependencies {
     implementation project(":core:designsystem")
-    implementation project(":core:localstorage:datastore")
+    implementation project(":core:datastore")
     implementation project(":core:authentication")
     implementation project(":core:schema")
     implementation project(":core:network")
