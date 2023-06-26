@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ca.authentication.navigation.authNavGraph
 import com.ca.home.navigation.BottomBarMenuNavHost
+import com.ca.onboarding.presentation.OnBoardingScreen
 import com.ca.recordglucose.navigation.glucoseGraph
 import com.ca.recordglucose.navigation.navigateToRecordGlucose
 import com.ca.recordinsulin.navigation.insulinGraph
@@ -14,7 +15,8 @@ import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 @Composable
 fun MainNavHost(
     navHostController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    isOnBoardingShowed: Boolean
 ) {
     NavHost(
         navController = navHostController,
@@ -27,12 +29,25 @@ fun MainNavHost(
             )
         }
 
+        composable(Route.OnBoarding.route) {
+            OnBoardingScreen(
+                navigateToHome = {
+                    navHostController.navigate(Route.Home.route) {
+                        popUpTo(Route.OnBoarding.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         glucoseGraph()
+
         insulinGraph()
+
         authNavGraph(
             route = Route.Auth.route,
             onComplete = {
-                navHostController.navigate(Route.Home.route) {
+                val nextDestination = if (isOnBoardingShowed) Route.Home.route else Route.OnBoarding.route
+                navHostController.navigate(nextDestination) {
                     popUpTo(Route.Auth.route) { inclusive = true }
                 }
             }

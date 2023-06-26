@@ -1,9 +1,8 @@
-package com.ca.common.utils
+package com.ca.designsystem.utils
 
 import android.graphics.Color.parseColor
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-
 
 fun Color.toHex(): String {
     return "#" + Integer.toHexString(toArgb()).drop(2)

@@ -47,7 +47,6 @@ dependencies {
     implementation project(":core:authentication")
     implementation project(":core:schema")
     implementation project(":core:network")
-    implementation project(":features:onboarding")
 
     // Android X
     implementation androidxDependencies.coreKtx
