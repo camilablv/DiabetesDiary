@@ -15,8 +15,8 @@ import com.ca.onboarding.presentation.components.AddInsulinButton
 
 @Composable
 fun AddInsulinPage(
-    insulins: List<Insulin>,
-    addInsulin: (Insulin) -> Unit
+    insulins: List<com.ca.model.Insulin>,
+    addInsulin: (com.ca.model.Insulin) -> Unit
 ) {
 
     Column(

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class UpdateGlucoseUnitUseCase @Inject constructor(
     private val repository: SettingsRepository
 ) {
-    suspend operator fun invoke(unit: GlucoseUnits): GlucoseUnits {
+    suspend operator fun invoke(unit: com.ca.model.GlucoseUnits): com.ca.model.GlucoseUnits {
         return repository.updateGlucoseUnits(unit)
     }
 }
