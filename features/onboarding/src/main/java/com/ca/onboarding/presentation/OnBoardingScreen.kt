@@ -27,8 +27,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
-    toHome: () -> Unit,
-    signInAnonymously: () -> Unit,
+    navigateToHome: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val pagerState = rememberPagerState()

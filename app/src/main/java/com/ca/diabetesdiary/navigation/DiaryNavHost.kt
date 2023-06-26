@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.ca.getstarted.navigation.getStartedNavGraph
+import com.ca.authentication.navigation.authNavGraph
 import com.ca.home.navigation.BottomBarMenuNavHost
 import com.ca.recordglucose.navigation.glucoseGraph
 import com.ca.recordglucose.navigation.navigateToRecordGlucose
@@ -22,23 +22,20 @@ fun MainNavHost(
     ) {
         composable(Route.Home.route) {
             BottomBarMenuNavHost(
-                navigateToRecordInsulinScreen = { navHostController.navigateToRecordInsulin()},
+                navigateToRecordInsulinScreen = { navHostController.navigateToRecordInsulin() },
                 navigateToRecordGlucoseScreen = { navHostController.navigateToRecordGlucose() }
             )
         }
 
         glucoseGraph()
         insulinGraph()
-
-        getStartedNavGraph(
-            navController = navHostController,
+        authNavGraph(
             route = Route.Auth.route,
             onComplete = {
                 navHostController.navigate(Route.Home.route) {
                     popUpTo(Route.Auth.route) { inclusive = true }
                 }
-            },
-            signInAnonymously = {  }
+            }
         )
     }
 }
