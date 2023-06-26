@@ -25,6 +25,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setStartDestination() {
+        //todo check if the onboarding screen was shown and show it if not
         val startDestination = if (repository.isUserSignedIn) Route.Home.route else Route.Auth.route
         _viewState.update { it.copy(startDestination = startDestination) }
     }
