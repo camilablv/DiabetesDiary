@@ -20,7 +20,7 @@ import com.ca.designsystem.theme.Theme
 @Composable
 fun ChooseGlucoseUnitsPage(
     defaultUnit: String,
-    select: (GlucoseUnits) -> Unit
+    select: (com.ca.model.GlucoseUnits) -> Unit
 ) {
     var selectedUnit = defaultUnit
 
@@ -35,7 +35,7 @@ fun ChooseGlucoseUnitsPage(
             style = Theme.typography.headlineLarge
         )
 
-        GlucoseUnits.units.forEach {
+        com.ca.model.GlucoseUnits.units.forEach {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

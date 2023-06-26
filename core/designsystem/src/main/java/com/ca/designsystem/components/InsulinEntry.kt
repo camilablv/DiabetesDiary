@@ -17,7 +17,7 @@ import com.ca.model.Insulin
 
 @Composable
 fun InsulinEntry(
-    insulin: Insulin
+    insulin: com.ca.model.Insulin
 ) {
 
     Card(

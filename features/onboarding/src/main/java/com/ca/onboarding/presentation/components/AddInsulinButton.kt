@@ -20,7 +20,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 
 @Composable
 fun AddInsulinButton(
-    add: (Insulin) -> Unit
+    add: (com.ca.model.Insulin) -> Unit
 ) {
     var insulinName by remember { mutableStateOf("") }
     var defaultDosage by remember { mutableStateOf(0) }
@@ -72,7 +72,7 @@ fun AddInsulinButton(
 
             Button(
                 onClick = {
-                    val insulin = Insulin(
+                    val insulin = com.ca.model.Insulin(
                         name = insulinName,
                         color = insulinColor.toHex(),
                         defaultDosage = defaultDosage

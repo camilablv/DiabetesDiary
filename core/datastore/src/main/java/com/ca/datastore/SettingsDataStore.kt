@@ -9,7 +9,7 @@ class SettingsDataStore @Inject constructor(
     private val dataStore: DataStore<Settings>
 ) {
 
-    suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits {
+    suspend fun updateGlucoseUnits(units: com.ca.model.GlucoseUnits): com.ca.model.GlucoseUnits {
         val settings = dataStore.updateData {
             it.toBuilder()
                 .setUnit(Settings.GlucoseUnit.valueOf(units.name))
@@ -18,7 +18,7 @@ class SettingsDataStore @Inject constructor(
         return settings.glucoseUnit()
     }
 
-    suspend fun addInsulin(insulin: Insulin): List<Insulin> {
+    suspend fun addInsulin(insulin: com.ca.model.Insulin): List<com.ca.model.Insulin> {
         val settings = dataStore.updateData {
             it.toBuilder()
                 .addInsulins(

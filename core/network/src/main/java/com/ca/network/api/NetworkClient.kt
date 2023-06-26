@@ -24,7 +24,7 @@ class NetworkClient @Inject constructor(
         }
     }
 
-    suspend fun updateGlucoseUnit(unit: GlucoseUnits): Result<UpdateGlucoseUnitMutation.Data> {
+    suspend fun updateGlucoseUnit(unit: com.ca.model.GlucoseUnits): Result<UpdateGlucoseUnitMutation.Data> {
         val glucoseUnit = BloodGlucoseUnits.safeValueOf(unit.unit)
 
         return errorHandler.withErrorHandler {
