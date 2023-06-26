@@ -7,7 +7,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
-class SettingsSerializer @Inject constructor() : Serializer<Settings> {
+internal class SettingsSerializer @Inject constructor() : Serializer<Settings> {
 
     override val defaultValue: Settings
         get() = Settings.getDefaultInstance()

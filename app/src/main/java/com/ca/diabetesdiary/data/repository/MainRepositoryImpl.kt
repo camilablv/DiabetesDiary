@@ -1,18 +1,19 @@
 package com.ca.diabetesdiary.data.repository
 
 import com.ca.authentication.FirebaseAuthProvider
+import com.ca.diabetesdiary.domain.repository.MainRepository
 import com.ca.network.api.NetworkClient
 import javax.inject.Inject
 
-class MainRepository @Inject constructor(
+class MainRepositoryImpl @Inject constructor(
     private val authProvider: FirebaseAuthProvider,
     private val networkClient: NetworkClient
-) {
+) : MainRepository {
 
-    val isUserSignedIn: Boolean
+    override val isUserSignedIn: Boolean
         get() = authProvider.isUserSignedIn
 
-    suspend fun isOnBoardingShowed(): Boolean {
+    override suspend fun isOnBoardingShowed(): Boolean {
         return networkClient.isOnBoardingShowed()
     }
 }

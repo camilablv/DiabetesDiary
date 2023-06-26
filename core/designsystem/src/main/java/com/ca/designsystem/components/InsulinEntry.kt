@@ -11,9 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.colorFromHex
+import com.ca.designsystem.utils.colorFromHex
 import com.ca.designsystem.theme.Theme
-import com.ca.model.Insulin
 
 @Composable
 fun InsulinEntry(

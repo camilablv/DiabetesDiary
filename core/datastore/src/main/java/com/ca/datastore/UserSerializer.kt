@@ -7,7 +7,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
-class UserSerializer @Inject constructor(): Serializer<UserPreferences>{
+internal class UserSerializer @Inject constructor(): Serializer<UserPreferences>{
     override val defaultValue: UserPreferences
         get() = UserPreferences.getDefaultInstance()
 

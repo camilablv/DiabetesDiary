@@ -1,7 +1,8 @@
 package com.ca.diabetesdiary.di
 
 import com.ca.authentication.FirebaseAuthProvider
-import com.ca.diabetesdiary.data.repository.MainRepository
+import com.ca.diabetesdiary.data.repository.MainRepositoryImpl
+import com.ca.diabetesdiary.domain.repository.MainRepository
 import com.ca.network.api.NetworkClient
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,7 @@ class MainModule {
         authProvider: FirebaseAuthProvider,
         networkClient: NetworkClient
     ): MainRepository {
-        return MainRepository(
+        return MainRepositoryImpl(
             authProvider = authProvider,
             networkClient = networkClient
         )
