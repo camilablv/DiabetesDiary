@@ -59,6 +59,7 @@ dependencies {
     implementation project(":features:authentication")
     implementation project(":core:datastore")
     implementation project(":core:authentication")
+    implementation project(":core:network")
 
     // Android X
     implementation androidxDependencies.coreKtx

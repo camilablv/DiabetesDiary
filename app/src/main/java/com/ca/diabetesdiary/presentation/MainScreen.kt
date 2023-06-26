@@ -21,11 +21,11 @@ fun MainScreen(
         modifier = Modifier.fillMaxSize(),
         color = Theme.colors.background
     ) {
-
         val navHostController = rememberNavController()
         MainNavHost(
             navHostController = navHostController,
-            startDestination = viewState.startDestination
+            startDestination = viewState.startDestination,
+            isOnBoardingShowed = viewState.isOnBoardingShowed
         )
     }
 }

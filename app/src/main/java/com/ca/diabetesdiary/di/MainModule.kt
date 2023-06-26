@@ -1,9 +1,8 @@
 package com.ca.diabetesdiary.di
 
-import androidx.datastore.core.DataStore
 import com.ca.authentication.FirebaseAuthProvider
-import com.ca.datastore.UserPreferences
 import com.ca.diabetesdiary.data.repository.MainRepository
+import com.ca.network.api.NetworkClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +14,12 @@ class MainModule {
 
     @Provides
     fun provideMainRepository(
-        userPreferencesDataStore: DataStore<UserPreferences>,
-        authProvider: FirebaseAuthProvider
+        authProvider: FirebaseAuthProvider,
+        networkClient: NetworkClient
     ): MainRepository {
         return MainRepository(
-            userPrefsStore = userPreferencesDataStore,
-            authProvider = authProvider
+            authProvider = authProvider,
+            networkClient = networkClient
         )
     }
 }

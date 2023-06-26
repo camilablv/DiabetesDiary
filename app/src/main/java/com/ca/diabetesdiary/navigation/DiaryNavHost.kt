@@ -14,7 +14,8 @@ import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 @Composable
 fun MainNavHost(
     navHostController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    isOnBoardingShowed: Boolean
 ) {
     NavHost(
         navController = navHostController,
@@ -30,12 +31,14 @@ fun MainNavHost(
         glucoseGraph()
         insulinGraph()
         authNavGraph(
+            navHostController = navHostController,
             route = Route.Auth.route,
-            onComplete = {
+            navigateToHome = {
                 navHostController.navigate(Route.Home.route) {
                     popUpTo(Route.Auth.route) { inclusive = true }
                 }
-            }
+            },
+            isOnBoardingShowed = isOnBoardingShowed
         )
     }
 }
