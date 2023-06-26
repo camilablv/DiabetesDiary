@@ -12,7 +12,11 @@ import com.ca.home.presentation.HomeScreen
 import com.ca.settings.presentation.SettingsScreen
 
 @Composable
-fun BottomBarMenuNavHost(navController: NavHostController = rememberNavController()) {
+fun BottomBarMenuNavHost(
+    navController: NavHostController = rememberNavController(),
+    navigateToRecordGlucoseScreen: () -> Unit,
+    navigateToRecordInsulinScreen: () -> Unit
+) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) { innerPadding ->
@@ -23,15 +27,13 @@ fun BottomBarMenuNavHost(navController: NavHostController = rememberNavControlle
         ) {
             composable(Route.Home.route) {
                 HomeScreen(
-                    navigateToRecordGlucoseScreen = { navController.navigate(Route.Glucose.List.route) },
-                    navigateToRecordInsulinScreen = { navController.navigate(Route.Insulin.List.route) }
+                    navigateToRecordGlucoseScreen = navigateToRecordGlucoseScreen,
+                    navigateToRecordInsulinScreen = navigateToRecordInsulinScreen
                 )
             }
             composable(Route.Settings.route) {
                 SettingsScreen()
             }
-            glucoseGraph()
-            insulinGraph()
         }
     }
 }

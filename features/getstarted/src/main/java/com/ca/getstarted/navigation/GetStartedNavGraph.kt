@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.ca.authentication.presentation.AuthScreen
-import com.ca.getstarted.presentation.WelcomeScreen
 import com.ca.onboarding.presentation.OnBoardingScreen
 
 fun NavGraphBuilder.getStartedNavGraph(
@@ -15,15 +14,10 @@ fun NavGraphBuilder.getStartedNavGraph(
     signInAnonymously: () -> Unit
 ) {
     navigation(
-        startDestination = Route.Welcome.route,
+        startDestination = Route.Auth.route,
         route = route
     ) {
-        composable(Route.Welcome.route) {
-            WelcomeScreen(
-                navigateToOnBoardingScreen = { navController.navigate(Route.OnBoarding.route) },
-                navigateToAuthScreen = { navController.navigate(Route.Auth.route) }
-            )
-        }
+
         composable(Route.OnBoarding.route) {
             OnBoardingScreen(
                 onComplete ,
