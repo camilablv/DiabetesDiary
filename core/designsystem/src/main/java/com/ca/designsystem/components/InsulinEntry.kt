@@ -45,7 +45,7 @@ fun InsulinEntry(
             )
 
             Text(
-                text = insulin.defaultDosage.toString(),
+                text = insulin.defaultDose.toString(),
                 style = Theme.typography.bodyLarge
             )
         }

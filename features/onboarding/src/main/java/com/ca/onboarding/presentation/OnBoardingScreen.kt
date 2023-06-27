@@ -7,9 +7,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -17,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,12 +34,13 @@ fun OnBoardingScreen(
 
     Scaffold { paddingValues ->
         OnBoardingPager(
-            pages = List(5) {},
+            pages = pages,
             pagerState = pagerState,
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
-            viewModel
+            viewModel = viewModel,
+            toHome = navigateToHome
         )
     }
 }
@@ -48,10 +48,11 @@ fun OnBoardingScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingPager(
-    pages: List<Unit>,
+    pages: List<Page>,
     pagerState: PagerState,
     modifier: Modifier,
-    viewModel: OnBoardingViewModel
+    viewModel: OnBoardingViewModel,
+    toHome: () -> Unit
 ) {
 
     val scope = rememberCoroutineScope()
@@ -71,36 +72,36 @@ fun OnBoardingPager(
         )
 
         HorizontalPager(
-            pageCount = 5,
+            pageCount = pages.size,
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
                 .weight(11f)
-        ) { page ->
-            when(page) {
-                0 -> {
+        ) { index ->
+            when(pages[index]) {
+                Page.Welcome -> {
                     WelcomePage()
                 }
-                1 -> {
+                Page.AddInsulin -> {
                     AddInsulinPage(
                         viewState.insulins
                     ) {
                         viewModel.addInsulin(it)
                     }
                 }
-                2 -> {
+                Page.GlucoseUnits -> {
                     ChooseGlucoseUnitsPage(
                         defaultUnit = viewState.units.unit,
                         select = { viewModel.updateGlucoseUnits(it) }
                     )
                 }
-                3 -> {
+                Page.Page4 -> {
                     Text(text = "Page 4",
                         modifier = Modifier
                             .fillMaxSize()
                     )
                 }
-                4 -> {
+                Page.Page5 -> {
                     Text(text = "Page 5",
                         modifier = Modifier
                             .fillMaxSize()
@@ -109,34 +110,65 @@ fun OnBoardingPager(
             }
         }
 
-        Row(
+        PagerButtons(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(
-                onClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                    }
+            onSkip = toHome,
+            onPrevious = {
+                scope.launch {
+                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
                 }
-            ) {
-                Text(text = "Previous")
+            },
+            onNext = {
+                scope.launch {
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
             }
+        )
+    }
+}
 
-            Button(
-                onClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                    }
-                }
+@Composable
+fun PagerButtons(
+    modifier: Modifier,
+    onSkip: () -> Unit,
+    onPrevious: () -> Unit,
+    onNext: () -> Unit
+) {
+
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        TextButton(
+            onClick = onSkip
+        ) {
+            Text(text = "Skip")
+        }
+
+        Row {
+            IconButton(
+                onClick = onPrevious
             ) {
-                Text(
-                    text = "Next"
+                Icon(
+                    painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_left),
+                    contentDescription = "",
+                    tint = Theme.colors.secondary
+                )
+            }
+            IconButton(
+                onClick = onNext
+            ) {
+                Icon(
+                    painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),
+                    contentDescription = "",
+                    tint = Theme.colors.secondary
                 )
             }
         }
+
     }
 }
 
@@ -159,8 +191,6 @@ fun PagerIndicator(
 
 @Composable
 fun Indicator(selected: Boolean) {
-//    val width = animateDpAsState(targetValue = if (selected) 54.dp else 10.dp)
-
     Box(
         modifier = Modifier
             .width(64.dp)

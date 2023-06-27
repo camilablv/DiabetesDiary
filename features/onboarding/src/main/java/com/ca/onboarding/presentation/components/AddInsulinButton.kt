@@ -74,7 +74,7 @@ fun AddInsulinButton(
                     val insulin = com.ca.model.Insulin(
                         name = insulinName,
                         color = insulinColor.toHex(),
-                        defaultDosage = defaultDosage
+                        defaultDose = defaultDosage
                     )
                     add(insulin)
                 }

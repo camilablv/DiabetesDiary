@@ -25,7 +25,7 @@ internal class SettingsDataStoreImpl @Inject constructor(
                     Settings.Insulin.newBuilder()
                         .setName(insulin.name)
                         .setColor(insulin.color)
-                        .setDefaultDosage(insulin.defaultDosage)
+                        .setDefaultDosage(insulin.defaultDose)
                         .build()
                 )
                 .build()

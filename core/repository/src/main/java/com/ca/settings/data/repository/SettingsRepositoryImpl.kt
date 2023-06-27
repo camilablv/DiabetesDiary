@@ -2,6 +2,7 @@ package com.ca.settings.data.repository
 
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
+import com.ca.model.Insulin
 import com.ca.network.api.NetworkClient
 import com.ca.settings.domain.repository.SettingsRepository
 import javax.inject.Inject
@@ -16,7 +17,8 @@ class SettingsRepositoryImpl @Inject constructor(
         return settingsDataStore.updateGlucoseUnits(units)
     }
 
-    override suspend fun addInsulin(insulin: com.ca.model.Insulin): List<com.ca.model.Insulin> {
+    override suspend fun addInsulin(insulin: Insulin): List<Insulin> {
+        networkClient.createInsulin(insulin.name, insulin.color, insulin.defaultDose)
         return settingsDataStore.addInsulin(insulin)
     }
 

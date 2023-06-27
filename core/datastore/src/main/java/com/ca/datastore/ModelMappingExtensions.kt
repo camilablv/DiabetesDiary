@@ -7,7 +7,7 @@ fun Settings.insulins(): List<Insulin> = insulinsList.map {
     Insulin(
         name = it.name,
         color = it.color,
-        defaultDosage = it.defaultDosage
+        defaultDose = it.defaultDosage
     )
 }
 
