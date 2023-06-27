@@ -40,9 +40,9 @@ class NetworkClient @Inject constructor(
         }
     }
 
-    suspend fun createInsulin(name: String, color: String): Result<CreateInsulinMutation.Data> {
+    suspend fun createInsulin(name: String, color: String, defaultDose: Int): Result<CreateInsulinMutation.Data> {
         return errorHandler.withErrorHandler {
-            apolloClient.mutation(CreateInsulinMutation(name, color)).execute()
+            apolloClient.mutation(CreateInsulinMutation(name, color, defaultDose)).execute()
         }
     }
 
