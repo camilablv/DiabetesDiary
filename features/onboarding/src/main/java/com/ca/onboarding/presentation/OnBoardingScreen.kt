@@ -60,9 +60,9 @@ fun OnBoardingPager(
 
     Column(
         modifier = modifier
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 24.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         PagerIndicator(
             size = pages.size,
@@ -115,11 +115,6 @@ fun OnBoardingPager(
                 .weight(1f)
                 .fillMaxWidth(),
             onSkip = toHome,
-            onPrevious = {
-                scope.launch {
-                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                }
-            },
             onNext = {
                 scope.launch {
                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
@@ -133,14 +128,12 @@ fun OnBoardingPager(
 fun PagerButtons(
     modifier: Modifier,
     onSkip: () -> Unit,
-    onPrevious: () -> Unit,
     onNext: () -> Unit
 ) {
-
-
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         TextButton(
             onClick = onSkip
@@ -148,27 +141,17 @@ fun PagerButtons(
             Text(text = "Skip")
         }
 
-        Row {
-            IconButton(
-                onClick = onPrevious
-            ) {
-                Icon(
-                    painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_left),
-                    contentDescription = "",
-                    tint = Theme.colors.secondary
-                )
-            }
-            IconButton(
-                onClick = onNext
-            ) {
-                Icon(
-                    painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),
-                    contentDescription = "",
-                    tint = Theme.colors.secondary
-                )
-            }
+        IconButton(
+            onClick = onNext
+        ) {
+            Icon(
+                painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),
+                contentDescription = "",
+                tint = Theme.colors.secondary,
+                modifier = Modifier
+                    .size(64.dp)
+            )
         }
-
     }
 }
 
