@@ -39,6 +39,7 @@ dependencies {
 
     implementation project(":core:schema")
     implementation project(':core:model')
+    implementation project(':core:datastore')
 
     //Network
     implementation network.apolloRuntime

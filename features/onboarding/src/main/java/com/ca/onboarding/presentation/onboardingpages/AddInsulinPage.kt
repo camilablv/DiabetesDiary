@@ -17,7 +17,7 @@ import com.ca.onboarding.presentation.components.AddInsulinButton
 @Composable
 fun AddInsulinPage(
     insulins: List<Insulin>,
-    addInsulin: (Insulin) -> Unit
+    addInsulin: (name: String, color: String, dose: Int) -> Unit
 ) {
 
     Column(
@@ -38,12 +38,16 @@ fun AddInsulinPage(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(4.dp)
         ) {
-            items(insulins.size) {
-                InsulinCard(
-                    insulin = insulins[it]
-                )
-            }
+            items(
+                count = insulins.size,
+                key = { index -> insulins[index].id },
+                itemContent = {
+                    InsulinCard(
+                        insulin = insulins[it]
+                    )
+                }
+            )
         }
-        AddInsulinButton(add = { addInsulin(it) })
+        AddInsulinButton(add = { name, color, dose ->  addInsulin(name, color, dose) })
     }
 }

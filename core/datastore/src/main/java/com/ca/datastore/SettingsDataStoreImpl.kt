@@ -23,6 +23,7 @@ internal class SettingsDataStoreImpl @Inject constructor(
             it.toBuilder()
                 .addInsulins(
                     Settings.Insulin.newBuilder()
+                        .setId(insulin.id)
                         .setName(insulin.name)
                         .setColor(insulin.color)
                         .setDefaultDosage(insulin.defaultDose)

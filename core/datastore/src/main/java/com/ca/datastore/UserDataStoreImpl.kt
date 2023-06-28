@@ -3,7 +3,7 @@ package com.ca.datastore
 import androidx.datastore.core.DataStore
 import javax.inject.Inject
 
-class UserDataStoreImpl @Inject constructor(
+internal class UserDataStoreImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>
 ) : UserDataStore {
 

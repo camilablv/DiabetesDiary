@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddInsulinUseCase @Inject constructor(
     private val repository: SettingsRepository
 ) {
-    suspend operator fun invoke(insulin: Insulin): List<Insulin> {
-        return repository.addInsulin(insulin)
+    suspend operator fun invoke(name: String, color: String, defaultDose: Int): List<Insulin> {
+        return repository.addInsulin(name, color, defaultDose)
     }
 }

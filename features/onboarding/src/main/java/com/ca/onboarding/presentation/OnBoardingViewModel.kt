@@ -29,9 +29,9 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun addInsulin(insulin: Insulin) {
+    fun addInsulin(name: String, color: String, defaultDose: Int) {
         viewModelScope.launch {
-            val insulins = addInsulinUseCase.invoke(insulin)
+            val insulins = addInsulinUseCase.invoke(name, color, defaultDose)
             _viewState.update { _viewState.value.copy(insulins = insulins) }
         }
     }

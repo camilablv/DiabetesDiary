@@ -85,8 +85,8 @@ fun OnBoardingPager(
                 Page.AddInsulin -> {
                     AddInsulinPage(
                         viewState.insulins
-                    ) {
-                        viewModel.addInsulin(it)
+                    ) { name, color, dose ->
+                        viewModel.addInsulin(name, color, dose)
                     }
                 }
                 Page.GlucoseUnits -> {

@@ -25,7 +25,7 @@ class NetworkClient @Inject constructor(
     }
 
     suspend fun updateGlucoseUnit(unit: GlucoseUnits): Result<UpdateGlucoseUnitMutation.Data> {
-        val glucoseUnit = BloodGlucoseUnits.safeValueOf(unit.unit)
+        val glucoseUnit = BloodGlucoseUnits.safeValueOf(unit.name)
 
         return errorHandler.withErrorHandler {
             apolloClient.mutation(
