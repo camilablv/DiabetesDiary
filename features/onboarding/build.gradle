@@ -39,6 +39,9 @@ android {
 
 dependencies {
     implementation project(":core:designsystem")
+    implementation project(':core:domain')
+    implementation project(':core:repository')
+    implementation project(':core:model')
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -58,6 +61,9 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
+    implementation composeDependencies.material3
+    implementation "io.github.vanpra.compose-material-dialogs:color:0.9.0"
 
     // Hilt
     implementation hiltDependencies.hilt

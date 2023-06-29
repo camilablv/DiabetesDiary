@@ -2,6 +2,7 @@ package com.ca.network.di
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
+import com.ca.authentication.token.JWTService
 import com.ca.network.error.NetworkErrorHandler
 import com.ca.network.interceptor.AuthInterceptor
 import dagger.Module
@@ -17,9 +18,11 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApolloClient(): ApolloClient {
+    fun provideApolloClient(
+        jwtService: JWTService
+    ): ApolloClient {
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor())
+            .addInterceptor(AuthInterceptor(jwtService))
             .build()
 
         return ApolloClient.Builder()
@@ -30,5 +33,4 @@ class NetworkModule {
 
     @Provides
     fun provideNetworkErrorHandler() = NetworkErrorHandler()
-
 }

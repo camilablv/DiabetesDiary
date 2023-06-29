@@ -37,6 +37,8 @@ android {
 
 dependencies {
 
+    implementation project(':core:datastore')
+
     // Firebase
     implementation firebaseDependencies.analytics
     implementation firebaseDependencies.crashlytics
@@ -46,6 +48,9 @@ dependencies {
 
     // Play Services
     implementation playServicesDependencies.auth
+
+    // DataStore
+    implementation androidxDependencies.dataStore
 
     // Hilt
     implementation hiltDependencies.hilt

@@ -54,9 +54,13 @@ dependencies {
 
     implementation project(":core:designsystem")
     implementation project(":features:home")
-    implementation project(":features:getstarted")
-    implementation project(":core:localstorage:datastore")
+    implementation project(":features:recordglucose")
+    implementation project(":features:recordinsulin")
+    implementation project(":features:authentication")
+    implementation project(":core:datastore")
     implementation project(":core:authentication")
+    implementation project(":core:network")
+    implementation project(":features:onboarding")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -77,6 +81,7 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
 
     // Hilt
     implementation hiltDependencies.hilt

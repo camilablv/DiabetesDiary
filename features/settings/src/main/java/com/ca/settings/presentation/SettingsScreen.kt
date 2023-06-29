@@ -1,8 +1,9 @@
 package com.ca.settings.presentation
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.authentication.GoogleAuthResultContract
 import com.ca.designsystem.theme.Theme
 
 @Composable
@@ -20,17 +20,6 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
-
-    val googleAuthLauncher =
-        rememberLauncherForActivityResult(GoogleAuthResultContract()) { result ->
-            result
-                .onSuccess { token ->
-                    viewModel.linkGoogleAccount(token)
-                }
-                .onFailure {
-                    //todo show error message
-                }
-        }
 
     Scaffold {
         Column(
@@ -46,20 +35,6 @@ fun SettingsScreen(
                 modifier = Modifier,
                 color = Color.Black
             )
-            if (viewState.isAnonymousSignInMethod) {
-                Button(
-                    onClick = { googleAuthLauncher.launch(Unit) }
-                ) {
-                    Text("Link With Google Account")
-                }
-            } else {
-                Button(
-                    onClick = {  }
-                ) {
-                    Text("Sign Out")
-                }
-            }
-
         }
     }
 }

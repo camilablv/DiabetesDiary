@@ -7,3 +7,34 @@ mutation CreateSessionByGoogleIdToken($idToken: String!) {
         }
     }
 }
+
+mutation UpdateGlucoseUnit($settingsInput: SettingsInput!) {
+    settings: updateSettings(input: $settingsInput) {
+        bloodGlucoseUnits
+    }
+}
+
+mutation CreateInsulin($name: String!, $color: String!, $defaultDose: Int!) {
+    insulin: createInsulin(input: {name: $name, color: $color, defaultDose: $defaultDose}) {
+        id
+        name
+        color
+        defaultDose
+    }
+}
+
+mutation UpdateInsulin($id: ID!, $name: String!, $color: String!) {
+    insulin: updateInsulin(id: $id, input: {name: $name, color: $color}) {
+        id
+        name
+        color
+    }
+}
+
+mutation DeleteInsulin($id: ID!) {
+    insulin: deleteInsulin(id: $id) {
+        id
+        name
+        color
+    }
+}
