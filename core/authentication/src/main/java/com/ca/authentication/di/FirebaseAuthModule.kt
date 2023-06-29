@@ -1,6 +1,9 @@
 package com.ca.authentication.di
 
 import com.ca.authentication.FirebaseAuthProvider
+import com.ca.authentication.token.JWTService
+import com.ca.authentication.token.JWTServiceImpl
+import com.ca.datastore.UserDataStore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -21,4 +24,7 @@ internal class FirebaseAuthModule {
     fun provideAuthProvider(firebaseAuth: FirebaseAuth): FirebaseAuthProvider {
         return FirebaseAuthProvider(firebaseAuth)
     }
+
+    @Provides
+    fun provideJWTService(userDataStore: UserDataStore): JWTService = JWTServiceImpl(userDataStore)
 }
