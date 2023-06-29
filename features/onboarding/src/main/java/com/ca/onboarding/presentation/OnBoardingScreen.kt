@@ -76,7 +76,8 @@ fun OnBoardingPager(
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
-                .weight(11f)
+                .weight(11f),
+            userScrollEnabled = false
         ) { index ->
             when(pages[index]) {
                 Page.Welcome -> {
@@ -84,10 +85,12 @@ fun OnBoardingPager(
                 }
                 Page.AddInsulin -> {
                     AddInsulinPage(
-                        viewState.insulins
-                    ) { name, color, dose ->
-                        viewModel.addInsulin(name, color, dose)
-                    }
+                        viewState.insulins,
+                        addInsulin = { name, color, dose ->
+                            viewModel.addInsulin(name, color, dose)
+                        },
+                        deleteInsulin = { viewModel.deleteInsulin(it) }
+                    )
                 }
                 Page.GlucoseUnits -> {
                     ChooseGlucoseUnitsPage(

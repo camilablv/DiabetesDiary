@@ -37,7 +37,10 @@ class SettingsRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteInsulin(id: String) {
-        TODO("Not yet implemented")
+    override suspend fun deleteInsulin(id: String): List<Insulin> {
+        networkClient.deleteInsulin(id)
+        return settingsDataStore.deleteInsulin(id)
     }
+
+    override suspend fun insulins(): List<Insulin> = settingsDataStore.insulins()
 }
