@@ -1,6 +1,7 @@
 package com.ca.diabetesdiary.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,11 +17,13 @@ import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 fun MainNavHost(
     navHostController: NavHostController,
     startDestination: String,
-    isOnBoardingShowed: Boolean
+    shouldShowOnBoarding: Boolean,
+    modifier: Modifier
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        modifier = modifier
     ) {
         composable(Route.Home.route) {
             BottomBarMenuNavHost(
@@ -46,7 +49,7 @@ fun MainNavHost(
         authNavGraph(
             route = Route.Auth.route,
             onComplete = {
-                val nextDestination = if (isOnBoardingShowed) Route.Home.route else Route.OnBoarding.route
+                val nextDestination = if (shouldShowOnBoarding) Route.OnBoarding.route else Route.Home.route
                 navHostController.navigate(nextDestination) {
                     popUpTo(Route.Auth.route) { inclusive = true }
                 }

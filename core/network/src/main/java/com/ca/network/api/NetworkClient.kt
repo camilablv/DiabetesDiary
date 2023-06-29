@@ -1,9 +1,11 @@
 package com.ca.network.api
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Optional
 import com.ca.CreateInsulinMutation
 import com.ca.CreateSessionByGoogleIdTokenMutation
+import com.ca.DeleteInsulinMutation
 import com.ca.UpdateGlucoseUnitMutation
 import com.ca.model.GlucoseUnits
 import com.ca.network.error.NetworkErrorHandler
@@ -25,7 +27,7 @@ class NetworkClient @Inject constructor(
     }
 
     suspend fun updateGlucoseUnit(unit: GlucoseUnits): Result<UpdateGlucoseUnitMutation.Data> {
-        val glucoseUnit = BloodGlucoseUnits.safeValueOf(unit.unit)
+        val glucoseUnit = BloodGlucoseUnits.safeValueOf(unit.name)
 
         return errorHandler.withErrorHandler {
             apolloClient.mutation(
@@ -40,13 +42,17 @@ class NetworkClient @Inject constructor(
         }
     }
 
-    suspend fun createInsulin(name: String, color: String): Result<CreateInsulinMutation.Data> {
+    suspend fun createInsulin(name: String, color: String, defaultDose: Int): Result<CreateInsulinMutation.Data> {
         return errorHandler.withErrorHandler {
-            apolloClient.mutation(CreateInsulinMutation(name, color)).execute()
+            apolloClient.mutation(CreateInsulinMutation(name, color, defaultDose)).execute()
         }
     }
 
     suspend fun isOnBoardingShowed(): Boolean {
         return false
+    }
+
+    suspend fun deleteInsulin(id: String): ApolloResponse<DeleteInsulinMutation.Data> {
+        return apolloClient.mutation(DeleteInsulinMutation(id)).execute()
     }
 }

@@ -5,9 +5,10 @@ import com.ca.model.Insulin
 
 fun Settings.insulins(): List<Insulin> = insulinsList.map {
     Insulin(
+        id = it.id,
         name = it.name,
         color = it.color,
-        defaultDosage = it.defaultDosage
+        defaultDose = it.defaultDosage
     )
 }
 

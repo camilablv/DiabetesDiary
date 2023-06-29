@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DiaryTheme {
-                MainScreen(viewModel = hiltViewModel())
+                DiaryApp(viewModel = hiltViewModel())
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.diabetesdiary.domain.repository.MainRepository
 import com.ca.diabetesdiary.navigation.Route
+import com.ca.diabetesdiary.presentation.state.MainViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class MainActivityViewModel @Inject constructor(
     private val repository: MainRepository
 ) : ViewModel() {
 
@@ -27,13 +28,13 @@ class MainViewModel @Inject constructor(
     private fun setStartDestination() {
         //todo check if the onboarding screen was shown and show it if not
         val startDestination = if (repository.isUserSignedIn) Route.Home.route else Route.Auth.route
-        _viewState.update { it.copy(startDestination = startDestination) }
+        _viewState.update { it.copy(startDestination = Route.OnBoarding.route) }
     }
 
     private fun checkIfOnBoardingShowed() {
         viewModelScope.launch {
             val isOnBoardingShowed = repository.isOnBoardingShowed()
-            _viewState.update { it.copy(isOnBoardingShowed = isOnBoardingShowed) }
+            _viewState.update { it.copy(shouldShowOnBoarding = !isOnBoardingShowed) }
         }
     }
 }

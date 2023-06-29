@@ -17,13 +17,9 @@ android {
     }
 
     buildTypes {
-        debug{
-            buildConfigField('String', 'AUTH_TOKEN', AUTH_TOKEN)
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField('String', 'AUTH_TOKEN', AUTH_TOKEN)
         }
     }
     compileOptions {
@@ -39,6 +35,7 @@ dependencies {
 
     implementation project(":core:schema")
     implementation project(':core:model')
+    implementation project(':core:authentication')
 
     //Network
     implementation network.apolloRuntime

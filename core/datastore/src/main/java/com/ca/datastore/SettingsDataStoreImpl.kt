@@ -3,6 +3,7 @@ package com.ca.datastore
 import androidx.datastore.core.DataStore
 import com.ca.model.GlucoseUnits
 import com.ca.model.Insulin
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 internal class SettingsDataStoreImpl @Inject constructor(
@@ -10,26 +11,40 @@ internal class SettingsDataStoreImpl @Inject constructor(
 ) : SettingsDataStore {
 
     override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits {
-        val settings = dataStore.updateData {
+        return dataStore.updateData {
             it.toBuilder()
                 .setUnit(Settings.GlucoseUnit.valueOf(units.name))
                 .build()
-        }
-        return settings.glucoseUnit()
+        }.glucoseUnit()
     }
 
     override suspend fun addInsulin(insulin: Insulin): List<Insulin> {
-        val settings = dataStore.updateData {
+        return dataStore.updateData {
             it.toBuilder()
                 .addInsulins(
                     Settings.Insulin.newBuilder()
+                        .setId(insulin.id)
                         .setName(insulin.name)
                         .setColor(insulin.color)
-                        .setDefaultDosage(insulin.defaultDosage)
+                        .setDefaultDosage(insulin.defaultDose)
                         .build()
                 )
                 .build()
+        }.insulins()
+    }
+
+    override suspend fun deleteInsulin(id: String): List<Insulin> {
+        val elementIndex = dataStore.data.first().insulinsList.let { list ->
+            list.indexOf(list.find { insulin -> insulin.id == id })
         }
-        return settings.insulins()
+        return dataStore.updateData {
+            it.toBuilder()
+                .removeInsulins(elementIndex)
+                .build()
+        }.insulins()
+    }
+
+    override suspend fun insulins(): List<Insulin> {
+        return dataStore.data.first().insulins()
     }
 }

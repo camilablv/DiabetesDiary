@@ -1,8 +1,13 @@
 package com.ca.settings.data.repository
 
+import android.util.Log
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
 import com.ca.network.api.NetworkClient
+import com.ca.network.utils.insulin
+import com.ca.network.utils.unit
 import com.ca.settings.domain.repository.SettingsRepository
 import javax.inject.Inject
 
@@ -12,12 +17,15 @@ class SettingsRepositoryImpl @Inject constructor(
     private val settingsDataStore: SettingsDataStore
 ) : SettingsRepository {
 
-    override suspend fun updateGlucoseUnits(units: com.ca.model.GlucoseUnits): com.ca.model.GlucoseUnits {
-        return settingsDataStore.updateGlucoseUnits(units)
+    override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits {
+        val result = networkClient.updateGlucoseUnit(units)
+        return settingsDataStore.updateGlucoseUnits(result.getOrNull()?.unit()!!)
     }
 
-    override suspend fun addInsulin(insulin: com.ca.model.Insulin): List<com.ca.model.Insulin> {
-        return settingsDataStore.addInsulin(insulin)
+    override suspend fun addInsulin(name: String, color: String, defaultDose: Int): List<Insulin> {
+        val result = networkClient.createInsulin(name, color, defaultDose)
+        result.onFailure { Log.d("SettingsRepositoryImpl", it.message.toString()) }
+        return settingsDataStore.addInsulin(result.getOrNull()?.insulin()!!)
     }
 
     override suspend fun updateInsulin(
@@ -29,7 +37,10 @@ class SettingsRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteInsulin(id: String) {
-        TODO("Not yet implemented")
+    override suspend fun deleteInsulin(id: String): List<Insulin> {
+        networkClient.deleteInsulin(id)
+        return settingsDataStore.deleteInsulin(id)
     }
+
+    override suspend fun insulins(): List<Insulin> = settingsDataStore.insulins()
 }

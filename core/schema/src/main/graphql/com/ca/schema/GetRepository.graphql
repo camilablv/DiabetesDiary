@@ -14,11 +14,12 @@ mutation UpdateGlucoseUnit($settingsInput: SettingsInput!) {
     }
 }
 
-mutation CreateInsulin($name: String!, $color: String!) {
-    insulin: createInsulin(input: {name: $name, color: $color}) {
+mutation CreateInsulin($name: String!, $color: String!, $defaultDose: Int!) {
+    insulin: createInsulin(input: {name: $name, color: $color, defaultDose: $defaultDose}) {
         id
         name
         color
+        defaultDose
     }
 }
 

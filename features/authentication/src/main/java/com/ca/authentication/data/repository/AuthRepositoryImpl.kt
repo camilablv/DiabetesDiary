@@ -1,5 +1,6 @@
 package com.ca.authentication.data.repository
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import com.ca.authentication.FirebaseAuthProvider
 import com.ca.authentication.domain.repository.AuthRepository
@@ -18,6 +19,7 @@ class AuthRepositoryImpl @Inject constructor(
             onSuccess()
 
             data.session?.let { session ->
+                Log.d("AuthRepositoryImpl", session.token.toString())
                 dataStore.updateData { prefs ->
                     prefs.toBuilder()
                         .setAuthToken(session.token)

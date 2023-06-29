@@ -1,7 +1,8 @@
 package com.ca.model
 
 data class Insulin(
+    val id: String,
     val name: String,
     val color: String,
-    val defaultDosage: Int
+    val defaultDose: Int
 )

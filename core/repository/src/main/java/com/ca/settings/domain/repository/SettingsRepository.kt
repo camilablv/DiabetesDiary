@@ -5,7 +5,8 @@ import com.ca.model.Insulin
 
 interface SettingsRepository {
     suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits
-    suspend fun addInsulin(insulin: Insulin): List<Insulin>
+    suspend fun addInsulin(name: String, color: String, defaultDose: Int): List<Insulin>
     suspend fun updateInsulin(id: String, name: String, color: String, defaultDosage: Int)
-    suspend fun deleteInsulin(id: String)
+    suspend fun deleteInsulin(id: String): List<Insulin>
+    suspend fun insulins(): List<Insulin>
 }

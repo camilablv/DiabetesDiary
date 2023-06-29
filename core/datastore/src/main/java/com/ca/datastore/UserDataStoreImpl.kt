@@ -1,9 +1,10 @@
 package com.ca.datastore
 
 import androidx.datastore.core.DataStore
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class UserDataStoreImpl @Inject constructor(
+internal class UserDataStoreImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>
 ) : UserDataStore {
 
@@ -14,5 +15,9 @@ class UserDataStoreImpl @Inject constructor(
                 .setEmail(email)
                 .build()
         }
+    }
+
+    override suspend fun authToken(): String {
+        return dataStore.data.first().authToken
     }
 }
