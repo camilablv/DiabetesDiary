@@ -77,7 +77,6 @@ fun OnBoardingPager(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(11f),
-            userScrollEnabled = false
         ) { index ->
             when(pages[index]) {
                 Page.Welcome -> {
@@ -114,10 +113,11 @@ fun OnBoardingPager(
         }
 
         PagerButtons(
+            state = pagerState,
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            onSkip = toHome,
+            toHome = toHome,
             onNext = {
                 scope.launch {
                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
@@ -127,10 +127,12 @@ fun OnBoardingPager(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PagerButtons(
+    state: PagerState,
     modifier: Modifier,
-    onSkip: () -> Unit,
+    toHome: () -> Unit,
     onNext: () -> Unit
 ) {
     Row(
@@ -139,13 +141,13 @@ fun PagerButtons(
         verticalAlignment = Alignment.CenterVertically
     ) {
         TextButton(
-            onClick = onSkip
+            onClick = toHome
         ) {
             Text(text = "Skip")
         }
 
         IconButton(
-            onClick = onNext
+            onClick = if (state.canScrollForward) onNext else toHome
         ) {
             Icon(
                 painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),

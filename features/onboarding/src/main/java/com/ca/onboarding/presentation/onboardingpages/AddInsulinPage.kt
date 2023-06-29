@@ -41,18 +41,17 @@ fun AddInsulinPage(
                 count = insulins.size,
                 key = { index -> insulins[index].id },
                 itemContent = { index ->
-                    val dismissState = rememberDismissState(
-                        confirmStateChange = {
-                            deleteInsulin(insulins[index].id)
-                            true
-                        }
-                    )
+                    val dismissState = rememberDismissState()
+
+                    if (dismissState.isDismissed(DismissDirection.EndToStart)) {
+                        deleteInsulin(insulins[index].id)
+                    }
 
                     SwipeToDismiss(
                         state = dismissState,
                         modifier = Modifier,
                         directions = setOf(DismissDirection.EndToStart),
-                        dismissThresholds = { FractionalThreshold(0.1f)},
+                        dismissThresholds = { FractionalThreshold(0.3f)},
                         background = {}
                     ) {
                         InsulinCard(
