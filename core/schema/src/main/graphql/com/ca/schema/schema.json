@@ -993,9 +993,13 @@
               "isDeprecated": false,
               "name": "color",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1017,9 +1021,13 @@
               "isDeprecated": false,
               "name": "id",
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1029,9 +1037,13 @@
               "isDeprecated": false,
               "name": "name",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             }
           ],
@@ -1109,6 +1121,37 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "completedAt",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "NaiveDateTime",
+                      "ofType": null
+                    }
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "completeOnboarding",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "User",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "input",
                   "type": {
                     "kind": "NON_NULL",
@@ -1126,9 +1169,13 @@
               "isDeprecated": false,
               "name": "createInsulin",
               "type": {
-                "kind": "OBJECT",
-                "name": "Insulin",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Insulin",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1157,12 +1204,16 @@
               "isDeprecated": false,
               "name": "createInsulins",
               "type": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Insulin",
-                  "ofType": null
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Insulin",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -1202,9 +1253,13 @@
               "isDeprecated": false,
               "name": "createSession",
               "type": {
-                "kind": "OBJECT",
-                "name": "Session",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Session",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1229,9 +1284,13 @@
               "isDeprecated": false,
               "name": "createSessionByGoogleIdToken",
               "type": {
-                "kind": "OBJECT",
-                "name": "Session",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Session",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1270,9 +1329,13 @@
               "isDeprecated": false,
               "name": "createUser",
               "type": {
-                "kind": "OBJECT",
-                "name": "Session",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Session",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1297,9 +1360,13 @@
               "isDeprecated": false,
               "name": "deleteInsulin",
               "type": {
-                "kind": "OBJECT",
-                "name": "Insulin",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Insulin",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1338,9 +1405,13 @@
               "isDeprecated": false,
               "name": "updateInsulin",
               "type": {
-                "kind": "OBJECT",
-                "name": "Insulin",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Insulin",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1365,9 +1436,13 @@
               "isDeprecated": false,
               "name": "updateSettings",
               "type": {
-                "kind": "OBJECT",
-                "name": "Settings",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Settings",
+                  "ofType": null
+                }
               }
             }
           ],
@@ -1375,6 +1450,16 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "RootMutationType",
+          "possibleTypes": null
+        },
+        {
+          "description": "The `Naive DateTime` scalar type represents a naive date and time without\ntimezone. The DateTime appears in a JSON response as an ISO8601 formatted\nstring.",
+          "enumValues": null,
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "SCALAR",
+          "name": "NaiveDateTime",
           "possibleTypes": null
         },
         {
@@ -1388,9 +1473,13 @@
               "isDeprecated": false,
               "name": "currentUser",
               "type": {
-                "kind": "OBJECT",
-                "name": "User",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "User",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1400,9 +1489,13 @@
               "isDeprecated": false,
               "name": "settings",
               "type": {
-                "kind": "OBJECT",
-                "name": "Settings",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Settings",
+                  "ofType": null
+                }
               }
             }
           ],
@@ -1423,9 +1516,13 @@
               "isDeprecated": false,
               "name": "token",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             },
             {
@@ -1435,9 +1532,13 @@
               "isDeprecated": false,
               "name": "user",
               "type": {
-                "kind": "OBJECT",
-                "name": "User",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "User",
+                  "ofType": null
+                }
               }
             }
           ],
@@ -1470,12 +1571,16 @@
               "isDeprecated": false,
               "name": "insulins",
               "type": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Insulin",
-                  "ofType": null
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Insulin",
+                    "ofType": null
+                  }
                 }
               }
             }
@@ -1496,9 +1601,13 @@
               "description": null,
               "name": "bloodGlucoseUnits",
               "type": {
-                "kind": "ENUM",
-                "name": "BloodGlucoseUnits",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "BloodGlucoseUnits",
+                  "ofType": null
+                }
               }
             }
           ],
@@ -1528,8 +1637,24 @@
               "isDeprecated": false,
               "name": "email",
               "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "onboardingCompletedAt",
+              "type": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "NaiveDateTime",
                 "ofType": null
               }
             }

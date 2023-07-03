@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,19 +23,24 @@ class MainActivityViewModel @Inject constructor(
 
     init {
         setStartDestination()
-        checkIfOnBoardingShowed()
     }
 
     private fun setStartDestination() {
-        //todo check if the onboarding screen was shown and show it if not
-        val startDestination = if (repository.isUserSignedIn) Route.Home.route else Route.Auth.route
-        _viewState.update { it.copy(startDestination = Route.OnBoarding.route) }
+        viewModelScope.launch {
+            val isOnBoardingShowed = checkIfOnBoardingShowed()
+            val startDestination = if (!repository.isUserSignedIn) Route.Auth.route
+            else if (!isOnBoardingShowed) Route.OnBoarding.route
+            else Route.Home.route
+
+            _viewState.update { it.copy(startDestination = startDestination) }
+        }
     }
 
-    private fun checkIfOnBoardingShowed() {
-        viewModelScope.launch {
-            val isOnBoardingShowed = repository.isOnBoardingShowed()
-            _viewState.update { it.copy(shouldShowOnBoarding = !isOnBoardingShowed) }
+    private fun checkIfOnBoardingShowed(): Boolean {
+        return runBlocking {
+            repository.isOnBoardingShowed().also { isOnBoardingShowed ->
+                _viewState.update { it.copy(shouldShowOnBoarding = !isOnBoardingShowed) }
+            }
         }
     }
 }
