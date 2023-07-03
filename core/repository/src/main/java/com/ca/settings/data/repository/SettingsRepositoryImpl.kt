@@ -17,15 +17,21 @@ class SettingsRepositoryImpl @Inject constructor(
     private val settingsDataStore: SettingsDataStore
 ) : SettingsRepository {
 
-    override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits {
-        val result = networkClient.updateGlucoseUnit(units)
-        return settingsDataStore.updateGlucoseUnits(result.getOrNull()?.unit()!!)
+    override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits? {
+        return networkClient.updateGlucoseUnit(units).fold(
+            onSuccess = { settingsDataStore.updateGlucoseUnits(it.unit()) },
+            onFailure = { null }
+        )
     }
 
-    override suspend fun addInsulin(name: String, color: String, defaultDose: Int): List<Insulin> {
-        val result = networkClient.createInsulin(name, color, defaultDose)
-        result.onFailure { Log.d("SettingsRepositoryImpl", it.message.toString()) }
-        return settingsDataStore.addInsulin(result.getOrNull()?.insulin()!!)
+    override suspend fun addInsulin(name: String, color: String, defaultDose: Int): List<Insulin>? {
+        return networkClient.createInsulin(name, color, defaultDose).fold(
+            onSuccess = { settingsDataStore.addInsulin(it.insulin()) },
+            onFailure = {
+                Log.d("SettingsRepositoryImpl", it.message.toString())
+                null
+            }
+        )
     }
 
     override suspend fun updateInsulin(
@@ -38,6 +44,7 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteInsulin(id: String): List<Insulin> {
+        //todo add delayed sending to the server if there is no internet
         networkClient.deleteInsulin(id)
         return settingsDataStore.deleteInsulin(id)
     }

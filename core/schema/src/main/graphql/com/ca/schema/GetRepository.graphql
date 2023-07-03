@@ -38,3 +38,17 @@ mutation DeleteInsulin($id: ID!) {
         color
     }
 }
+
+mutation CompleteOnBoarding($completedAt: NaiveDateTime!) {
+    user: completeOnboarding(completedAt: $completedAt) {
+        email
+        onboardingCompletedAt
+    }
+}
+
+query CurrentUser {
+    user: currentUser {
+        email
+        onboardingCompletedAt
+    }
+}
