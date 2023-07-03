@@ -35,8 +35,9 @@ class OnBoardingViewModel @Inject constructor(
 
     fun updateGlucoseUnits(units: GlucoseUnits) {
         viewModelScope.launch {
-            val unit = updateGlucoseUnitUseCase.invoke(units)
-            _viewState.update { _viewState.value.copy(units = unit) }
+            updateGlucoseUnitUseCase.invoke(units)?.let { units ->
+                _viewState.update { _viewState.value.copy(units = units) }
+            }
         }
     }
 
