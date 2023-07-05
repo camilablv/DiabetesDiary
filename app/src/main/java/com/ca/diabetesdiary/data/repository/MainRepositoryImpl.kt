@@ -14,8 +14,7 @@ class MainRepositoryImpl @Inject constructor(
         get() = authProvider.isUserSignedIn
 
     override suspend fun isOnBoardingShowed(): Boolean {
-        val currentUser = networkClient.currentUser()
-        return currentUser.fold(
+        return networkClient.currentUser().fold(
             onFailure = { false },
             onSuccess = { data -> data.user.onboardingCompletedAt != null }
         )

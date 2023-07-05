@@ -2,12 +2,16 @@ package com.ca.designsystem.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
+@OptIn(ExperimentalTextApi::class)
 val Typography = DiaryTypography(
     headlineSmall = TextStyle(
         fontFamily = FontFamily.Default,
@@ -55,7 +59,17 @@ val Typography = DiaryTypography(
         lineHeight = 36.sp,
         letterSpacing = 0.sp,
         textAlign = TextAlign.Center
-    )
+    ),
+    note = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+        brush = Brush.verticalGradient(
+            colors = listOf(Color.White, Color.Transparent),
+            startY = 0.2f,
+        )
+    ),
 )
 
 @Immutable
@@ -66,7 +80,8 @@ data class DiaryTypography(
     val bodySmall: TextStyle,
     val bodyMedium: TextStyle,
     val bodyLarge: TextStyle,
-    val counter: TextStyle
+    val counter: TextStyle,
+    val note: TextStyle
 )
 
 val LocalDiaryTypography = staticCompositionLocalOf<DiaryTypography> {

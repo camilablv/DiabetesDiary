@@ -3,7 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="datastore" target="11" />
-      <module name="DiabetesDiary.core.common" target="11" />
       <module name="DiabetesDiary.core.model1" target="11" />
     </bytecodeTargetLevel>
   </component>
