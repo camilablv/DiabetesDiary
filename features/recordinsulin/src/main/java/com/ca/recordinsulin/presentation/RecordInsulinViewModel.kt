@@ -38,4 +38,16 @@ class RecordInsulinViewModel @Inject constructor(
     fun setNote(text: String) {
         _viewState.update { it.copy(note = text) }
     }
+
+    fun setUnits(value: Int) {
+        _viewState.update { it.copy(units = value) }
+    }
+
+    fun incrementUnits() {
+        _viewState.update { it.copy(units = it.units + 1) }
+    }
+
+    fun decrementUnits() {
+        _viewState.update { it.copy(units = it.units - 1) }
+    }
 }

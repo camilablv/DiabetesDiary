@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
@@ -70,7 +71,7 @@ fun NoteTextField(
                 visualTransformation = VisualTransformation.None,
                 interactionSource = interactionSource,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = Theme.colors.onBackground
+                    textColor = Color.Black
                 ),
                 placeholder = placeholder
             )

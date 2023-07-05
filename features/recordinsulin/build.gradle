@@ -69,4 +69,7 @@ dependencies {
     implementation hiltDependencies.hilt
     implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
+
+    // Accompanist
+    implementation accompanist.systemUiController
 }

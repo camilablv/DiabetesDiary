@@ -1,13 +1,17 @@
 package com.ca.designsystem.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.DiaryTheme
@@ -41,22 +45,41 @@ fun InsulinSelectionCard(
                         RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
                     )
                     .fillMaxWidth()
+                    .padding(8.dp),
+                style = Theme.typography.bodyLarge,
+                color = Color.White
             )
 
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = { onExpandedChange(it) }
             ) {
-                TextField(
+                BasicTextField(
                     value = selectedInsulin?.name ?: "Select Insulin",
                     onValueChange = {},
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                    },
+//                    trailingIcon = {
+//                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+//                    },
                     modifier = Modifier
                         .fillMaxWidth(),
-                    readOnly = true
-                )
+                    readOnly = true,
+                    textStyle = Theme.typography.bodyLarge
+                ) {
+                    TextFieldDefaults.TextFieldDecorationBox(
+                        value = selectedInsulin?.name ?: "Select Insulin",
+                        innerTextField = it,
+                        enabled = true,
+                        singleLine = true,
+                        visualTransformation = VisualTransformation.None,
+                        interactionSource = MutableInteractionSource(),
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                        },
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color.Black
+                        )
+                    )
+                }
 
                 ExposedDropdownMenu(
                     expanded = expanded,
