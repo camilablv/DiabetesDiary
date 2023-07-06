@@ -37,7 +37,8 @@ fun NoteTextField(
     val noteText = remember { mutableStateOf(value) }
 
     Surface(
-        elevation = Theme.elevations.default
+        elevation = Theme.elevations.default,
+        shape = Theme.shapes.large
     ) {
         BasicTextField(
             value = value,
@@ -46,11 +47,9 @@ fun NoteTextField(
                 onValueChange(it)
             },
             modifier = modifier
-                .background(Theme.colors.surface, Theme.shapes.medium)
                 .fillMaxWidth()
-                .clickable {}
                 .animateContentSize(),
-            textStyle = if (expanded) Theme.typography.bodyMedium else Theme.typography.note,
+            textStyle = Theme.typography.bodyMedium,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text

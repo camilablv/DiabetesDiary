@@ -66,7 +66,7 @@ val Typography = DiaryTypography(
         fontSize = 18.sp,
         lineHeight = 24.sp,
         brush = Brush.verticalGradient(
-            colors = listOf(Color.White, Color.Transparent),
+            colors = listOf(Color.Black, Color.Transparent),
             startY = 0.2f,
         )
     ),

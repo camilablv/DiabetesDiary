@@ -1,5 +1,6 @@
 package com.ca.recordinsulin.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -8,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,11 +24,25 @@ fun RecordInsulinScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
+//    val focusManager = LocalFocusManager.current
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopBar(title = "Record Insulin", onBackClick = onBackClick) }
     ) { paddings ->
+
+        TimePicker(
+            expanded = viewState.showTimePicker,
+            onDismiss = { viewModel.showTimePicker(false) },
+            setTime = { viewModel.setTime(it) }
+        )
+
+        DatePicker(
+            expanded = viewState.showDatePicker,
+            onDismiss = { viewModel.showDatePicker(false) },
+            setDate = { viewModel.setDate(it) }
+        )
+
         Column(
             modifier = Modifier
                 .padding(paddings)
@@ -50,12 +66,14 @@ fun RecordInsulinScreen(
                     ) {
                         DateCard(
                             modifier = Modifier
-                                .width(120.dp),
+                                .width(120.dp)
+                                .clickable { viewModel.showDatePicker(true) },
                             date = viewState.date
                         )
                         TimeCard(
                             modifier = Modifier
-                                .width(120.dp),
+                                .width(120.dp)
+                                .clickable { viewModel.showTimePicker(true) },
                             time = viewState.time
                         )
                     }
@@ -99,7 +117,7 @@ fun RecordInsulinScreen(
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { viewModel.addRecord() },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Theme.colors.primary
                 ),
@@ -107,7 +125,10 @@ fun RecordInsulinScreen(
                 modifier = Modifier
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Add Record")
+                Text(
+                    text = "Add Record",
+                    color = Theme.colors.onPrimary
+                )
             }
         }
     }
