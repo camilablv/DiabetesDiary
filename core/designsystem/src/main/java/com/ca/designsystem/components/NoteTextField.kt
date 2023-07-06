@@ -29,7 +29,7 @@ fun NoteTextField(
     modifier: Modifier,
     expanded: Boolean,
     placeholder: @Composable () -> Unit,
-    onDoneAction: () -> Unit,
+    onDoneAction: (String) -> Unit,
     expandedMaxLines: Int,
     collapsedMaxLines: Int
 ) {
@@ -53,8 +53,7 @@ fun NoteTextField(
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    onDoneAction()
-                    onValueChange(noteText.value)
+                    onDoneAction(noteText.value)
                 }
             ),
             maxLines = if (expanded) expandedMaxLines else collapsedMaxLines

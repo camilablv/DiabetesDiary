@@ -27,7 +27,7 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = "insulin_graph",
+        startDestination = startDestination,
         modifier = modifier
     ) {
         composable(Route.Home.route) {

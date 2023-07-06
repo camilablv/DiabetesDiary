@@ -1,21 +1,26 @@
 package com.ca.recordinsulin.presentation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.*
 import com.ca.designsystem.theme.Theme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RecordInsulinScreen(
     viewModel: RecordInsulinViewModel = hiltViewModel(),
@@ -24,7 +29,8 @@ fun RecordInsulinScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
-//    val focusManager = LocalFocusManager.current
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -47,7 +53,11 @@ fun RecordInsulinScreen(
             modifier = Modifier
                 .padding(paddings)
                 .fillMaxSize()
-                .imePadding(),
+                .imePadding()
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) { focusManager.clearFocus(true) },
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -109,7 +119,11 @@ fun RecordInsulinScreen(
                         modifier = Modifier,
                         expanded = viewState.noteTextFieldExpanded,
                         placeholder = { Text(text = "Type note..", color = Color.Gray) },
-                        onDoneAction = { /*TODO*/ },
+                        onDoneAction = {
+                            viewModel.setNote(it)
+                            keyboardController?.hide()
+                            focusManager.clearFocus(true)
+                        },
                         expandedMaxLines = 10,
                         collapsedMaxLines = 5
                     )
