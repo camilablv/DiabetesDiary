@@ -36,10 +36,7 @@ fun NoteTextField(
     val interactionSource = remember { MutableInteractionSource() }
     val noteText = remember { mutableStateOf(value) }
 
-    Surface(
-        elevation = Theme.elevations.default,
-        shape = Theme.shapes.large
-    ) {
+    CardWithTitle(modifier = modifier, title = "Type note") {
         BasicTextField(
             value = value,
             onValueChange = {
@@ -76,6 +73,4 @@ fun NoteTextField(
             )
         }
     }
-
-
 }

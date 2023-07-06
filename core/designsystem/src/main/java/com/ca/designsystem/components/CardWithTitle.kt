@@ -12,18 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 
 @Composable
-internal fun DateTimeCard(
+internal fun CardWithTitle(
     modifier: Modifier,
     title: String,
-    value: String,
-    icon: Painter
-    ) {
+    icon: Painter? = null,
+    content: @Composable () -> Unit
+) {
     Surface(
         modifier = modifier,
         elevation = Theme.elevations.default,
@@ -34,7 +32,6 @@ internal fun DateTimeCard(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -52,60 +49,19 @@ internal fun DateTimeCard(
                         style = Theme.typography.bodyLarge,
                         color = Color.White
                     )
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp),
-                        painter = icon,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
+                    icon?.let {
+                        Icon(
+                            modifier = Modifier
+                                .size(24.dp),
+                            painter = it,
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                    }
                 }
 
-                Text(
-                    modifier = Modifier
-                        .padding(8.dp),
-                    text = value,
-                    style = Theme.typography.bodyLarge
-                )
+                content()
             }
         }
-    }
-}
-
-@Composable
-fun DateCard(
-    modifier: Modifier,
-    date: String
-) {
-    CardWithTitle(
-        modifier = modifier,
-        title = "Date",
-        icon = painterResource(id = R.drawable.calendar)
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(8.dp),
-            text = date,
-            style = Theme.typography.bodyLarge
-        )
-    }
-}
-
-@Composable
-fun TimeCard(
-    modifier: Modifier,
-    time: String
-) {
-    CardWithTitle(
-        modifier = modifier,
-        title = "Time",
-        icon = painterResource(id = R.drawable.schedule)
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(8.dp),
-            text = time,
-            style = Theme.typography.bodyLarge
-        )
     }
 }

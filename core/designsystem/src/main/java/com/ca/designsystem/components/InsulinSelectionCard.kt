@@ -29,66 +29,45 @@ fun InsulinSelectionCard(
     selectedInsulin: Insulin?,
     options: List<Insulin>
 ) {
-    Surface(
+    CardWithTitle(
         modifier = modifier,
-        elevation = Theme.elevations.default,
-        shape = Theme.shapes.large
+        title = "Select Insulin"
     ) {
-        Column(
-            modifier = Modifier
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { onExpandedChange(it) }
         ) {
-            Text(
-                text = "Select Insulin",
+            BasicTextField(
+                value = selectedInsulin?.name ?: "Select Insulin",
+                onValueChange = {},
                 modifier = Modifier
-                    .background(
-                        Theme.colors.secondary,
-                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
-                    )
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                style = Theme.typography.bodyLarge,
-                color = Color.White
-            )
-
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = { onExpandedChange(it) }
+                    .fillMaxWidth(),
+                readOnly = true,
+                textStyle = Theme.typography.bodyLarge
             ) {
-                BasicTextField(
+                TextFieldDefaults.TextFieldDecorationBox(
                     value = selectedInsulin?.name ?: "Select Insulin",
-                    onValueChange = {},
-//                    trailingIcon = {
-//                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-//                    },
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    readOnly = true,
-                    textStyle = Theme.typography.bodyLarge
-                ) {
-                    TextFieldDefaults.TextFieldDecorationBox(
-                        value = selectedInsulin?.name ?: "Select Insulin",
-                        innerTextField = it,
-                        enabled = true,
-                        singleLine = true,
-                        visualTransformation = VisualTransformation.None,
-                        interactionSource = MutableInteractionSource(),
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                        },
-                        colors = TextFieldDefaults.textFieldColors(
-                            textColor = Color.Black
-                        )
+                    innerTextField = it,
+                    enabled = true,
+                    singleLine = true,
+                    visualTransformation = VisualTransformation.None,
+                    interactionSource = MutableInteractionSource(),
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        textColor = Color.Black
                     )
-                }
+                )
+            }
 
-                ExposedDropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { onDismiss() }
-                ) {
-                    options.forEach {
-                        DropdownMenuItem(onClick = { onSelect(it) }) {
-                                Text(text = it.name)
-                        }
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { onDismiss() }
+            ) {
+                options.forEach {
+                    DropdownMenuItem(onClick = { onSelect(it) }) {
+                        Text(text = it.name)
                     }
                 }
             }
