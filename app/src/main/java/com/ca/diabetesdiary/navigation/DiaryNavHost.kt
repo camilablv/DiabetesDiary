@@ -47,7 +47,9 @@ fun MainNavHost(
             )
         }
 
-        glucoseGraph()
+        glucoseGraph(
+            navigateBack = { navHostController.navigateBack() }
+        )
 
         insulinGraph(
             navigateBack = { navHostController.navigateBack() }

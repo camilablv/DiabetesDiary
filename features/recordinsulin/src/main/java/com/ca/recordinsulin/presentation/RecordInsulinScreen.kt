@@ -35,7 +35,7 @@ fun RecordInsulinScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopBar(title = "Record Insulin", onBackClick = onBackClick) }
-    ) { paddings ->
+    ) { paddingValues ->
 
         TimePicker(
             expanded = viewState.showTimePicker,
@@ -51,7 +51,7 @@ fun RecordInsulinScreen(
 
         Column(
             modifier = Modifier
-                .padding(paddings)
+                .padding(paddingValues)
                 .fillMaxSize()
                 .imePadding()
                 .clickable(
