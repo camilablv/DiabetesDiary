@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,13 @@ fun HomeScreen(
     navigateToRecordInsulinScreen: () -> Unit
 ) {
 
-    Scaffold {
+    Scaffold(
+        topBar = {
+            TopAppBar {
+                Text(text = "Home")
+            }
+        }
+    ) {
         Column(
             modifier = Modifier
                 .padding(it)

@@ -91,15 +91,6 @@ fun RecordGlucoseScreen(
                 }
 
                 item {
-                    ChooseGlucoseUnitCard(
-                        modifier = Modifier,
-                        units = GlucoseUnits.units,
-                        defaultUnit = viewState.glucoseUnit,
-                        onSelect = { viewModel.setGlucoseUnit(it) }
-                    )
-                }
-
-                item {
                     Counter(
                         modifier = Modifier,
                         value = viewState.glucoseLevel,

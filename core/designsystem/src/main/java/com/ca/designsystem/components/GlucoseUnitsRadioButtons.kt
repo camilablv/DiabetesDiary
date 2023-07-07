@@ -23,13 +23,12 @@ import com.ca.model.GlucoseUnits
 @Composable
 fun GlucoseUnitsRadioButtons(
     modifier: Modifier,
-    units:  List<GlucoseUnits>,
     defaultUnit: GlucoseUnits,
     onSelect: (GlucoseUnits) -> Unit
 ) {
     var selectedUnit = defaultUnit
 
-    units.forEach {
+    GlucoseUnits.units.forEach {
         Row(
             modifier = modifier
                 .fillMaxWidth()

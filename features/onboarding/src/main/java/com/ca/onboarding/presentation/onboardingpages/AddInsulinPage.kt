@@ -55,6 +55,7 @@ fun AddInsulinPage(
                         background = {}
                     ) {
                         InsulinCard(
+                            modifier = Modifier,
                             insulin = insulins[index]
                         )
                     }

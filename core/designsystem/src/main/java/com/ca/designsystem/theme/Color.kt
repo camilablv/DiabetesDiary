@@ -41,7 +41,7 @@ val LightColors = DiaryColors(
     onBackground = Black,
     onPrimary = Grey50,
     onSecondary = Grey50,
-    onSurface = Grey50,
+    onSurface = Black,
     onError = Grey50
 )
 
