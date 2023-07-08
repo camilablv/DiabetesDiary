@@ -1,14 +1,14 @@
 package com.ca.recordinsulin.presentation
 
 import androidx.lifecycle.ViewModel
-import com.ca.common.utils.currentDate
-import com.ca.common.utils.currentTime
+import androidx.lifecycle.viewModelScope
 import com.ca.model.Insulin
 import com.ca.recordinsulin.domain.repository.RecordInsulinRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.LocalTime
@@ -19,8 +19,8 @@ class RecordInsulinViewModel @Inject constructor(
     private val repository: RecordInsulinRepository
 ) : ViewModel() {
 
-    private val _viewState = MutableStateFlow(InsulinViewState())
-    val viewState: StateFlow<InsulinViewState>
+    private val _viewState = MutableStateFlow(RecordInsulinViewState())
+    val viewState: StateFlow<RecordInsulinViewState>
         get() = _viewState
 
     init {
@@ -60,7 +60,7 @@ class RecordInsulinViewModel @Inject constructor(
     }
 
     fun setTime(time: LocalTime) {
-        _viewState.update { it.copy(time = time.currentTime()) }
+        _viewState.update { it.copy(time = time) }
     }
 
     fun showDatePicker(show: Boolean) {
@@ -68,10 +68,18 @@ class RecordInsulinViewModel @Inject constructor(
     }
 
     fun setDate(date: LocalDate) {
-        _viewState.update { it.copy(date = date.currentDate()) }
+        _viewState.update { it.copy(date = date) }
     }
 
     fun addRecord() {
+        with(viewState.value) {
+            addRecord(selectedInsulin?.id!!, note, date, time, units)
+        }
+    }
 
+    private fun addRecord(insulinId: String, note: String, date: LocalDate, time: LocalTime, units: Int) {
+        viewModelScope.launch {
+            repository.recordInsulin(insulinId, note, date, time, units)
+        }
     }
 }

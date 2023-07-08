@@ -25,12 +25,12 @@ fun GlucoseStatusCards(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        measuringMarks.forEach { status ->
+        measuringMarks.forEach { mark ->
             Card(
                 modifier = Modifier
-                    .clickable { onSelect(status) },
+                    .clickable { onSelect(mark) },
                 elevation = Theme.elevations.default,
-                backgroundColor = if (status == selectedMark) Theme.colors.secondary else Theme.colors.background
+                backgroundColor = if (mark == selectedMark) Theme.colors.secondary else Theme.colors.background
             ) {
                 Column(
                     modifier = Modifier
@@ -40,13 +40,13 @@ fun GlucoseStatusCards(
                     Icon(
                         modifier = Modifier
                             .size(36.dp),
-                        painter = painterResource(id = status.icon),
+                        painter = painterResource(id = mark.icon),
                         contentDescription = "",
-                        tint = if (status == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
+                        tint = if (mark == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
                     )
                     Text(
-                        text = status.time,
-                        color = if (status == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
+                        text = mark.text,
+                        color = if (mark == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
                     )
                 }
             }

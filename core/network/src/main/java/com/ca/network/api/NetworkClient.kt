@@ -5,6 +5,7 @@ import com.ca.*
 import com.ca.model.GlucoseUnits
 import com.ca.network.error.NetworkErrorHandler
 import com.ca.type.BloodGlucoseUnits
+import com.ca.type.GlucoseRecordStatus
 import com.ca.type.SettingsInput
 import javax.inject.Inject
 
@@ -61,6 +62,44 @@ class NetworkClient @Inject constructor(
         return errorHandler.withErrorHandler {
             return@withErrorHandler apolloClient.mutation(CompleteOnBoardingMutation(completedAt))
                 .execute()
+        }
+    }
+
+    suspend fun recordInsulin(
+        insulinId: String,
+        note: String,
+        dateTime: String,
+        dose: Int
+    ): Result<RecordInsulinMutation.Data> {
+        return errorHandler.withErrorHandler {
+            return@withErrorHandler apolloClient.mutation(
+                RecordInsulinMutation(
+                    insulinId,
+                    note,
+                    dateTime,
+                    dose.toDouble()
+                )
+            ).execute()
+        }
+    }
+
+    suspend fun recordGlucose(
+        dateTime: String,
+        note: String,
+        mark: String,
+        units: Int
+    ): Result<RecordGlucoseMutation.Data> {
+
+        val status = GlucoseRecordStatus.safeValueOf(mark)
+        return errorHandler.withErrorHandler {
+            return@withErrorHandler apolloClient.mutation(
+                RecordGlucoseMutation(
+                    dateTime,
+                    note,
+                    status,
+                    units.toDouble()
+                )
+            ).execute()
         }
     }
 }

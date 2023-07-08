@@ -1,15 +1,14 @@
 package com.ca.recordglucose.presentation
 
 import androidx.lifecycle.ViewModel
-import com.ca.common.utils.currentDate
-import com.ca.common.utils.currentTime
-import com.ca.model.GlucoseUnits
+import androidx.lifecycle.viewModelScope
 import com.ca.recordglucose.domain.model.MeasuringMark
 import com.ca.recordglucose.domain.repository.RecordGlucoseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -24,7 +23,15 @@ class RecordGlucoseViewModel @Inject constructor(
         get() = _viewState
 
     fun addRecord() {
+        with(viewState.value) {
+            addRecord(time, date, note, measuringMark, glucoseLevel)
+        }
+    }
 
+    private fun addRecord(time: LocalTime, date: LocalDate, note: String, mark: MeasuringMark, glucoseLevel: Int) {
+        viewModelScope.launch {
+            repository.recordGlucose(time, date, note, mark, glucoseLevel)
+        }
     }
 
     fun setNote(text: String) {
@@ -48,7 +55,7 @@ class RecordGlucoseViewModel @Inject constructor(
     }
 
     fun setTime(time: LocalTime) {
-        _viewState.update { it.copy(time = time.currentTime()) }
+        _viewState.update { it.copy(time = time) }
     }
 
     fun showDatePicker(show: Boolean) {
@@ -56,11 +63,7 @@ class RecordGlucoseViewModel @Inject constructor(
     }
 
     fun setDate(date: LocalDate) {
-        _viewState.update { it.copy(date = date.currentDate()) }
-    }
-
-    fun setGlucoseUnit(unit: GlucoseUnits) {
-        _viewState.update { it.copy(glucoseUnit = unit) }
+        _viewState.update { it.copy(date = date) }
     }
 
     fun setMeasuringMark(mark: MeasuringMark) {

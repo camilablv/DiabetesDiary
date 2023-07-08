@@ -52,3 +52,23 @@ query CurrentUser {
         onboardingCompletedAt
     }
 }
+
+mutation RecordInsulin($id: ID!, $notes: String!, $dateTime: NaiveDateTime!, $dose: Float!) {
+    record: recordInsulin(input: {insulinId: $id, notes: $notes, takenAt: $dateTime, units: $dose}) {
+        id
+        insulinId
+        notes
+        takenAt
+        units
+    }
+}
+
+mutation RecordGlucose($measuredAt: NaiveDateTime!, $notes: String!, $measuringMark: GlucoseRecordStatus!, $units: Float!) {
+    record: recordGlucose(input: {measuredAt: $measuredAt, notes: $notes status: $measuringMark, units: $units}) {
+        id
+        measuredAt
+        notes
+        status
+        units
+    }
+}

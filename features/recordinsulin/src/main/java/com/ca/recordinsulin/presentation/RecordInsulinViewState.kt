@@ -1,15 +1,13 @@
 package com.ca.recordinsulin.presentation
 
-import com.ca.common.utils.currentDate
-import com.ca.common.utils.currentTime
 import com.ca.model.Insulin
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class InsulinViewState(
+data class RecordInsulinViewState(
     val units: Int = 0,
-    val time: String = LocalTime.now().currentTime(),
-    val date: String = LocalDate.now().currentDate(),
+    val time: LocalTime = LocalTime.now(),
+    val date: LocalDate = LocalDate.now(),
     val selectedInsulin: Insulin? = null,
     val note: String = "",
     val insulins: List<Insulin> = listOf(),

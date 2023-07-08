@@ -17,9 +17,10 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.common.utils.currentDate
+import com.ca.common.utils.currentTime
 import com.ca.designsystem.components.*
 import com.ca.designsystem.theme.Theme
-import com.ca.model.GlucoseUnits
 import com.ca.recordglucose.presentation.components.GlucoseStatusCards
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -79,13 +80,13 @@ fun RecordGlucoseScreen(
                             modifier = Modifier
                                 .width(120.dp)
                                 .clickable { viewModel.showDatePicker(true) },
-                            date = viewState.date
+                            date = viewState.date.currentDate()
                         )
                         TimeCard(
                             modifier = Modifier
                                 .width(120.dp)
                                 .clickable { viewModel.showTimePicker(true) },
-                            time = viewState.time
+                            time = viewState.time.currentTime()
                         )
                     }
                 }
