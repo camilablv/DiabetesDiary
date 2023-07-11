@@ -2,6 +2,8 @@ package com.ca.home.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -19,11 +21,18 @@ fun BottomBarMenuNavHost(
     navigateToRecordInsulinScreen: () -> Unit
 ) {
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = { BottomBar(navController = navController) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "")
+            }
+        },
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Route.Records.route,
+            startDestination = Route.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Route.Home.route) {
