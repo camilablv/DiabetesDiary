@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -107,28 +108,30 @@ private fun InsulinSection(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             insulins.forEach { insulin ->
-                val dismissState = rememberDismissState()
+                key(insulin.id) {
+                    val dismissState = rememberDismissState()
 
-                if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                    deleteInsulin(insulin.id)
+                    if (dismissState.isDismissed(DismissDirection.EndToStart)) {
+                        deleteInsulin(insulin.id)
+                    }
+
+                    SwipeToDismiss(
+                        state = dismissState,
+                        modifier = Modifier,
+                        directions = setOf(DismissDirection.EndToStart),
+                        dismissThresholds = { FractionalThreshold(0.3f) },
+                        background = {}
+                    ) {
+
+                        InsulinCard(
+                            modifier = Modifier
+                                .clickable { editInsulin(insulin.id) },
+                            insulin = insulin
+                        )
+                    }
                 }
 
-                SwipeToDismiss(
-                    state = dismissState,
-                    modifier = Modifier,
-                    directions = setOf(DismissDirection.EndToStart),
-                    dismissThresholds = { FractionalThreshold(0.3f) },
-                    background = {}
-                ) {
-
-                    InsulinCard(
-                        modifier = Modifier
-                            .clickable { editInsulin(insulin.id) },
-                        insulin = insulin
-                    )
-                }
             }
         }
     }
-
 }
