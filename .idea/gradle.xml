@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/features/onboarding" />
             <option value="$PROJECT_DIR$/features/recordglucose" />
             <option value="$PROJECT_DIR$/features/recordinsulin" />
+            <option value="$PROJECT_DIR$/features/records" />
             <option value="$PROJECT_DIR$/features/settings" />
           </set>
         </option>

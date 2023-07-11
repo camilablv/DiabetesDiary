@@ -102,4 +102,10 @@ class NetworkClient @Inject constructor(
             ).execute()
         }
     }
+
+    suspend fun insulinRecords(cursor: String, limit: Int): Result<InsulinRecordsQuery.Data> {
+        return errorHandler.withErrorHandler {
+            return@withErrorHandler apolloClient.query(InsulinRecordsQuery(cursor, limit)).execute()
+        }
+    }
 }

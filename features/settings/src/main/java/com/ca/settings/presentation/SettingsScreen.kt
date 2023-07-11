@@ -11,9 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.AddInsulinDialog
-import com.ca.designsystem.components.GlucoseUnitsRadioButtons
-import com.ca.designsystem.components.InsulinCard
+import com.ca.designsystem.components.*
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
 import com.ca.settings.presentation.components.SettingsSectionCard
@@ -27,11 +25,7 @@ fun SettingsScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar {
-                Text(text = "Settings")
-            }
-        }
+        topBar = { MainTopBar(title = "Settings") }
     ) { paddingValues ->
 
         AddInsulinDialog(

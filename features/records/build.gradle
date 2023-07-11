@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ca.home'
+    namespace 'com.ca.records'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
@@ -38,11 +38,20 @@ android {
 }
 
 dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
     implementation project(":core:designsystem")
-    implementation project(":features:settings")
-    implementation project(":features:recordinsulin")
-    implementation project(":features:recordglucose")
-    implementation project(":features:records")
+    implementation project(":core:model")
+    implementation project(":core:network")
+    implementation project(":core:datastore")
+    implementation project(":core:common")
+    implementation project(":core:schema")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -62,9 +71,14 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
+    implementation composeDependencies.material3
 
     // Hilt
     implementation hiltDependencies.hilt
     implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
+
+    //Network
+    implementation network.apolloRuntime
 }

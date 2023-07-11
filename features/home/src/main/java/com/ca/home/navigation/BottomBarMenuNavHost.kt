@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ca.home.presentation.HomeScreen
+import com.ca.records.presentation.RecordsScreen
 import com.ca.settings.presentation.SettingsScreen
 
 @Composable
@@ -22,7 +23,7 @@ fun BottomBarMenuNavHost(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Route.Home.route,
+            startDestination = Route.Records.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Route.Home.route) {
@@ -33,6 +34,9 @@ fun BottomBarMenuNavHost(
             }
             composable(Route.Settings.route) {
                 SettingsScreen()
+            }
+            composable(Route.Records.route) {
+                RecordsScreen()
             }
         }
     }
