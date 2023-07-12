@@ -33,18 +33,12 @@ fun RecordsScreen(
     val pagerState = rememberPagerState()
     val scaffoldState = rememberScaffoldState()
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { MainTopBar(title = "Records") }
-    ) { paddingValues ->
-        RecordsPager(
-            modifier = Modifier
-                .padding(paddingValues),
-            pagerState = pagerState,
-            viewState = viewState,
-            scope = scope
-        )
-    }
+    RecordsPager(
+        modifier = Modifier,
+        pagerState = pagerState,
+        viewState = viewState,
+        scope = scope
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)

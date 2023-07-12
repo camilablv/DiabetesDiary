@@ -24,52 +24,45 @@ fun SettingsScreen(
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { MainTopBar(title = "Settings") }
-    ) { paddingValues ->
+    AddInsulinDialog(
+        show = viewState.showAddInsulinDialog,
+        add = { name, color, dose -> viewModel.addInsulin(name, color, dose) },
+        onDismiss = { viewModel.setShowAddInsulinDialog(false) }
+    )
 
-        AddInsulinDialog(
-            show = viewState.showAddInsulinDialog,
-            add = { name, color, dose -> viewModel.addInsulin(name, color, dose) },
-            onDismiss = { viewModel.setShowAddInsulinDialog(false) }
-        )
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = PaddingValues(16.dp)
+    ) {
 
-        LazyColumn(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(16.dp)
-        ) {
-
-            item {
-                SettingsSectionCard(
+        item {
+            SettingsSectionCard(
+                modifier = Modifier,
+                sectionTitle = "Choose glucose unit"
+            ) {
+                GlucoseUnitsRadioButtons(
                     modifier = Modifier,
-                    sectionTitle = "Choose glucose unit"
-                ) {
-                    GlucoseUnitsRadioButtons(
-                        modifier = Modifier,
-                        defaultUnit = viewState.glucoseUnits,
-                        onSelect = { viewModel.setGlucoseUnit(it) }
-                    )
-                }
-            }
-
-            item {
-                InsulinSection(
-                    modifier = Modifier,
-                    insulins = viewState.insulins,
-                    addInsulin = {
-                        viewModel.setShowAddInsulinDialog(true)
-                    },
-                    deleteInsulin = { viewModel.deleteInsulin(it) },
-                    editInsulin = {}
+                    defaultUnit = viewState.glucoseUnits,
+                    onSelect = { viewModel.setGlucoseUnit(it) }
                 )
             }
-
         }
+
+        item {
+            InsulinSection(
+                modifier = Modifier,
+                insulins = viewState.insulins,
+                addInsulin = {
+                    viewModel.setShowAddInsulinDialog(true)
+                },
+                deleteInsulin = { viewModel.deleteInsulin(it) },
+                editInsulin = {}
+            )
+        }
+
     }
 }
 

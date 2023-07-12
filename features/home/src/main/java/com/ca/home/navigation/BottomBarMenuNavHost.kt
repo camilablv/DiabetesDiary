@@ -9,11 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ca.designsystem.components.AddRecordActionButton
+import com.ca.designsystem.components.MainTopBar
+import com.ca.designsystem.components.multifab.MultiFloatingActionButton
+import com.ca.designsystem.components.multifab.RecordMenuItem
 import com.ca.home.presentation.HomeScreen
 import com.ca.records.presentation.RecordsScreen
 import com.ca.settings.presentation.SettingsScreen
-
 
 @Composable
 fun BottomBarMenuNavHost(
@@ -21,13 +22,20 @@ fun BottomBarMenuNavHost(
     navigateToRecordGlucoseScreen: () -> Unit,
     navigateToRecordInsulinScreen: () -> Unit
 ) {
+
     Scaffold(
+        topBar = { MainTopBar(title = "Diabetes Diary") },
         bottomBar = { BottomBar(navController = navController) },
         floatingActionButton = {
-            AddRecordActionButton(
-                navigateToRecordGlucoseScreen = navigateToRecordGlucoseScreen,
-                navigateToRecordInsulinScreen = navigateToRecordInsulinScreen
-            )
+               MultiFloatingActionButton(
+                   modifier = Modifier,
+                   onMenuItemClicked = {
+                       when(it) {
+                           RecordMenuItem.Insulin -> { navigateToRecordInsulinScreen() }
+                           RecordMenuItem.Glucose -> { navigateToRecordGlucoseScreen() }
+                       }
+                   }
+               )
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.End
