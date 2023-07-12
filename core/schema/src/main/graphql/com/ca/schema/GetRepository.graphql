@@ -73,11 +73,16 @@ mutation RecordGlucose($measuredAt: NaiveDateTime!, $notes: String!, $measuringM
     }
 }
 
-query InsulinRecords($cursor: String!, $limit: Int!) {
+query InsulinRecords($cursor: String, $limit: Int!) {
     records: insulinRecords(cursor: $cursor, limit: $limit) {
         cursor
         id
-        insulinId
+        insulin {
+            id
+            name
+            color
+            defaultDose
+        }
         notes
         takenAt
         units

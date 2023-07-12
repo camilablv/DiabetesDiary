@@ -1344,6 +1344,22 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
+              "name": "insulin",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Insulin",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
               "name": "insulinId",
               "type": {
                 "kind": "NON_NULL",

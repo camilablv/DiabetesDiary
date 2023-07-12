@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecordsViewModel @Inject constructor(
-    val repository: RecordsRepository
+    private val repository: RecordsRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(RecordsViewState())
@@ -21,7 +21,7 @@ class RecordsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.insulinRecords("", 20)?.let { list ->
+            repository.insulinRecords(null, 20)?.let { list ->
                 _viewState.update { it.copy(insulinRecords = list) }
             }
         }

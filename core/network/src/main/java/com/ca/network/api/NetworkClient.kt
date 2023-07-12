@@ -103,9 +103,10 @@ class NetworkClient @Inject constructor(
         }
     }
 
-    suspend fun insulinRecords(cursor: String, limit: Int): Result<InsulinRecordsQuery.Data> {
+    suspend fun insulinRecords(cursor: String?, limit: Int): Result<InsulinRecordsQuery.Data> {
+        val optional = com.apollographql.apollo3.api.Optional.present(cursor)
         return errorHandler.withErrorHandler {
-            return@withErrorHandler apolloClient.query(InsulinRecordsQuery(cursor, limit)).execute()
+            return@withErrorHandler apolloClient.query(InsulinRecordsQuery(optional, limit)).execute()
         }
     }
 }

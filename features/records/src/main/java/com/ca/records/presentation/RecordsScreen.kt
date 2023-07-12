@@ -59,31 +59,16 @@ fun RecordsPager(
         modifier = modifier
             .fillMaxSize()
     ) {
-        TabRow(
-            selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier
-        ) {
-            pages.forEachIndexed { index, item ->
-                Tab(
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        scope.launch { pagerState.animateScrollToPage(index) }
-                    },
-                    text = {
-                        Text(
-                            text = item.text,
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                )
-            }
-        }
+        Tabs(
+            pagerState = pagerState,
+            onTabClick = { scope.launch { pagerState.animateScrollToPage(it) } }
+        )
 
         HorizontalPager(
             state = pagerState,
             pageCount = pages.size
         ) {
-            when(pages[it]) {
+            when (pages[it]) {
                 Page.InsulinRecords -> {
                     InsulinRecordsPage(records = viewState.insulinRecords)
                 }
@@ -94,4 +79,30 @@ fun RecordsPager(
         }
     }
 
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun Tabs(
+    pagerState: PagerState,
+    onTabClick: (Int) -> Unit
+) {
+    TabRow(
+        selectedTabIndex = pagerState.currentPage,
+        modifier = Modifier,
+        backgroundColor = Theme.colors.background
+    ) {
+        pages.forEachIndexed { index, item ->
+            Tab(
+                selected = pagerState.currentPage == index,
+                onClick = { onTabClick(index) },
+                text = {
+                    Text(
+                        text = item.text,
+                        style = Theme.typography.bodyLarge
+                    )
+                }
+            )
+        }
+    }
 }

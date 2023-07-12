@@ -26,12 +26,15 @@ fun InsulinRecord(record: InsulinRecord) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(24.dp)
                     .background(
                         colorFromHex(record.insulin.color),
                         RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
                     )
             )
-            Row {
+            Row(
+
+            ) {
                 Text(text = record.dateTime.time())
                 Text(text = record.insulin.name)
                 Text(text = record.units.toString())

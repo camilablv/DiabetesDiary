@@ -12,12 +12,9 @@ class RecordsRepositoryImpl @Inject constructor(
     private val settingsDataStore: SettingsDataStore
 ) : RecordsRepository {
 
-    override suspend fun insulinRecords(cursor: String, limit: Int): List<InsulinRecord?>? {
-        val insulins = settingsDataStore.insulins()
+    override suspend fun insulinRecords(cursor: String?, limit: Int): List<InsulinRecord?>? {
         return networkClient.insulinRecords(cursor, limit).fold(
-            onSuccess = {
-                    data -> data.records(insulins)
-                        },
+            onSuccess = { data -> data.records() },
             onFailure = {
                 null
             }

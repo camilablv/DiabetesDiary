@@ -18,29 +18,31 @@ fun BottomBar(navController: NavHostController) {
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
-        bottomNavigationItems.forEachIndexed { index, screen ->
-            if (index == 2) {
+        bottomNavigationItems.forEach { screen ->
+            if (screen == BottomMenuItem.ActionButton) {
                 BottomNavigationItem(
                     selected = false,
                     onClick = {},
                     icon = {},
                     enabled = false
                 )
-            }
-            BottomNavigationItem(
-                icon = { Icon(imageVector = screen.icon, contentDescription = null) },
-                label = { Text(text = screen.text) },
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = {
-                    navController.navigate(screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            } else {
+                BottomNavigationItem(
+                    icon = { Icon(imageVector = screen.icon, contentDescription = null) },
+                    label = { Text(text = screen.title) },
+                    selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+            }
+
         }
     }
 }

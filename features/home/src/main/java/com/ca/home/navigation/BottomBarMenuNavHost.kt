@@ -1,18 +1,19 @@
 package com.ca.home.navigation
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.FabPosition
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ca.designsystem.components.AddRecordActionButton
 import com.ca.home.presentation.HomeScreen
 import com.ca.records.presentation.RecordsScreen
 import com.ca.settings.presentation.SettingsScreen
+
 
 @Composable
 fun BottomBarMenuNavHost(
@@ -23,12 +24,13 @@ fun BottomBarMenuNavHost(
     Scaffold(
         bottomBar = { BottomBar(navController = navController) },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "")
-            }
+            AddRecordActionButton(
+                navigateToRecordGlucoseScreen = navigateToRecordGlucoseScreen,
+                navigateToRecordInsulinScreen = navigateToRecordInsulinScreen
+            )
         },
         isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center
+        floatingActionButtonPosition = FabPosition.End
     ) { innerPadding ->
         NavHost(
             navController = navController,
