@@ -1,4 +1,4 @@
-package com.ca.records.presentation.pages
+package com.ca.records.presentation
 
 sealed class Page(val text: String) {
     object InsulinRecords : Page("Insulin")

@@ -58,6 +58,7 @@ dependencies {
     implementation androidxDependencies.lifecycleRuntime
     implementation androidxDependencies.viewModel
     implementation androidxDependencies.dataStore
+    implementation androidxDependencies.paging
 
     // Jetpack Compose
     implementation composeDependencies.ui
@@ -72,7 +73,7 @@ dependencies {
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
     implementation composeDependencies.lifecycleRuntime
-    implementation composeDependencies.material3
+    implementation composeDependencies.paging
 
     // Hilt
     implementation hiltDependencies.hilt

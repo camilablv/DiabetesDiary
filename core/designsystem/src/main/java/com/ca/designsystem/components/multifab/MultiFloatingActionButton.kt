@@ -16,29 +16,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
 
-sealed class MultiFabState {
-    object Collapsed : MultiFabState()
-    object Expanded : MultiFabState()
 
-    fun isExpanded() = this == Expanded
-
-    fun toggleValue() = if (isExpanded()) Collapsed else Expanded
-}
-
-@Composable
-fun rememberMultiFabState() = remember {
-    mutableStateOf<MultiFabState>(MultiFabState.Collapsed)
-}
 
 @Composable
 fun MultiFloatingActionButton(
     modifier: Modifier,
     state: MutableState<MultiFabState> = rememberMultiFabState(),
-    onMenuItemClicked: (RecordMenuItem) -> Unit
+    onMenuItemClicked: (MultiFabItem) -> Unit
 ) {
     val rotation by animateFloatAsState(
         if (state.value == MultiFabState.Expanded) 45f else 0f
@@ -46,7 +36,8 @@ fun MultiFloatingActionButton(
 
     Column(
         modifier = Modifier
-
+            .onFocusChanged { if (!it.isFocused) state.value = MultiFabState.Collapsed },
+        horizontalAlignment = Alignment.End
     ) {
         FabMenu(
             modifier = Modifier,
@@ -78,9 +69,9 @@ fun MultiFloatingActionButton(
 @Composable
 fun FabMenu(
     modifier: Modifier,
-    items: List<RecordMenuItem>,
+    items: List<MultiFabItem>,
     state: MutableState<MultiFabState>,
-    onMenuItemClicked: (RecordMenuItem) -> Unit
+    onMenuItemClicked: (MultiFabItem) -> Unit
 ) {
     AnimatedVisibility(
         visible = state.value.isExpanded(),
@@ -95,10 +86,9 @@ fun FabMenu(
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(
-                items = items,
-                key = { it.id }
+                items = items
             ) {
-                FabMenuButton(
+                FabMenuItem(
                     item = it,
                     onClick = {
                         onMenuItemClicked(it)
@@ -111,8 +101,8 @@ fun FabMenu(
 }
 
 @Composable
-private fun FabMenuButton(
-    item: RecordMenuItem,
+private fun FabMenuItem(
+    item: MultiFabItem,
     onClick: () -> Unit
 ) {
     Row(
@@ -122,7 +112,10 @@ private fun FabMenuButton(
         verticalAlignment = Alignment.CenterVertically
     ) {
         item.label?.let {
-            Text(text = it)
+            Text(
+                text = it,
+                style = Theme.typography.bodyLarge
+            )
         }
 
         Button(

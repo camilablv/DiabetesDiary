@@ -3,50 +3,38 @@ package com.ca.records.presentation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.MainTopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.records.presentation.pages.GlucoseRecordsPage
-import com.ca.records.presentation.pages.InsulinRecordsPage
-import com.ca.records.presentation.pages.Page
-import com.ca.records.presentation.pages.pages
+import com.ca.records.glucose.presentation.GlucoseRecordsPage
+import com.ca.records.insulin.presentation.InsulinRecordsPage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RecordsScreen(
-    viewModel: RecordsViewModel = hiltViewModel()
-) {
+fun RecordsScreen() {
     val scope = rememberCoroutineScope()
-    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState()
     val scaffoldState = rememberScaffoldState()
 
     RecordsPager(
         modifier = Modifier,
         pagerState = pagerState,
-        viewState = viewState,
         scope = scope
     )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RecordsPager(
+private fun RecordsPager(
     modifier: Modifier,
     pagerState: PagerState,
-    viewState: RecordsViewState,
     scope: CoroutineScope
 ) {
     Column(
@@ -64,7 +52,7 @@ fun RecordsPager(
         ) {
             when (pages[it]) {
                 Page.InsulinRecords -> {
-                    InsulinRecordsPage(records = viewState.insulinRecords)
+                    InsulinRecordsPage()
                 }
                 Page.GlucoseRecords -> {
                     GlucoseRecordsPage()
@@ -72,7 +60,6 @@ fun RecordsPager(
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)

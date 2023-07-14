@@ -27,17 +27,16 @@ fun InsulinRecordsQuery.Insulin.insulin(): Insulin {
     )
 }
 
-fun InsulinRecordsQuery.Data.records(): List<InsulinRecord?>? {
-    return records?.map { record ->
-        record?.let {
-            InsulinRecord(
-                id = it.id,
-                insulin = it.insulin.insulin(),
-                dateTime = LocalDateTime.parse(it.takenAt.toString()),
-                units = it.units,
-                note = it.notes
-            )
-        }
+fun InsulinRecordsQuery.Data.records(): List<InsulinRecord> {
+    return records.map {
+        InsulinRecord(
+            cursor = it.cursor,
+            id = it.id,
+            insulin = it.insulin.insulin(),
+            dateTime = LocalDateTime.parse(it.takenAt.toString()),
+            units = it.units,
+            note = it.notes
+        )
 
     }
 }
