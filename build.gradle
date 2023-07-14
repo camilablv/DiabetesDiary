@@ -7,6 +7,7 @@ buildscript {
         hiltVersion = "2.44"
         composeNavigationVersion = "2.5.3"
         lifecycleVersion = "2.5.0"
+        pagingVersion = "3.1.1"
 
         gradleDependencies = [
                 compileSdk: 33,
@@ -18,7 +19,8 @@ buildscript {
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
                 viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0",
                 dataStore        : "androidx.datastore:datastore:1.0.0",
-                splashScreen     : "androidx.core:core-splashscreen:1.0.0"
+                splashScreen     : "androidx.core:core-splashscreen:1.0.0",
+                paging           : "androidx.paging:paging-runtime:$pagingVersion"
         ]
         composeDependencies = [
                 ui               : "androidx.compose.ui:ui:$composeVersion",
@@ -33,7 +35,8 @@ buildscript {
                 navigation       : "androidx.navigation:navigation-compose:$composeNavigationVersion",
                 constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1",
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.0",
-                material3        : "androidx.compose.material3:material3:1.1.0"
+                material3        : "androidx.compose.material3:material3:1.1.0",
+                paging           : "androidx.paging:paging-compose:3.2.0-rc01"
         ]
         hiltDependencies = [
                 hilt             : "com.google.dagger:hilt-android:$hiltVersion",
@@ -69,7 +72,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.6'
     }
 }
 

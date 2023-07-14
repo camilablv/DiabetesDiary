@@ -12,13 +12,17 @@ fun NavController.navigateToRecordInsulin() {
     navigate(Route.Record.route)
 }
 
-fun NavGraphBuilder.insulinGraph() {
+fun NavGraphBuilder.insulinGraph(
+    navigateBack: () -> Unit
+) {
     navigation(
         startDestination = Route.Record.route,
         route = insulinGraphRoute
     ) {
         composable(Route.Record.route) {
-            RecordInsulinScreen()
+            RecordInsulinScreen(
+                onBackClick = { navigateBack() }
+            )
         }
     }
 }

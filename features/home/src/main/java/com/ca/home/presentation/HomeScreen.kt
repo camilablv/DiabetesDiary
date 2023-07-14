@@ -1,13 +1,18 @@
 package com.ca.home.presentation
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.ca.designsystem.components.multifab.MultiFloatingActionButton
+import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.theme.Theme
 
 @Composable
@@ -16,11 +21,24 @@ fun HomeScreen(
     navigateToRecordInsulinScreen: () -> Unit
 ) {
 
-    Scaffold {
+    Scaffold(
+        floatingActionButton = {
+            MultiFloatingActionButton(
+                modifier = Modifier,
+                onMenuItemClicked = {
+                    when(it) {
+                        MultiFabItem.RecordInsulin -> { navigateToRecordInsulinScreen() }
+                        MultiFabItem.RecordGlucose -> { navigateToRecordGlucoseScreen() }
+                    }
+                }
+            )
+        },
+        floatingActionButtonPosition = FabPosition.End
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .padding(it)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(paddingValues),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -30,12 +48,7 @@ fun HomeScreen(
                 modifier = Modifier,
                 color = Color.Black
             )
-            Button(onClick = { navigateToRecordGlucoseScreen() }) {
-                Text("Record Glucose")
-            }
-            Button(onClick = { navigateToRecordInsulinScreen() }) {
-                Text("Record Insulin")
-            }
         }
     }
+
 }

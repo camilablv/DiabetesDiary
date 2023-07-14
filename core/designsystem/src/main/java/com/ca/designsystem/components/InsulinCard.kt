@@ -16,10 +16,11 @@ import com.ca.model.Insulin
 
 @Composable
 fun InsulinCard(
+    modifier: Modifier,
     insulin: Insulin
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .height(72.dp)
             .fillMaxWidth(),
         shape = Theme.shapes.large,

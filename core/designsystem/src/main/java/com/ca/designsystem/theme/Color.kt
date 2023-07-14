@@ -24,11 +24,12 @@ val DarkColors = DiaryColors(
     secondary = DeepPurple200,
     surface = Grey800,
     error = DarkRed,
-    onBackground = Grey50,
-    onPrimary = Grey50,
-    onSecondary = Grey800,
-    onSurface = Grey50,
-    onError = Grey50
+    onBackground = Black,
+    onPrimary = Color.White,
+    onSecondary = Black,
+    onSurface = Black,
+    onError = Color.White
+
 )
 
 val LightColors = DiaryColors(
@@ -38,10 +39,10 @@ val LightColors = DiaryColors(
     surface = Color.White,
     error = Red,
     onBackground = Black,
-    onPrimary = Color.White,
-    onSecondary = Black,
+    onPrimary = Grey50,
+    onSecondary = Grey50,
     onSurface = Black,
-    onError = Color.White
+    onError = Grey50
 )
 
 @Immutable
