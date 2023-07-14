@@ -42,6 +42,7 @@ dependencies {
     implementation project(':core:domain')
     implementation project(':core:repository')
     implementation project(':core:model')
+    implementation project(":core:network")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -69,4 +70,7 @@ dependencies {
     implementation hiltDependencies.hilt
     implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
+
+    //Network
+    implementation network.apolloRuntime
 }

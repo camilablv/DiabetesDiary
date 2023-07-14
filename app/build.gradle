@@ -60,6 +60,7 @@ dependencies {
     implementation project(":core:datastore")
     implementation project(":core:authentication")
     implementation project(":core:network")
+    implementation project(":core:schema")
     implementation project(":features:onboarding")
 
     // Android X
@@ -95,4 +96,7 @@ dependencies {
 
     // Protobuf
     implementation protobufDependencies.protobuf
+
+    //Network
+    implementation network.apolloRuntime
 }

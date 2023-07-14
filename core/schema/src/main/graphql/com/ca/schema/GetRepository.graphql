@@ -38,3 +38,53 @@ mutation DeleteInsulin($id: ID!) {
         color
     }
 }
+
+mutation CompleteOnBoarding($completedAt: NaiveDateTime!) {
+    user: completeOnboarding(completedAt: $completedAt) {
+        email
+        onboardingCompletedAt
+    }
+}
+
+query CurrentUser {
+    user: currentUser {
+        email
+        onboardingCompletedAt
+    }
+}
+
+mutation RecordInsulin($id: ID!, $notes: String!, $dateTime: NaiveDateTime!, $dose: Float!) {
+    record: recordInsulin(input: {insulinId: $id, notes: $notes, takenAt: $dateTime, units: $dose}) {
+        id
+        insulinId
+        notes
+        takenAt
+        units
+    }
+}
+
+mutation RecordGlucose($measuredAt: NaiveDateTime!, $notes: String!, $measuringMark: GlucoseRecordStatus!, $units: Float!) {
+    record: recordGlucose(input: {measuredAt: $measuredAt, notes: $notes status: $measuringMark, units: $units}) {
+        id
+        measuredAt
+        notes
+        status
+        units
+    }
+}
+
+query InsulinRecords($cursor: String, $limit: Int!) {
+    records: insulinRecords(cursor: $cursor, limit: $limit) {
+        cursor
+        id
+        insulin {
+            id
+            name
+            color
+            defaultDose
+        }
+        notes
+        takenAt
+        units
+    }
+}

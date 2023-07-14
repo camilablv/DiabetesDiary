@@ -6,7 +6,7 @@ import com.ca.domain.AddInsulinUseCase
 import com.ca.domain.DeleteInsulinUseCase
 import com.ca.domain.UpdateGlucoseUnitUseCase
 import com.ca.model.GlucoseUnits
-import com.ca.model.Insulin
+import com.ca.onboarding.domain.repository.OnBoardingRepository
 import com.ca.settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,8 @@ class OnBoardingViewModel @Inject constructor(
     private val updateGlucoseUnitUseCase: UpdateGlucoseUnitUseCase,
     private val addInsulinUseCase: AddInsulinUseCase,
     private val deleteInsulinUseCase: DeleteInsulinUseCase,
-    private val repository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val onBoardingRepository: OnBoardingRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(OnBoardingViewState())
@@ -28,14 +29,15 @@ class OnBoardingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _viewState.update { it.copy(insulins = repository.insulins()) }
+            _viewState.update { it.copy(insulins = settingsRepository.insulins()) }
         }
     }
 
     fun updateGlucoseUnits(units: GlucoseUnits) {
         viewModelScope.launch {
-            val unit = updateGlucoseUnitUseCase.invoke(units)
-            _viewState.update { _viewState.value.copy(units = unit) }
+            updateGlucoseUnitUseCase.invoke(units)?.let { units ->
+                _viewState.update { _viewState.value.copy(units = units) }
+            }
         }
     }
 
@@ -50,6 +52,12 @@ class OnBoardingViewModel @Inject constructor(
         viewModelScope.launch {
             val insulins = deleteInsulinUseCase.invoke(id)
             _viewState.update { _viewState.value.copy(insulins = insulins) }
+        }
+    }
+
+    fun completeOnBoarding() {
+        viewModelScope.launch {
+            onBoardingRepository.onBoardingCompleted()
         }
     }
 }

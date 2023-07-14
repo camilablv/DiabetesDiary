@@ -6,7 +6,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 
 @Composable
 fun DiaryTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) DarkColors else LightColors

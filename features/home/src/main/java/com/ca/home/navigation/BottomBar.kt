@@ -1,25 +1,27 @@
 package com.ca.home.navigation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.ca.designsystem.theme.Theme
 
 @Composable
 fun BottomBar(navController: NavHostController) {
-    BottomNavigation {
+    BottomAppBar(
+        backgroundColor = Theme.colors.background,
+        cutoutShape = CircleShape
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         bottomNavigationItems.forEach { screen ->
             BottomNavigationItem(
                 icon = { Icon(imageVector = screen.icon, contentDescription = null) },
-                label = { Text(text = screen.text) },
+                label = { Text(text = screen.title) },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
                     navController.navigate(screen.route) {
@@ -31,6 +33,7 @@ fun BottomBar(navController: NavHostController) {
                     }
                 }
             )
+
         }
     }
 }

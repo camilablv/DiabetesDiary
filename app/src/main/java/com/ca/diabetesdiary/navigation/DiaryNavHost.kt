@@ -2,6 +2,7 @@ package com.ca.diabetesdiary.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +13,10 @@ import com.ca.recordglucose.navigation.glucoseGraph
 import com.ca.recordglucose.navigation.navigateToRecordGlucose
 import com.ca.recordinsulin.navigation.insulinGraph
 import com.ca.recordinsulin.navigation.navigateToRecordInsulin
+
+fun NavController.navigateBack() {
+    popBackStack()
+}
 
 @Composable
 fun MainNavHost(
@@ -42,9 +47,13 @@ fun MainNavHost(
             )
         }
 
-        glucoseGraph()
+        glucoseGraph(
+            navigateBack = { navHostController.navigateBack() }
+        )
 
-        insulinGraph()
+        insulinGraph(
+            navigateBack = { navHostController.navigateBack() }
+        )
 
         authNavGraph(
             route = Route.Auth.route,

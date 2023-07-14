@@ -117,7 +117,10 @@ fun OnBoardingPager(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            toHome = toHome,
+            toHome = {
+                viewModel.completeOnBoarding()
+                toHome()
+             },
             onNext = {
                 scope.launch {
                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
