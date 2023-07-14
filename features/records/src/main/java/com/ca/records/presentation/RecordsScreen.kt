@@ -48,7 +48,8 @@ private fun RecordsPager(
 
         HorizontalPager(
             state = pagerState,
-            pageCount = pages.size
+            pageCount = pages.size,
+            beyondBoundsPageCount = pages.size
         ) {
             when (pages[it]) {
                 Page.InsulinRecords -> {

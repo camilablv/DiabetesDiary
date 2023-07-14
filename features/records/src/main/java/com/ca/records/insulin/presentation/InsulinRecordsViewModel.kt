@@ -19,7 +19,7 @@ class InsulinRecordsViewModel @Inject constructor(
 
     fun insulinRecords(): Flow<PagingData<InsulinRecord>> {
         return runBlocking {
-            repository.records(null, 2).cachedIn(viewModelScope)
+            repository.records(null, 20).cachedIn(viewModelScope)
         }
     }
 
