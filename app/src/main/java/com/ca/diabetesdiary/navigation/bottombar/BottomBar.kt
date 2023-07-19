@@ -1,4 +1,4 @@
-package com.ca.home.navigation
+package com.ca.diabetesdiary.navigation.bottombar
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -31,7 +31,9 @@ fun BottomBar(navController: NavHostController) {
                         launchSingleTop = true
                         restoreState = true
                     }
-                }
+                },
+                selectedContentColor = Theme.colors.primary,
+                unselectedContentColor = Theme.colors.onBackground
             )
 
         }

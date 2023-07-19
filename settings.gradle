@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DiabetesDiary"
 include ':app'
-include ':designsystem'
 include ':core:network'
 include ':core:designsystem'
 include ':features:recordinsulin'

@@ -1,4 +1,4 @@
-package com.ca.home.navigation
+package com.ca.diabetesdiary.navigation.bottombar
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -26,22 +26,22 @@ fun BottomBarMenuNavHost(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Route.Home.route,
+            startDestination = BottomBarRoute.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Route.Home.route) {
+            composable(BottomBarRoute.Home.route) {
                 HomeScreen(
                     navigateToRecordGlucoseScreen = navigateToRecordGlucoseScreen,
                     navigateToRecordInsulinScreen = navigateToRecordInsulinScreen
                 )
             }
-            composable(Route.Settings.route) {
+            composable(BottomBarRoute.Settings.route) {
                 SettingsScreen()
             }
-            composable(Route.Records.route) {
+            composable(BottomBarRoute.Records.route) {
                 RecordsScreen()
             }
-            composable(Route.Reminder.route) {
+            composable(BottomBarRoute.Reminder.route) {
                 RecordInsulinReminderScreen()
             }
         }

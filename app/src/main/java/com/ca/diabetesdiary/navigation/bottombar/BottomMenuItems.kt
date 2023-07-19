@@ -1,4 +1,4 @@
-package com.ca.home.navigation
+package com.ca.diabetesdiary.navigation.bottombar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -8,10 +8,10 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomMenuItem(val route: String, val title: String, val icon: ImageVector) {
-    object Home : BottomMenuItem(Route.Home.route, "Home", Icons.Filled.Home)
-    object Reminder : BottomMenuItem(Route.Reminder.route, "Reminder", Icons.Filled.Notifications)
-    object Records : BottomMenuItem(Route.Records.route, "Records", Icons.Filled.List)
-    object Settings : BottomMenuItem(Route.Settings.route, "Settings", Icons.Filled.Settings)
+    object Home : BottomMenuItem(BottomBarRoute.Home.route, "Home", Icons.Filled.Home)
+    object Reminder : BottomMenuItem(BottomBarRoute.Reminder.route, "Reminder", Icons.Filled.Notifications)
+    object Records : BottomMenuItem(BottomBarRoute.Records.route, "Records", Icons.Filled.List)
+    object Settings : BottomMenuItem(BottomBarRoute.Settings.route, "Settings", Icons.Filled.Settings)
 }
 
 internal val bottomNavigationItems = listOf(

@@ -53,15 +53,18 @@ android {
 dependencies {
 
     implementation project(":core:designsystem")
-    implementation project(":features:home")
-    implementation project(":features:recordglucose")
-    implementation project(":features:recordinsulin")
-    implementation project(":features:authentication")
     implementation project(":core:datastore")
     implementation project(":core:authentication")
     implementation project(":core:network")
     implementation project(":core:schema")
+    implementation project(":features:home")
+    implementation project(":features:recordglucose")
+    implementation project(":features:recordinsulin")
+    implementation project(":features:authentication")
     implementation project(":features:onboarding")
+    implementation project(":features:settings")
+    implementation project(":features:records")
+    implementation project(":features:reminders")
 
     // Android X
     implementation androidxDependencies.coreKtx
