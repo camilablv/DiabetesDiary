@@ -18,7 +18,8 @@ fun DiaryApp(
     val appState = rememberDiaryAppState()
 
     Scaffold(
-        scaffoldState = appState.scaffoldState
+        scaffoldState = appState.scaffoldState,
+        snackbarHost = { appState.scaffoldState.snackbarHostState }
     ) { contentPadding ->
         MainNavHost(
             navHostController = appState.navController,
