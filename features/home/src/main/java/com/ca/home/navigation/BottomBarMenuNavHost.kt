@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ca.designsystem.components.MainTopBar
 import com.ca.home.presentation.HomeScreen
 import com.ca.records.presentation.RecordsScreen
+import com.ca.reminders.recordinsulineminder.RecordInsulinReminderScreen
 import com.ca.settings.presentation.SettingsScreen
 
 @Composable
@@ -39,6 +40,9 @@ fun BottomBarMenuNavHost(
             }
             composable(Route.Records.route) {
                 RecordsScreen()
+            }
+            composable(Route.Reminder.route) {
+                RecordInsulinReminderScreen()
             }
         }
     }
