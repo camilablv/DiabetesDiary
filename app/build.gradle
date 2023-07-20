@@ -57,6 +57,7 @@ dependencies {
     implementation project(":core:authentication")
     implementation project(":core:network")
     implementation project(":core:schema")
+    implementation project(":core:alarmmanager")
     implementation project(":features:home")
     implementation project(":features:recordglucose")
     implementation project(":features:recordinsulin")

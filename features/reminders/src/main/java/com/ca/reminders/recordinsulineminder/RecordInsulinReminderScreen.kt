@@ -86,7 +86,7 @@ fun RecordInsulinReminderScreen(
         }
 
         Button(
-            onClick = {  },
+            onClick = { viewModel.setSchedule() },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Theme.colors.secondary
             ),
