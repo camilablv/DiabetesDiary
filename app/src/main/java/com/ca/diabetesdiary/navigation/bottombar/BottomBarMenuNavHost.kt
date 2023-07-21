@@ -10,29 +10,32 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ca.designsystem.components.MainTopBar
 import com.ca.home.presentation.HomeScreen
+import com.ca.insulinreminder.navigation.navigateToInsulinReminder
+import com.ca.recordglucose.navigation.navigateToRecordGlucose
+import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 import com.ca.records.presentation.RecordsScreen
-import com.ca.reminders.recordinsulineminder.RecordInsulinReminderScreen
+import com.ca.reminders.presentation.RemindersScreen
 import com.ca.settings.presentation.SettingsScreen
 
 @Composable
 fun BottomBarMenuNavHost(
-    navController: NavHostController = rememberNavController(),
-    navigateToRecordGlucoseScreen: () -> Unit,
-    navigateToRecordInsulinScreen: () -> Unit
+    mainNavController: NavHostController
 ) {
+    val bottomMenuNavHostController = rememberNavController()
+
     Scaffold(
         topBar = { MainTopBar(title = "Diabetes Diary") },
-        bottomBar = { BottomBar(navController = navController) },
+        bottomBar = { BottomBar(navController = bottomMenuNavHostController) },
     ) { innerPadding ->
         NavHost(
-            navController = navController,
+            navController = bottomMenuNavHostController,
             startDestination = BottomBarRoute.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomBarRoute.Home.route) {
                 HomeScreen(
-                    navigateToRecordGlucoseScreen = navigateToRecordGlucoseScreen,
-                    navigateToRecordInsulinScreen = navigateToRecordInsulinScreen
+                    navigateToRecordGlucose = { mainNavController.navigateToRecordGlucose() },
+                    navigateToRecordInsulin = { mainNavController.navigateToRecordInsulin() }
                 )
             }
             composable(BottomBarRoute.Settings.route) {
@@ -42,7 +45,9 @@ fun BottomBarMenuNavHost(
                 RecordsScreen()
             }
             composable(BottomBarRoute.Reminder.route) {
-                RecordInsulinReminderScreen()
+                RemindersScreen(
+                    navigateToAddInsulinReminder = { mainNavController.navigateToInsulinReminder() }
+                )
             }
         }
     }

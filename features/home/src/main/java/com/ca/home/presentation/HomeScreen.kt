@@ -17,8 +17,8 @@ import com.ca.designsystem.theme.Theme
 
 @Composable
 fun HomeScreen(
-    navigateToRecordGlucoseScreen: () -> Unit,
-    navigateToRecordInsulinScreen: () -> Unit
+    navigateToRecordGlucose: () -> Unit,
+    navigateToRecordInsulin: () -> Unit
 ) {
 
     Scaffold(
@@ -27,8 +27,8 @@ fun HomeScreen(
                 modifier = Modifier,
                 onMenuItemClicked = {
                     when(it) {
-                        MultiFabItem.RecordInsulin -> { navigateToRecordInsulinScreen() }
-                        MultiFabItem.RecordGlucose -> { navigateToRecordGlucoseScreen() }
+                        MultiFabItem.RecordInsulin -> { navigateToRecordInsulin() }
+                        MultiFabItem.RecordGlucose -> { navigateToRecordGlucose() }
                     }
                 }
             )

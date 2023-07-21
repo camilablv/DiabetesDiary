@@ -1,7 +1,7 @@
-package com.ca.reminders.recordinsulineminder.di
+package com.ca.insulinreminder.di
 
-import com.ca.reminders.recordinsulineminder.data.repository.InsulinReminderRepositoryImpl
-import com.ca.reminders.recordinsulineminder.domain.repository.InsulinReminderRepository
+import com.ca.insulinreminder.data.InsulinReminderRepositoryImpl
+import com.ca.insulinreminder.domain.InsulinReminderRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

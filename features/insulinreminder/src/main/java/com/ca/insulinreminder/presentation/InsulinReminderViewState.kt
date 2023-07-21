@@ -1,4 +1,4 @@
-package com.ca.reminders.recordinsulineminder
+package com.ca.insulinreminder.presentation
 
 import com.ca.model.Insulin
 import com.ca.model.ReminderIteration

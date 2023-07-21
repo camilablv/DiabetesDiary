@@ -1,4 +1,4 @@
-package com.ca.reminders.recordinsulineminder
+package com.ca.insulinreminder.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,8 +23,9 @@ import com.ca.designsystem.components.TimeWheelPicker
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun RecordInsulinReminderScreen(
-    viewModel: RecordInsulinReminderViewModel = hiltViewModel()
+fun InsulinReminderScreen(
+    viewModel: InsulinReminderViewModel = hiltViewModel(),
+    navigateBack: () -> Unit
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()

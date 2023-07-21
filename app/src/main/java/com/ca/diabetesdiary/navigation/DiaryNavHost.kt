@@ -8,11 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ca.authentication.navigation.authNavGraph
 import com.ca.diabetesdiary.navigation.bottombar.BottomBarMenuNavHost
+import com.ca.insulinreminder.navigation.insulinReminderGraph
 import com.ca.onboarding.presentation.OnBoardingScreen
 import com.ca.recordglucose.navigation.glucoseGraph
-import com.ca.recordglucose.navigation.navigateToRecordGlucose
 import com.ca.recordinsulin.navigation.insulinGraph
-import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 
 fun NavController.navigateBack() {
     popBackStack()
@@ -31,10 +30,7 @@ fun MainNavHost(
         modifier = modifier
     ) {
         composable(MainRoute.Home.route) {
-            BottomBarMenuNavHost(
-                navigateToRecordInsulinScreen = { navHostController.navigateToRecordInsulin() },
-                navigateToRecordGlucoseScreen = { navHostController.navigateToRecordGlucose() }
-            )
+            BottomBarMenuNavHost(navHostController)
         }
 
         composable(MainRoute.OnBoarding.route) {
@@ -63,6 +59,10 @@ fun MainNavHost(
                     popUpTo(MainRoute.Auth.route) { inclusive = true }
                 }
             }
+        )
+
+        insulinReminderGraph(
+            navigateBack = { navHostController.navigateBack() }
         )
     }
 }

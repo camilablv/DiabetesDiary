@@ -1,4 +1,4 @@
-package com.ca.records.presentation
+package com.ca.reminders.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -7,34 +7,54 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.*
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.Tabs
-import com.ca.records.glucose.presentation.GlucoseRecordsPage
-import com.ca.records.insulin.presentation.InsulinRecordsPage
+import com.ca.reminders.presentation.pages.GlucoseRemindersPage
+import com.ca.reminders.presentation.pages.InsulinRemindersPage
+import com.ca.reminders.presentation.pages.RemindersPage
+import com.ca.reminders.presentation.pages.pages
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RecordsScreen() {
+fun RemindersScreen(
+    navigateToAddInsulinReminder: () -> Unit
+) {
+
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
-    RecordsPager(
-        modifier = Modifier,
-        pagerState = pagerState,
-        scope = scope
-    )
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = { navigateToAddInsulinReminder() }) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center
+    ) { paddingValues ->
+        RemindersPager(
+            modifier = Modifier
+                .padding(paddingValues),
+            pagerState = pagerState,
+            scope = scope
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun RecordsPager(
+private fun RemindersPager(
     modifier: Modifier,
     pagerState: PagerState,
     scope: CoroutineScope
@@ -57,12 +77,12 @@ private fun RecordsPager(
             pageCount = pages.size,
             beyondBoundsPageCount = pages.size
         ) {
-            when (pages[it]) {
-                RecordsPage.InsulinRecords -> {
-                    InsulinRecordsPage()
+            when(pages[it]) {
+                RemindersPage.InsulinRecords -> {
+                    InsulinRemindersPage()
                 }
-                RecordsPage.GlucoseRecords -> {
-                    GlucoseRecordsPage()
+                RemindersPage.GlucoseRecords -> {
+                    GlucoseRemindersPage()
                 }
             }
         }
