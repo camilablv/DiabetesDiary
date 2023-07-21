@@ -38,6 +38,9 @@ dependencies {
     implementation project(":core:network")
     implementation project(":core:schema")
     implementation project(':core:model')
+    implementation project(':core:domain')
+    implementation project(":core:database")
+    implementation project(":core:alarmmanager")
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -53,4 +56,7 @@ dependencies {
 
     // Apollo
     implementation network.apolloRuntime
+
+    // Room
+    implementation roomDependencies.runtime
 }

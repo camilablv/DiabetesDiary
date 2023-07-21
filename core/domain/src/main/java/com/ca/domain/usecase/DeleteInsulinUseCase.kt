@@ -1,7 +1,7 @@
-package com.ca.domain
+package com.ca.domain.usecase
 
 import com.ca.model.Insulin
-import com.ca.settings.domain.repository.SettingsRepository
+import com.ca.domain.repository.SettingsRepository
 import javax.inject.Inject
 
 class DeleteInsulinUseCase @Inject constructor(private val repository: SettingsRepository) {

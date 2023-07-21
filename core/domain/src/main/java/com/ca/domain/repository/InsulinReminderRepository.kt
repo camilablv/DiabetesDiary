@@ -1,4 +1,4 @@
-package com.ca.insulinreminder.domain
+package com.ca.domain.repository
 
 import com.ca.database.entities.RecordInsulinReminder
 import com.ca.model.Insulin
@@ -7,7 +7,6 @@ import java.time.LocalTime
 
 interface InsulinReminderRepository {
     fun reminders(): List<RecordInsulinReminder>
-    suspend fun insulins(): List<Insulin>
     suspend fun addReminder(
         time: LocalTime,
         iteration: ReminderIteration,

@@ -2,7 +2,8 @@ package com.ca.insulinreminder.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.insulinreminder.domain.InsulinReminderRepository
+import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.SettingsRepository
 import com.ca.model.Insulin
 import com.ca.model.ReminderIteration
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InsulinReminderViewModel @Inject constructor(
-    private val repository: InsulinReminderRepository
+    private val reminderRepository: InsulinReminderRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(RecordsInsulinReminderViewState())
@@ -25,7 +27,7 @@ class InsulinReminderViewModel @Inject constructor(
 
     init {
         runBlocking {
-            repository.insulins().let { insulins ->
+            settingsRepository.insulins().let { insulins ->
                 _viewState.update { it.copy(insulins = insulins, selectedInsulin = insulins[0]) }
             }
         }
@@ -35,7 +37,7 @@ class InsulinReminderViewModel @Inject constructor(
         with(_viewState.value) {
             if (selectedInsulin != null) {
                 viewModelScope.launch {
-                    repository.addReminder(
+                    reminderRepository.addReminder(
                         time = time,
                         iteration = iteration,
                         insulin = selectedInsulin,

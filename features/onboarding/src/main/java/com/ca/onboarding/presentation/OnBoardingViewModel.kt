@@ -2,12 +2,12 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.AddInsulinUseCase
-import com.ca.domain.DeleteInsulinUseCase
-import com.ca.domain.UpdateGlucoseUnitUseCase
+import com.ca.domain.usecase.AddInsulinUseCase
+import com.ca.domain.usecase.DeleteInsulinUseCase
+import com.ca.domain.usecase.UpdateGlucoseUnitUseCase
 import com.ca.model.GlucoseUnits
 import com.ca.onboarding.domain.repository.OnBoardingRepository
-import com.ca.settings.domain.repository.SettingsRepository
+import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

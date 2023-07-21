@@ -1,4 +1,4 @@
-package com.ca.settings.domain.repository
+package com.ca.domain.repository
 
 import com.ca.model.GlucoseUnits
 import com.ca.model.Insulin
