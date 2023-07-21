@@ -42,6 +42,8 @@ dependencies {
     implementation project(":core:model")
     implementation project(":core:common")
     implementation project(":core:alarmmanager")
+    implementation project(":core:database")
+    implementation project(":core:datastore")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -68,4 +70,7 @@ dependencies {
     implementation hiltDependencies.hilt
     implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
+
+    // Room
+    implementation roomDependencies.runtime
 }

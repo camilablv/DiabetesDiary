@@ -8,6 +8,7 @@ buildscript {
         composeNavigationVersion = "2.5.3"
         lifecycleVersion = "2.5.0"
         pagingVersion = "3.1.1"
+        roomVersion = "2.5.2"
 
         gradleDependencies = [
                 compileSdk: 33,
@@ -44,13 +45,13 @@ buildscript {
                 navigationCompose: "androidx.hilt:hilt-navigation-compose:1.0.0"
         ]
         network = [
-                apolloRuntime : "com.apollographql.apollo3:apollo-runtime:$apolloVersion",
-                apolloApi     : "com.apollographql.apollo3:apollo-api:$apolloVersion"
+                apolloRuntime    : "com.apollographql.apollo3:apollo-runtime:$apolloVersion",
+                apolloApi        : "com.apollographql.apollo3:apollo-api:$apolloVersion"
         ]
         firebaseDependencies = [
-                analytics  : "com.google.firebase:firebase-analytics-ktx:21.3.0",
-                crashlytics: "com.google.firebase:firebase-crashlytics-ktx:18.3.7",
-                auth       : "com.google.firebase:firebase-auth-ktx:22.0.0"
+                analytics        : "com.google.firebase:firebase-analytics-ktx:21.3.0",
+                crashlytics      : "com.google.firebase:firebase-crashlytics-ktx:18.3.7",
+                auth             : "com.google.firebase:firebase-auth-ktx:22.0.0"
         ]
         accompanist = [
                 systemUiController: "com.google.accompanist:accompanist-systemuicontroller:0.10.0"
@@ -60,6 +61,12 @@ buildscript {
         ]
         playServicesDependencies = [
                 auth: "com.google.android.gms:play-services-auth:20.5.0"
+        ]
+        roomDependencies = [
+                runtime : "androidx.room:room-runtime:$roomVersion",
+                compiler: "androidx.room:room-compiler:$roomVersion",
+                ktx     : "androidx.room:room-ktx:$roomVersion",
+                common  : "androidx.room:room-common:$roomVersion"
         ]
     }
 
@@ -72,7 +79,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.6'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.7'
     }
 }
 

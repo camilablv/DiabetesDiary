@@ -1,6 +1,7 @@
 package com.ca.insulinreminder.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ca.insulinreminder.domain.InsulinReminderRepository
 import com.ca.model.Insulin
 import com.ca.model.ReminderIteration
@@ -8,6 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -20,8 +23,27 @@ class InsulinReminderViewModel @Inject constructor(
     val viewState: StateFlow<RecordsInsulinReminderViewState>
         get() = _viewState
 
-    fun setSchedule() {
-        repository.scheduleOnce(_viewState.value.time)
+    init {
+        runBlocking {
+            repository.insulins().let { insulins ->
+                _viewState.update { it.copy(insulins = insulins, selectedInsulin = insulins[0]) }
+            }
+        }
+    }
+
+    fun addReminder() {
+        with(_viewState.value) {
+            if (selectedInsulin != null) {
+                viewModelScope.launch {
+                    repository.addReminder(
+                        time = time,
+                        iteration = iteration,
+                        insulin = selectedInsulin,
+                        dose = units
+                    )
+                }
+            }
+        }
     }
 
     fun setInsulinDropDownMenuExpanded(expanded: Boolean) {
