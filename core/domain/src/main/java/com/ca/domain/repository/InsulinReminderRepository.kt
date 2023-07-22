@@ -1,12 +1,13 @@
 package com.ca.domain.repository
 
-import com.ca.database.entities.RecordInsulinReminder
+import com.ca.model.RecordInsulinReminder
 import com.ca.model.Insulin
 import com.ca.model.ReminderIteration
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 
 interface InsulinReminderRepository {
-    fun reminders(): List<RecordInsulinReminder>
+    suspend fun reminders(): Flow<List<RecordInsulinReminder>>
     suspend fun addReminder(
         time: LocalTime,
         iteration: ReminderIteration,

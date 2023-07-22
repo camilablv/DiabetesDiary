@@ -1,14 +1,14 @@
-package com.ca.database.db
+package com.ca.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ca.database.converters.LocalTimeConverter
-import com.ca.database.converters.ReminderIterationConverter
+import com.ca.database.util.LocalTimeConverter
+import com.ca.database.util.ReminderIterationConverter
 import com.ca.database.dao.GlucoseReminderDao
 import com.ca.database.dao.InsulinReminderDao
-import com.ca.database.entities.RecordGlucoseReminder
-import com.ca.database.entities.RecordInsulinReminder
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 
 @Database(
     entities = [
@@ -21,7 +21,7 @@ import com.ca.database.entities.RecordInsulinReminder
     LocalTimeConverter::class,
     ReminderIterationConverter::class
 )
-abstract class ReminderDataBase : RoomDatabase() {
+abstract class DiaryDataBase : RoomDatabase() {
     abstract fun glucoseReminderDao(): GlucoseReminderDao
     abstract fun insulinReminderDao(): InsulinReminderDao
 }

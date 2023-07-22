@@ -14,10 +14,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.Tabs
 import com.ca.reminders.presentation.pages.GlucoseRemindersPage
 import com.ca.reminders.presentation.pages.InsulinRemindersPage
@@ -29,9 +32,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RemindersScreen(
+    viewModel: RemindersViewModel = hiltViewModel(),
     navigateToAddInsulinReminder: () -> Unit
 ) {
 
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
@@ -47,7 +52,8 @@ fun RemindersScreen(
             modifier = Modifier
                 .padding(paddingValues),
             pagerState = pagerState,
-            scope = scope
+            scope = scope,
+            viewState = viewState
         )
     }
 }
@@ -57,7 +63,8 @@ fun RemindersScreen(
 private fun RemindersPager(
     modifier: Modifier,
     pagerState: PagerState,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    viewState: RemindersViewState
 ) {
     Column(
         modifier = modifier
@@ -79,7 +86,7 @@ private fun RemindersPager(
         ) {
             when(pages[it]) {
                 RemindersPage.InsulinRecords -> {
-                    InsulinRemindersPage()
+                    InsulinRemindersPage(viewState.insulinReminders)
                 }
                 RemindersPage.GlucoseRecords -> {
                     GlucoseRemindersPage()

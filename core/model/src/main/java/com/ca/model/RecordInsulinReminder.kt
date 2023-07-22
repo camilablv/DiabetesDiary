@@ -1,9 +1,6 @@
-package com.ca.database.entities
+package com.ca.model
 
 import androidx.room.*
-import com.ca.database.converters.LocalTimeConverter
-import com.ca.model.Insulin
-import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 @Entity(tableName = "insulin_reminder")

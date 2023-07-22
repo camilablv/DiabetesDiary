@@ -1,4 +1,4 @@
-package com.ca.database.converters
+package com.ca.database.util
 
 import androidx.room.TypeConverter
 import java.time.LocalTime

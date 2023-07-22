@@ -1,8 +1,7 @@
-package com.ca.database.entities
+package com.ca.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 @Entity(tableName = "glucose_reminder")

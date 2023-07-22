@@ -1,22 +1,37 @@
 package com.ca.reminders.presentation.pages
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.ca.designsystem.theme.Theme
+import androidx.compose.ui.unit.dp
+import com.ca.model.RecordInsulinReminder
 
 @Composable
-fun InsulinRemindersPage() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+fun InsulinRemindersPage(
+    reminders: List<RecordInsulinReminder>
+) {
+
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(
-            text = "Insulin Reminders",
-            style = Theme.typography.headlineSmall
-        )
+        items(reminders.size) {
+            InsulinReminderCard(reminder = reminders[it])
+        }
+    }
+}
+
+@Composable
+fun InsulinReminderCard(reminder: RecordInsulinReminder) {
+    Card {
+        Text(text = reminder.time.toString())
     }
 }
