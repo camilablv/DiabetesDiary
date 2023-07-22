@@ -42,7 +42,7 @@ dependencies {
     implementation project(":core:model")
     implementation project(":core:common")
     implementation project(":core:alarmmanager")
-    implementation project(":core:database")
+    compileOnly project(":core:database")
     implementation project(":core:datastore")
     implementation project(':core:domain')
     implementation project(':core:data')

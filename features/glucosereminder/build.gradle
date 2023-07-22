@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ca.settings'
+    namespace 'com.ca.glucosereminder'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
@@ -39,13 +39,13 @@ android {
 
 dependencies {
     implementation project(":core:designsystem")
+    implementation project(":core:model")
+    implementation project(":core:common")
+    implementation project(":core:alarmmanager")
+    implementation project(":core:database")
     implementation project(":core:datastore")
-    implementation project(":core:authentication")
-    implementation project(":core:network")
-    implementation project(":core:schema")
     implementation project(':core:domain')
     implementation project(':core:data')
-    implementation project(':core:model')
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -66,16 +66,13 @@ dependencies {
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
     implementation composeDependencies.lifecycleRuntime
+    implementation composeDependencies.material3
 
     // Hilt
     implementation hiltDependencies.hilt
     implementation hiltDependencies.navigationCompose
     kapt hiltDependencies.kapt
 
-    // DataStore
-    implementation androidxDependencies.dataStore
-    implementation protobufDependencies.protobuf
-
-    // Apollo
-    compileOnly network.apolloRuntime
+    // Room
+    implementation roomDependencies.runtime
 }

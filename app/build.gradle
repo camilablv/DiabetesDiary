@@ -67,6 +67,7 @@ dependencies {
     implementation project(":features:records")
     implementation project(":features:reminders")
     implementation project(":features:insulinreminder")
+    implementation project(":features:glucosereminder")
 
     // Android X
     implementation androidxDependencies.coreKtx

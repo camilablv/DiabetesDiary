@@ -20,6 +20,8 @@ fun BottomBar(navController: NavHostController) {
         val currentDestination = navBackStackEntry?.destination
         bottomNavigationItems.forEach { screen ->
             BottomNavigationItem(
+                selectedContentColor = Theme.colors.primary,
+                unselectedContentColor = Theme.colors.onBackground,
                 icon = { Icon(imageVector = screen.icon, contentDescription = null) },
                 label = { Text(text = screen.title) },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
@@ -31,9 +33,8 @@ fun BottomBar(navController: NavHostController) {
                         launchSingleTop = true
                         restoreState = true
                     }
-                },
-                selectedContentColor = Theme.colors.primary,
-                unselectedContentColor = Theme.colors.onBackground
+                }
+
             )
 
         }

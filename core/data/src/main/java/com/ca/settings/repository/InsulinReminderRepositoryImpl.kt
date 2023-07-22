@@ -1,10 +1,11 @@
 package com.ca.settings.repository
 
 import com.ca.alarmmanager.ReminderAlarmManager
-import com.ca.database.DiaryDataBase
+import com.ca.database.DiaryDatabase
 import com.ca.model.RecordInsulinReminder
 import com.ca.domain.repository.InsulinReminderRepository
 import com.ca.model.Insulin
+import com.ca.model.RecordGlucoseReminder
 import com.ca.model.ReminderIteration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,14 +16,15 @@ import javax.inject.Inject
 
 class InsulinReminderRepositoryImpl @Inject constructor(
     private val alarmManager: ReminderAlarmManager,
-    private val reminderDataBase: DiaryDataBase
+    private val reminderDataBase: DiaryDatabase
 ) : InsulinReminderRepository {
 
-    private val reminderDao by lazy { reminderDataBase.insulinReminderDao() }
+    private val insulinReminderDao by lazy { reminderDataBase.insulinReminderDao() }
+    private val glucoseReminderDao by lazy { reminderDataBase.glucoseReminderDao() }
 
-    override suspend fun addReminder(time: LocalTime, iteration: ReminderIteration, insulin: Insulin, dose: Int) {
+    override suspend fun addInsulinReminder(time: LocalTime, iteration: ReminderIteration, insulin: Insulin, dose: Int) {
         withContext(Dispatchers.IO) {
-            reminderDao.insert(
+            insulinReminderDao.insert(
                 RecordInsulinReminder(
                     time, iteration, insulin.id, dose
                 )
@@ -31,7 +33,32 @@ class InsulinReminderRepositoryImpl @Inject constructor(
         alarmManager.scheduleOnce(time)
     }
 
-    override suspend fun reminders(): Flow<List<RecordInsulinReminder>> {
-        return reminderDao.insulinReminders().flowOn(Dispatchers.IO)
+    override suspend fun addRecordGlucoseReminder(time: LocalTime, iteration: ReminderIteration) {
+        withContext(Dispatchers.IO) {
+            glucoseReminderDao.insert(
+                RecordGlucoseReminder(time, iteration)
+            )
+        }
+        alarmManager.scheduleOnce(time)
+    }
+
+    override suspend fun insulinReminders(): Flow<List<RecordInsulinReminder>> {
+        return insulinReminderDao.insulinReminders().flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun glucoseReminders(): Flow<List<RecordGlucoseReminder>> {
+        return glucoseReminderDao.glucoseReminders().flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun deleteGlucoseReminder(reminder: RecordGlucoseReminder) {
+        withContext(Dispatchers.IO) {
+            glucoseReminderDao.delete(reminder)
+        }
+    }
+
+    override suspend fun deleteInsulinReminder(reminder: RecordInsulinReminder) {
+        withContext(Dispatchers.IO) {
+            insulinReminderDao.delete(reminder)
+        }
     }
 }

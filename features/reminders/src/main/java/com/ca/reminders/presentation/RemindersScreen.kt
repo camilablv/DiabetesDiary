@@ -21,7 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.components.ReminderFloatingActionButton
 import com.ca.designsystem.components.Tabs
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 import com.ca.reminders.presentation.pages.GlucoseRemindersPage
 import com.ca.reminders.presentation.pages.InsulinRemindersPage
 import com.ca.reminders.presentation.pages.RemindersPage
@@ -33,7 +36,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun RemindersScreen(
     viewModel: RemindersViewModel = hiltViewModel(),
-    navigateToAddInsulinReminder: () -> Unit
+    navigateToAddInsulinReminder: () -> Unit,
+    navigateToAddGlucoseReminder: () -> Unit
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -42,9 +46,11 @@ fun RemindersScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { navigateToAddInsulinReminder() }) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-            }
+           ReminderFloatingActionButton(
+               pagerState = pagerState,
+               navigateToAddInsulinReminder = navigateToAddInsulinReminder,
+               navigateToAddGlucoseReminder = navigateToAddGlucoseReminder
+           )
         },
         floatingActionButtonPosition = FabPosition.Center
     ) { paddingValues ->
@@ -53,7 +59,9 @@ fun RemindersScreen(
                 .padding(paddingValues),
             pagerState = pagerState,
             scope = scope,
-            viewState = viewState
+            viewState = viewState,
+            viewModel::deleteInsulinReminder,
+            viewModel::deleteGlucoseReminder
         )
     }
 }
@@ -64,7 +72,9 @@ private fun RemindersPager(
     modifier: Modifier,
     pagerState: PagerState,
     scope: CoroutineScope,
-    viewState: RemindersViewState
+    viewState: RemindersViewState,
+    deleteInsulinReminder: (RecordInsulinReminder) -> Unit,
+    deleteGlucoseReminder: (RecordGlucoseReminder) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -86,10 +96,16 @@ private fun RemindersPager(
         ) {
             when(pages[it]) {
                 RemindersPage.InsulinRecords -> {
-                    InsulinRemindersPage(viewState.insulinReminders)
+                    InsulinRemindersPage(
+                        viewState.insulinReminders,
+                        deleteInsulinReminder
+                    )
                 }
                 RemindersPage.GlucoseRecords -> {
-                    GlucoseRemindersPage()
+                    GlucoseRemindersPage(
+                        viewState.glucoseReminders,
+                        deleteGlucoseReminder
+                    )
                 }
             }
         }

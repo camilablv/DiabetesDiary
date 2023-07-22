@@ -37,7 +37,7 @@ class InsulinReminderViewModel @Inject constructor(
         with(_viewState.value) {
             if (selectedInsulin != null) {
                 viewModelScope.launch {
-                    reminderRepository.addReminder(
+                    reminderRepository.addInsulinReminder(
                         time = time,
                         iteration = iteration,
                         insulin = selectedInsulin,

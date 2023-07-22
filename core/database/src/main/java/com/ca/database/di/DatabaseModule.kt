@@ -2,7 +2,7 @@ package com.ca.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ca.database.DiaryDataBase
+import com.ca.database.DiaryDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +16,10 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): DiaryDataBase {
+    fun provideDatabase(@ApplicationContext context: Context): DiaryDatabase {
         return Room.databaseBuilder(
             context = context,
-            klass = DiaryDataBase::class.java,
+            klass = DiaryDatabase::class.java,
             name = "reminder_database"
         )
             .fallbackToDestructiveMigration() //todo remove it later

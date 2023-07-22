@@ -13,7 +13,7 @@ interface GlucoseReminderDao {
     @Delete
     suspend fun delete(reminder: RecordGlucoseReminder)
 
-    @Query("SELECT * FROM insulin_reminder")
+    @Query("SELECT * FROM glucose_reminder")
     fun glucoseReminders(): Flow<List<RecordGlucoseReminder>>
 
     @Update

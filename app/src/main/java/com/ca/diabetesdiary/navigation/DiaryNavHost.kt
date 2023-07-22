@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ca.authentication.navigation.authNavGraph
 import com.ca.diabetesdiary.navigation.bottombar.BottomBarMenuNavHost
+import com.ca.glucosereminder.navigation.glucoseReminderGraph
 import com.ca.insulinreminder.navigation.insulinReminderGraph
 import com.ca.onboarding.presentation.OnBoardingScreen
 import com.ca.recordglucose.navigation.glucoseGraph
@@ -62,6 +63,10 @@ fun MainNavHost(
         )
 
         insulinReminderGraph(
+            navigateBack = { navHostController.navigateBack() }
+        )
+
+        glucoseReminderGraph(
             navigateBack = { navHostController.navigateBack() }
         )
     }

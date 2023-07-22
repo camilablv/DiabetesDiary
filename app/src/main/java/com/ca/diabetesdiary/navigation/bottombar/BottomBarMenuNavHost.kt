@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ca.designsystem.components.MainTopBar
+import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.home.presentation.HomeScreen
 import com.ca.insulinreminder.navigation.navigateToInsulinReminder
 import com.ca.recordglucose.navigation.navigateToRecordGlucose
@@ -46,7 +47,8 @@ fun BottomBarMenuNavHost(
             }
             composable(BottomBarRoute.Reminder.route) {
                 RemindersScreen(
-                    navigateToAddInsulinReminder = { mainNavController.navigateToInsulinReminder() }
+                    navigateToAddInsulinReminder = { mainNavController.navigateToInsulinReminder() },
+                    navigateToAddGlucoseReminder = { mainNavController.navigateToGlucoseReminder() }
                 )
             }
         }

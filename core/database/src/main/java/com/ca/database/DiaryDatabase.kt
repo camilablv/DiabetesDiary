@@ -21,7 +21,7 @@ import com.ca.model.RecordInsulinReminder
     LocalTimeConverter::class,
     ReminderIterationConverter::class
 )
-abstract class DiaryDataBase : RoomDatabase() {
+abstract class DiaryDatabase : RoomDatabase() {
     abstract fun glucoseReminderDao(): GlucoseReminderDao
     abstract fun insulinReminderDao(): InsulinReminderDao
 }

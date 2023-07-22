@@ -72,5 +72,5 @@ dependencies {
     kapt hiltDependencies.kapt
 
     //Network
-    implementation network.apolloRuntime
+    compileOnly network.apolloRuntime
 }
