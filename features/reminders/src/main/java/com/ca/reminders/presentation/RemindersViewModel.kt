@@ -3,6 +3,7 @@ package com.ca.reminders.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RemindersViewModel @Inject constructor(
-    private val repository: InsulinReminderRepository
+    private val repository: InsulinReminderRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(RemindersViewState())
@@ -22,7 +24,11 @@ class RemindersViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             repository.reminders().collect { list ->
-                _viewState.update { it.copy(insulinReminders = list) }
+                val insulins = settingsRepository.insulins()
+                val reminders = list.map { reminder ->
+                    reminder to insulins.find { it.id == reminder.insulinId }!!
+                }.sortedBy { it.first.time }
+                _viewState.update { it.copy(insulinReminders = reminders) }
             }
         }
     }
