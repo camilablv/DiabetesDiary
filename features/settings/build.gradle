@@ -44,7 +44,7 @@ dependencies {
     implementation project(":core:network")
     implementation project(":core:schema")
     implementation project(':core:domain')
-    implementation project(':core:repository')
+    implementation project(':core:data')
     implementation project(':core:model')
 
     // Android X
@@ -77,5 +77,5 @@ dependencies {
     implementation protobufDependencies.protobuf
 
     // Apollo
-    implementation network.apolloRuntime
+    compileOnly network.apolloRuntime
 }

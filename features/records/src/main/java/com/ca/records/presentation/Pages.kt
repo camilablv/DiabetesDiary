@@ -1,12 +1,14 @@
 package com.ca.records.presentation
 
-sealed class Page(val text: String) {
-    object InsulinRecords : Page("Insulin")
-    object GlucoseRecords : Page("Glucose")
+import com.ca.model.Page
+
+sealed class RecordsPage(override val text: String) : Page {
+    object InsulinRecords : RecordsPage("Insulin")
+    object GlucoseRecords : RecordsPage("Glucose")
 }
 
 val pages = listOf(
-    Page.InsulinRecords,
-    Page.GlucoseRecords
+    RecordsPage.InsulinRecords,
+    RecordsPage.GlucoseRecords
 )
 

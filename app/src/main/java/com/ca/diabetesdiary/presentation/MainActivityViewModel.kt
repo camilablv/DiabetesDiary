@@ -3,7 +3,7 @@ package com.ca.diabetesdiary.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.diabetesdiary.domain.repository.MainRepository
-import com.ca.diabetesdiary.navigation.Route
+import com.ca.diabetesdiary.navigation.MainRoute
 import com.ca.diabetesdiary.presentation.state.MainViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,9 +28,9 @@ class MainActivityViewModel @Inject constructor(
     private fun setStartDestination() {
         viewModelScope.launch {
             val isOnBoardingShowed = checkIfOnBoardingShowed()
-            val startDestination = if (!repository.isUserSignedIn) Route.Auth.route
-            else if (!isOnBoardingShowed) Route.OnBoarding.route
-            else Route.Home.route
+            val startDestination = if (!repository.isUserSignedIn) MainRoute.Auth.route
+            else if (!isOnBoardingShowed) MainRoute.OnBoarding.route
+            else MainRoute.Home.route
 
             _viewState.update { it.copy(startDestination = startDestination) }
         }
