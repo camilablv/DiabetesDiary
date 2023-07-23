@@ -1,0 +1,78 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.ca.glucosereminder'
+    compileSdk gradleDependencies.compileSdk
+
+    defaultConfig {
+        minSdk gradleDependencies.minSdk
+        targetSdk gradleDependencies.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion composeCompilerVersion
+    }
+}
+
+dependencies {
+    implementation project(":core:designsystem")
+    implementation project(":core:model")
+    implementation project(":core:common")
+    implementation project(":core:alarmmanager")
+    implementation project(":core:database")
+    implementation project(":core:datastore")
+    implementation project(':core:domain')
+    implementation project(':core:data')
+
+    // Android X
+    implementation androidxDependencies.coreKtx
+    implementation androidxDependencies.lifecycleRuntime
+    implementation androidxDependencies.viewModel
+    implementation androidxDependencies.dataStore
+
+    // Jetpack Compose
+    implementation composeDependencies.ui
+    implementation composeDependencies.uiTooling
+    implementation composeDependencies.uiToolingPreview
+    implementation composeDependencies.material
+    implementation composeDependencies.runtime
+    implementation composeDependencies.foundation
+    implementation composeDependencies.foundationLayout
+    implementation composeDependencies.activity
+    implementation composeDependencies.viewModel
+    implementation composeDependencies.navigation
+    implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
+    implementation composeDependencies.material3
+
+    // Hilt
+    implementation hiltDependencies.hilt
+    implementation hiltDependencies.navigationCompose
+    kapt hiltDependencies.kapt
+
+    // Room
+    implementation roomDependencies.runtime
+}

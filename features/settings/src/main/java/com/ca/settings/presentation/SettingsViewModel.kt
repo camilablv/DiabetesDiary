@@ -3,7 +3,7 @@ package com.ca.settings.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.model.GlucoseUnits
-import com.ca.settings.domain.repository.SettingsRepository
+import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

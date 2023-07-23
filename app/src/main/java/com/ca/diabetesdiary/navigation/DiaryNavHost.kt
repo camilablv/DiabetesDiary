@@ -7,12 +7,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ca.authentication.navigation.authNavGraph
-import com.ca.home.navigation.BottomBarMenuNavHost
+import com.ca.diabetesdiary.navigation.bottombar.BottomBarMenuNavHost
+import com.ca.glucosereminder.navigation.glucoseReminderGraph
+import com.ca.insulinreminder.navigation.insulinReminderGraph
 import com.ca.onboarding.presentation.OnBoardingScreen
 import com.ca.recordglucose.navigation.glucoseGraph
-import com.ca.recordglucose.navigation.navigateToRecordGlucose
 import com.ca.recordinsulin.navigation.insulinGraph
-import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 
 fun NavController.navigateBack() {
     popBackStack()
@@ -30,18 +30,15 @@ fun MainNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(Route.Home.route) {
-            BottomBarMenuNavHost(
-                navigateToRecordInsulinScreen = { navHostController.navigateToRecordInsulin() },
-                navigateToRecordGlucoseScreen = { navHostController.navigateToRecordGlucose() }
-            )
+        composable(MainRoute.Home.route) {
+            BottomBarMenuNavHost(navHostController)
         }
 
-        composable(Route.OnBoarding.route) {
+        composable(MainRoute.OnBoarding.route) {
             OnBoardingScreen(
                 navigateToHome = {
-                    navHostController.navigate(Route.Home.route) {
-                        popUpTo(Route.OnBoarding.route) { inclusive = true }
+                    navHostController.navigate(MainRoute.Home.route) {
+                        popUpTo(MainRoute.OnBoarding.route) { inclusive = true }
                     }
                 }
             )
@@ -56,13 +53,21 @@ fun MainNavHost(
         )
 
         authNavGraph(
-            route = Route.Auth.route,
+            route = MainRoute.Auth.route,
             onComplete = {
-                val nextDestination = if (shouldShowOnBoarding) Route.OnBoarding.route else Route.Home.route
+                val nextDestination = if (shouldShowOnBoarding) MainRoute.OnBoarding.route else MainRoute.Home.route
                 navHostController.navigate(nextDestination) {
-                    popUpTo(Route.Auth.route) { inclusive = true }
+                    popUpTo(MainRoute.Auth.route) { inclusive = true }
                 }
             }
+        )
+
+        insulinReminderGraph(
+            navigateBack = { navHostController.navigateBack() }
+        )
+
+        glucoseReminderGraph(
+            navigateBack = { navHostController.navigateBack() }
         )
     }
 }

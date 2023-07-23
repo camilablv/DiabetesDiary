@@ -4,6 +4,8 @@
     <bytecodeTargetLevel target="1.8">
       <module name="datastore" target="11" />
       <module name="DiabetesDiary.core.model1" target="11" />
+      <module name="DiabetesDiary.core.notifications" target="11" />
+      <module name="DiabetesDiary.features.recordinsulinreminder" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

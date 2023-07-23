@@ -3,14 +3,17 @@ package com.ca.records.presentation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.ca.designsystem.theme.Theme
+import androidx.compose.ui.unit.dp
+import com.ca.designsystem.components.Tabs
 import com.ca.records.glucose.presentation.GlucoseRecordsPage
 import com.ca.records.insulin.presentation.InsulinRecordsPage
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +24,6 @@ import kotlinx.coroutines.launch
 fun RecordsScreen() {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    val scaffoldState = rememberScaffoldState()
 
     RecordsPager(
         modifier = Modifier,
@@ -39,11 +41,15 @@ private fun RecordsPager(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Tabs(
-            pagerState = pagerState,
-            onTabClick = { scope.launch { pagerState.animateScrollToPage(it) } }
+            pages = pages,
+            modifier = Modifier
+                .padding(vertical = 12.dp),
+            onTabClick = { scope.launch { pagerState.animateScrollToPage(it) } },
+            selectedTabIndex = pagerState.currentPage
         )
 
         HorizontalPager(
@@ -52,39 +58,13 @@ private fun RecordsPager(
             beyondBoundsPageCount = pages.size
         ) {
             when (pages[it]) {
-                Page.InsulinRecords -> {
+                RecordsPage.InsulinRecords -> {
                     InsulinRecordsPage()
                 }
-                Page.GlucoseRecords -> {
+                RecordsPage.GlucoseRecords -> {
                     GlucoseRecordsPage()
                 }
             }
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun Tabs(
-    pagerState: PagerState,
-    onTabClick: (Int) -> Unit
-) {
-    TabRow(
-        selectedTabIndex = pagerState.currentPage,
-        modifier = Modifier,
-        backgroundColor = Theme.colors.background
-    ) {
-        pages.forEachIndexed { index, item ->
-            Tab(
-                selected = pagerState.currentPage == index,
-                onClick = { onTabClick(index) },
-                text = {
-                    Text(
-                        text = item.text,
-                        style = Theme.typography.bodyLarge
-                    )
-                }
-            )
         }
     }
 }

@@ -10,11 +10,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "DiabetesDiary"
 include ':app'
-include ':designsystem'
 include ':core:network'
 include ':core:designsystem'
 include ':features:recordinsulin'
@@ -27,7 +27,12 @@ include ':core:authentication'
 include ':core:datastore'
 include ':core:schema'
 include ':core:domain'
-include ':core:repository'
+include ':core:data'
 include ':core:model'
 include ':core:common'
 include ':features:records'
+include ':features:reminders'
+include ':core:alarmmanager'
+include ':features:insulinreminder'
+include ':core:database'
+include ':features:glucosereminder'
