@@ -5,13 +5,17 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
-import java.time.*
+import com.ca.alarmmanager.extensions.timeExactForAlarm
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import java.util.*
 import javax.inject.Inject
 
-class ReminderAlarmManager @Inject constructor(
+internal class AlarmSchedulerImpl @Inject constructor(
     private val context: Context
-) : AlarmSchedule {
+) : AlarmScheduler {
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private val pendingIntent by lazy {
@@ -33,7 +37,7 @@ class ReminderAlarmManager @Inject constructor(
 
         alarmManager.setExact(
             AlarmManager.ELAPSED_REALTIME,
-            SystemClock.elapsedRealtime() + 3 * 1000,
+            SystemClock.elapsedRealtime() + 60 * 1000,
             pendingIntent
         )
     }
@@ -41,12 +45,19 @@ class ReminderAlarmManager @Inject constructor(
     override fun scheduleDaily(time: LocalTime) {
         val timeInMillis = Calendar.Builder()
             .setTimeOfDay(time.hour, time.minute, time.second)
+            .setTimeZone(TimeZone.getDefault())
             .build()
             .timeInMillis
 
+        val dateTime = LocalDateTime.of(LocalDate.now(), time).atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
+
+        val timeExact = Calendar.getInstance().timeExactForAlarm(time).timeInMillis
+
+        val realTime = SystemClock.elapsedRealtime() + 3 * 1000
+
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
-            timeInMillis,
+            timeExact,
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )

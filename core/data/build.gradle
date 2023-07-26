@@ -39,7 +39,7 @@ dependencies {
     implementation project(":core:schema")
     implementation project(':core:model')
     implementation project(':core:domain')
-    implementation project(":core:alarmmanager")
+    implementation project(':core:alarmscheduler')
     implementation project(":core:database")
 
     implementation 'androidx.core:core-ktx:1.7.0'

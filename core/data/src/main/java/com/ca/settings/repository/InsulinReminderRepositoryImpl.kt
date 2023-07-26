@@ -1,6 +1,6 @@
 package com.ca.settings.repository
 
-import com.ca.alarmmanager.ReminderAlarmManager
+import com.ca.alarmmanager.AlarmScheduler
 import com.ca.database.DiaryDatabase
 import com.ca.model.RecordInsulinReminder
 import com.ca.domain.repository.InsulinReminderRepository
@@ -15,7 +15,7 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 class InsulinReminderRepositoryImpl @Inject constructor(
-    private val alarmManager: ReminderAlarmManager,
+    private val alarmManager: AlarmScheduler,
     private val reminderDataBase: DiaryDatabase
 ) : InsulinReminderRepository {
 
@@ -39,7 +39,7 @@ class InsulinReminderRepositoryImpl @Inject constructor(
                 RecordGlucoseReminder(time, iteration)
             )
         }
-        alarmManager.scheduleOnce(time)
+        alarmManager.scheduleDaily(time)
     }
 
     override suspend fun insulinReminders(): Flow<List<RecordInsulinReminder>> {

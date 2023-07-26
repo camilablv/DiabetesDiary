@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 
     <application
@@ -17,7 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DiabetesDiary"
-        tools:targetApi="31"
+        tools:targetApi="33"
         android:name=".DiaryApplication">
         <activity
             android:name=".presentation.MainActivity"
@@ -31,8 +32,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.ca.alarmmanager.AlarmReceiver"
-            tools:ignore="Instantiatable" />
+        <receiver android:name="com.ca.alarmmanager.AlarmReceiver"/>
         
         <receiver android:name="com.ca.alarmmanager.BootCompletedReceiver"
             android:enabled="false"

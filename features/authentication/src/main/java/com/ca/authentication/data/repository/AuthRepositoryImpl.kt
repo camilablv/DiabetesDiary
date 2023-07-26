@@ -18,12 +18,12 @@ class AuthRepositoryImpl @Inject constructor(
         networkClient.createSession(idToken).onSuccess { data ->
             onSuccess()
 
-            data.session?.let { session ->
+            data.session.let { session ->
                 Log.d("AuthRepositoryImpl", session.token.toString())
                 dataStore.updateData { prefs ->
                     prefs.toBuilder()
                         .setAuthToken(session.token)
-                        .setEmail(session.user?.email)
+                        .setEmail(session.user.email)
                         .build()
                 }
             }
