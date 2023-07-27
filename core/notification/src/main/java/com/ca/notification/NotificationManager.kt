@@ -1,30 +1,29 @@
 package com.ca.notification
 
 import android.Manifest
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import javax.inject.Inject
 
 class NotificationManager @Inject constructor(
-    private val context: Context
+    private val context: Context,
+    activityClass: Class<out Activity>
 ) {
 
-//    private val intent by lazy {
-//        Intent(context, activityClass).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
-//    }
-//
-//    private val pendingIntent by lazy {
-//        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-//    }
+    private val intent = Intent(context, activityClass).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    }
+
+    private val pendingIntent by lazy {
+        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+    }
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
@@ -46,7 +45,7 @@ class NotificationManager @Inject constructor(
             .setContentTitle("Title")
             .setContentText("Text")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-//            .setContentIntent(pendingIntent)
+            .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(context)) {
