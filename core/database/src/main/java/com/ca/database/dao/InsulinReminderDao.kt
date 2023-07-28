@@ -1,21 +1,21 @@
 package com.ca.database.dao
 
 import androidx.room.*
-import com.ca.model.RecordInsulinReminder
+import com.ca.database.model.RecordInsulinReminderEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface InsulinReminderDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(reminder: RecordInsulinReminder)
+    suspend fun insert(reminder: RecordInsulinReminderEntity)
 
     @Delete
-    suspend fun delete(reminder: RecordInsulinReminder)
+    suspend fun delete(reminder: RecordInsulinReminderEntity)
 
     @Query("SELECT * FROM insulin_reminder")
-    fun insulinReminders(): Flow<List<RecordInsulinReminder>>
+    fun insulinReminders(): Flow<List<RecordInsulinReminderEntity>>
 
     @Update
-    fun update(reminder: RecordInsulinReminder)
+    fun update(reminder: RecordInsulinReminderEntity)
 }

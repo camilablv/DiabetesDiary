@@ -16,7 +16,7 @@ buildscript {
                 minSdk    : 28
         ]
         androidxDependencies = [
-                coreKtx          : "androidx.core:core-ktx:1.9.0",
+                coreKtx          : "androidx.core:core-ktx:1.10.1",
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
                 viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0",
                 dataStore        : "androidx.datastore:datastore:1.0.0",

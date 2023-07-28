@@ -14,15 +14,10 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "DiabetesDiary"
+
 include ':app'
 include ':core:network'
 include ':core:designsystem'
-include ':features:recordinsulin'
-include ':features:recordglucose'
-include ':features:settings'
-include ':features:home'
-include ':features:onboarding'
-include ':features:authentication'
 include ':core:authentication'
 include ':core:datastore'
 include ':core:schema'
@@ -30,9 +25,18 @@ include ':core:domain'
 include ':core:data'
 include ':core:model'
 include ':core:common'
+include ':core:alarmscheduler'
+include ':core:database'
+include ':core:notification'
+
+include ':features:recordinsulin'
+include ':features:recordglucose'
+include ':features:settings'
+include ':features:home'
+include ':features:onboarding'
+include ':features:authentication'
 include ':features:records'
 include ':features:reminders'
-include ':core:alarmmanager'
 include ':features:insulinreminder'
-include ':core:database'
 include ':features:glucosereminder'
+

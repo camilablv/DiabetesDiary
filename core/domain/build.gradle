@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ca.data'
+    namespace 'com.ca.domain'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
