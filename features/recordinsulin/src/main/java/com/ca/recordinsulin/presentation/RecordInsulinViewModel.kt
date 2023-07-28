@@ -3,7 +3,7 @@ package com.ca.recordinsulin.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.model.Insulin
-import com.ca.recordinsulin.domain.repository.RecordInsulinRepository
+import com.ca.domain.repository.RecordInsulinRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
