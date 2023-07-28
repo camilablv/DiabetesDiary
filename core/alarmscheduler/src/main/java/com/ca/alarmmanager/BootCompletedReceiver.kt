@@ -3,7 +3,9 @@ package com.ca.alarmmanager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BootCompletedReceiver : BroadcastReceiver() {
 
     companion object {

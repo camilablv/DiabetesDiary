@@ -1,9 +1,10 @@
 package com.ca.alarmmanager
 
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 interface AlarmScheduler {
-    fun scheduleOnce(time: LocalTime)
-    fun scheduleDaily(time: LocalTime)
-    fun cancel()
+    fun scheduleRecordInsulin(reminder: RecordInsulinReminder)
+    fun scheduleGlucoseMeasuring(time: LocalTime, iteration: ReminderIteration)
 }

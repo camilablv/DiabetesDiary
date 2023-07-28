@@ -1,9 +1,9 @@
-package com.ca.recordinsulin.data.repository
+package com.ca.data.repository
 
 import com.ca.datastore.SettingsDataStore
+import com.ca.domain.repository.RecordInsulinRepository
 import com.ca.model.Insulin
 import com.ca.network.api.NetworkClient
-import com.ca.recordinsulin.domain.repository.RecordInsulinRepository
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime

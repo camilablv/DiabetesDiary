@@ -29,8 +29,8 @@ class NotificationManager @Inject constructor(
 
     fun createNotificationChannel() {
         val channel = NotificationChannel(
-            "channel_id",
-            "channel_name",
+            CHANNEL_ID,
+            CHANNEL_NAME,
             android.app.NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = "Description"
@@ -38,32 +38,47 @@ class NotificationManager @Inject constructor(
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun createNotification() {
+    fun createRecordInsulinNotification(
+        insulinId: String,
+        dose: Int,
+        notificationId: Int
+    ) {
+        val recordInsulinPendingIntent = insulinActionPendingIntent(insulinId, dose)
 
-        val builder = NotificationCompat.Builder(context, "channel_id")
-            .setSmallIcon(R.drawable.round_pest_control_24)
-            .setContentTitle("Title")
-            .setContentText("Text")
+        intent.apply {
+            putExtra("start_type", "insulin_notification")
+        }
+
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.round_alarm_24)
+            .setContentTitle("Record insulin")
+            .setContentText("It's time to take insulin: $dose UN")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .addAction(R.drawable.baseline_edit_24, "Done", recordInsulinPendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return
-            }
-            notify(1, builder.build())
+            ) return
+            notify(notificationId, builder.build())
         }
+    }
+
+    private fun insulinActionPendingIntent(insulinId: String, dose: Int,): PendingIntent? {
+        val recordInsulinIntent = Intent(context, RecordInsulinBroadcastReceiver::class.java).apply {
+            action = RecordInsulinBroadcastReceiver.ACTION_INSULIN_TAKEN
+            putExtra(RecordInsulinBroadcastReceiver.INSULIN_ID_KEY, insulinId)
+            putExtra(RecordInsulinBroadcastReceiver.DOSE_KEY, dose)
+        }
+        return PendingIntent.getBroadcast(context, 0, recordInsulinIntent, 0)
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "notification_channel_id"
+        private const val CHANNEL_NAME = "Reminders"
     }
 }

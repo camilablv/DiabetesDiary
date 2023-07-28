@@ -1,4 +1,4 @@
-package com.ca.settings.repository
+package com.ca.data.repository
 
 import android.util.Log
 import com.ca.datastore.SettingsDataStore

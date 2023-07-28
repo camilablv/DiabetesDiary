@@ -1,4 +1,4 @@
-package com.ca.recordinsulin.domain.repository
+package com.ca.domain.repository
 
 import com.ca.model.Insulin
 import java.time.LocalDate

@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import com.ca.alarmmanager.extensions.timeExactForAlarm
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -18,31 +20,36 @@ internal class AlarmSchedulerImpl @Inject constructor(
 ) : AlarmScheduler {
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+    private val intent = Intent(context, AlarmReceiver::class.java)
+
     private val pendingIntent by lazy {
-        val intent = Intent(context, AlarmReceiver::class.java).also {
-            it.putExtra("EXTRA_MESSAGE", "Received message!")
-        }
         PendingIntent.getBroadcast(context, 0, intent, 0)
     }
 
-    override fun scheduleOnce(time: LocalTime) {
-        val timeInMillis = Calendar.Builder()
-            .setTimeOfDay(time.hour, time.minute, time.second)
-            .setTimeZone(TimeZone.getDefault())
-            .setDate(2023, 7, 20)
-            .build()
-            .timeInMillis
+    override fun scheduleRecordInsulin(reminder: RecordInsulinReminder) {
+        intent.apply {
+            putExtra(AlarmReceiver.INSULIN_ID_KEY, reminder.insulinId)
+            putExtra(AlarmReceiver.DOSE_KEY, reminder.dose)
+            putExtra(AlarmReceiver.REMINDER_ID_KEY, reminder.id)
+        }
 
-        val dateTime = LocalDateTime.of(LocalDate.now(), time).atZone(ZoneId.systemDefault()).toEpochSecond() * 1000
+        scheduleOnce(reminder.time)
+    }
 
+    override fun scheduleGlucoseMeasuring(time: LocalTime, iteration: ReminderIteration) {
+        TODO("Not yet implemented")
+    }
+
+    private fun scheduleOnce(time: LocalTime) {
         alarmManager.setExact(
             AlarmManager.ELAPSED_REALTIME,
-            SystemClock.elapsedRealtime() + 60 * 1000,
+            SystemClock.elapsedRealtime() + 5 * 1000,
             pendingIntent
         )
     }
 
-    override fun scheduleDaily(time: LocalTime) {
+    private fun scheduleDaily(time: LocalTime) {
         val timeInMillis = Calendar.Builder()
             .setTimeOfDay(time.hour, time.minute, time.second)
             .setTimeZone(TimeZone.getDefault())
@@ -61,9 +68,5 @@ internal class AlarmSchedulerImpl @Inject constructor(
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
-    }
-
-    override fun cancel() {
-        TODO("Not yet implemented")
     }
 }

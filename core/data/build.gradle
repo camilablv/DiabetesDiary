@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ca.settingscore'
+    namespace 'com.ca.data'
     compileSdk gradleDependencies.compileSdk
 
     defaultConfig {
