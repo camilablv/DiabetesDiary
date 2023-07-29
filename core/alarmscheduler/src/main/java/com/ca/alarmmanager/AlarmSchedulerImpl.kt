@@ -38,7 +38,7 @@ internal class AlarmSchedulerImpl @Inject constructor(
     }
 
     override fun scheduleGlucoseMeasuring(time: LocalTime, iteration: ReminderIteration) {
-        TODO("Not yet implemented")
+
     }
 
     private fun scheduleOnce(time: LocalTime) {

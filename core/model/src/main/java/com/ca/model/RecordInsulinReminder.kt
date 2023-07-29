@@ -4,9 +4,10 @@ import java.time.LocalTime
 
 
 data class RecordInsulinReminder(
-    val id: Int,
-    val time: LocalTime,
-    val iteration: ReminderIteration,
+    override val id: Int,
+    override val time: LocalTime,
+    override val iteration: ReminderIteration,
     val insulinId: String,
-    val dose: Int
-)
+    val dose: Int,
+    val insulin: Insulin? = null
+): Reminder

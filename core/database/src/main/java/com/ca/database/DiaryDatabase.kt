@@ -20,7 +20,7 @@ import com.ca.database.util.*
         InsulinRecordEntity::class,
         GlucoseRecordEntity::class
     ],
-    version = 2
+    version = 3
 )
 @TypeConverters(
     LocalTimeConverter::class,

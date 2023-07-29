@@ -1,25 +1,33 @@
 package com.ca.home.presentation
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.ca.designsystem.components.multifab.MultiFloatingActionButton
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.components.InsulinReminderCardWithCheckbox
 import com.ca.designsystem.components.multifab.MultiFabItem
-import com.ca.designsystem.theme.Theme
+import com.ca.designsystem.components.multifab.MultiFloatingActionButton
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 
 @Composable
 fun HomeScreen(
     navigateToRecordGlucose: () -> Unit,
-    navigateToRecordInsulin: () -> Unit
+    navigateToRecordInsulin: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
+
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     Scaffold(
         floatingActionButton = {
@@ -35,19 +43,23 @@ fun HomeScreen(
         },
         floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Home",
-                style = Theme.typography.headlineMedium,
-                modifier = Modifier,
-                color = Color.Black
-            )
+            items(viewState.reminders) { reminder ->
+                when(reminder) {
+                    is RecordInsulinReminder -> {
+                        InsulinReminderCardWithCheckbox(reminder = reminder)
+                    }
+                    is RecordGlucoseReminder -> {
+
+                    }
+                }
+            }
         }
     }
 

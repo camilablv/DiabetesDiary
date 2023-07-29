@@ -1,6 +1,6 @@
 package com.ca.data.di
 
-import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.RemindersRepository
 import com.ca.data.repository.SettingsRepositoryImpl
 import com.ca.domain.repository.SettingsRepository
 import com.ca.data.repository.InsulinReminderRepositoryImpl
@@ -20,7 +20,7 @@ internal interface RepositoryModule {
     fun bindSettingsRepository(settingsRepositoryImpl: SettingsRepositoryImpl): SettingsRepository
 
     @Binds
-    fun bindInsulinReminderRepository(repositoryImpl: InsulinReminderRepositoryImpl): InsulinReminderRepository
+    fun bindInsulinReminderRepository(repositoryImpl: InsulinReminderRepositoryImpl): RemindersRepository
 
     @Binds
     fun bindRecordInsulinRepository(recordInsulinRepository: RecordInsulinRepositoryImpl): RecordInsulinRepository

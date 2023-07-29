@@ -2,7 +2,7 @@ package com.ca.reminders.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
 import com.ca.model.RecordGlucoseReminder
 import com.ca.model.RecordInsulinReminder
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RemindersViewModel @Inject constructor(
-    private val reminderRepository: InsulinReminderRepository,
+    private val reminderRepository: RemindersRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -28,8 +28,8 @@ class RemindersViewModel @Inject constructor(
             reminderRepository.insulinReminders().collect { list ->
                 val insulins = settingsRepository.insulins()
                 val reminders = list.map { reminder ->
-                    reminder to insulins.find { it.id == reminder.insulinId }!!
-                }.sortedBy { it.first.time }
+                    reminder.copy(insulin = insulins.find { it.id == reminder.insulinId }!!)
+                }.sortedBy { it.time }
                 _viewState.update { it.copy(insulinReminders = reminders) }
             }
         }

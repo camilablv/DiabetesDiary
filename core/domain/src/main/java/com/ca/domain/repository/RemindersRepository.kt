@@ -7,7 +7,7 @@ import com.ca.model.ReminderIteration
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 
-interface InsulinReminderRepository {
+interface RemindersRepository {
     suspend fun insulinReminders(): Flow<List<RecordInsulinReminder>>
     suspend fun glucoseReminders(): Flow<List<RecordGlucoseReminder>>
     suspend fun addInsulinReminder(
