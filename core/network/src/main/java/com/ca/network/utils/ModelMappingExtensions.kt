@@ -1,11 +1,7 @@
 package com.ca.network.utils
 
-import com.ca.CreateInsulinMutation
-import com.ca.InsulinRecordsQuery
-import com.ca.UpdateGlucoseUnitMutation
-import com.ca.model.GlucoseUnits
-import com.ca.model.Insulin
-import com.ca.model.InsulinRecord
+import com.ca.*
+import com.ca.model.*
 import java.time.LocalDateTime
 
 fun CreateInsulinMutation.Data.insulin(): Insulin {
@@ -38,5 +34,30 @@ fun InsulinRecordsQuery.Data.records(): List<InsulinRecord> {
             note = it.notes
         )
 
+    }
+}
+
+fun RecordInsulinMutation.Data.record(insulin: Insulin): InsulinRecord {
+    return with(record) {
+        InsulinRecord(
+            cursor = insulin.id,
+            id = id,
+            insulin = insulin,
+            dateTime = LocalDateTime.parse(takenAt.toString()),
+            units = units,
+            note = notes
+        )
+    }
+}
+
+fun RecordGlucoseMutation.Data.record(): GlucoseRecord {
+    return with(record) {
+        GlucoseRecord(
+            id = id,
+            level = units,
+            note = notes ?: "",
+            dateTime = LocalDateTime.parse(measuredAt.toString()),
+            measuringMark = status.name
+        )
     }
 }

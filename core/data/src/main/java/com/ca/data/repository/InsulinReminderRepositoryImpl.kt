@@ -2,6 +2,8 @@ package com.ca.data.repository
 
 import com.ca.alarmmanager.AlarmScheduler
 import com.ca.database.DiaryDatabase
+import com.ca.database.dao.GlucoseReminderDao
+import com.ca.database.dao.InsulinReminderDao
 import com.ca.database.model.RecordGlucoseReminderEntity
 import com.ca.database.model.RecordInsulinReminderEntity
 import com.ca.database.model.asEntity
@@ -23,11 +25,9 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 class InsulinReminderRepositoryImpl @Inject constructor(
     private val alarmManager: AlarmScheduler,
-    private val reminderDataBase: DiaryDatabase
+    private val insulinReminderDao: InsulinReminderDao,
+    private val glucoseReminderDao: GlucoseReminderDao
 ) : InsulinReminderRepository {
-
-    private val insulinReminderDao by lazy { reminderDataBase.insulinReminderDao() }
-    private val glucoseReminderDao by lazy { reminderDataBase.glucoseReminderDao() }
 
     override suspend fun addInsulinReminder(time: LocalTime, iteration: ReminderIteration, insulin: Insulin, dose: Int) {
         val reminder = RecordInsulinReminderEntity(

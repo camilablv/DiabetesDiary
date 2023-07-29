@@ -5,8 +5,8 @@ import com.ca.model.ReminderIteration
 
 class ReminderIterationConverter {
     @TypeConverter
-    fun toInsulin(text: String) = ReminderIteration.valueOf(text)
+    fun toReminderIteration(text: String) = ReminderIteration.valueOf(text)
 
     @TypeConverter
-    fun fromInsulin(iteration: ReminderIteration) = iteration.name
+    fun fromReminderIteration(iteration: ReminderIteration) = iteration.name
 }

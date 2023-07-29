@@ -1,6 +1,8 @@
 package com.ca.recordglucose.domain.model
 
-enum class MeasuringMark(val text: String, val icon: Int) {
+import com.ca.model.Mark
+
+enum class MeasuringMark(override val text: String, override val icon: Int) : Mark {
     GENERAL("General", com.ca.designsystem.R.drawable.person),
     FASTING("Fasting", com.ca.designsystem.R.drawable.no_meals),
     PRE_MEAL("Pre-meal", com.ca.designsystem.R.drawable.lunch_dining),
@@ -15,4 +17,3 @@ internal val measuringMarks = listOf(
     MeasuringMark.POST_MEAL,
     MeasuringMark.BEFORE_SLEEP,
 )
-
