@@ -48,12 +48,10 @@ class InsulinReminderRepositoryImpl @Inject constructor(
     override suspend fun insulinReminders(): Flow<List<RecordInsulinReminder>> {
         return insulinReminderDao
             .insulinReminders()
-            .map { list ->
-                list.map { it.asExternalModel() }
+            .map { list -> list.map { it.asExternalModel() }
             }
             .flowOn(Dispatchers.IO)
     }
-
 
     override suspend fun glucoseReminders(): Flow<List<RecordGlucoseReminder>> {
         return glucoseReminderDao

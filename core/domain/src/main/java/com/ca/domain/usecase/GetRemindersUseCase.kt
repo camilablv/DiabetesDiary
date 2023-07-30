@@ -3,7 +3,7 @@ package com.ca.domain.usecase
 import com.ca.domain.repository.RemindersRepository
 import com.ca.model.Reminder
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class GetRemindersUseCase @Inject constructor(
@@ -13,6 +13,8 @@ class GetRemindersUseCase @Inject constructor(
     suspend operator fun invoke(): Flow<List<Reminder>> {
         val glucoseReminders = remindersRepository.glucoseReminders()
         val insulinReminders = remindersRepository.insulinReminders()
-        return merge(glucoseReminders, insulinReminders)
+        return glucoseReminders.combine(insulinReminders) { glucose, insulin ->
+            glucose.plus(insulin)
+        }
     }
 }

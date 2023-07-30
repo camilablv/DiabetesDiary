@@ -1,5 +1,6 @@
 package com.ca.home.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.domain.repository.SettingsRepository
@@ -30,7 +31,8 @@ class HomeViewModel @Inject constructor(
                     if (reminder is RecordInsulinReminder) {
                         reminder.copy(insulin = insulins.find { it.id == reminder.insulinId }!!)
                     } else reminder
-                }
+                }.sortedBy { it.time }
+                Log.d("TEST1", reminders.toString())
                 _viewState.update { it.copy(reminders = reminders) }
             }
         }
