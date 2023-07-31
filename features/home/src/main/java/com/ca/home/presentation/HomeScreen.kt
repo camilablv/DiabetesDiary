@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.GlucoseReminderCardWithCheckbox
 import com.ca.designsystem.components.InsulinReminderCardWithCheckbox
+import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
 import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
 import com.ca.model.RecordGlucoseReminder
@@ -42,35 +43,47 @@ fun HomeScreen(
         },
         floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
-        LazyColumn(
+
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(16.dp)
+                .padding(paddingValues)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(viewState.reminders) { reminder ->
-                when(reminder) {
-                    is RecordInsulinReminder -> {
-                        InsulinReminderCardWithCheckbox(
-                            reminder = reminder,
-                            checked = false,
-                            onCheckboxClick = {}
-                        )
-                    }
-                    is RecordGlucoseReminder -> {
-                        GlucoseReminderCardWithCheckbox(
-                            reminder = reminder
-                        )
+            SingleRowCalendar()
+            LazyColumn(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(vertical = 4.dp)
+            ) {
+                items(viewState.reminders) { reminder ->
+                    when(reminder) {
+                        is RecordInsulinReminder -> {
+                            InsulinReminderCardWithCheckbox(
+                                reminder = reminder,
+                                checked = false,
+                                onCheckboxClick = {}
+                            )
+                        }
+                        is RecordGlucoseReminder -> {
+                            GlucoseReminderCardWithCheckbox(
+                                reminder = reminder
+                            )
+                        }
                     }
                 }
-            }
 
-            item {
-                Spacer(modifier = Modifier.fillMaxWidth().height(64.dp))
+                item {
+                    Spacer(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(64.dp))
+                }
             }
         }
+
     }
 
 }

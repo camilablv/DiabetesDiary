@@ -1,17 +1,17 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
-import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.RecordInsulinReminder
 import kotlin.random.Random
 
@@ -40,16 +40,15 @@ fun InsulinReminderCardWithCheckbox(
             Row(
                 modifier = Modifier
                     .height(56.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
+                Image(
                     modifier = Modifier
-                        .background(
-                            colorFromHex(reminder.insulin?.color!!),
-                            RoundedCornerShape(topStart = 12.dp, bottomStart = 12.dp)
-                        )
-                        .width(24.dp)
-                        .fillMaxHeight()
+                        .size(48.dp)
+                        .padding(4.dp),
+                    painter = painterResource(id = R.drawable.injection),
+                    contentDescription = ""
                 )
 
                 Column(

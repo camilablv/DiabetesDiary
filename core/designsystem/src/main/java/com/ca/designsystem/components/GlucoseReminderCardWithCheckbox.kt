@@ -37,18 +37,20 @@ fun GlucoseReminderCardWithCheckbox(
             Row(
                 modifier = Modifier
                     .height(56.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
                     modifier = Modifier
                         .padding(4.dp)
                         .weight(2f),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
                         modifier = Modifier
-                            .size(56.dp),
-                        painter = painterResource(id = com.ca.designsystem.R.drawable.blood),
+                            .size(48.dp),
+                        painter = painterResource(id = com.ca.designsystem.R.drawable.blood_filled),
                         contentDescription = ""
                     )
 
