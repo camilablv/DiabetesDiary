@@ -29,20 +29,10 @@ data class CalendarState(
 fun SingleRowCalendar(
     selectedDay: String = "",
     onSelectedDayChange: (LocalDate) -> Unit = {},
-    loadNextWeek: () -> Unit,
-    loadPrevWeek: () -> Unit,
-    loadedDates: CalendarState
+    loadDates: (Int) -> List<LocalDate>
 ) {
-    val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE / 2)
+    val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE)
     val scope = rememberCoroutineScope()
-
-//    val dateCursor by remember {
-//        mutableStateOf(LocalDate.now().weekStartDate())
-//    }
-//
-//    var visibleDates by remember {
-//        mutableStateOf(dateCursor.startDates())
-//    }
 
     Card(
         modifier = Modifier
@@ -66,7 +56,6 @@ fun SingleRowCalendar(
                         .clickable {
                             scope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                                loadPrevWeek()
                             }
                         },
                     painter = painterResource(id = com.ca.designsystem.R.drawable.round_arrow_back),
@@ -74,7 +63,7 @@ fun SingleRowCalendar(
                 )
                 Text(
                     modifier = Modifier,
-                    text = loadedDates.currentWeek[0].month.toString()
+                    text = LocalDate.now().date()
                 )
 
                 Icon(
@@ -84,7 +73,6 @@ fun SingleRowCalendar(
                         ) {
                             scope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                                loadNextWeek()
                             }
                         },
                     painter = painterResource(id = com.ca.designsystem.R.drawable.round_arrow_forward),
@@ -94,17 +82,14 @@ fun SingleRowCalendar(
             }
 
             CalendarPager(
-                pagerState = pagerState,
-                loadedDates = loadedDates,
-                loadNextDates = loadNextWeek,
-                loadPrevDates = loadPrevWeek
+                pagerState = pagerState
             ) { currentPage ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    loadedDates.currentWeek.forEach {
+                    loadDates(currentPage).forEach {
                         Day(
                             date = it,
                             onClick = { date ->

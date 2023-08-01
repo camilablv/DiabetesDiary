@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.common.utils.getNextDates
+import com.ca.common.utils.getPrevDates
 import com.ca.common.utils.weekStartDate
 import com.ca.designsystem.components.singlerowcalendar.CalendarState
 import com.ca.domain.repository.SettingsRepository
@@ -46,6 +47,10 @@ class HomeViewModel @Inject constructor(
             currentWeek = array[1],
             nextWeek = array[2]
         )
+    }
+
+    fun loadDates(page: Int): List<LocalDate> {
+        return LocalDate.now().weekStartDate().getPrevDates(page)
     }
 
     fun loadNextDates() {

@@ -58,3 +58,12 @@ fun LocalDate.getNextDates(count: Int): List<LocalDate> {
     }
     return dates
 }
+
+fun LocalDate.getPrevDates(page: Int): List<LocalDate> {
+    val startDAte = this.minusDays((page * 7).toLong())
+    val dates = mutableListOf<LocalDate>()
+    repeat(7) { day ->
+        dates.add(startDAte.plusDays((day).toLong()))
+    }
+    return dates
+}

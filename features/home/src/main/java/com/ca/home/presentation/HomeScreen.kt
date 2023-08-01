@@ -56,9 +56,7 @@ fun HomeScreen(
             SingleRowCalendar(
                 selectedDay = "",
                 onSelectedDayChange = {},
-                loadedDates = loadedDates,
-                loadNextWeek = { viewModel.loadNextDates() },
-                loadPrevWeek = { viewModel.loadPrevDates() }
+                loadDates = { viewModel.loadDates(it) }
             )
             LazyColumn(
                 modifier = Modifier,
