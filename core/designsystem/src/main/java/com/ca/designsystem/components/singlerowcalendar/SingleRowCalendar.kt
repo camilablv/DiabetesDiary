@@ -31,6 +31,11 @@ fun SingleRowCalendar(
 ) {
     val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE)
     val scope = rememberCoroutineScope()
+    val visibleDate = remember { mutableStateOf(LocalDate.now()) }
+
+    LaunchedEffect(pagerState.currentPage) {
+        visibleDate.value = loadDates(pagerState.currentPage)[0]
+    }
 
     Card(
         modifier = Modifier
@@ -61,7 +66,7 @@ fun SingleRowCalendar(
                 )
                 Text(
                     modifier = Modifier,
-                    text = LocalDate.now().formatMonthYear()
+                    text = visibleDate.value.formatMonthYear()
                 )
 
                 Icon(
