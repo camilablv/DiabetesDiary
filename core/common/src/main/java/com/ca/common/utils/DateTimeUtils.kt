@@ -5,6 +5,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 fun LocalDate.dayOfddPattern(): String = format(DateTimeFormatter.ofPattern("dd"))
 
@@ -21,7 +22,11 @@ fun LocalDateTime.time(): String = format(DateTimeFormatter.ofPattern("hh:mm"))
 fun LocalDate.dayName(): String =
     format(DateTimeFormatter.ofPattern("E"))
 
-fun LocalDate.formatMonthYear(): String = format(DateTimeFormatter.ofPattern("MMMM y"))
+fun LocalDate.formatMonthYear(): String = format(DateTimeFormatter.ofPattern("MMMM y")).replaceFirstChar {
+    if (it.isLowerCase()) it.titlecase(
+        Locale.getDefault()
+    ) else it.toString()
+}
 
 fun LocalDate.weekStartDate(weekStartDay: DayOfWeek = DayOfWeek.MONDAY): LocalDate {
     var date = this

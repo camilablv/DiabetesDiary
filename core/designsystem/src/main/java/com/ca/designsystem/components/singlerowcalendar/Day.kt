@@ -2,6 +2,7 @@ package com.ca.designsystem.components.singlerowcalendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -27,7 +28,9 @@ internal fun Day(
     Column(
         modifier = modifier
             .clickable(
-                enabled = date <= LocalDate.now()
+                enabled = date <= LocalDate.now(),
+                indication = null,
+                interactionSource = MutableInteractionSource(),
             ) { onClick(date) }
             .width(36.dp)
             .wrapContentHeight()
@@ -50,10 +53,7 @@ internal fun Day(
                 )
                 .padding(6.dp)
                 .size(24.dp)
-
-                .aspectRatio(1f)
-
-                ,
+                .aspectRatio(1f),
             text = date.dayOfMonth.toString(),
             style = Theme.typography.bodyLarge,
             color = if (date > LocalDate.now()) Color.Gray.copy(alpha = 0.3f) else textColor,
