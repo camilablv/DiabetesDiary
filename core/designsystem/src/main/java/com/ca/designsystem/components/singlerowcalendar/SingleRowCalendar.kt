@@ -1,6 +1,5 @@
 package com.ca.designsystem.components.singlerowcalendar
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -30,11 +29,11 @@ data class CalendarState(
 fun SingleRowCalendar(
     selectedDay: String = "",
     onSelectedDayChange: (LocalDate) -> Unit = {},
-    loadNextWeek: (nextWeekDate: LocalDate) -> Unit,
-    loadPrevWeek: (endWeekDate: LocalDate) -> Unit,
-    loadedDates: Array<List<LocalDate>>
+    loadNextWeek: () -> Unit,
+    loadPrevWeek: () -> Unit,
+    loadedDates: CalendarState
 ) {
-    val pagerState = rememberPagerState(initialPage = 1)
+    val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE / 2)
     val scope = rememberCoroutineScope()
 
 //    val dateCursor by remember {
@@ -67,6 +66,7 @@ fun SingleRowCalendar(
                         .clickable {
                             scope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                                loadPrevWeek()
                             }
                         },
                     painter = painterResource(id = com.ca.designsystem.R.drawable.round_arrow_back),
@@ -74,7 +74,7 @@ fun SingleRowCalendar(
                 )
                 Text(
                     modifier = Modifier,
-                    text = LocalDate.now().date()
+                    text = loadedDates.currentWeek[0].month.toString()
                 )
 
                 Icon(
@@ -84,6 +84,7 @@ fun SingleRowCalendar(
                         ) {
                             scope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                loadNextWeek()
                             }
                         },
                     painter = painterResource(id = com.ca.designsystem.R.drawable.round_arrow_forward),
@@ -103,7 +104,7 @@ fun SingleRowCalendar(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    loadedDates[currentPage].forEach {
+                    loadedDates.currentWeek.forEach {
                         Day(
                             date = it,
                             onClick = { date ->

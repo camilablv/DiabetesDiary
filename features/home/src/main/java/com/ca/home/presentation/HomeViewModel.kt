@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.common.utils.getNextDates
-import com.ca.common.utils.startDates
 import com.ca.common.utils.weekStartDate
+import com.ca.designsystem.components.singlerowcalendar.CalendarState
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.GetRemindersUseCase
 import com.ca.model.RecordInsulinReminder
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.Period
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,17 +34,26 @@ class HomeViewModel @Inject constructor(
                 startDate = LocalDate.now().weekStartDate().minusWeeks(1)
             )
         )
-    val visibleDates: StateFlow<Array<List<LocalDate>>> = _visibleDates
+    val visibleDates: StateFlow<CalendarState> = _visibleDates
 
-    private fun calculateCollapsedCalendarDays(startDate: LocalDate): Array<List<LocalDate>> {
+    private fun calculateCollapsedCalendarDays(startDate: LocalDate): CalendarState {
         val dates = startDate.getNextDates(21)
-        return Array(3) {
+        val array =  Array(3) {
             dates.slice(it * 7 until (it + 1) * 7)
         }
+        return CalendarState(
+            prevWeek = array[0],
+            currentWeek = array[1],
+            nextWeek = array[2]
+        )
     }
 
-    fun loadNexDates(startDate: LocalDate) {
-        calculateCalendarDates(startDate = startDate)
+    fun loadNextDates() {
+        calculateCalendarDates(startDate = visibleDates.value.currentWeek[0])
+    }
+
+    fun loadPrevDates() {
+        calculateCalendarDates(startDate = visibleDates.value.prevWeek[0].minusDays(7))
     }
 
     private fun calculateCalendarDates(

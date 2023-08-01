@@ -57,8 +57,8 @@ fun HomeScreen(
                 selectedDay = "",
                 onSelectedDayChange = {},
                 loadedDates = loadedDates,
-                loadNextWeek = {},
-                loadPrevWeek = {}
+                loadNextWeek = { viewModel.loadNextDates() },
+                loadPrevWeek = { viewModel.loadPrevDates() }
             )
             LazyColumn(
                 modifier = Modifier,
