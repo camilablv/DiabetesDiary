@@ -2,6 +2,7 @@ package com.ca.designsystem.components.singlerowcalendar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Card
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.formatMonthYear
@@ -49,40 +51,20 @@ fun SingleRowCalendar(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .clickable {
-                            scope.launch {
-                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                            }
-                        },
-                    painter = painterResource(id = R.drawable.round_arrow_back),
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier,
-                    text = visibleDate.value.formatMonthYear()
-                )
-
-                Icon(
-                    modifier = Modifier
-                        .clickable(
-                            enabled = pagerState.canScrollForward
-                        ) {
-                            scope.launch {
-                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                            }
-                        },
-                    painter = painterResource(id = R.drawable.round_arrow_forward),
-                    contentDescription = null,
-                    tint = if (pagerState.canScrollForward) Theme.colors.onBackground else Color.Gray.copy(alpha = 0.3f)
-                )
-            }
+            CalendarHeader(
+                title = visibleDate.value.formatMonthYear(),
+                onBackClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                    }
+                },
+                onForwardClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
+                },
+                canScrollForward = pagerState.canScrollForward
+            )
 
             CalendarPager(
                 pagerState = pagerState
@@ -106,6 +88,58 @@ fun SingleRowCalendar(
             }
         }
     }
+}
+
+@Composable
+internal fun CalendarHeader(
+    title: String,
+    onBackClick: () -> Unit,
+    onForwardClick: () -> Unit,
+    canScrollForward: Boolean
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        ArrowIcon(
+            painter = painterResource(id = R.drawable.round_arrow_back),
+            onClick = onBackClick
+        )
+
+        Text(
+            modifier = Modifier,
+            text = title
+        )
+
+        ArrowIcon(
+            painter = painterResource(id = R.drawable.round_arrow_forward),
+            color = if (canScrollForward) Theme.colors.onBackground else Color.Gray.copy(alpha = 0.3f),
+            enabled = canScrollForward,
+            onClick = onForwardClick
+        )
+    }
+}
+
+@Composable
+internal fun ArrowIcon(
+    painter: Painter,
+    color: Color = Theme.colors.onBackground,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    Icon(
+        modifier = Modifier
+            .clickable(
+                enabled = enabled,
+                indication = null,
+                interactionSource = MutableInteractionSource(),
+                onClick = onClick
+            ),
+        painter = painter,
+        contentDescription = null,
+        tint = color
+    )
 }
 
 private fun loadDates(page: Int): List<LocalDate> {
