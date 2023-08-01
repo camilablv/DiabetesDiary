@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ca.common.utils.getDay3LettersName
 import com.ca.designsystem.theme.Theme
 import java.time.LocalDate
 

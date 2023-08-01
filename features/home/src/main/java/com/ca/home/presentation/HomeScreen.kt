@@ -28,6 +28,7 @@ fun HomeScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val loadedDates by viewModel.visibleDates.collectAsStateWithLifecycle()
 
     Scaffold(
         floatingActionButton = {
@@ -52,7 +53,13 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            SingleRowCalendar()
+            SingleRowCalendar(
+                selectedDay = "",
+                onSelectedDayChange = {},
+                loadedDates = loadedDates,
+                loadNextWeek = {},
+                loadPrevWeek = {}
+            )
             LazyColumn(
                 modifier = Modifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -83,7 +90,5 @@ fun HomeScreen(
                 }
             }
         }
-
     }
-
 }
