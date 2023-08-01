@@ -53,6 +53,7 @@ fun SingleRowCalendar(
                 Icon(
                     modifier = Modifier
                         .clickable {
+                            visibleDates = dateCursor.prevWeek(visibleDates[0])
                             scope.launch {
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
                             }
@@ -75,23 +76,26 @@ fun SingleRowCalendar(
                     )
                 }
             }
-//            LaunchedEffect(pagerState.currentPage) {
-//                if (pagerState.targetPage < pagerState.currentPage) {
-//                    visibleDates = dateCursor.daysBetween(-1)
-//                } else if (pagerState.targetPage > pagerState.currentPage) {
-//                    visibleDates = dateCursor.daysBetween(1)
-//                }
-//            }
+            LaunchedEffect(pagerState.currentPage) {
+                if (pagerState.targetPage < pagerState.currentPage) {
+                    visibleDates = dateCursor.prevWeek(visibleDates[0])
+                }
+            }
 
             CalendarPager(
                 pagerState = pagerState
             ) {
+//                LaunchedEffect(pagerState.currentPage) {
+//                    if (pagerState.currentPage == 2) {
+//                        visibleDates = dateCursor.prevWeek(visibleDates[0])
+//                    }
+//                }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    dateCursor.daysBetween(1).forEach {
+                    visibleDates.forEach {
                         Day(
                             date = it,
                             onClick = { date ->

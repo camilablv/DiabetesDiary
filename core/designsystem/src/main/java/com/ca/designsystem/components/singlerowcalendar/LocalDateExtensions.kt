@@ -12,7 +12,7 @@ fun LocalDate.getDay3LettersName(): String =
 
 fun LocalDate.weekStartDate(weekStartDay: DayOfWeek = DayOfWeek.MONDAY): LocalDate {
     var date = this
-    while (dayOfWeek != weekStartDay) {
+    while (date.dayOfWeek != weekStartDay) {
         date = date.minusDays(1)
     }
     return date
@@ -28,12 +28,10 @@ fun LocalDate.startDates(): List<LocalDate> {
         .collect(Collectors.toList())
 }
 
-fun LocalDate.daysBetween(page: Int): List<LocalDate> {
-    val startDate = weekStartDate().minusDays((page * 7).toLong())
+fun LocalDate.prevWeek(fromDate: LocalDate): List<LocalDate> {
+    val startDate = fromDate.minusDays(7)
     val numOfDays = ChronoUnit.DAYS.between(startDate, startDate.plusDays(7))
-    return Stream.iterate(startDate) { date ->
-        date.plusDays(1)
-    }
+    return Stream.iterate(fromDate) { date -> date.plusDays(1) }
         .limit(numOfDays)
         .collect(Collectors.toList())
 }
