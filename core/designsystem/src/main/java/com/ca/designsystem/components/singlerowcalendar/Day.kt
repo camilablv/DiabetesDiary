@@ -1,5 +1,6 @@
 package com.ca.designsystem.components.singlerowcalendar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -9,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.getDay3LettersName
+import com.ca.common.utils.dayName
 import com.ca.designsystem.theme.Theme
 import java.time.LocalDate
 
@@ -28,12 +29,16 @@ internal fun Day(
                 enabled = date <= LocalDate.now()
             ) { onClick(date) }
             .width(36.dp)
-            .height(36.dp),
+            .height(36.dp)
+            .background(
+                color = if (isSelected) Theme.colors.secondary else Theme.colors.background,
+                shape = Theme.shapes.large
+            ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = date.getDay3LettersName(),
+            text = date.dayName(),
             style = Theme.typography.bodyMedium,
             color = textColor,
             textAlign = TextAlign.Center

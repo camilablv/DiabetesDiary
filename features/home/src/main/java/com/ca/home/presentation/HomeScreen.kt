@@ -28,7 +28,6 @@ fun HomeScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-    val loadedDates by viewModel.visibleDates.collectAsStateWithLifecycle()
 
     Scaffold(
         floatingActionButton = {
@@ -54,9 +53,8 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SingleRowCalendar(
-                selectedDay = "",
-                onSelectedDayChange = {},
-                loadDates = { viewModel.loadDates(it) }
+                selectedDay = viewState.selectedDate,
+                onSelectedDayChange = { viewModel.selectDate(it) }
             )
             LazyColumn(
                 modifier = Modifier,

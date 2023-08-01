@@ -12,24 +12,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.date
+import com.ca.common.utils.formatMonthYear
+import com.ca.common.utils.getPrevDates
+import com.ca.common.utils.weekStartDate
 import com.ca.designsystem.components.singlerowcalendar.*
 import com.ca.designsystem.theme.Theme
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlin.math.absoluteValue
 
-data class CalendarState(
-    val prevWeek: List<LocalDate>,
-    val currentWeek: List<LocalDate>,
-    val nextWeek: List<LocalDate>
-)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SingleRowCalendar(
-    selectedDay: String = "",
-    onSelectedDayChange: (LocalDate) -> Unit = {},
-    loadDates: (Int) -> List<LocalDate>
+    selectedDay: LocalDate,
+    onSelectedDayChange: (LocalDate) -> Unit = {}
 ) {
     val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE)
     val scope = rememberCoroutineScope()
@@ -63,7 +60,7 @@ fun SingleRowCalendar(
                 )
                 Text(
                     modifier = Modifier,
-                    text = LocalDate.now().date()
+                    text = LocalDate.now().formatMonthYear()
                 )
 
                 Icon(
@@ -87,7 +84,7 @@ fun SingleRowCalendar(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     loadDates(currentPage).forEach {
                         Day(
@@ -96,11 +93,16 @@ fun SingleRowCalendar(
                                 onSelectedDayChange(date)
                             },
                             modifier = Modifier,
-                            isSelected = false
+                            isSelected = it == selectedDay
                         )
                     }
                 }
             }
         }
     }
+}
+
+private fun loadDates(page: Int): List<LocalDate> {
+    val invertedPage = page.minus(Int.MAX_VALUE).plus(1).absoluteValue
+    return LocalDate.now().weekStartDate().getPrevDates(invertedPage)
 }
