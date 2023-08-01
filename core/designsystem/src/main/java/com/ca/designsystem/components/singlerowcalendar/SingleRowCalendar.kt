@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.common.utils.formatMonthYear
 import com.ca.common.utils.getPrevDates
 import com.ca.common.utils.weekStartDate
+import com.ca.designsystem.R
 import com.ca.designsystem.components.singlerowcalendar.*
 import com.ca.designsystem.theme.Theme
 import kotlinx.coroutines.launch
@@ -55,7 +56,7 @@ fun SingleRowCalendar(
                                 pagerState.animateScrollToPage(pagerState.currentPage - 1)
                             }
                         },
-                    painter = painterResource(id = com.ca.designsystem.R.drawable.round_arrow_back),
+                    painter = painterResource(id = R.drawable.round_arrow_back),
                     contentDescription = null
                 )
                 Text(
@@ -72,7 +73,7 @@ fun SingleRowCalendar(
                                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
                             }
                         },
-                    painter = painterResource(id = com.ca.designsystem.R.drawable.round_arrow_forward),
+                    painter = painterResource(id = R.drawable.round_arrow_forward),
                     contentDescription = null,
                     tint = if (pagerState.canScrollForward) Theme.colors.onBackground else Color.Gray.copy(alpha = 0.3f)
                 )

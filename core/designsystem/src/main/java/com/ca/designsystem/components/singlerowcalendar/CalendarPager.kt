@@ -17,7 +17,6 @@ internal fun CalendarPager(
     HorizontalPager(
         pageCount = Int.MAX_VALUE,
         state = pagerState,
-        contentPadding = PaddingValues(bottom = 6.dp),
         beyondBoundsPageCount = 1
     ) { page ->
         content(page)

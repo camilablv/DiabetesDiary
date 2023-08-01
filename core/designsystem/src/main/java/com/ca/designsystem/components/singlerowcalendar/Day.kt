@@ -3,6 +3,7 @@ package com.ca.designsystem.components.singlerowcalendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,28 +30,33 @@ internal fun Day(
                 enabled = date <= LocalDate.now()
             ) { onClick(date) }
             .width(36.dp)
-            .height(36.dp)
-            .background(
-                color = if (isSelected) Theme.colors.secondary else Theme.colors.background,
-                shape = Theme.shapes.large
-            ),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .wrapContentHeight()
+        ,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = date.dayName(),
             style = Theme.typography.bodyMedium,
-            color = textColor,
+            color = Theme.colors.onBackground,
             textAlign = TextAlign.Center
         )
 
         Text(
             modifier = Modifier
+                .background(
+                    color = if (isSelected) Theme.colors.secondary else Theme.colors.background,
+                    shape = CircleShape
+                )
                 .padding(6.dp)
-                .aspectRatio(1f),
+                .size(24.dp)
+
+                .aspectRatio(1f)
+
+                ,
             text = date.dayOfMonth.toString(),
             style = Theme.typography.bodyLarge,
-            color = if (date > LocalDate.now()) Color.Gray.copy(alpha = 0.5f) else textColor,
+            color = if (date > LocalDate.now()) Color.Gray.copy(alpha = 0.3f) else textColor,
             textAlign = TextAlign.Center
         )
     }
