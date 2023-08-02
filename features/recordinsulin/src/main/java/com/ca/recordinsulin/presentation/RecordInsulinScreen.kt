@@ -20,6 +20,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.common.utils.date
 import com.ca.common.utils.timeOfhhmmPattern
 import com.ca.designsystem.components.*
+import com.ca.designsystem.components.pickers.DatePicker
+import com.ca.designsystem.components.pickers.TimePicker
 import com.ca.designsystem.theme.Theme
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -133,7 +135,10 @@ fun RecordInsulinScreen(
             }
 
             Button(
-                onClick = { viewModel.addRecord() },
+                onClick = {
+                    viewModel.addRecord()
+                    onBackClick()
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Theme.colors.primary
                 ),

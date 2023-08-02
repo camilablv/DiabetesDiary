@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.domain.repository.SettingsRepository
+import com.ca.domain.usecase.GetRecordsByDateUseCase
 import com.ca.domain.usecase.GetRemindersUseCase
 import com.ca.model.RecordInsulinReminder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getRemindersUseCase: GetRemindersUseCase,
+    private val getRecordsUseCase: GetRecordsByDateUseCase,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -37,9 +39,26 @@ class HomeViewModel @Inject constructor(
                 _viewState.update { it.copy(reminders = reminders) }
             }
         }
+
+        recordsByDate(viewState.value.selectedDate)
     }
 
     fun selectDate(date: LocalDate) {
         _viewState.update { it.copy(selectedDate = date) }
+        recordsByDate(date)
+    }
+
+    private fun recordsByDate(date: LocalDate) {
+        viewModelScope.launch {
+            getRecordsUseCase.invoke(date).collect { records ->
+                _viewState.update { state ->
+                    state.copy(
+                        records = records
+                            .filter { it.dateTime.toLocalDate() == viewState.value.selectedDate }
+                    )
+                }
+            }
+        }
     }
 }
+

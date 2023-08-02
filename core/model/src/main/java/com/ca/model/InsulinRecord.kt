@@ -6,7 +6,7 @@ data class InsulinRecord(
     val cursor: String,
     val id: String,
     val insulin: Insulin,
-    val dateTime: LocalDateTime,
+    override val dateTime: LocalDateTime,
     val units: Double,
     val note: String?
-)
+) : Record

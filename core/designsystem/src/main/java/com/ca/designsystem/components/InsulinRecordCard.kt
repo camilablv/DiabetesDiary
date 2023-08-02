@@ -1,4 +1,4 @@
-package com.ca.records.insulin.presentation.components
+package com.ca.designsystem.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,7 +16,7 @@ import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.InsulinRecord
 
 @Composable
-fun InsulinRecord(record: InsulinRecord) {
+fun InsulinRecordCard(record: InsulinRecord) {
     Card(
         modifier = Modifier,
         elevation = Theme.elevations.default,

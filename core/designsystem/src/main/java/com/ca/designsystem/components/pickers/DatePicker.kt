@@ -1,4 +1,4 @@
-package com.ca.designsystem.components
+package com.ca.designsystem.components.pickers
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi

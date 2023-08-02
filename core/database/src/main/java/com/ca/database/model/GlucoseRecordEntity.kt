@@ -10,12 +10,20 @@ import java.time.LocalTime
 @Entity(tableName = "glucose_record")
 data class GlucoseRecordEntity(
     @PrimaryKey val id: String,
-    val units: GlucoseUnits,
     val level: Double,
     val note: String,
     val date: LocalDate,
     val time: LocalTime,
     val measuringMark: String
+)
+
+fun GlucoseRecord.asEntity() = GlucoseRecordEntity(
+    id = id,
+    level = level,
+    note = note,
+    date = dateTime.toLocalDate(),
+    time = dateTime.toLocalTime(),
+    measuringMark = measuringMark
 )
 
 fun GlucoseRecordEntity.asExternalModel() = GlucoseRecord(

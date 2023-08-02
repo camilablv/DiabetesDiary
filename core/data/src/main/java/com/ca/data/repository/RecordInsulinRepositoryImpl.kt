@@ -1,9 +1,8 @@
 package com.ca.data.repository
 
-import com.ca.database.DiaryDatabase
 import com.ca.database.dao.InsulinRecordsDao
-import com.ca.database.model.InsulinRecordEntity
 import com.ca.database.model.asEntity
+import com.ca.database.model.asExternalModel
 import com.ca.datastore.SettingsDataStore
 import com.ca.domain.repository.RecordInsulinRepository
 import com.ca.model.Insulin
@@ -13,6 +12,7 @@ import com.ca.network.utils.record
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -49,11 +49,17 @@ class RecordInsulinRepositoryImpl @Inject constructor(
         insulinRecordsDao.insert(record.asEntity())
     }
 
-    override suspend fun records(): Flow<List<InsulinRecordEntity>> {
-        return insulinRecordsDao.insulinRecords().flowOn(Dispatchers.IO)
+    override suspend fun records(): Flow<List<InsulinRecord>> {
+        return insulinRecordsDao
+            .insulinRecords()
+            .map { list -> list.map { it.asExternalModel() } }
+            .flowOn(Dispatchers.IO)
     }
 
-    override suspend fun recordsByDate(date: LocalDate): Flow<List<InsulinRecordEntity>> {
-        return insulinRecordsDao.recordsByDate(date).flowOn(Dispatchers.IO)
+    override suspend fun recordsByDate(date: LocalDate): Flow<List<InsulinRecord>> {
+        return insulinRecordsDao
+            .recordsByDate(date)
+            .map { list -> list.map { it.asExternalModel() } }
+            .flowOn(Dispatchers.IO)
     }
 }

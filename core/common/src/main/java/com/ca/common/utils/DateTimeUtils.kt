@@ -35,8 +35,8 @@ fun LocalDate.weekStartDate(weekStartDay: DayOfWeek = DayOfWeek.MONDAY): LocalDa
     }
     return date
 }
-fun LocalDate.getPrevDates(page: Int): List<LocalDate> {
-    val startDAte = this.minusDays((page * 7).toLong())
+fun LocalDate.getPrevDates(weeksFromCurrentDate: Int): List<LocalDate> {
+    val startDAte = this.minusDays((weeksFromCurrentDate * 7).toLong())
     val dates = mutableListOf<LocalDate>()
     repeat(7) { day ->
         dates.add(startDAte.plusDays((day).toLong()))

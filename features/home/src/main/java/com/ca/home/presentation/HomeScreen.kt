@@ -13,12 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.GlucoseReminderCardWithCheckbox
+import com.ca.designsystem.components.InsulinRecordCard
 import com.ca.designsystem.components.InsulinReminderCardWithCheckbox
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
 import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
+import com.ca.model.*
 
 @Composable
 fun HomeScreen(
@@ -75,6 +75,17 @@ fun HomeScreen(
                             GlucoseReminderCardWithCheckbox(
                                 reminder = reminder
                             )
+                        }
+                    }
+                }
+
+                items(viewState.records) { item: Record ->
+                    when(item) {
+                        is InsulinRecord -> {
+                            InsulinRecordCard(record = item)
+                        }
+                        is GlucoseRecord -> {
+
                         }
                     }
                 }

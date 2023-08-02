@@ -14,7 +14,7 @@ interface GlucoseRecordsDao {
     suspend fun delete(record: GlucoseRecordEntity)
 
     @Query("SELECT * FROM glucose_record")
-    fun insulinRecords(): Flow<List<GlucoseRecordEntity>>
+    fun glucoseRecords(): Flow<List<GlucoseRecordEntity>>
 
     @Update
     fun update(record: GlucoseRecordEntity)

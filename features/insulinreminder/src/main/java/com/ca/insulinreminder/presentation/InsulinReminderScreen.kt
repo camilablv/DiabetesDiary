@@ -19,7 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.Counter
 import com.ca.designsystem.components.InsulinSelectionCard
 import com.ca.designsystem.components.ReminderIterationOptions
-import com.ca.designsystem.components.TimeWheelPicker
+import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.theme.Theme
 
 @Composable
