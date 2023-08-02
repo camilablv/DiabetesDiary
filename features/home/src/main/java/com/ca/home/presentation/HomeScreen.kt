@@ -12,10 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.GlucoseRecordCard
-import com.ca.designsystem.components.GlucoseReminderCardWithCheckbox
-import com.ca.designsystem.components.InsulinRecordCard
-import com.ca.designsystem.components.InsulinReminderCardWithCheckbox
+import com.ca.designsystem.components.*
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
 import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
@@ -68,13 +65,13 @@ fun HomeScreen(
                         is RecordInsulinReminder -> {
                             InsulinReminderCardWithCheckbox(
                                 reminder = reminder,
-                                checked = false,
-                                onCheckboxClick = {}
+                                onDoneClick = {}
                             )
                         }
                         is RecordGlucoseReminder -> {
                             GlucoseReminderCardWithCheckbox(
-                                reminder = reminder
+                                reminder = reminder,
+                                onDoneClick = {}
                             )
                         }
                     }
@@ -83,10 +80,10 @@ fun HomeScreen(
                 items(viewState.records) { item: Record ->
                     when(item) {
                         is InsulinRecord -> {
-                            InsulinRecordCard(record = item)
+                            InsulinRecordCardWithTimeline(record = item)
                         }
                         is GlucoseRecord -> {
-                            GlucoseRecordCard(record = item)
+                            GlucoseRecordCardWithTimeline(record = item)
                         }
                     }
                 }

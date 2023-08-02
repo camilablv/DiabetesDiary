@@ -1,26 +1,20 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.ca.designsystem.R
+import com.ca.common.utils.time
+import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCard
 import com.ca.designsystem.theme.Theme
-import com.ca.model.RecordInsulinReminder
-import kotlin.random.Random
+import com.ca.model.GlucoseRecord
+
 
 @Composable
-fun InsulinReminderCardWithCheckbox(
-    reminder: RecordInsulinReminder,
-    checked: Boolean,
-    onCheckboxClick: () -> Unit
-) {
+fun GlucoseRecordCardWithTimeline(record: GlucoseRecord) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -28,7 +22,7 @@ fun InsulinReminderCardWithCheckbox(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = reminder.time.toString(),
+            text = record.dateTime.time(),
             style = Theme.typography.bodyLarge
         )
 
@@ -40,39 +34,28 @@ fun InsulinReminderCardWithCheckbox(
             Row(
                 modifier = Modifier
                     .height(56.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
+                MeasuringMarkCard(mark = record.measuringMark)
+                
+                Row(
                     modifier = Modifier
-                        .size(48.dp)
-                        .padding(4.dp),
-                    painter = painterResource(id = R.drawable.injection),
-                    contentDescription = ""
-                )
-
-                Column(
-                    modifier = Modifier
-                        .padding(4.dp)
+                        .padding(end = 12.dp)
                         .weight(2f),
-                    verticalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = reminder.insulin?.name!!,
+                        text = record.measuringMark.text,
                         style = Theme.typography.bodyLarge
                     )
                     Text(
-                        text = reminder.dose.toString(),
+                        text = record.level.toString(),
                         style = Theme.typography.bodyLarge
                     )
                 }
-                
-                Checkbox(
-                    checked = Random.nextBoolean(),
-                    onCheckedChange = {}
-                )
             }
-            
+
         }
     }
 }

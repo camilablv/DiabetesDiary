@@ -55,6 +55,7 @@ class HomeViewModel @Inject constructor(
                     state.copy(
                         records = records
                             .filter { it.dateTime.toLocalDate() == viewState.value.selectedDate }
+                            .sortedBy { it.dateTime.toLocalTime() }
                     )
                 }
             }

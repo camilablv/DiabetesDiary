@@ -1,4 +1,4 @@
-package com.ca.designsystem.components
+package com.ca.designsystem.components.glucosemeasuringmark
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,14 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
 import com.ca.model.MeasuringMark
 
-internal val measuringMarks = listOf(
-    MeasuringMark.GENERAL to com.ca.designsystem.R.drawable.person,
-    MeasuringMark.FASTING to com.ca.designsystem.R.drawable.no_meals,
-    MeasuringMark.PRE_MEAL to com.ca.designsystem.R.drawable.lunch_dining,
-    MeasuringMark.POST_MEAL to com.ca.designsystem.R.drawable.restaurant,
-    MeasuringMark.BEFORE_SLEEP to com.ca.designsystem.R.drawable.bedtime,
-)
-
 @Composable
 fun MeasuringMarkCards(
     selectedMark: MeasuringMark,
@@ -32,28 +24,29 @@ fun MeasuringMarkCards(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        measuringMarks.forEach { mark ->
+        measuringMarkIcons.forEach { markIcon ->
             Card(
                 modifier = Modifier
-                    .clickable { onSelect(mark.first) },
+                    .clickable { onSelect(markIcon.mark) },
                 elevation = Theme.elevations.default,
-                backgroundColor = if (mark.first == selectedMark) Theme.colors.secondary else Theme.colors.background
+                backgroundColor = if (markIcon.mark == selectedMark) Theme.colors.secondary else Theme.colors.background
             ) {
                 Column(
                     modifier = Modifier
                         .padding(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
                     Icon(
                         modifier = Modifier
                             .size(36.dp),
-                        painter = painterResource(id = mark.second),
+                        painter = painterResource(id = markIcon.icon),
                         contentDescription = "",
-                        tint = if (mark.first == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
+                        tint = if (markIcon.mark == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
                     )
                     Text(
-                        text = mark.first.text,
-                        color = if (mark.first == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
+                        text = markIcon.mark.text,
+                        color = if (markIcon.mark == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
                     )
                 }
             }
