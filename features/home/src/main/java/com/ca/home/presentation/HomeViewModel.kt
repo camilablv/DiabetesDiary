@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.GetRecordsByDateUseCase
 import com.ca.domain.usecase.GetRemindersUseCase
+import com.ca.domain.usecase.MarkInsulinReminderAsDoneUseCase
 import com.ca.model.RecordInsulinReminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,9 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val settingsRepository: SettingsRepository,
     private val getRemindersUseCase: GetRemindersUseCase,
     private val getRecordsUseCase: GetRecordsByDateUseCase,
-    private val settingsRepository: SettingsRepository
+    private val markInsulinReminderAsDoneUseCase: MarkInsulinReminderAsDoneUseCase
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(HomeViewState())
@@ -59,6 +61,12 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun markInsulinReminderAsDone(reminder: RecordInsulinReminder) {
+        viewModelScope.launch {
+            markInsulinReminderAsDoneUseCase.invoke(reminder)
         }
     }
 }

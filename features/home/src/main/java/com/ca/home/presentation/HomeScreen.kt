@@ -65,13 +65,15 @@ fun HomeScreen(
                         is RecordInsulinReminder -> {
                             InsulinReminderCardWithCheckbox(
                                 reminder = reminder,
-                                onDoneClick = {}
+                                onDoneClick = {
+                                    viewModel.markInsulinReminderAsDone(it)
+                                }
                             )
                         }
                         is RecordGlucoseReminder -> {
                             GlucoseReminderCardWithCheckbox(
                                 reminder = reminder,
-                                onDoneClick = {}
+                                onAddClick = { navigateToRecordGlucose() }
                             )
                         }
                     }
