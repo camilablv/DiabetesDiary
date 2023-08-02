@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
 import com.ca.model.RecordGlucoseReminder
 
@@ -29,11 +30,7 @@ fun GlucoseReminderCardWithCheckbox(
             style = Theme.typography.bodyLarge
         )
 
-        Card(
-            modifier = Modifier,
-            shape = Theme.shapes.large,
-            elevation = Theme.elevations.default
-        ) {
+        ReminderCard {
             Row(
                 modifier = Modifier
                     .height(56.dp),
@@ -47,12 +44,7 @@ fun GlucoseReminderCardWithCheckbox(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        modifier = Modifier
-                            .size(48.dp),
-                        painter = painterResource(id = com.ca.designsystem.R.drawable.blood_filled),
-                        contentDescription = ""
-                    )
+                    FilledIcon(backgroundColor = Grey100, icon = com.ca.designsystem.R.drawable.blood_filled)
 
                     Text(
                         text = "Glucose measuring",
