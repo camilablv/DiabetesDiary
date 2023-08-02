@@ -6,6 +6,7 @@ import com.ca.database.model.asExternalModel
 import com.ca.domain.repository.RecordGlucoseRepository
 import com.ca.model.GlucoseRecord
 import com.ca.network.api.NetworkClient
+import com.ca.network.utils.record
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -34,6 +35,11 @@ class RecordGlucoseRepositoryImpl @Inject constructor(
             note,
             mark,
             units
+        ).fold(
+            onSuccess = {
+                addRecord(it.record())
+            },
+            onFailure = {}
         )
     }
 

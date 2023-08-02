@@ -23,7 +23,6 @@ import com.ca.designsystem.components.*
 import com.ca.designsystem.components.pickers.DatePicker
 import com.ca.designsystem.components.pickers.TimePicker
 import com.ca.designsystem.theme.Theme
-import com.ca.recordglucose.presentation.components.GlucoseStatusCards
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -121,7 +120,7 @@ fun RecordGlucoseScreen(
                 }
 
                 item {
-                    GlucoseStatusCards(
+                    MeasuringMarkCards(
                         selectedMark = viewState.measuringMark,
                         onSelect = { viewModel.setMeasuringMark(it) }
                     )

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.components.GlucoseRecordCard
 import com.ca.designsystem.components.GlucoseReminderCardWithCheckbox
 import com.ca.designsystem.components.InsulinRecordCard
 import com.ca.designsystem.components.InsulinReminderCardWithCheckbox
@@ -85,7 +86,7 @@ fun HomeScreen(
                             InsulinRecordCard(record = item)
                         }
                         is GlucoseRecord -> {
-
+                            GlucoseRecordCard(record = item)
                         }
                     }
                 }

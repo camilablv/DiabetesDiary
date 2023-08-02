@@ -57,7 +57,7 @@ fun RecordGlucoseMutation.Data.record(): GlucoseRecord {
             level = units,
             note = notes ?: "",
             dateTime = LocalDateTime.parse(measuredAt.toString()),
-            measuringMark = status.name
+            measuringMark = MeasuringMark.valueOf(status.name)
         )
     }
 }

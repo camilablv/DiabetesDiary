@@ -20,13 +20,15 @@ import com.ca.database.util.*
         InsulinRecordEntity::class,
         GlucoseRecordEntity::class
     ],
-    version = 4
+    version = 6,
+    exportSchema = false
 )
 @TypeConverters(
     LocalTimeConverter::class,
     ReminderIterationConverter::class,
     LocalDateConverter::class,
-    GlucoseUnitsConverter::class
+    GlucoseUnitsConverter::class,
+    MarkConverter::class
 )
 abstract class DiaryDatabase : RoomDatabase() {
     abstract fun glucoseReminderDao(): GlucoseReminderDao

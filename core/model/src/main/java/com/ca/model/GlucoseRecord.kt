@@ -7,5 +7,5 @@ data class GlucoseRecord(
     val level: Double,
     val note: String,
     override val dateTime: LocalDateTime,
-    val measuringMark: String
+    val measuringMark: MeasuringMark
 ) : Record

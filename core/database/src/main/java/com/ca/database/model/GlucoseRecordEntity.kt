@@ -14,7 +14,7 @@ data class GlucoseRecordEntity(
     val note: String,
     val date: LocalDate,
     val time: LocalTime,
-    val measuringMark: String
+    val measuringMark: MeasuringMark
 )
 
 fun GlucoseRecord.asEntity() = GlucoseRecordEntity(

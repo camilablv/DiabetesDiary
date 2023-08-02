@@ -1,4 +1,4 @@
-package com.ca.recordglucose.presentation.components
+package com.ca.designsystem.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,11 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
-import com.ca.recordglucose.domain.model.MeasuringMark
-import com.ca.recordglucose.domain.model.measuringMarks
+import com.ca.model.MeasuringMark
+
+internal val measuringMarks = listOf(
+    MeasuringMark.GENERAL to com.ca.designsystem.R.drawable.person,
+    MeasuringMark.FASTING to com.ca.designsystem.R.drawable.no_meals,
+    MeasuringMark.PRE_MEAL to com.ca.designsystem.R.drawable.lunch_dining,
+    MeasuringMark.POST_MEAL to com.ca.designsystem.R.drawable.restaurant,
+    MeasuringMark.BEFORE_SLEEP to com.ca.designsystem.R.drawable.bedtime,
+)
 
 @Composable
-fun GlucoseStatusCards(
+fun MeasuringMarkCards(
     selectedMark: MeasuringMark,
     onSelect: (MeasuringMark) -> Unit
 ) {
@@ -28,9 +35,9 @@ fun GlucoseStatusCards(
         measuringMarks.forEach { mark ->
             Card(
                 modifier = Modifier
-                    .clickable { onSelect(mark) },
+                    .clickable { onSelect(mark.first) },
                 elevation = Theme.elevations.default,
-                backgroundColor = if (mark == selectedMark) Theme.colors.secondary else Theme.colors.background
+                backgroundColor = if (mark.first == selectedMark) Theme.colors.secondary else Theme.colors.background
             ) {
                 Column(
                     modifier = Modifier
@@ -40,13 +47,13 @@ fun GlucoseStatusCards(
                     Icon(
                         modifier = Modifier
                             .size(36.dp),
-                        painter = painterResource(id = mark.icon),
+                        painter = painterResource(id = mark.second),
                         contentDescription = "",
-                        tint = if (mark == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
+                        tint = if (mark.first == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
                     )
                     Text(
-                        text = mark.text,
-                        color = if (mark == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
+                        text = mark.first.text,
+                        color = if (mark.first == selectedMark) Theme.colors.onSecondary else Theme.colors.onBackground
                     )
                 }
             }
