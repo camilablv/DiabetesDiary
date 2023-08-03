@@ -6,6 +6,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
@@ -28,29 +29,40 @@ fun GlucoseReminderCardWithCheckbox(
         )
 
         ReminderCard {
-            Row(
+            Column(
                 modifier = Modifier
-                    .height(56.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(8.dp)
             ) {
+                Text(
+                    text = "Reminder: Measuring glucose level",
+                    style = Theme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
+                )
+
                 Row(
                     modifier = Modifier
-                        .padding(4.dp)
-                        .weight(2f),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        .height(56.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    FilledIcon(backgroundColor = Grey100, icon = com.ca.designsystem.R.drawable.blood_filled)
+                    Row(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .weight(2f),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        FilledIcon(backgroundColor = Grey100, icon = com.ca.designsystem.R.drawable.blood_filled)
 
-                    Text(
-                        text = "Glucose measuring",
-                        style = Theme.typography.bodyLarge
-                    )
-                }
+                        Text(
+                            text = "Glucose measuring",
+                            style = Theme.typography.bodyLarge
+                        )
+                    }
 
-                TextButton(onClick = { onAddClick(reminder) }) {
-                    Text(text = "Add")
+                    TextButton(onClick = { onAddClick(reminder) }) {
+                        Text(text = "Add")
+                    }
                 }
             }
         }

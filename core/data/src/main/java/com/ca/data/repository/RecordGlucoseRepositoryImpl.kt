@@ -25,7 +25,7 @@ class RecordGlucoseRepositoryImpl @Inject constructor(
     override suspend fun recordGlucose(
         time: LocalTime,
         date: LocalDate,
-        note: String,
+        note: String?,
         mark: String,
         units: Int
     ) {

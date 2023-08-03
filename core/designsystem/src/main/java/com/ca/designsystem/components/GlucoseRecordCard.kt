@@ -45,7 +45,7 @@ fun GlucoseRecordCard(
                 )
             }
 
-            record.note.let {
+            record.note?.let {
                 Divider()
                 Text(text = it)
             }

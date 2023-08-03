@@ -24,11 +24,11 @@ class RecordGlucoseViewModel @Inject constructor(
 
     fun addRecord() {
         with(viewState.value) {
-            addRecord(time, date, note, measuringMark, glucoseLevel)
+            addRecord(time, date, note.ifEmpty { null }, measuringMark, glucoseLevel)
         }
     }
 
-    private fun addRecord(time: LocalTime, date: LocalDate, note: String, mark: MeasuringMark, glucoseLevel: Int) {
+    private fun addRecord(time: LocalTime, date: LocalDate, note: String?, mark: MeasuringMark, glucoseLevel: Int) {
         viewModelScope.launch {
             repository.recordGlucose(time, date, note, mark.name, glucoseLevel)
         }

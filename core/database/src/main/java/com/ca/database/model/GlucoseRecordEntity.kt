@@ -11,7 +11,7 @@ import java.time.LocalTime
 data class GlucoseRecordEntity(
     @PrimaryKey val id: String,
     val level: Double,
-    val note: String,
+    val note: String?,
     val date: LocalDate,
     val time: LocalTime,
     val measuringMark: MeasuringMark
