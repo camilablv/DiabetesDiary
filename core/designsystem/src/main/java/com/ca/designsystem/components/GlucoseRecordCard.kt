@@ -34,7 +34,7 @@ fun GlucoseRecordCard(
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = record.dateTime.time(),
+                    text = record.time.toString(),
                     style = Theme.typography.bodyMedium
                 )
                 Text(

@@ -8,15 +8,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ca.designsystem.R
+import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
-import com.ca.designsystem.utils.colorFromHex
-import com.ca.model.RecordInsulinReminder
+import com.ca.model.RecordGlucoseReminder
 
 @Composable
-fun InsulinReminderCardWithCheckbox(
-    reminder: RecordInsulinReminder,
-    onDoneClick: (RecordInsulinReminder) -> Unit
+fun GlucoseReminderTimelineCard(
+    reminder: RecordGlucoseReminder,
+    onAddClick: (RecordGlucoseReminder) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -35,49 +34,37 @@ fun InsulinReminderCardWithCheckbox(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = "Reminder: Taking insulin",
+                    text = "Reminder: Measuring glucose level",
                     style = Theme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
 
                 Row(
                     modifier = Modifier
-                        .height(56.dp)
-                        .padding(start = 4.dp),
+                        .height(56.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    FilledIcon(backgroundColor = colorFromHex(reminder.insulin?.color!!), icon = R.drawable.notifications)
-
-                    Column(
+                    Row(
                         modifier = Modifier
                             .padding(4.dp)
                             .weight(2f),
-                        verticalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
+                        FilledIcon(backgroundColor = Grey100, icon = com.ca.designsystem.R.drawable.blood_filled)
+
                         Text(
-                            text = reminder.insulin?.name!!,
+                            text = "Glucose measuring",
                             style = Theme.typography.bodyLarge
                         )
-
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalAlignment = Alignment.Bottom
-                        ) {
-                            Text(
-                                text = reminder.dose.toString(),
-                                style = Theme.typography.bodyLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                text = "UN",
-                                style = Theme.typography.bodySmall,
-                            )
-                        }
                     }
 
-                    TextButton(onClick = { onDoneClick(reminder) }) {
-                        Text(text = "Done")
+                    TextButton(onClick = {
+                        onAddClick(reminder)
+                    }
+                    ) {
+                        Text(text = "Add")
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package com.ca.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ca.domain.repository.SettingsRepository
@@ -11,6 +10,7 @@ import com.ca.model.RecordInsulinReminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -29,39 +29,38 @@ class HomeViewModel @Inject constructor(
         get() = _viewState
 
     init {
-        viewModelScope.launch {
-            getRemindersUseCase.invoke().collect { list ->
-                val insulins = settingsRepository.insulins()
-                val reminders = list.map { reminder ->
-                    if (reminder is RecordInsulinReminder) {
-                        reminder.copy(insulin = insulins.find { it.id == reminder.insulinId }!!)
-                    } else reminder
-                }.sortedBy { it.time }
-                Log.d("TEST1", reminders.toString())
-                _viewState.update { it.copy(reminders = reminders) }
-            }
-        }
-
-        recordsByDate(viewState.value.selectedDate)
+        items(viewState.value.selectedDate)
     }
 
     fun selectDate(date: LocalDate) {
         _viewState.update { it.copy(selectedDate = date) }
-        recordsByDate(date)
+        items(date)
     }
 
-    private fun recordsByDate(date: LocalDate) {
+    private fun items(date: LocalDate) {
         viewModelScope.launch {
-            getRecordsUseCase.invoke(date).collect { records ->
+            val reminders = getRemindersUseCase.invoke()
+            val records = getRecordsUseCase.invoke(date)
+            records.combine(reminders) { recordItems, reminderItems ->
+                if (date == LocalDate.now()) {
+                    val insulins = settingsRepository.insulins()
+                    val list = reminderItems.map { reminder ->
+                        if (reminder is RecordInsulinReminder) {
+                            reminder.copy(insulin = insulins.find { it.id == reminder.insulinId }!!)
+                        } else reminder
+                    }
+                    recordItems.plus(list)
+                } else recordItems
+            }.collect { list ->
                 _viewState.update { state ->
                     state.copy(
-                        records = records
-                            .filter { it.dateTime.toLocalDate() == viewState.value.selectedDate }
-                            .sortedBy { it.dateTime.toLocalTime() }
+                        listItems = list
+                            .sortedBy { it.time }
                     )
                 }
             }
         }
+
     }
 
     fun markInsulinReminderAsDone(reminder: RecordInsulinReminder) {

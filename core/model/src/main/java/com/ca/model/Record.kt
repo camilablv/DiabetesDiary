@@ -2,6 +2,6 @@ package com.ca.model
 
 import java.time.LocalDateTime
 
-interface Record {
+interface Record : ListItem {
     val dateTime: LocalDateTime
 }

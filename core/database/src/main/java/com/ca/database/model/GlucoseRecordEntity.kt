@@ -21,15 +21,16 @@ fun GlucoseRecord.asEntity() = GlucoseRecordEntity(
     id = id,
     level = level,
     note = note,
-    date = dateTime.toLocalDate(),
-    time = dateTime.toLocalTime(),
+    date = date,
+    time = time,
     measuringMark = measuringMark
 )
 
 fun GlucoseRecordEntity.asExternalModel() = GlucoseRecord(
     id = id,
     level = level,
-    dateTime = LocalDateTime.of(date, time),
+    date = date,
+    time = time,
     note = note,
     measuringMark = measuringMark
 )

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.common.utils.date
-import com.ca.common.utils.timeOfhhmmPattern
+import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.components.*
 import com.ca.designsystem.components.pickers.DatePicker
 import com.ca.designsystem.components.pickers.TimePicker
@@ -28,6 +28,7 @@ import com.ca.designsystem.theme.Theme
 @Composable
 fun RecordInsulinScreen(
     viewModel: RecordInsulinViewModel = hiltViewModel(),
+    navArgument: String?,
     onBackClick: () -> Unit
 ) {
 
@@ -88,7 +89,7 @@ fun RecordInsulinScreen(
                             modifier = Modifier
                                 .width(120.dp)
                                 .clickable { viewModel.showTimePicker(true) },
-                            time = viewState.time.timeOfhhmmPattern()
+                            time = viewState.time.timeOfHHmmPattern()
                         )
                     }
                 }

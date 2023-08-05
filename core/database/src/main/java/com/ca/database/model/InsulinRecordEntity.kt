@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 import com.ca.model.Insulin
 import com.ca.model.InsulinRecord
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Entity(tableName = "insulin_record")
@@ -46,7 +45,8 @@ fun InsulinRecordEntity.asExternalModel() = InsulinRecord(
     cursor = cursor,
     id = id,
     insulin = insulin.asExternalModel(),
-    dateTime = LocalDateTime.of(date, time),
+    date = date,
+    time = time,
     units = units,
     note = note
 )
@@ -55,8 +55,8 @@ fun InsulinRecord.asEntity() = InsulinRecordEntity(
     cursor = cursor,
     id = id,
     insulin = insulin.asEntity(),
-    date = dateTime.toLocalDate(),
-    time = dateTime.toLocalTime(),
+    date = date,
+    time = time,
     units = units,
     note = note
 )

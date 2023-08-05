@@ -9,13 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.time
+import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.InsulinRecord
 
 @Composable
-fun InsulinRecordCardWithTimeline(
+fun InsulinRecordTimelineCard(
     record: InsulinRecord
 ) {
     Row(
@@ -25,7 +25,7 @@ fun InsulinRecordCardWithTimeline(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = record.dateTime.time(),
+            text = record.time.timeOfHHmmPattern(),
             style = Theme.typography.bodyLarge
         )
 

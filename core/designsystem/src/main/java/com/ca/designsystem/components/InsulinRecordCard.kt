@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.time
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.InsulinRecord
@@ -40,7 +39,7 @@ fun InsulinRecordCard(record: InsulinRecord) {
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = record.dateTime.time(),
+                    text = record.time.toString(),
                     style = Theme.typography.bodyMedium
                 )
                 Text(

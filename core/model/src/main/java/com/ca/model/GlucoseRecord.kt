@@ -1,11 +1,13 @@
 package com.ca.model
 
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.LocalTime
 
 data class GlucoseRecord(
     val id: String,
     val level: Double,
     val note: String?,
-    override val dateTime: LocalDateTime,
+    override val time: LocalTime,
+    val date: LocalDate,
     val measuringMark: MeasuringMark
-) : Record
+) : ListItem

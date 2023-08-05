@@ -1,21 +1,23 @@
 package com.ca.designsystem.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.time
-import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCard
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
-import com.ca.model.GlucoseRecord
-
+import com.ca.designsystem.utils.colorFromHex
+import com.ca.model.RecordInsulinReminder
 
 @Composable
-fun GlucoseRecordCardWithTimeline(record: GlucoseRecord) {
+fun InsulinReminderTimelineCard(
+    reminder: RecordInsulinReminder,
+    onDoneClick: (RecordInsulinReminder) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -23,41 +25,38 @@ fun GlucoseRecordCardWithTimeline(record: GlucoseRecord) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = record.dateTime.time(),
+            text = reminder.time.toString(),
             style = Theme.typography.bodyLarge
         )
 
-        Card(
-            modifier = Modifier,
-            shape = Theme.shapes.large,
-            elevation = Theme.elevations.default
-        ) {
+        ReminderCard {
             Column(
                 modifier = Modifier
-                    .padding(8.dp),
+                    .padding(8.dp)
             ) {
                 Text(
-                    text = "Glucose",
+                    text = "Reminder: Taking insulin",
                     style = Theme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
 
                 Row(
                     modifier = Modifier
-                        .height(56.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        .height(56.dp)
+                        .padding(start = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    MeasuringMarkCard(mark = record.measuringMark)
+                    FilledIcon(backgroundColor = colorFromHex(reminder.insulin?.color!!), icon = R.drawable.notifications)
 
-                    Row(
+                    Column(
                         modifier = Modifier
-                            .padding(end = 12.dp)
+                            .padding(4.dp)
                             .weight(2f),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = record.measuringMark.text,
+                            text = reminder.insulin?.name!!,
                             style = Theme.typography.bodyLarge
                         )
 
@@ -66,21 +65,20 @@ fun GlucoseRecordCardWithTimeline(record: GlucoseRecord) {
                             verticalAlignment = Alignment.Bottom
                         ) {
                             Text(
-                                text = record.level.toString(),
+                                text = reminder.dose.toString(),
                                 style = Theme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "mmol/L",
+                                text = "UN",
                                 style = Theme.typography.bodySmall,
                             )
                         }
-
                     }
-                }
 
-                record.note?.ifEmpty { null }?.let {
-                    Text(text = it)
+                    TextButton(onClick = { onDoneClick(reminder) }) {
+                        Text(text = "Done")
+                    }
                 }
             }
         }
