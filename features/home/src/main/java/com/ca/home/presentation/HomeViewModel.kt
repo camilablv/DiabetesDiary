@@ -83,6 +83,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             item?.let { removeItemUseCase(item) }
         }
+        disableEditMode()
     }
 
     fun enableEditMode(selectedItem: ListItem?) {

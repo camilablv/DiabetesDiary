@@ -6,8 +6,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -38,6 +42,8 @@ fun HomeScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     fun navigateToEditItem(item: ListItem?) {
         if (item == null) return
@@ -50,6 +56,7 @@ fun HomeScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             HomeTopBar(
                 isInEditMode = viewState.isInEditMode,
@@ -81,7 +88,8 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
                 .focusRequester(focusRequester)
                 .onFocusChanged { viewModel.disableEditMode() },
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -98,7 +106,7 @@ fun HomeScreen(
                 modifier = Modifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(vertical = 4.dp)
+//                contentPadding = PaddingValues(vertical = 4.dp)
             ) {
                 items(
                     viewState.listItems
@@ -146,7 +154,7 @@ fun HomeScreen(
                 item {
                     Spacer(modifier = Modifier
                         .fillMaxWidth()
-                        .height(64.dp))
+                        .height(76.dp))
                 }
             }
         }
