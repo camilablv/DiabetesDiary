@@ -24,10 +24,7 @@ import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
 import com.ca.designsystem.components.topbar.HomeTopBar
-import com.ca.model.GlucoseRecord
-import com.ca.model.InsulinRecord
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
+import com.ca.model.*
 
 @Composable
 fun HomeScreen(
@@ -42,7 +39,24 @@ fun HomeScreen(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
 
+    fun navigateToEditItem(item: ListItem?) {
+        if (item == null) return
+        when(item) {
+            is RecordInsulinReminder -> { navigateToInsulinReminder() }
+            is RecordGlucoseReminder -> { navigateToGlucoseReminder() }
+            is InsulinRecord -> { navigateToRecordInsulin() }
+            is GlucoseRecord -> { navigateToRecordGlucose(item.id) }
+        }
+    }
+
     Scaffold(
+        topBar = {
+            HomeTopBar(
+                isInEditMode = viewState.isInEditMode,
+                onEditClick = { navigateToEditItem(viewState.selectedItem) },
+                onDeleteClick = { viewModel.removeItem(viewState.selectedItem) }
+            )
+        },
         floatingActionButton = {
             MultiFloatingActionButton(
                 modifier = Modifier,
@@ -55,31 +69,6 @@ fun HomeScreen(
             )
         },
         floatingActionButtonPosition = FabPosition.End,
-        topBar = {
-            HomeTopBar(
-                isInEditMode = viewState.isInEditMode,
-                onEditClick = {
-                    with(viewState.selectedItem) {
-                        when(this) {
-                            is RecordInsulinReminder -> { navigateToInsulinReminder() }
-                            is RecordGlucoseReminder -> { navigateToGlucoseReminder() }
-                            is InsulinRecord -> { navigateToRecordInsulin() }
-                            is GlucoseRecord -> { navigateToRecordGlucose(this.id) }
-                        }
-                    }
-                },
-                onDeleteClick = {
-                    with(viewState.selectedItem) {
-                        when(this) {
-                            is RecordInsulinReminder -> { viewModel.removeInsulinReminder(this) }
-                            is RecordGlucoseReminder -> { viewModel.removeGlucoseReminder(this) }
-                            is InsulinRecord -> { viewModel.removeInsulinRecord(this) }
-                            is GlucoseRecord -> { viewModel.removeGlucoseRecord(this) }
-                        }
-                    }
-                }
-            )
-        }
     ) { paddingValues ->
 
         BackHandler(enabled = true) {

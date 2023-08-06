@@ -2,13 +2,11 @@ package com.ca.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.repository.RecordGlucoseRepository
-import com.ca.domain.repository.RecordInsulinRepository
-import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.GetRecordsByDateUseCase
 import com.ca.domain.usecase.GetRemindersUseCase
 import com.ca.domain.usecase.MarkInsulinReminderAsDoneUseCase
+import com.ca.domain.usecase.RemoveItemUseCase
 import com.ca.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
-    private val recordGlucoseRepository: RecordGlucoseRepository,
-    private val recordInsulinRepository: RecordInsulinRepository,
-    private val remindersRepository: RemindersRepository,
+    private val removeItemUseCase: RemoveItemUseCase,
     private val getRemindersUseCase: GetRemindersUseCase,
     private val getRecordsUseCase: GetRecordsByDateUseCase,
     private val markInsulinReminderAsDoneUseCase: MarkInsulinReminderAsDoneUseCase
@@ -45,8 +41,8 @@ class HomeViewModel @Inject constructor(
 
     private fun items(date: LocalDate) {
         viewModelScope.launch {
-            val reminders = getRemindersUseCase.invoke()
-            val records = getRecordsUseCase.invoke(date)
+            val reminders = getRemindersUseCase()
+            val records = getRecordsUseCase(date)
             records.combine(reminders) { recordItems, reminderItems ->
                 if (date == LocalDate.now()) {
                     val insulins = settingsRepository.insulins()
@@ -71,7 +67,7 @@ class HomeViewModel @Inject constructor(
 
     fun markInsulinReminderAsDone(reminder: RecordInsulinReminder) {
         viewModelScope.launch {
-            markInsulinReminderAsDoneUseCase.invoke(reminder)
+            markInsulinReminderAsDoneUseCase(reminder)
         }
     }
 
@@ -83,20 +79,10 @@ class HomeViewModel @Inject constructor(
         _viewState.update { it.copy(selectedItem = selectedItem) }
     }
 
-    fun removeGlucoseRecord(record: GlucoseRecord) {
-        viewModelScope.launch { recordGlucoseRepository.delete(record) }
-    }
-
-    fun removeInsulinRecord(record: InsulinRecord) {
-        viewModelScope.launch { recordInsulinRepository.delete(record) }
-    }
-
-    fun removeGlucoseReminder(reminder: RecordGlucoseReminder) {
-        viewModelScope.launch { remindersRepository.deleteGlucoseReminder(reminder) }
-    }
-
-    fun removeInsulinReminder(reminder: RecordInsulinReminder) {
-        viewModelScope.launch { remindersRepository.deleteInsulinReminder(reminder) }
+    fun removeItem(item: ListItem?) {
+        viewModelScope.launch {
+            item?.let { removeItemUseCase(item) }
+        }
     }
 
     fun enableEditMode(selectedItem: ListItem?) {
