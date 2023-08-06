@@ -5,5 +5,7 @@ import java.time.LocalDate
 
 data class HomeViewState(
     val listItems: List<ListItem> = listOf(),
-    val selectedDate: LocalDate = LocalDate.now()
+    val selectedDate: LocalDate = LocalDate.now(),
+    val isInEditMode: Boolean = false,
+    val selectedItem: ListItem? = null
 )

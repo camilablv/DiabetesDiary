@@ -12,7 +12,10 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun ReminderCard(content: @Composable () -> Unit) {
+fun ReminderCard(
+    backgroundColor: Color,
+    content: @Composable () -> Unit
+) {
     val gradient = Brush.horizontalGradient(
         colors = listOf(Color(0xffa18cd1), Color(0xfffbc2eb)),
         startX = 0.0f,
@@ -25,7 +28,8 @@ fun ReminderCard(content: @Composable () -> Unit) {
             .fillMaxWidth(),
         shape = Theme.shapes.large,
         elevation = Theme.elevations.default,
-        border = BorderStroke(4.dp, gradient)
+        border = BorderStroke(4.dp, gradient),
+        backgroundColor = backgroundColor
     ) {
         content()
     }

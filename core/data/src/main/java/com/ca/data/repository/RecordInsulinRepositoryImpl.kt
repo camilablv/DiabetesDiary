@@ -62,4 +62,8 @@ class RecordInsulinRepositoryImpl @Inject constructor(
             .map { list -> list.map { it.asExternalModel() } }
             .flowOn(Dispatchers.IO)
     }
+
+    override suspend fun delete(record: InsulinRecord) {
+        insulinRecordsDao.delete(record.asEntity())
+    }
 }

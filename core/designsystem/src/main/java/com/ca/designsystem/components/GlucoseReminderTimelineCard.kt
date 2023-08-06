@@ -1,5 +1,7 @@
 package com.ca.designsystem.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -12,14 +14,24 @@ import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
 import com.ca.model.RecordGlucoseReminder
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GlucoseReminderTimelineCard(
     reminder: RecordGlucoseReminder,
-    onAddClick: (RecordGlucoseReminder) -> Unit
+    selected: Boolean,
+    onAddClick: (RecordGlucoseReminder) -> Unit,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit
 ) {
+    val backgroundColor = if (selected) Theme.colors.secondary else Theme.colors.background
+
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            ),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -28,7 +40,9 @@ fun GlucoseReminderTimelineCard(
             style = Theme.typography.bodyLarge
         )
 
-        ReminderCard {
+        ReminderCard(
+            backgroundColor = backgroundColor
+        ) {
             Column(
                 modifier = Modifier
                     .padding(8.dp)

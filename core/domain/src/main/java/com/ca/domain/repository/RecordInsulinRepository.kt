@@ -1,6 +1,5 @@
 package com.ca.domain.repository
 
-import com.ca.database.model.InsulinRecordEntity
 import com.ca.model.Insulin
 import com.ca.model.InsulinRecord
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +12,5 @@ interface RecordInsulinRepository {
     suspend fun addRecord(record: InsulinRecord)
     suspend fun records(): Flow<List<InsulinRecord>>
     suspend fun recordsByDate(date: LocalDate): Flow<List<InsulinRecord>>
+    suspend fun delete(record: InsulinRecord)
 }

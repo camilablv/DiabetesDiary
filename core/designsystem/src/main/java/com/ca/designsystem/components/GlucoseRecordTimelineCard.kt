@@ -1,5 +1,7 @@
 package com.ca.designsystem.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -14,11 +16,23 @@ import com.ca.designsystem.theme.Theme
 import com.ca.model.GlucoseRecord
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GlucoseRecordTimelineCard(record: GlucoseRecord) {
+fun GlucoseRecordTimelineCard(
+    record: GlucoseRecord,
+    selected: Boolean,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit
+) {
+    val backgroundColor = if (selected) Theme.colors.secondary else Theme.colors.background
+
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            ),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -30,7 +44,8 @@ fun GlucoseRecordTimelineCard(record: GlucoseRecord) {
         Card(
             modifier = Modifier,
             shape = Theme.shapes.large,
-            elevation = Theme.elevations.default
+            elevation = Theme.elevations.default,
+            backgroundColor = backgroundColor
         ) {
             Column(
                 modifier = Modifier

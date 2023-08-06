@@ -2,11 +2,14 @@ package com.ca.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.repository.RecordGlucoseRepository
+import com.ca.domain.repository.RecordInsulinRepository
+import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.GetRecordsByDateUseCase
 import com.ca.domain.usecase.GetRemindersUseCase
 import com.ca.domain.usecase.MarkInsulinReminderAsDoneUseCase
-import com.ca.model.RecordInsulinReminder
+import com.ca.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
+    private val recordGlucoseRepository: RecordGlucoseRepository,
+    private val recordInsulinRepository: RecordInsulinRepository,
+    private val remindersRepository: RemindersRepository,
     private val getRemindersUseCase: GetRemindersUseCase,
     private val getRecordsUseCase: GetRecordsByDateUseCase,
     private val markInsulinReminderAsDoneUseCase: MarkInsulinReminderAsDoneUseCase
@@ -68,5 +74,30 @@ class HomeViewModel @Inject constructor(
             markInsulinReminderAsDoneUseCase.invoke(reminder)
         }
     }
+
+    fun setEditMode(boolean: Boolean) {
+        _viewState.update { it.copy(isInEditMode = boolean) }
+    }
+
+    fun setSelectedItem(selectedItem: ListItem?) {
+        _viewState.update { it.copy(selectedItem = selectedItem) }
+    }
+
+    fun removeGlucoseRecord(record: GlucoseRecord) {
+        viewModelScope.launch { recordGlucoseRepository.delete(record) }
+    }
+
+    fun removeInsulinRecord(record: InsulinRecord) {
+        viewModelScope.launch { recordInsulinRepository.delete(record) }
+    }
+
+    fun removeGlucoseReminder(reminder: RecordGlucoseReminder) {
+        viewModelScope.launch { remindersRepository.deleteGlucoseReminder(reminder) }
+    }
+
+    fun removeInsulinReminder(reminder: RecordInsulinReminder) {
+        viewModelScope.launch { remindersRepository.deleteInsulinReminder(reminder) }
+    }
+
 }
 
