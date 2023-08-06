@@ -85,7 +85,7 @@ class NetworkClient @Inject constructor(
 
     suspend fun recordGlucose(
         dateTime: String,
-        note: String,
+        note: String?,
         mark: String,
         units: Int
     ): Result<RecordGlucoseMutation.Data> {
@@ -95,7 +95,7 @@ class NetworkClient @Inject constructor(
             return@withErrorHandler apolloClient.mutation(
                 RecordGlucoseMutation(
                     dateTime,
-                    note,
+                    note ?: "",
                     status,
                     units.toDouble()
                 )

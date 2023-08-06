@@ -16,6 +16,9 @@ interface InsulinReminderDao {
     @Query("SELECT * FROM insulin_reminder")
     fun insulinReminders(): Flow<List<RecordInsulinReminderEntity>>
 
+    @Query("SELECT * FROM insulin_reminder")
+    fun insulinRemindersFlow(): Flow<RecordInsulinReminderEntity>
+
     @Update
     fun update(reminder: RecordInsulinReminderEntity)
 }

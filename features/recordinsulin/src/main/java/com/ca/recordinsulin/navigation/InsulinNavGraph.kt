@@ -1,26 +1,30 @@
 package com.ca.recordinsulin.navigation
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.ca.recordinsulin.presentation.RecordInsulinScreen
 
-private const val insulinGraphRoute = "insulin_graph"
+private const val recordInsulinGraphRoute = "insulin_graph"
+private const val recordInsulinRoute = "record_insulin"
+private const val argumentName = "recordId"
 
-fun NavController.navigateToRecordInsulin() {
-    navigate(Route.Record.route)
+fun NavController.navigateToRecordInsulin(recordId: String? = null) {
+    navigate("$recordInsulinRoute?$argumentName=$recordId")
 }
 
 fun NavGraphBuilder.insulinGraph(
     navigateBack: () -> Unit
 ) {
     navigation(
-        startDestination = Route.Record.route,
-        route = insulinGraphRoute
+        startDestination = "$recordInsulinRoute?$argumentName={$argumentName}",
+        route = recordInsulinGraphRoute
     ) {
-        composable(Route.Record.route) {
+        composable(
+            route = "$recordInsulinRoute?$argumentName={$argumentName}",
+            arguments = listOf(navArgument(argumentName) { nullable = true })
+        ) {
             RecordInsulinScreen(
+                navArgument = it.arguments?.getString(argumentName),
                 onBackClick = { navigateBack() }
             )
         }

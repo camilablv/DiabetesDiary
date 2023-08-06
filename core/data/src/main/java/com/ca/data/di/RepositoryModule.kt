@@ -1,10 +1,12 @@
 package com.ca.data.di
 
-import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.RemindersRepository
 import com.ca.data.repository.SettingsRepositoryImpl
 import com.ca.domain.repository.SettingsRepository
 import com.ca.data.repository.InsulinReminderRepositoryImpl
+import com.ca.data.repository.RecordGlucoseRepositoryImpl
 import com.ca.data.repository.RecordInsulinRepositoryImpl
+import com.ca.domain.repository.RecordGlucoseRepository
 import com.ca.domain.repository.RecordInsulinRepository
 import dagger.Binds
 import dagger.Module
@@ -20,8 +22,11 @@ internal interface RepositoryModule {
     fun bindSettingsRepository(settingsRepositoryImpl: SettingsRepositoryImpl): SettingsRepository
 
     @Binds
-    fun bindInsulinReminderRepository(repositoryImpl: InsulinReminderRepositoryImpl): InsulinReminderRepository
+    fun bindInsulinReminderRepository(repositoryImpl: InsulinReminderRepositoryImpl): RemindersRepository
 
     @Binds
     fun bindRecordInsulinRepository(recordInsulinRepository: RecordInsulinRepositoryImpl): RecordInsulinRepository
+
+    @Binds
+    fun bindRecordGlucoseRepository(recordGlucoseRepository: RecordGlucoseRepositoryImpl): RecordGlucoseRepository
 }

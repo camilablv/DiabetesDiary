@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.*
+import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
 import com.ca.settings.presentation.components.SettingsSectionCard
@@ -24,46 +25,52 @@ fun SettingsScreen(
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
 
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { MainTopBar(title = "Diabetes Diary") }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(16.dp)
+        ) {
+
+            item {
+                SettingsSectionCard(
+                    modifier = Modifier,
+                    sectionTitle = "Choose glucose unit"
+                ) {
+                    GlucoseUnitsRadioButtons(
+                        modifier = Modifier,
+                        defaultUnit = viewState.glucoseUnits,
+                        onSelect = { viewModel.setGlucoseUnit(it) }
+                    )
+                }
+            }
+
+            item {
+                InsulinSection(
+                    modifier = Modifier,
+                    insulins = viewState.insulins,
+                    addInsulin = {
+                        viewModel.setShowAddInsulinDialog(true)
+                    },
+                    deleteInsulin = { viewModel.deleteInsulin(it) },
+                    editInsulin = {}
+                )
+            }
+
+        }
+    }
+
     AddInsulinDialog(
         show = viewState.showAddInsulinDialog,
         add = { name, color, dose -> viewModel.addInsulin(name, color, dose) },
         onDismiss = { viewModel.setShowAddInsulinDialog(false) }
     )
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(16.dp)
-    ) {
-
-        item {
-            SettingsSectionCard(
-                modifier = Modifier,
-                sectionTitle = "Choose glucose unit"
-            ) {
-                GlucoseUnitsRadioButtons(
-                    modifier = Modifier,
-                    defaultUnit = viewState.glucoseUnits,
-                    onSelect = { viewModel.setGlucoseUnit(it) }
-                )
-            }
-        }
-
-        item {
-            InsulinSection(
-                modifier = Modifier,
-                insulins = viewState.insulins,
-                addInsulin = {
-                    viewModel.setShowAddInsulinDialog(true)
-                },
-                deleteInsulin = { viewModel.deleteInsulin(it) },
-                editInsulin = {}
-            )
-        }
-
-    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)

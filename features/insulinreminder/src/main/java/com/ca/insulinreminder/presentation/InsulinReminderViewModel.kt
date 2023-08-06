@@ -2,7 +2,7 @@ package com.ca.insulinreminder.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
 import com.ca.model.Insulin
 import com.ca.model.ReminderIteration
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InsulinReminderViewModel @Inject constructor(
-    private val reminderRepository: InsulinReminderRepository,
+    private val reminderRepository: RemindersRepository,
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
