@@ -1,11 +1,13 @@
 package com.ca.recordglucose.presentation
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,17 +20,25 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.common.utils.date
-import com.ca.common.utils.timeOfhhmmPattern
+import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.components.*
+import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCards
+import com.ca.designsystem.components.pickers.DatePicker
+import com.ca.designsystem.components.pickers.TimePicker
+import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.recordglucose.presentation.components.GlucoseStatusCards
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RecordGlucoseScreen(
     viewModel: RecordGlucoseViewModel = hiltViewModel(),
+    navArgument: String?,
     onBackClick: () -> Unit
 ) {
+
+    LaunchedEffect(true) {
+        Log.d("NavArgument", navArgument.toString())
+    }
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
@@ -86,7 +96,7 @@ fun RecordGlucoseScreen(
                             modifier = Modifier
                                 .width(120.dp)
                                 .clickable { viewModel.showTimePicker(true) },
-                            time = viewState.time.timeOfhhmmPattern()
+                            time = viewState.time.timeOfHHmmPattern()
                         )
                     }
                 }
@@ -119,7 +129,7 @@ fun RecordGlucoseScreen(
                 }
 
                 item {
-                    GlucoseStatusCards(
+                    MeasuringMarkCards(
                         selectedMark = viewState.measuringMark,
                         onSelect = { viewModel.setMeasuringMark(it) }
                     )
@@ -127,7 +137,10 @@ fun RecordGlucoseScreen(
             }
 
             Button(
-                onClick = { viewModel.addRecord() },
+                onClick = {
+                    viewModel.addRecord()
+                    onBackClick()
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Theme.colors.secondary
                 ),

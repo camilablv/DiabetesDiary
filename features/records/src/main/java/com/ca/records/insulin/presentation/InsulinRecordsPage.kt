@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.ca.records.insulin.presentation.components.InsulinRecord
+import com.ca.designsystem.components.InsulinRecordCard
 
 @Composable
 fun InsulinRecordsPage(
@@ -25,7 +25,7 @@ fun InsulinRecordsPage(
     ) {
         items(records.itemCount) {
             records[it]?.let { record ->
-                InsulinRecord(record = record)
+                InsulinRecordCard(record = record)
             }
         }
     }

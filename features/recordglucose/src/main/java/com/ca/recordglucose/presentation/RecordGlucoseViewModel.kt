@@ -2,8 +2,8 @@ package com.ca.recordglucose.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.recordglucose.domain.model.MeasuringMark
-import com.ca.recordglucose.domain.repository.RecordGlucoseRepository
+import com.ca.domain.repository.RecordGlucoseRepository
+import com.ca.model.MeasuringMark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,13 +24,13 @@ class RecordGlucoseViewModel @Inject constructor(
 
     fun addRecord() {
         with(viewState.value) {
-            addRecord(time, date, note, measuringMark, glucoseLevel)
+            addRecord(time, date, note.ifEmpty { null }, measuringMark, glucoseLevel)
         }
     }
 
-    private fun addRecord(time: LocalTime, date: LocalDate, note: String, mark: MeasuringMark, glucoseLevel: Int) {
+    private fun addRecord(time: LocalTime, date: LocalDate, note: String?, mark: MeasuringMark, glucoseLevel: Int) {
         viewModelScope.launch {
-            repository.recordGlucose(time, date, note, mark, glucoseLevel)
+            repository.recordGlucose(time, date, note, mark.name, glucoseLevel)
         }
     }
 

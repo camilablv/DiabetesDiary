@@ -39,6 +39,9 @@ android {
 
 dependencies {
     implementation project(":core:designsystem")
+    implementation project(":core:model")
+    implementation project(":core:domain")
+    implementation project(":core:common")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -58,6 +61,7 @@ dependencies {
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
+    implementation composeDependencies.lifecycleRuntime
 
     // Hilt
     implementation hiltDependencies.hilt

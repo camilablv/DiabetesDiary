@@ -22,7 +22,7 @@ class NotificationManager @Inject constructor(
     }
 
     private val pendingIntent by lazy {
-        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager

@@ -1,5 +1,6 @@
 package com.ca.diabetesdiary.navigation.bottombar
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -8,7 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ca.designsystem.components.MainTopBar
 import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.home.presentation.HomeScreen
 import com.ca.insulinreminder.navigation.navigateToInsulinReminder
@@ -25,7 +25,6 @@ fun BottomBarMenuNavHost(
     val bottomMenuNavHostController = rememberNavController()
 
     Scaffold(
-        topBar = { MainTopBar(title = "Diabetes Diary") },
         bottomBar = { BottomBar(navController = bottomMenuNavHostController) },
     ) { innerPadding ->
         NavHost(
@@ -35,8 +34,10 @@ fun BottomBarMenuNavHost(
         ) {
             composable(BottomBarRoute.Home.route) {
                 HomeScreen(
-                    navigateToRecordGlucose = { mainNavController.navigateToRecordGlucose() },
-                    navigateToRecordInsulin = { mainNavController.navigateToRecordInsulin() }
+                    navigateToRecordGlucose = { mainNavController.navigateToRecordGlucose(it) },
+                    navigateToRecordInsulin = { mainNavController.navigateToRecordInsulin() },
+                    navigateToInsulinReminder = { mainNavController.navigateToInsulinReminder() },
+                    navigateToGlucoseReminder = { mainNavController.navigateToGlucoseReminder() }
                 )
             }
             composable(BottomBarRoute.Settings.route) {

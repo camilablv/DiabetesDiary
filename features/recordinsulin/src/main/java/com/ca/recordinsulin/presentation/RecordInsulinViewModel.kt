@@ -31,6 +31,12 @@ class RecordInsulinViewModel @Inject constructor(
         }
     }
 
+    fun addRecord() {
+        with(viewState.value) {
+            addRecord(selectedInsulin?.id!!, note, date, time, units)
+        }
+    }
+
     fun setInsulinDropDownMenuExpanded(expanded: Boolean) {
         _viewState.update { it.copy(insulinDropDownMenuExpanded = expanded) }
     }
@@ -69,12 +75,6 @@ class RecordInsulinViewModel @Inject constructor(
 
     fun setDate(date: LocalDate) {
         _viewState.update { it.copy(date = date) }
-    }
-
-    fun addRecord() {
-        with(viewState.value) {
-            addRecord(selectedInsulin?.id!!, note, date, time, units)
-        }
     }
 
     private fun addRecord(insulinId: String, note: String, date: LocalDate, time: LocalTime, units: Int) {

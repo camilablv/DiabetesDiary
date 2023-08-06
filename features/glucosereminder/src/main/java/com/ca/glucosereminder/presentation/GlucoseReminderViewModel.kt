@@ -2,7 +2,7 @@ package com.ca.glucosereminder.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.repository.InsulinReminderRepository
+import com.ca.domain.repository.RemindersRepository
 import com.ca.model.ReminderIteration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GlucoseReminderViewModel @Inject constructor(
-    private val reminderRepository: InsulinReminderRepository
+    private val reminderRepository: RemindersRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(GlucoseReminderViewState())
