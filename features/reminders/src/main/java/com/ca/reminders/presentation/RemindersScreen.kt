@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.MainTopBar
+import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.designsystem.components.ReminderFloatingActionButton
 import com.ca.designsystem.components.Tabs
 import com.ca.model.RecordGlucoseReminder

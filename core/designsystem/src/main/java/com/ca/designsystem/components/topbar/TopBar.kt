@@ -1,4 +1,4 @@
-package com.ca.designsystem.components
+package com.ca.designsystem.components.topbar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

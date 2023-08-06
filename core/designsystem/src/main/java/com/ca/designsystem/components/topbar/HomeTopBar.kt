@@ -1,4 +1,4 @@
-package com.ca.home.presentation
+package com.ca.designsystem.components.topbar
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

@@ -1,15 +1,11 @@
 package com.ca.home.presentation
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.FabPosition
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,22 +13,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.*
+import com.ca.designsystem.components.GlucoseRecordTimelineCard
+import com.ca.designsystem.components.GlucoseReminderTimelineCard
+import com.ca.designsystem.components.InsulinRecordTimelineCard
+import com.ca.designsystem.components.InsulinReminderTimelineCard
 import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
-import com.ca.model.*
+import com.ca.designsystem.components.topbar.HomeTopBar
+import com.ca.model.GlucoseRecord
+import com.ca.model.InsulinRecord
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 
 @Composable
 fun HomeScreen(
     navigateToRecordGlucose: (String?) -> Unit,
-    navigateToRecordInsulin: (String?) -> Unit,
-    navigateToInsulinReminder: (String?) -> Unit,
-    navigateToGlucoseReminder: (String?) -> Unit,
+    navigateToRecordInsulin: () -> Unit,
+    navigateToInsulinReminder: () -> Unit,
+    navigateToGlucoseReminder: () -> Unit,
+    navigateBack: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -45,7 +48,7 @@ fun HomeScreen(
                 modifier = Modifier,
                 onMenuItemClicked = {
                     when(it) {
-                        MultiFabItem.RecordInsulin -> { navigateToRecordInsulin(null) }
+                        MultiFabItem.RecordInsulin -> { navigateToRecordInsulin() }
                         MultiFabItem.RecordGlucose -> { navigateToRecordGlucose(null) }
                     }
                 }
@@ -58,9 +61,9 @@ fun HomeScreen(
                 onEditClick = {
                     with(viewState.selectedItem) {
                         when(this) {
-                            is RecordInsulinReminder -> { navigateToInsulinReminder(this.id.toString()) }
-                            is RecordGlucoseReminder -> { navigateToGlucoseReminder(this.id.toString()) }
-                            is InsulinRecord -> { navigateToRecordInsulin(this.id) }
+                            is RecordInsulinReminder -> { navigateToInsulinReminder() }
+                            is RecordGlucoseReminder -> { navigateToGlucoseReminder() }
+                            is InsulinRecord -> { navigateToRecordInsulin() }
                             is GlucoseRecord -> { navigateToRecordGlucose(this.id) }
                         }
                     }
@@ -81,9 +84,8 @@ fun HomeScreen(
 
         BackHandler(enabled = true) {
             if (viewState.isInEditMode) {
-                viewModel.setEditMode(false)
-                viewModel.setSelectedItem(null)
-            }
+                viewModel.disableEditMode()
+            } else navigateBack()
         }
 
         Column(
@@ -92,16 +94,16 @@ fun HomeScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
                 .focusRequester(focusRequester)
-                .onFocusChanged {
-                    viewModel.setEditMode(false)
-                    viewModel.setSelectedItem(null)
-                },
+                .onFocusChanged { viewModel.disableEditMode() },
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SingleRowCalendar(
                 selectedDay = viewState.selectedDate,
-                onSelectedDayChange = { viewModel.selectDate(it) }
+                onSelectedDayChange = {
+                    viewModel.selectDate(it)
+                    viewModel.disableEditMode()
+                }
             )
             LazyColumn(
                 modifier = Modifier,
@@ -116,61 +118,37 @@ fun HomeScreen(
                         is RecordInsulinReminder -> {
                             InsulinReminderTimelineCard(
                                 reminder = item,
-                                selected = item == viewState.selectedItem,
+                                selected = viewModel.isItemSelected(item),
                                 onDoneClick = {
                                     viewModel.markInsulinReminderAsDone(it)
                                 },
-                                onClick = {
-                                    viewModel.setEditMode(false)
-                                    viewModel.setSelectedItem(null)
-                                },
-                                onLongClick = {
-                                    viewModel.setEditMode(true)
-                                    viewModel.setSelectedItem(item)
-                                }
+                                onClick = { viewModel.disableEditMode() },
+                                onLongClick = { viewModel.enableEditMode(item) }
                             )
                         }
                         is RecordGlucoseReminder -> {
                             GlucoseReminderTimelineCard(
                                 reminder = item,
-                                selected = item == viewState.selectedItem,
+                                selected = viewModel.isItemSelected(item),
                                 onAddClick = { navigateToRecordGlucose(it.id.toString()) },
-                                onClick = {
-                                    viewModel.setEditMode(false)
-                                    viewModel.setSelectedItem(null)
-                                },
-                                onLongClick = {
-                                    viewModel.setEditMode(true)
-                                    viewModel.setSelectedItem(item)
-                                }
+                                onClick = { viewModel.disableEditMode() },
+                                onLongClick = { viewModel.enableEditMode(item) }
                             )
                         }
                         is InsulinRecord -> {
                             InsulinRecordTimelineCard(
                                 record = item,
-                                selected = item == viewState.selectedItem,
-                                onClick = {
-                                    viewModel.setEditMode(false)
-                                    viewModel.setSelectedItem(null)
-                                },
-                                onLongClick = {
-                                    viewModel.setEditMode(true)
-                                    viewModel.setSelectedItem(item)
-                                }
+                                selected = viewModel.isItemSelected(item),
+                                onClick = { viewModel.disableEditMode() },
+                                onLongClick = { viewModel.enableEditMode(item) }
                             )
                         }
                         is GlucoseRecord -> {
                             GlucoseRecordTimelineCard(
                                 record = item,
-                                selected = item == viewState.selectedItem,
-                                onClick = {
-                                    viewModel.setEditMode(false)
-                                    viewModel.setSelectedItem(null)
-                                },
-                                onLongClick = {
-                                    viewModel.setEditMode(true)
-                                    viewModel.setSelectedItem(item)
-                                }
+                                selected = viewModel.isItemSelected(item),
+                                onClick = { viewModel.disableEditMode() },
+                                onLongClick = { viewModel.enableEditMode(item) }
                             )
                         }
                     }
@@ -183,54 +161,5 @@ fun HomeScreen(
                 }
             }
         }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun DismissBackground(dismissState: DismissState) {
-    if (dismissState.dismissDirection == DismissDirection.EndToStart) {
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                ,
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                IconButton(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .background(Color.Gray.copy(alpha = 0.5f), CircleShape),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Delete,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }
-
-                IconButton(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .background(Color.Gray.copy(alpha = 0.5f), CircleShape),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Edit,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }
-            }
-        }
-
     }
 }

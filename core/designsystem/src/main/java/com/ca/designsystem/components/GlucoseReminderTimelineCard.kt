@@ -2,6 +2,7 @@ package com.ca.designsystem.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Grey100
+import com.ca.designsystem.theme.Purple100
 import com.ca.designsystem.theme.Theme
 import com.ca.model.RecordGlucoseReminder
 
@@ -23,14 +25,16 @@ fun GlucoseReminderTimelineCard(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val backgroundColor = if (selected) Theme.colors.secondary else Theme.colors.background
+    val backgroundColor = if (selected) Purple100 else Theme.colors.background
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = onClick,
-                onLongClick = onLongClick
+                onLongClick = onLongClick,
+                indication = null,
+                interactionSource = MutableInteractionSource()
             ),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically

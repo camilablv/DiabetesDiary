@@ -75,11 +75,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setEditMode(boolean: Boolean) {
+    private fun setEditMode(boolean: Boolean) {
         _viewState.update { it.copy(isInEditMode = boolean) }
     }
 
-    fun setSelectedItem(selectedItem: ListItem?) {
+    private fun setSelectedItem(selectedItem: ListItem?) {
         _viewState.update { it.copy(selectedItem = selectedItem) }
     }
 
@@ -99,5 +99,16 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch { remindersRepository.deleteInsulinReminder(reminder) }
     }
 
+    fun enableEditMode(selectedItem: ListItem?) {
+        setEditMode(true)
+        setSelectedItem(selectedItem)
+    }
+
+    fun disableEditMode() {
+        setEditMode(false)
+        setSelectedItem(null)
+    }
+
+    fun isItemSelected(item: ListItem) = viewState.value.selectedItem == item
 }
 

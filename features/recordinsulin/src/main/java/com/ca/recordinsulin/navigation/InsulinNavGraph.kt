@@ -4,23 +4,24 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.ca.recordinsulin.presentation.RecordInsulinScreen
 
-private const val insulinGraphRoute = "insulin_graph"
+private const val recordInsulinGraphRoute = "insulin_graph"
+private const val recordInsulinRoute = "record_insulin"
 private const val argumentName = "recordId"
 
 fun NavController.navigateToRecordInsulin(recordId: String? = null) {
-    navigate("${Route.Record.route}/$recordId")
+    navigate("$recordInsulinRoute?$argumentName=$recordId")
 }
 
 fun NavGraphBuilder.insulinGraph(
     navigateBack: () -> Unit
 ) {
     navigation(
-        startDestination = "${Route.Record.route}/{$argumentName}",
-        route = insulinGraphRoute
+        startDestination = "$recordInsulinRoute?$argumentName={$argumentName}",
+        route = recordInsulinGraphRoute
     ) {
         composable(
-            route = "${Route.Record.route}?$argumentName={$argumentName}",
-            arguments = listOf(navArgument(argumentName) { type = NavType.StringType })
+            route = "$recordInsulinRoute?$argumentName={$argumentName}",
+            arguments = listOf(navArgument(argumentName) { nullable = true })
         ) {
             RecordInsulinScreen(
                 navArgument = it.arguments?.getString(argumentName),

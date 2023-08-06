@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ca.diabetesdiary.navigation.navigateBack
 import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.home.presentation.HomeScreen
 import com.ca.insulinreminder.navigation.navigateToInsulinReminder
@@ -34,9 +35,10 @@ fun BottomBarMenuNavHost(
             composable(BottomBarRoute.Home.route) {
                 HomeScreen(
                     navigateToRecordGlucose = { mainNavController.navigateToRecordGlucose(it) },
-                    navigateToRecordInsulin = { mainNavController.navigateToRecordInsulin(it) },
+                    navigateToRecordInsulin = { mainNavController.navigateToRecordInsulin() },
                     navigateToInsulinReminder = { mainNavController.navigateToInsulinReminder() },
-                    navigateToGlucoseReminder = { mainNavController.navigateToGlucoseReminder() }
+                    navigateToGlucoseReminder = { mainNavController.navigateToGlucoseReminder() },
+                    navigateBack = { bottomMenuNavHostController.navigateBack() }
                 )
             }
             composable(BottomBarRoute.Settings.route) {
