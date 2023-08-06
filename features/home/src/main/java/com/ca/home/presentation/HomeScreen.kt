@@ -36,7 +36,6 @@ fun HomeScreen(
     navigateToRecordInsulin: () -> Unit,
     navigateToInsulinReminder: () -> Unit,
     navigateToGlucoseReminder: () -> Unit,
-    navigateBack: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -78,10 +77,8 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.End,
     ) { paddingValues ->
 
-        BackHandler(enabled = true) {
-            if (viewState.isInEditMode) {
-                viewModel.disableEditMode()
-            } else navigateBack()
+        BackHandler(enabled = viewState.isInEditMode) {
+            viewModel.disableEditMode()
         }
 
         Column(
