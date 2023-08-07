@@ -49,11 +49,11 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun setShowAddInsulinDialog(value: Boolean) {
+    fun showAddInsulinDialog(value: Boolean) {
         _viewState.update { it.copy(showAddInsulinDialog = value) }
     }
 
-    fun setShowEditInsulinDialog(value: Boolean) {
+    fun showEditInsulinDialog(value: Boolean) {
         _viewState.update { it.copy(showEditInsulinDialog = value) }
     }
 }
