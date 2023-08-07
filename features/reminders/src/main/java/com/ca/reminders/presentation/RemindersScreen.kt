@@ -40,6 +40,7 @@ fun RemindersScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val editModeState by viewModel.editModeState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
@@ -51,16 +52,16 @@ fun RemindersScreen(
         viewModel.disableEditMode()
     }
 
-    BackHandler(viewState.isInEditMode) {
+    BackHandler(editModeState.isInEditMode) {
         viewModel.disableEditMode()
     }
 
     Scaffold(
         topBar = {
              EditModeTopBar(
-                 isInEditMode = viewState.isInEditMode,
-                 onEditClick = { navigateToEditReminder(viewState.selectedItem) },
-                 onDeleteClick = { viewModel.removeItem(viewState.selectedItem) }
+                 isInEditMode = editModeState.isInEditMode,
+                 onEditClick = { navigateToEditReminder(editModeState.selectedItem) },
+                 onDeleteClick = { viewModel.removeItem(editModeState.selectedItem) }
              )
         },
         floatingActionButton = {

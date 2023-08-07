@@ -40,6 +40,7 @@ fun HomeScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val editModeState by viewModel.editModeState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -58,9 +59,9 @@ fun HomeScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             EditModeTopBar(
-                isInEditMode = viewState.isInEditMode,
-                onEditClick = { navigateToEditItem(viewState.selectedItem) },
-                onDeleteClick = { viewModel.removeItem(viewState.selectedItem) }
+                isInEditMode = editModeState.isInEditMode,
+                onEditClick = { navigateToEditItem(editModeState.selectedItem) },
+                onDeleteClick = { viewModel.removeItem(editModeState.selectedItem) }
             )
         },
         floatingActionButton = {
@@ -77,7 +78,7 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.End,
     ) { paddingValues ->
 
-        BackHandler(enabled = viewState.isInEditMode) {
+        BackHandler(enabled = editModeState.isInEditMode) {
             viewModel.disableEditMode()
         }
 

@@ -28,6 +28,7 @@ include ':core:common'
 include ':core:alarmscheduler'
 include ':core:database'
 include ':core:notification'
+include ':core:platform'
 
 include ':features:recordinsulin'
 include ':features:recordglucose'
