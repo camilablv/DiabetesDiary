@@ -10,6 +10,7 @@ import java.time.LocalTime
 data class RecordGlucoseReminderEntity(
     val time: LocalTime,
     val iteration: ReminderIteration,
+    val enabled: Boolean,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 )
@@ -17,11 +18,13 @@ data class RecordGlucoseReminderEntity(
 fun RecordGlucoseReminderEntity.asExternalModel() = RecordGlucoseReminder(
     id = id,
     time = time,
-    iteration = iteration
+    iteration = iteration,
+    enabled = enabled
 )
 
 fun RecordGlucoseReminder.asEntity() = RecordGlucoseReminderEntity(
     id = id,
     time = time,
-    iteration = iteration
+    iteration = iteration,
+    enabled = enabled
 )

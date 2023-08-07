@@ -22,4 +22,6 @@ interface RemindersRepository {
     )
     suspend fun deleteGlucoseReminder(reminder: RecordGlucoseReminder)
     suspend fun deleteInsulinReminder(reminder: RecordInsulinReminder)
+    suspend fun updateInsulinReminder(reminder: RecordInsulinReminder)
+    suspend fun updateGlucoseReminder(reminder: RecordGlucoseReminder)
 }

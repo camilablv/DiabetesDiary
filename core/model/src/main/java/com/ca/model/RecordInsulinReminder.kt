@@ -9,5 +9,6 @@ data class RecordInsulinReminder(
     val iteration: ReminderIteration,
     val insulinId: String,
     val dose: Int,
+    val enabled: Boolean,
     val insulin: Insulin? = null
 ): ListItem

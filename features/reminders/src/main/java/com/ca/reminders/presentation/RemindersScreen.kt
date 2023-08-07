@@ -1,5 +1,6 @@
 package com.ca.reminders.presentation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,9 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.designsystem.components.ReminderFloatingActionButton
 import com.ca.designsystem.components.Tabs
+import com.ca.designsystem.components.topbar.EditModeTopBar
+import com.ca.model.ListItem
 import com.ca.model.RecordGlucoseReminder
 import com.ca.model.RecordInsulinReminder
 import com.ca.reminders.presentation.pages.GlucoseRemindersPage
@@ -41,8 +43,26 @@ fun RemindersScreen(
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
+    fun navigateToEditReminder(item: ListItem?) {
+        when(item) {
+            is RecordGlucoseReminder -> { navigateToAddGlucoseReminder() }
+            is RecordInsulinReminder -> { navigateToAddInsulinReminder() }
+        }
+        viewModel.disableEditMode()
+    }
+
+    BackHandler(viewState.isInEditMode) {
+        viewModel.disableEditMode()
+    }
+
     Scaffold(
-        topBar = { MainTopBar(title = "Diabetes Diary") },
+        topBar = {
+             EditModeTopBar(
+                 isInEditMode = viewState.isInEditMode,
+                 onEditClick = { navigateToEditReminder(viewState.selectedItem) },
+                 onDeleteClick = { viewModel.removeItem(viewState.selectedItem) }
+             )
+        },
         floatingActionButton = {
            ReminderFloatingActionButton(
                pagerState = pagerState,
@@ -58,8 +78,15 @@ fun RemindersScreen(
             pagerState = pagerState,
             scope = scope,
             viewState = viewState,
-            viewModel::deleteInsulinReminder,
-            viewModel::deleteGlucoseReminder
+            insulinReminderEnabledChange = { reminder, enabled ->
+                viewModel.setInsulinReminderEnabled(reminder, enabled)
+            },
+            glucoseReminderEnabledChange = { reminder, enabled ->
+                viewModel.setGlucoseReminderEnabled(reminder, enabled)
+            },
+            onItemClick = { viewModel.disableEditMode() },
+            onLongItemClick = { viewModel.enableEditMode(it) },
+            isItemSelected = { viewModel.isItemSelected(it) }
         )
     }
 }
@@ -71,8 +98,11 @@ private fun RemindersPager(
     pagerState: PagerState,
     scope: CoroutineScope,
     viewState: RemindersViewState,
-    deleteInsulinReminder: (RecordInsulinReminder) -> Unit,
-    deleteGlucoseReminder: (RecordGlucoseReminder) -> Unit
+    insulinReminderEnabledChange: (RecordInsulinReminder, Boolean) -> Unit,
+    glucoseReminderEnabledChange: (RecordGlucoseReminder, Boolean) -> Unit,
+    onItemClick: (ListItem) -> Unit,
+    onLongItemClick: (ListItem) -> Unit,
+    isItemSelected: (ListItem) -> Boolean
 ) {
     Column(
         modifier = modifier
@@ -91,18 +121,28 @@ private fun RemindersPager(
             state = pagerState,
             pageCount = pages.size,
             beyondBoundsPageCount = pages.size
-        ) {
-            when(pages[it]) {
+        ) { page ->
+            when(pages[page]) {
                 RemindersPage.InsulinRecords -> {
                     InsulinRemindersPage(
-                        viewState.insulinReminders,
-                        deleteInsulinReminder
+                        reminders = viewState.insulinReminders,
+                        onEnabledChange = { reminder, enabled ->
+                            insulinReminderEnabledChange(reminder, enabled)
+                        },
+                        onClick = { onItemClick(it) },
+                        onLongClick = { onLongItemClick(it) },
+                        isItemSelected = isItemSelected
                     )
                 }
                 RemindersPage.GlucoseRecords -> {
                     GlucoseRemindersPage(
-                        viewState.glucoseReminders,
-                        deleteGlucoseReminder
+                        reminders = viewState.glucoseReminders,
+                        onEnabledChange = { reminder, enabled ->
+                            glucoseReminderEnabledChange(reminder, enabled)
+                        },
+                        onClick = { onItemClick(it) },
+                        onLongClick = { onLongItemClick(it) },
+                        isItemSelected = isItemSelected
                     )
                 }
             }

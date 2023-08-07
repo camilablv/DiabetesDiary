@@ -27,7 +27,7 @@ import com.ca.designsystem.components.InsulinReminderTimelineCard
 import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
-import com.ca.designsystem.components.topbar.HomeTopBar
+import com.ca.designsystem.components.topbar.EditModeTopBar
 import com.ca.model.*
 
 @Composable
@@ -57,7 +57,7 @@ fun HomeScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            HomeTopBar(
+            EditModeTopBar(
                 isInEditMode = viewState.isInEditMode,
                 onEditClick = { navigateToEditItem(viewState.selectedItem) },
                 onDeleteClick = { viewModel.removeItem(viewState.selectedItem) }
