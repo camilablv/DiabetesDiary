@@ -27,7 +27,7 @@ val Grey50 = Color(0xFFFAFAFA)
 val Grey900 = Color(0xFF212121)
 
 val DarkColors = DiaryColors(
-    background = Grey900,
+    background = Black,
     primary = Purple40,
     secondary = DeepPurple200,
     surface = Grey800,
@@ -37,7 +37,6 @@ val DarkColors = DiaryColors(
     onSecondary = Black,
     onSurface = Black,
     onError = Color.White
-
 )
 
 val LightColors = DiaryColors(

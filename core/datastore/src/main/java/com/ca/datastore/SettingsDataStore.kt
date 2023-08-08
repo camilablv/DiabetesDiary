@@ -12,4 +12,5 @@ interface SettingsDataStore {
     suspend fun insulins(): List<Insulin>
     suspend fun setDarkMode(darkMode: Boolean)
     suspend fun settings(): Flow<Settings>
+    fun darkMode(): Flow<Boolean>
 }
