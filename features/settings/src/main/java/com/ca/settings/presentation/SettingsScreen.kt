@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.*
+import com.ca.designsystem.components.settings.LanguageSection
+import com.ca.designsystem.components.settings.ThemeSection
 import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
@@ -43,6 +46,19 @@ fun SettingsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(16.dp)
         ) {
+            item {
+                ThemeSection(
+                    isDarkThemeMode = viewState.darkMode,
+                    onCheckedChange = { viewModel.darkMode(it) }
+                )
+            }
+
+            item {
+                LanguageSection(
+                    selectedLanguage = "English",
+                    onClick = {}
+                )
+            }
 
             item {
                 SettingsSectionCard(
@@ -200,4 +216,5 @@ fun DismissBackground(
         }
     }
 }
+
 

@@ -1,9 +1,12 @@
 package com.ca.datastore
 
 import androidx.datastore.core.DataStore
+import com.ca.model.ExternalSettings
 import com.ca.model.GlucoseUnits
 import com.ca.model.Insulin
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 internal class SettingsDataStoreImpl @Inject constructor(
@@ -47,4 +50,14 @@ internal class SettingsDataStoreImpl @Inject constructor(
     override suspend fun insulins(): List<Insulin> {
         return dataStore.data.first().insulins()
     }
+
+    override suspend fun setDarkMode(darkMode: Boolean) {
+        dataStore.updateData {
+            it.toBuilder()
+                .setDarkMode(darkMode)
+                .build()
+        }
+    }
+
+    override suspend fun settings(): Flow<ExternalSettings> = dataStore.data.asExternalModel()
 }

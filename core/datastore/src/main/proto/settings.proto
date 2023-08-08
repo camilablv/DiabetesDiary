@@ -6,6 +6,7 @@ option java_multiple_files = true;
 message Settings {
   GlucoseUnit unit = 1;
   repeated Insulin insulins = 2;
+  bool darkMode = 3;
 
   enum GlucoseUnit {
       MG_PER_DL = 0;

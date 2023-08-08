@@ -5,9 +5,13 @@ import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
 import com.ca.model.GlucoseUnits
 import com.ca.model.Insulin
+import com.ca.model.ExternalSettings
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.insulin
 import com.ca.network.utils.unit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
@@ -49,4 +53,12 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insulins(): List<Insulin> = settingsDataStore.insulins()
+
+    override suspend fun settings(): Flow<ExternalSettings> {
+        return settingsDataStore.settings().flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun darkMode(darkMode: Boolean) {
+        settingsDataStore.setDarkMode(darkMode)
+    }
 }

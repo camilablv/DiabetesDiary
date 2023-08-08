@@ -5,9 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ca.model.GlucoseUnits
 import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,35 +15,38 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _viewState = MutableStateFlow(SettingsViewState())
-    val viewState: StateFlow<SettingsViewState> = _viewState
+    val viewState: StateFlow<SettingsViewState> = _viewState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            _viewState.update { it.copy(insulins = repository.insulins()) }
+            repository.settings().collect { settings ->
+                _viewState.update {
+                    it.copy(
+                        glucoseUnits = settings.glucoseUnits,
+                        insulins = settings.insulins,
+                        darkMode = settings.darkMode
+                    )
+                }
+            }
+
         }
     }
 
     fun setGlucoseUnit(units: GlucoseUnits) {
         viewModelScope.launch {
-            repository.updateGlucoseUnits(units)?.also { units ->
-                _viewState.update { it.copy(glucoseUnits = units) }
-            }
+            repository.updateGlucoseUnits(units)
         }
     }
 
     fun addInsulin(name: String, color: String, defaultDose: Int) {
         viewModelScope.launch {
-            repository.addInsulin(name, color, defaultDose)?.also { insulins ->
-                _viewState.update { _viewState.value.copy(insulins = insulins)}
-            }
+            repository.addInsulin(name, color, defaultDose)
         }
     }
 
     fun deleteInsulin(id: String) {
         viewModelScope.launch {
-            repository.deleteInsulin(id).also { insulins ->
-                _viewState.update { _viewState.value.copy(insulins = insulins) }
-            }
+            repository.deleteInsulin(id)
         }
     }
 
@@ -55,5 +56,11 @@ class SettingsViewModel @Inject constructor(
 
     fun showEditInsulinDialog(value: Boolean) {
         _viewState.update { it.copy(showEditInsulinDialog = value) }
+    }
+
+    fun darkMode(darkMode: Boolean) {
+        viewModelScope.launch {
+            repository.darkMode(darkMode)
+        }
     }
 }
