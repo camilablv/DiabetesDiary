@@ -1,22 +1,21 @@
 package com.ca.datastore
 
 import androidx.datastore.core.DataStore
-import com.ca.model.ExternalSettings
+import com.ca.model.Settings
 import com.ca.model.GlucoseUnits
 import com.ca.model.Insulin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 internal class SettingsDataStoreImpl @Inject constructor(
-    private val dataStore: DataStore<Settings>
+    private val dataStore: DataStore<SettingsProto>
 ) : SettingsDataStore {
 
     override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits {
         return dataStore.updateData {
             it.toBuilder()
-                .setUnit(Settings.GlucoseUnit.valueOf(units.name))
+                .setUnit(SettingsProto.GlucoseUnit.valueOf(units.name))
                 .build()
         }.glucoseUnit()
     }
@@ -25,7 +24,7 @@ internal class SettingsDataStoreImpl @Inject constructor(
         return dataStore.updateData {
             it.toBuilder()
                 .addInsulins(
-                    Settings.Insulin.newBuilder()
+                    SettingsProto.Insulin.newBuilder()
                         .setId(insulin.id)
                         .setName(insulin.name)
                         .setColor(insulin.color)
@@ -59,5 +58,5 @@ internal class SettingsDataStoreImpl @Inject constructor(
         }
     }
 
-    override suspend fun settings(): Flow<ExternalSettings> = dataStore.data.asExternalModel()
+    override suspend fun settings(): Flow<Settings> = dataStore.data.asExternalModel()
 }

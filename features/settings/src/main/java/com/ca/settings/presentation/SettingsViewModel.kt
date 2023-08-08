@@ -18,6 +18,10 @@ class SettingsViewModel @Inject constructor(
     val viewState: StateFlow<SettingsViewState> = _viewState.asStateFlow()
 
     init {
+        settings()
+    }
+
+    private fun settings() {
         viewModelScope.launch {
             repository.settings().collect { settings ->
                 _viewState.update {
@@ -28,7 +32,6 @@ class SettingsViewModel @Inject constructor(
                     )
                 }
             }
-
         }
     }
 

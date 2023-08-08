@@ -28,7 +28,7 @@ class DataStoreModule {
 
     @Singleton
     @Provides
-    fun provideSettingsDataStoreAPIClass(dataStore: DataStore<Settings>): SettingsDataStore {
+    fun provideSettingsDataStoreAPIClass(dataStore: DataStore<SettingsProto>): SettingsDataStore {
         return SettingsDataStoreImpl(dataStore)
     }
 
@@ -38,7 +38,7 @@ class DataStoreModule {
 
     @Singleton
     @Provides
-    fun provideSettingsSerializer(): Serializer<Settings> = SettingsSerializer()
+    fun provideSettingsSerializer(): Serializer<SettingsProto> = SettingsSerializer()
 
     @Singleton
     @Provides
@@ -56,8 +56,8 @@ class DataStoreModule {
     @Provides
     fun provideSettingsDataStore(
         @ApplicationContext context: Context,
-        serializer: Serializer<Settings>
-    ): DataStore<Settings> {
+        serializer: Serializer<SettingsProto>
+    ): DataStore<SettingsProto> {
         return DataStoreFactory.create(
             serializer = serializer,
             produceFile = { context.dataStoreFile(SETTINGS_DATA_STORE_FILE_NAME) }
