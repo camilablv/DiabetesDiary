@@ -88,3 +88,15 @@ query InsulinRecords($cursor: String, $limit: Int!) {
         units
     }
 }
+
+query Settings {
+    settings {
+        bloodGlucoseUnits
+        insulins {
+            id
+            name
+            color,
+            defaultDose
+        }
+    }
+}

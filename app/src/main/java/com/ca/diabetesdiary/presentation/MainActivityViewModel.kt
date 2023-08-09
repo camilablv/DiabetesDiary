@@ -22,6 +22,7 @@ class MainActivityViewModel @Inject constructor(
     init {
         setStartDestination()
         setTheme()
+        setUserSettings()
     }
 
     private fun setStartDestination() {
@@ -48,6 +49,12 @@ class MainActivityViewModel @Inject constructor(
             repository.darkMode().collect { darkMode ->
                 _viewState.update { it.copy(darkMode = darkMode) }
             }
+        }
+    }
+
+    private fun setUserSettings() {
+        viewModelScope.launch {
+            repository.fetchRemoteSettings()
         }
     }
 }

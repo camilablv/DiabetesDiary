@@ -67,3 +67,22 @@ fun RecordGlucoseMutation.Data.record(): GlucoseRecord {
         )
     }
 }
+
+fun SettingsQuery.Insulin.insulin(): Insulin {
+    return Insulin(
+        id = id,
+        name = name,
+        color = color,
+        defaultDose = defaultDose ?: 0
+    )
+}
+
+fun SettingsQuery.Data.settings(): Settings {
+    return with(settings) {
+        Settings(
+            glucoseUnits = GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!),
+            insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() },
+            darkMode = false //todo fix local model
+        )
+    }
+}

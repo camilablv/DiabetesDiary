@@ -6,4 +6,5 @@ interface MainRepository {
     val isUserSignedIn: Boolean
     suspend fun isOnBoardingShowed(): Boolean
     fun darkMode(): Flow<Boolean>
+    suspend fun fetchRemoteSettings()
 }

@@ -11,7 +11,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,12 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.*
+import com.ca.designsystem.components.settings.GlucoseUnitsSection
 import com.ca.designsystem.components.settings.LanguageSection
 import com.ca.designsystem.components.settings.ThemeSection
 import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
-import com.ca.settings.presentation.components.SettingsSectionCard
 
 @Composable
 fun SettingsScreen(
@@ -61,16 +60,10 @@ fun SettingsScreen(
             }
 
             item {
-                SettingsSectionCard(
-                    modifier = Modifier,
-                    sectionTitle = "Choose glucose unit"
-                ) {
-                    GlucoseUnitsRadioButtons(
-                        modifier = Modifier,
-                        defaultUnit = viewState.glucoseUnits,
-                        onSelect = { viewModel.setGlucoseUnit(it) }
-                    )
-                }
+                GlucoseUnitsSection(
+                    selectedUnits = viewState.glucoseUnits,
+                    onSelect = { viewModel.setGlucoseUnit(it) }
+                )
             }
 
             item {
@@ -158,7 +151,6 @@ private fun InsulinSection(
                         )
                     }
                 }
-
             }
         }
     }
