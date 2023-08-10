@@ -47,6 +47,22 @@ internal class SettingsDataStoreImpl @Inject constructor(
         }.insulins()
     }
 
+    override suspend fun updateInsulin(insulin: Insulin) {
+        val insulins = dataStore.data.first().insulinsList
+        val element = insulins.find { it.id == insulin.id }
+        val index = insulins.indexOf(element)
+
+        if (element == null) {
+            addInsulin(insulin)
+        } else {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setInsulins(index, element)
+                    .build()
+            }
+        }
+    }
+
     override suspend fun insulins(): List<Insulin> {
         return dataStore.data.first().insulins()
     }

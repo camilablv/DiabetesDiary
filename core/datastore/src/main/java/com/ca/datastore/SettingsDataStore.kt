@@ -9,6 +9,7 @@ interface SettingsDataStore {
     suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits
     suspend fun addInsulin(insulin: Insulin): List<Insulin>
     suspend fun deleteInsulin(id: String): List<Insulin>
+    suspend fun updateInsulin(insulin: Insulin)
     suspend fun insulins(): List<Insulin>
     suspend fun setDarkMode(darkMode: Boolean)
     suspend fun settings(): Flow<Settings>

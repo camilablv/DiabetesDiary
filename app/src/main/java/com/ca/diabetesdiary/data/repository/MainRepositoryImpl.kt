@@ -33,10 +33,11 @@ class MainRepositoryImpl @Inject constructor(
                 with(data.settings()) {
                     Log.d("insulins", insulins.size.toString())
                     insulins.forEach { insulin ->
-                        networkClient.deleteInsulin(insulin.id).fold(
-                            onSuccess = { Log.d("insulins", "onSuccess ${insulin.id}") },
-                            onFailure = { Log.d("insulins", "onFailure $it") }
-                        )
+                        settingsDataStore.updateInsulin(insulin)
+//                        networkClient.deleteInsulin(insulin.id).fold(
+//                            onSuccess = { Log.d("insulins", "onSuccess ${insulin.id}") },
+//                            onFailure = { Log.d("insulins", "onFailure $it") }
+//                        )
                     }
                     settingsDataStore.updateGlucoseUnits(glucoseUnits)
 

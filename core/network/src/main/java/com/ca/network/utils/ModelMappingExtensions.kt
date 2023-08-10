@@ -82,7 +82,7 @@ fun SettingsQuery.Data.settings(): Settings {
         Settings(
             glucoseUnits = GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!),
             insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() },
-            darkMode = false //todo fix local model
+            darkMode = false //TODO fix local model
         )
     }
 }
