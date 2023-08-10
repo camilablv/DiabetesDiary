@@ -83,4 +83,12 @@ class InsulinReminderRepositoryImpl @Inject constructor(
             glucoseReminderDao.update(reminder.asEntity())
         }
     }
+
+    override suspend fun insulinRemindersByInsulinId(insulinId: String): List<RecordInsulinReminder> {
+        return withContext(Dispatchers.IO) {
+            insulinReminderDao
+                .insulinRemindersByInsulinId(insulinId)
+                .map { it.asExternalModel() }
+        }
+    }
 }

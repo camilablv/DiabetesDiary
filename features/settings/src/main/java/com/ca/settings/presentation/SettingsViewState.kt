@@ -9,4 +9,6 @@ data class SettingsViewState(
     val darkMode: Boolean = false,
     val showAddInsulinDialog: Boolean = false,
     val showEditInsulinDialog: Boolean = false,
+    val showDeleteInsulinDialog: Boolean = false,
+    val selectedInsulin: Insulin? = null
 )

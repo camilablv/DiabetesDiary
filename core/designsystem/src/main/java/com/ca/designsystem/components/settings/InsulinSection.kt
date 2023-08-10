@@ -26,8 +26,8 @@ fun InsulinSection(
     modifier: Modifier,
     insulins: List<Insulin>,
     addInsulin: () -> Unit,
-    deleteInsulin: (String) -> Unit,
-    editInsulin: (String) -> Unit
+    deleteInsulin: (Insulin) -> Unit,
+    editInsulin: (Insulin) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -83,7 +83,7 @@ fun InsulinSection(
                                     .padding(16.dp)
                                     .size(36.dp)
                                     .background(Color.Gray.copy(alpha = 0.5f), CircleShape),
-                                onClick = { /*TODO*/ }
+                                onClick = { deleteInsulin(insulin) }
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Delete,
@@ -97,7 +97,7 @@ fun InsulinSection(
                     ) {
                         InsulinCard(
                             modifier = Modifier
-                                .clickable { editInsulin(insulin.id) },
+                                .clickable { editInsulin(insulin) },
                             insulin = insulin
                         )
                     }

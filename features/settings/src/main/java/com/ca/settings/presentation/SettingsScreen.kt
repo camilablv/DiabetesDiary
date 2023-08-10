@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.AddInsulinDialog
+import com.ca.designsystem.components.dialog.DiaryAlertDialog
 import com.ca.designsystem.components.settings.GlucoseUnitsSection
 import com.ca.designsystem.components.settings.InsulinSection
 import com.ca.designsystem.components.settings.LanguageSection
@@ -68,13 +69,26 @@ fun SettingsScreen(
                     addInsulin = {
                         viewModel.showAddInsulinDialog(true)
                     },
-                    deleteInsulin = { viewModel.deleteInsulin(it) },
-                    editInsulin = { viewModel.showEditInsulinDialog(true) }
+                    deleteInsulin = {
+                        viewModel.setSelectedInsulin(it)
+                        viewModel.deleteInsulin(it)
+                    },
+                    editInsulin = {
+                        viewModel.showEditInsulinDialog(true)
+                        viewModel.setSelectedInsulin(it)
+                    }
                 )
             }
 
         }
     }
+
+    DiaryAlertDialog(
+        show = viewState.showDeleteInsulinDialog,
+        onDismiss = { viewModel.showDeleteInsulinDialog(false) },
+        onPositiveButtonClick = { viewModel.deleteInsulinWithReminders(viewState.selectedInsulin) },
+        positiveButtonText = "Delete"
+    )
 
     AddInsulinDialog(
         show = viewState.showAddInsulinDialog,
