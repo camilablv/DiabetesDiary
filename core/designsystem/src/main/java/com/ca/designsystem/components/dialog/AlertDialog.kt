@@ -30,7 +30,10 @@ fun DiaryAlertDialog(
                 horizontalArrangement = Arrangement.End
             ) {
                 TextButton(onClick = onDismiss) {
-                    Text(text = "Dismiss")
+                    Text(
+                        text = "Dismiss",
+                        color = Theme.colors.secondary
+                    )
                 }
                 Button(
                     modifier = Modifier

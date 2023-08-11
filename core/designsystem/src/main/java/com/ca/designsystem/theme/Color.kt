@@ -32,10 +32,10 @@ val DarkColors = DiaryColors(
     secondary = DeepPurple200,
     surface = Grey800,
     error = DarkRed,
-    onBackground = Black,
+    onBackground = Grey50,
     onPrimary = Color.White,
-    onSecondary = Black,
-    onSurface = Black,
+    onSecondary = Grey50,
+    onSurface = Grey50,
     onError = Color.White
 )
 
