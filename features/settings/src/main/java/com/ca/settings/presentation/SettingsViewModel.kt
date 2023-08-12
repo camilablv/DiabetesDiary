@@ -44,13 +44,15 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun addInsulin(name: String, color: String, defaultDose: Int) {
+    fun addInsulin(id: String?, name: String, color: String, defaultDose: Int) {
         viewModelScope.launch {
-            repository.addInsulin(name, color, defaultDose)
+            if (id == null) repository.addInsulin(name, color, defaultDose)
+            else repository.updateInsulin(id, name, color, defaultDose)
         }
     }
 
     fun deleteInsulinWithReminders(insulin: Insulin?) {
+        setSelectedInsulin(null)
         showDeleteInsulinDialog(false)
         if (insulin == null) return
         viewModelScope.launch {
@@ -74,10 +76,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun showAddInsulinDialog(value: Boolean) {
-        _viewState.update { it.copy(showAddInsulinDialog = value) }
-    }
-
     fun showEditInsulinDialog(value: Boolean) {
         _viewState.update { it.copy(showEditInsulinDialog = value) }
     }
@@ -86,7 +84,7 @@ class SettingsViewModel @Inject constructor(
         _viewState.update { it.copy(showDeleteInsulinDialog = value) }
     }
 
-    fun setSelectedInsulin(insulin: Insulin) {
+    fun setSelectedInsulin(insulin: Insulin?) {
         _viewState.update { it.copy(selectedInsulin = insulin) }
     }
 

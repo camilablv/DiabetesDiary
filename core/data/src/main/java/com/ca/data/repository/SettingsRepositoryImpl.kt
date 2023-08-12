@@ -44,7 +44,12 @@ class SettingsRepositoryImpl @Inject constructor(
         color: String,
         defaultDosage: Int
     ) {
-        TODO("Not yet implemented")
+        networkClient.updateInsulin(id, name, color, defaultDosage).fold(
+            onSuccess = { settingsDataStore.updateInsulin(it.insulin()) },
+            onFailure = {
+                Log.d("SettingsRepositoryImpl", "updateInsulin " + it.message.toString())
+            }
+        )
     }
 
     override suspend fun deleteInsulin(id: String): List<Insulin> {

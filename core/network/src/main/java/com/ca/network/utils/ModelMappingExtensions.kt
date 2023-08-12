@@ -10,6 +10,12 @@ fun CreateInsulinMutation.Data.insulin(): Insulin {
     }
 }
 
+fun UpdateInsulinMutation.Data.insulin(): Insulin {
+    return insulin.let {
+        Insulin(it.id, it.name, it.color, it.defaultDose!!)
+    }
+}
+
 fun UpdateGlucoseUnitMutation.Data.unit(): GlucoseUnits {
     return GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!)
 }

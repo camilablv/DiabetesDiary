@@ -57,7 +57,14 @@ internal class SettingsDataStoreImpl @Inject constructor(
         } else {
             dataStore.updateData {
                 it.toBuilder()
-                    .setInsulins(index, element)
+                    .setInsulins(
+                        index,
+                        SettingsProto.Insulin.newBuilder()
+                            .setId(insulin.id)
+                            .setName(insulin.name)
+                            .setColor(insulin.color)
+                            .setDefaultDosage(insulin.defaultDose)
+                    )
                     .build()
             }
         }

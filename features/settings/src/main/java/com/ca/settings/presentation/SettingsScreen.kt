@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.dialog.AddInsulinDialog
+import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.components.dialog.DiaryAlertDialog
 import com.ca.designsystem.components.settings.GlucoseUnitsSection
 import com.ca.designsystem.components.settings.InsulinSection
@@ -67,19 +67,19 @@ fun SettingsScreen(
                     modifier = Modifier,
                     insulins = viewState.insulins,
                     addInsulin = {
-                        viewModel.showAddInsulinDialog(true)
+                        viewModel.setSelectedInsulin(null)
+                        viewModel.showEditInsulinDialog(true)
                     },
                     deleteInsulin = {
                         viewModel.setSelectedInsulin(it)
                         viewModel.deleteInsulin(it)
                     },
                     editInsulin = {
-                        viewModel.showEditInsulinDialog(true)
                         viewModel.setSelectedInsulin(it)
+                        viewModel.showEditInsulinDialog(true)
                     }
                 )
             }
-
         }
     }
 
@@ -90,8 +90,10 @@ fun SettingsScreen(
         positiveButtonText = "Delete"
     )
 
-    AddInsulinDialog(
-        show = viewState.showAddInsulinDialog,
-        add = { name, color, dose -> viewModel.addInsulin(name, color, dose) }
-    ) { viewModel.showAddInsulinDialog(false) }
+    EditInsulinDialog(
+        show = viewState.showEditInsulinDialog,
+        edit = { id, name, color, dose -> viewModel.addInsulin(id, name, color, dose) },
+        onDismiss = { viewModel.showEditInsulinDialog(false) },
+        editableInsulin = viewState.selectedInsulin
+    )
 }

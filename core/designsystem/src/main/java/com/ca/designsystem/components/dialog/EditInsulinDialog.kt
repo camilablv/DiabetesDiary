@@ -2,11 +2,13 @@ package com.ca.designsystem.components.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -14,23 +16,30 @@ import com.ca.designsystem.components.ColorPickerButton
 import com.ca.designsystem.components.Counter
 import com.ca.designsystem.theme.DiaryTheme
 import com.ca.designsystem.theme.Theme
+import com.ca.designsystem.utils.colorFromHex
 import com.ca.designsystem.utils.toHex
+import com.ca.model.Insulin
 import com.vanpra.composematerialdialogs.color.ColorPalette
 
 @Composable
-fun AddInsulinDialog(
+fun EditInsulinDialog(
     show: Boolean,
-    add: (name: String, color: String, dose: Int) -> Unit,
-    onDismiss: () -> Unit
+    edit: (id: String?, name: String, color: String, dose: Int) -> Unit,
+    onDismiss: () -> Unit,
+    editableInsulin: Insulin? = null
 ) {
     if (!show) return
     Dialog(
         onDismissRequest = onDismiss
     ) {
-
-        var insulinName by remember { mutableStateOf("") }
-        var defaultDosage by remember { mutableStateOf(0) }
-        var insulinColor by remember { mutableStateOf(ColorPalette.Primary[12]) }
+        var insulinName by remember { mutableStateOf(editableInsulin?.name ?: "") }
+        var defaultDosage by remember { mutableStateOf(editableInsulin?.defaultDose ?: 0) }
+        var insulinColor by remember {
+            mutableStateOf(
+                if (editableInsulin?.color != null) colorFromHex(editableInsulin.color)
+                else ColorPalette.Primary[12]
+            )
+        }
         Surface(
             shape = Theme.shapes.large,
             color = Theme.colors.surface
@@ -47,7 +56,7 @@ fun AddInsulinDialog(
                     color = Theme.colors.onSurface
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     ColorPickerButton(
                         color = insulinColor,
@@ -65,18 +74,12 @@ fun AddInsulinDialog(
                         },
                         modifier = Modifier
                             .height(48.dp)
+                            .padding(start = 16.dp)
                             .background(Color.White, Theme.shapes.large),
-                        shape = Theme.shapes.large
+                        shape = Theme.shapes.large,
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
                     )
                 }
-
-//                NumberWheelPicker(
-//                    modifier = Modifier,
-//                    startItem = 5,
-//                    count = 100,
-//                    visibleItemsCount = 3,
-//                    size = DpSize(128.dp, 128.dp)
-//                )
 
                 Box(
                     modifier = Modifier
@@ -110,7 +113,7 @@ fun AddInsulinDialog(
                         modifier = Modifier
                             .padding(start = 8.dp),
                         onClick = {
-                            add(insulinName, insulinColor.toHex(), defaultDosage)
+                            edit(editableInsulin?.id, insulinName, insulinColor.toHex(), defaultDosage)
                             onDismiss()
                         },
                         shape = Theme.shapes.large,
@@ -119,7 +122,7 @@ fun AddInsulinDialog(
                         )
                     ) {
                         Text(
-                            text = "Add",
+                            text = if (editableInsulin == null) "Add" else "Edit",
                             color = Theme.colors.onSecondary
                         )
                     }
@@ -131,14 +134,15 @@ fun AddInsulinDialog(
 
 @Preview
 @Composable
-fun AddInsulinDialog() {
-    val lambda: (String, String, Int) -> Unit = {p1, p2, p3 ->}
+fun EditInsulinDialog() {
+    val lambda: (String?, String, String, Int) -> Unit = { p1, p2, p3, p4 -> }
     DiaryTheme {
-        AddInsulinDialog(
+        EditInsulinDialog(
             show = true,
-            add = { p1, p2, p3 ->
-                lambda(p1, p2, p3)
-            }
-        ) {}
+            edit = { p1, p2, p3, p4 ->
+                lambda(p1, p2, p3, p4)
+            },
+            onDismiss = {}
+        )
     }
 }

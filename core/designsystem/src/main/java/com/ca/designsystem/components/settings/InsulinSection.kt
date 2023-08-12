@@ -36,7 +36,8 @@ fun InsulinSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Insulin",
@@ -45,8 +46,17 @@ fun InsulinSection(
                 color = Theme.colors.onSurface
             )
 
-            Button(onClick = { addInsulin() }) {
-                Text(text = "Add")
+            Button(
+                onClick = { addInsulin() },
+                shape = Theme.shapes.large,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Theme.colors.secondary
+                )
+            ) {
+                Text(
+                    text = "Add",
+                    color = Theme.colors.onSecondary
+                )
             }
         }
         Column(
@@ -68,7 +78,7 @@ fun InsulinSection(
                                     .padding(16.dp)
                                     .size(36.dp)
                                     .background(Color.Gray.copy(alpha = 0.5f), CircleShape),
-                                onClick = { /*TODO*/ }
+                                onClick = { editInsulin(insulin) }
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Edit,
@@ -96,8 +106,7 @@ fun InsulinSection(
                         backgroundCardEndColor = Theme.colors.background
                     ) {
                         InsulinCard(
-                            modifier = Modifier
-                                .clickable { editInsulin(insulin) },
+                            modifier = Modifier,
                             insulin = insulin
                         )
                     }
