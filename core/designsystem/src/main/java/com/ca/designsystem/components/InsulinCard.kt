@@ -67,6 +67,5 @@ fun InsulinCard(
                 )
             }
         }
-
     }
 }
