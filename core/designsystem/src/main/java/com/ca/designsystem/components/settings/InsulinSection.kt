@@ -1,7 +1,6 @@
 package com.ca.designsystem.components.settings
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -9,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,14 +17,15 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinCard
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
-import de.charlex.compose.RevealDirection
-import de.charlex.compose.RevealSwipe
+import de.charlex.compose.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InsulinSection(
     modifier: Modifier,
     insulins: List<Insulin>,
+    revealedInsulin: Insulin?,
+    onReveal: (Insulin) -> Unit,
     addInsulin: () -> Unit,
     deleteInsulin: (Insulin) -> Unit,
     editInsulin: (Insulin) -> Unit
@@ -66,7 +67,20 @@ fun InsulinSection(
         ) {
             insulins.forEach { insulin ->
                 key(insulin.id) {
+                    val revealState = rememberRevealState()
+
+                    LaunchedEffect(revealState.progress) {
+                        if (revealState.targetValue != RevealValue.Default)
+                            onReveal(insulin)
+                    }
+
+                    LaunchedEffect(revealedInsulin) {
+                        val isItemRevealed = insulin == revealedInsulin
+                        if (!isItemRevealed) revealState.reset()
+                    }
+
                     RevealSwipe(
+                        state = revealState,
                         modifier = Modifier.padding(vertical = 5.dp),
                         directions = setOf(
                             RevealDirection.StartToEnd,
@@ -103,7 +117,9 @@ fun InsulinSection(
                             }
                         },
                         backgroundCardStartColor = Theme.colors.background,
-                        backgroundCardEndColor = Theme.colors.background
+                        backgroundCardEndColor = Theme.colors.background,
+                        closeOnContentClick = true,
+                        closeOnBackgroundClick = true
                     ) {
                         InsulinCard(
                             modifier = Modifier,

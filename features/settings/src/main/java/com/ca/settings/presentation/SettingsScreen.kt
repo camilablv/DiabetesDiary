@@ -66,16 +66,18 @@ fun SettingsScreen(
                 InsulinSection(
                     modifier = Modifier,
                     insulins = viewState.insulins,
+                    revealedInsulin = viewState.revealedInsulin,
+                    onReveal = { viewModel.setRevealedInsulin(it) },
                     addInsulin = {
-                        viewModel.setSelectedInsulin(null)
+                        viewModel.setRevealedInsulin(null)
                         viewModel.showEditInsulinDialog(true)
                     },
                     deleteInsulin = {
-                        viewModel.setSelectedInsulin(it)
+                        viewModel.setRevealedInsulin(it)
                         viewModel.deleteInsulin(it)
                     },
                     editInsulin = {
-                        viewModel.setSelectedInsulin(it)
+                        viewModel.setRevealedInsulin(it)
                         viewModel.showEditInsulinDialog(true)
                     }
                 )
@@ -86,14 +88,14 @@ fun SettingsScreen(
     DiaryAlertDialog(
         show = viewState.showDeleteInsulinDialog,
         onDismiss = { viewModel.showDeleteInsulinDialog(false) },
-        onPositiveButtonClick = { viewModel.deleteInsulinWithReminders(viewState.selectedInsulin) },
+        onPositiveButtonClick = { viewModel.deleteInsulinWithReminders(viewState.revealedInsulin) },
         positiveButtonText = "Delete"
     )
 
     EditInsulinDialog(
         show = viewState.showEditInsulinDialog,
-        edit = { id, name, color, dose -> viewModel.addInsulin(id, name, color, dose) },
+        edit = { id, name, color, dose -> viewModel.editInsulin(id, name, color, dose) },
         onDismiss = { viewModel.showEditInsulinDialog(false) },
-        editableInsulin = viewState.selectedInsulin
+        editableInsulin = viewState.revealedInsulin
     )
 }

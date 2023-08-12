@@ -31,39 +31,39 @@ class HomeViewModel @Inject constructor(
         get() = _viewState
 
     init {
-//        items(viewState.value.selectedDate)
+        items(viewState.value.selectedDate)
     }
 
     fun selectDate(date: LocalDate) {
         _viewState.update { it.copy(selectedDate = date) }
-//        items(date)
+        items(date)
     }
 
-//    private fun items(date: LocalDate) {
-//        viewModelScope.launch {
-//            val reminders = getRemindersUseCase()
-//            val records = getRecordsUseCase(date)
-//            records.combine(reminders) { recordItems, reminderItems ->
-//                if (date == LocalDate.now()) {
-//                    val insulins = settingsRepository.insulins()
-//                    val list = reminderItems.map { reminder ->
-//                        if (reminder is RecordInsulinReminder) {
-//                            reminder.copy(insulin = insulins.find { it.id == reminder.insulinId }!!)
-//                        } else reminder
-//                    }
-//                    recordItems.plus(list)
-//                } else recordItems
-//            }.collect { list ->
-//                _viewState.update { state ->
-//                    state.copy(
-//                        listItems = list
-//                            .sortedBy { it.time }
-//                    )
-//                }
-//            }
-//        }
-//
-//    }
+    private fun items(date: LocalDate) {
+        viewModelScope.launch {
+            val reminders = getRemindersUseCase()
+            val records = getRecordsUseCase(date)
+            records.combine(reminders) { recordItems, reminderItems ->
+                if (date == LocalDate.now()) {
+                    val insulins = settingsRepository.insulins()
+                    val list = reminderItems.map { reminder ->
+                        if (reminder is RecordInsulinReminder) {
+                            reminder.copy(insulin = insulins.find { it.id == reminder.insulinId }!!)
+                        } else reminder
+                    }
+                    recordItems.plus(list)
+                } else recordItems
+            }.collect { list ->
+                _viewState.update { state ->
+                    state.copy(
+                        listItems = list
+                            .sortedBy { it.time }
+                    )
+                }
+            }
+        }
+
+    }
 
     fun markInsulinReminderAsDone(reminder: RecordInsulinReminder) {
         viewModelScope.launch {

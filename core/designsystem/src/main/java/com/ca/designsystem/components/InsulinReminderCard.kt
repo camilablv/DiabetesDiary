@@ -55,10 +55,8 @@ fun InsulinReminderCard(
         ) {
             Row(
                 modifier = Modifier
-
                     .height(64.dp)
-                    .fillMaxWidth()
-                    ,
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
