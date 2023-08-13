@@ -5,18 +5,22 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.GlucoseReminderCard
+import com.ca.model.ListItem
 import com.ca.model.RecordGlucoseReminder
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GlucoseRemindersPage(
     reminders: List<RecordGlucoseReminder>,
-    delete: (RecordGlucoseReminder) -> Unit
+    onEnabledChange: (RecordGlucoseReminder, Boolean) -> Unit,
+    isItemSelected: (ListItem) -> Boolean,
+    onClick: (RecordGlucoseReminder) -> Unit,
+    onLongClick: (RecordGlucoseReminder) -> Unit
 ) {
 
     LazyColumn(
@@ -26,34 +30,24 @@ fun GlucoseRemindersPage(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(
-            count = reminders.size,
-            key = { reminders[it].id }
+            count = reminders.size
         ) {
-            val dismissState = rememberDismissState()
-
-            if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                delete(reminders[it])
-            }
-
-            SwipeToDismiss(
-                state = dismissState,
-                modifier = Modifier,
-                directions = setOf(DismissDirection.EndToStart),
-                dismissThresholds = { FractionalThreshold(0.3f)},
-                background = {}
-            ) {
-                GlucoseReminderCard(
-                    modifier = Modifier
-                        .animateItemPlacement(
-                            animationSpec = tween(
-                                durationMillis = 2000,
-                                delayMillis = 500,
-                                easing = LinearOutSlowInEasing
-                            )
-                        ),
-                    reminder = reminders[it]
-                )
-            }
+            val reminder = reminders[it]
+            GlucoseReminderCard(
+                modifier = Modifier
+                    .animateItemPlacement(
+                        animationSpec = tween(
+                            durationMillis = 2000,
+                            delayMillis = 500,
+                            easing = LinearOutSlowInEasing
+                        )
+                    ),
+                reminder = reminder,
+                onCheckedChanged = { enabled -> onEnabledChange(reminder, enabled) },
+                selected = isItemSelected(reminder),
+                onClick = { onClick(reminder) },
+                onLongClick = { onLongClick(reminder) }
+            )
         }
         item {
             Spacer(modifier = Modifier

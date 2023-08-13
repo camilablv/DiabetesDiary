@@ -7,20 +7,20 @@ import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
-internal class SettingsSerializer @Inject constructor() : Serializer<Settings> {
+internal class SettingsSerializer @Inject constructor() : Serializer<SettingsProto> {
 
-    override val defaultValue: Settings
-        get() = Settings.getDefaultInstance()
+    override val defaultValue: SettingsProto
+        get() = SettingsProto.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): Settings {
+    override suspend fun readFrom(input: InputStream): SettingsProto {
         try {
-            return Settings.parseFrom(input)
+            return SettingsProto.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
             throw CorruptionException("Cannot read proto.", exception)
         }
     }
 
-    override suspend fun writeTo(t: Settings, output: OutputStream) {
+    override suspend fun writeTo(t: SettingsProto, output: OutputStream) {
         t.writeTo(output)
     }
 }

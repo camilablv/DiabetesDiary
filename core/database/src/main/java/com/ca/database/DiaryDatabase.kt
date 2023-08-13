@@ -20,7 +20,7 @@ import com.ca.database.util.*
         InsulinRecordEntity::class,
         GlucoseRecordEntity::class
     ],
-    version = 7,
+    version = 8,
     exportSchema = false
 )
 @TypeConverters(

@@ -88,7 +88,7 @@ fun InsulinReminderTimelineCard(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "UN",
+                                text = "IU",
                                 style = Theme.typography.bodySmall,
                             )
                         }

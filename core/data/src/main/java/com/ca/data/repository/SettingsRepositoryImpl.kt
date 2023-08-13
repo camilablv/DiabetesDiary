@@ -5,9 +5,14 @@ import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
 import com.ca.model.GlucoseUnits
 import com.ca.model.Insulin
+import com.ca.model.Settings
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.insulin
 import com.ca.network.utils.unit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
@@ -39,7 +44,12 @@ class SettingsRepositoryImpl @Inject constructor(
         color: String,
         defaultDosage: Int
     ) {
-        TODO("Not yet implemented")
+        networkClient.updateInsulin(id, name, color, defaultDosage).fold(
+            onSuccess = { settingsDataStore.updateInsulin(it.insulin()) },
+            onFailure = {
+                Log.d("SettingsRepositoryImpl", "updateInsulin " + it.message.toString())
+            }
+        )
     }
 
     override suspend fun deleteInsulin(id: String): List<Insulin> {
@@ -49,4 +59,12 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insulins(): List<Insulin> = settingsDataStore.insulins()
+
+    override suspend fun settings(): Flow<Settings> {
+        return settingsDataStore.settings().flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun darkMode(darkMode: Boolean) {
+        settingsDataStore.setDarkMode(darkMode)
+    }
 }

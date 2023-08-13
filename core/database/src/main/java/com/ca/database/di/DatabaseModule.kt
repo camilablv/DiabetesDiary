@@ -26,7 +26,7 @@ class DatabaseModule {
             klass = DiaryDatabase::class.java,
             name = "reminder_database"
         )
-            .fallbackToDestructiveMigration() //todo remove it later
+            .fallbackToDestructiveMigration() //TODO remove it later
             .build()
     }
 

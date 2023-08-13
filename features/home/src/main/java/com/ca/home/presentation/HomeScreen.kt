@@ -27,7 +27,7 @@ import com.ca.designsystem.components.InsulinReminderTimelineCard
 import com.ca.designsystem.components.multifab.MultiFabItem
 import com.ca.designsystem.components.multifab.MultiFloatingActionButton
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
-import com.ca.designsystem.components.topbar.HomeTopBar
+import com.ca.designsystem.components.topbar.EditModeTopBar
 import com.ca.model.*
 
 @Composable
@@ -40,6 +40,7 @@ fun HomeScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val editModeState by viewModel.editModeState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -57,10 +58,10 @@ fun HomeScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            HomeTopBar(
-                isInEditMode = viewState.isInEditMode,
-                onEditClick = { navigateToEditItem(viewState.selectedItem) },
-                onDeleteClick = { viewModel.removeItem(viewState.selectedItem) }
+            EditModeTopBar(
+                isInEditMode = editModeState.isInEditMode,
+                onEditClick = { navigateToEditItem(editModeState.selectedItem) },
+                onDeleteClick = { viewModel.removeItem(editModeState.selectedItem) }
             )
         },
         floatingActionButton = {
@@ -77,7 +78,7 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.End,
     ) { paddingValues ->
 
-        BackHandler(enabled = viewState.isInEditMode) {
+        BackHandler(enabled = editModeState.isInEditMode) {
             viewModel.disableEditMode()
         }
 

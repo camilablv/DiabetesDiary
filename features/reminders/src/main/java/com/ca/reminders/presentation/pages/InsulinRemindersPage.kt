@@ -10,16 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinReminderCard
+import com.ca.model.ListItem
 import com.ca.model.RecordInsulinReminder
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InsulinRemindersPage(
     reminders: List<RecordInsulinReminder>,
-    delete: (RecordInsulinReminder) -> Unit
+    onEnabledChange: (RecordInsulinReminder, Boolean) -> Unit,
+    isItemSelected: (ListItem) -> Boolean,
+    onClick: (RecordInsulinReminder) -> Unit,
+    onLongClick: (RecordInsulinReminder) -> Unit
 ) {
-
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -27,37 +29,31 @@ fun InsulinRemindersPage(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(
-            reminders.size,
-            key = { reminders[it].id }
+            reminders.size
         ) {
-            val dismissState = rememberDismissState()
-
-            if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                delete(reminders[it])
-            }
-
-            SwipeToDismiss(
-                state = dismissState,
-                modifier = Modifier,
-                directions = setOf(DismissDirection.EndToStart),
-                dismissThresholds = { FractionalThreshold(0.3f) },
-                background = {}
-            ) {
-                InsulinReminderCard(
-                    modifier = Modifier
-                        .animateItemPlacement(
-                            animationSpec = tween(
-                                durationMillis = 2000,
-                                delayMillis = 500,
-                                easing = LinearOutSlowInEasing
-                            )
-                        ),
-                    reminder = reminders[it]
-                )
-            }
+            val reminder = reminders[it]
+            InsulinReminderCard(
+                modifier = Modifier
+                    .animateItemPlacement(
+                        animationSpec = tween(
+                            durationMillis = 2000,
+                            delayMillis = 500,
+                            easing = LinearOutSlowInEasing
+                        )
+                    ),
+                reminder = reminders[it],
+                onCheckedChanged = { enabled ->
+                    onEnabledChange(reminder, enabled)
+                },
+                selected = isItemSelected(reminder),
+                onClick = { onClick(reminder) },
+                onLongClick = { onLongClick(reminder) }
+            )
         }
         item { 
-            Spacer(modifier = Modifier.fillMaxWidth().height(64.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(64.dp))
         }
     }
 }

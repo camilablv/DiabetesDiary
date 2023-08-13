@@ -22,6 +22,12 @@ class NetworkClient @Inject constructor(
         }
     }
 
+    suspend fun currentUser(): Result<CurrentUserQuery.Data> {
+        return errorHandler.withErrorHandler {
+            return@withErrorHandler apolloClient.query(CurrentUserQuery()).execute()
+        }
+    }
+
     suspend fun updateGlucoseUnit(unit: GlucoseUnits): Result<UpdateGlucoseUnitMutation.Data> {
         val glucoseUnit = BloodGlucoseUnits.safeValueOf(unit.name)
 
@@ -46,9 +52,9 @@ class NetworkClient @Inject constructor(
         }
     }
 
-    suspend fun currentUser(): Result<CurrentUserQuery.Data> {
+    suspend fun updateInsulin(id: String, name: String, color: String, defaultDose: Int): Result<UpdateInsulinMutation.Data> {
         return errorHandler.withErrorHandler {
-            return@withErrorHandler apolloClient.query(CurrentUserQuery()).execute()
+            return@withErrorHandler apolloClient.mutation(UpdateInsulinMutation(id, name, color, defaultDose)).execute()
         }
     }
 
@@ -107,6 +113,12 @@ class NetworkClient @Inject constructor(
         val optional = com.apollographql.apollo3.api.Optional.present(cursor)
         return errorHandler.withErrorHandler {
             return@withErrorHandler apolloClient.query(InsulinRecordsQuery(optional, limit)).execute()
+        }
+    }
+
+    suspend fun settings(): Result<SettingsQuery.Data> {
+        return errorHandler.withErrorHandler {
+            return@withErrorHandler apolloClient.query(SettingsQuery()).execute()
         }
     }
 }

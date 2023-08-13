@@ -6,6 +6,8 @@ import com.ca.model.Insulin
 data class SettingsViewState(
     val glucoseUnits: GlucoseUnits = GlucoseUnits.MMOL_PER_L,
     val insulins: List<Insulin> = listOf(),
-    val showAddInsulinDialog: Boolean = false,
+    val darkMode: Boolean = false,
     val showEditInsulinDialog: Boolean = false,
+    val showDeleteInsulinDialog: Boolean = false,
+    val revealedInsulin: Insulin? = null
 )

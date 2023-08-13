@@ -10,6 +10,12 @@ fun CreateInsulinMutation.Data.insulin(): Insulin {
     }
 }
 
+fun UpdateInsulinMutation.Data.insulin(): Insulin {
+    return insulin.let {
+        Insulin(it.id, it.name, it.color, it.defaultDose!!)
+    }
+}
+
 fun UpdateGlucoseUnitMutation.Data.unit(): GlucoseUnits {
     return GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!)
 }
@@ -64,6 +70,25 @@ fun RecordGlucoseMutation.Data.record(): GlucoseRecord {
             time = dateTime.toLocalTime(),
             date = dateTime.toLocalDate(),
             measuringMark = MeasuringMark.valueOf(status.name)
+        )
+    }
+}
+
+fun SettingsQuery.Insulin.insulin(): Insulin {
+    return Insulin(
+        id = id,
+        name = name,
+        color = color,
+        defaultDose = defaultDose ?: 0
+    )
+}
+
+fun SettingsQuery.Data.settings(): Settings {
+    return with(settings) {
+        Settings(
+            glucoseUnits = GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!),
+            insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() },
+            darkMode = false //TODO fix local model
         )
     }
 }

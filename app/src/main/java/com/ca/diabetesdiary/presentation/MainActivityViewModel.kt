@@ -6,9 +6,7 @@ import com.ca.diabetesdiary.domain.repository.MainRepository
 import com.ca.diabetesdiary.navigation.MainRoute
 import com.ca.diabetesdiary.presentation.state.MainViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -23,6 +21,8 @@ class MainActivityViewModel @Inject constructor(
 
     init {
         setStartDestination()
+        setTheme()
+        setUserSettings()
     }
 
     private fun setStartDestination() {
@@ -41,6 +41,20 @@ class MainActivityViewModel @Inject constructor(
             repository.isOnBoardingShowed().also { isOnBoardingShowed ->
                 _viewState.update { it.copy(shouldShowOnBoarding = !isOnBoardingShowed) }
             }
+        }
+    }
+
+    private fun setTheme() {
+        viewModelScope.launch {
+            repository.darkMode().collect { darkMode ->
+                _viewState.update { it.copy(darkMode = darkMode) }
+            }
+        }
+    }
+
+    private fun setUserSettings() {
+        viewModelScope.launch {
+            repository.fetchRemoteSettings()
         }
     }
 }
