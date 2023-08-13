@@ -59,7 +59,7 @@ fun InsulinCard(
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = "${insulin.defaultDose} un",
+                    text = "${insulin.defaultDose} IU",
                     style = Theme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = Color.Gray,

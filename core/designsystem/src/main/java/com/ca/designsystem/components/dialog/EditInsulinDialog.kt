@@ -61,7 +61,7 @@ fun EditInsulinDialog(
                     ColorPickerButton(
                         color = insulinColor,
                         modifier = Modifier
-                            .size(48.dp),
+                            .size(54.dp),
                         select = {
                             insulinColor = it
                         }
@@ -73,11 +73,12 @@ fun EditInsulinDialog(
                             insulinName = it
                         },
                         modifier = Modifier
-                            .height(48.dp)
+                            .height(54.dp)
                             .padding(start = 16.dp)
                             .background(Color.White, Theme.shapes.large),
                         shape = Theme.shapes.large,
-                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                        placeholder = { Text(text = "Type insulin name..") }
                     )
                 }
 
@@ -134,7 +135,7 @@ fun EditInsulinDialog(
 
 @Preview
 @Composable
-fun EditInsulinDialog() {
+fun EditInsulinDialogPreview() {
     val lambda: (String?, String, String, Int) -> Unit = { p1, p2, p3, p4 -> }
     DiaryTheme {
         EditInsulinDialog(

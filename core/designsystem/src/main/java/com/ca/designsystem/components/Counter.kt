@@ -140,6 +140,7 @@ fun CounterTextField(
         value = value.value,
         onValueChange = { string ->
             value.value = string
+            onValueChanged(string)
         },
         textStyle = Theme.typography.counter,
         modifier = Modifier
@@ -166,8 +167,8 @@ fun CounterTextField(
         cursorBrush = Brush.verticalGradient(
             0.00f to Color.Transparent,
             0.27f to Color.Transparent,
-            0.27f to Color.White,
-            0.80f to Color.White,
+            0.27f to Theme.colors.onSurface,
+            0.80f to Theme.colors.onSurface,
             0.80f to Color.Transparent,
             1.00f to Color.Transparent
         )

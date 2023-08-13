@@ -107,7 +107,7 @@ fun InsulinReminderCard(
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = "${reminder.dose} un",
+                    text = "${reminder.dose} IU",
                     style = Theme.typography.headlineSmall,
                     textAlign = TextAlign.Center,
                     color = Color.Gray

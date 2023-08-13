@@ -1,6 +1,8 @@
 package com.ca.designsystem.components.settings
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -9,6 +11,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +21,7 @@ import com.ca.designsystem.components.InsulinCard
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
 import de.charlex.compose.*
+import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -69,6 +73,10 @@ fun InsulinSection(
                 key(insulin.id) {
                     val revealState = rememberRevealState()
 
+                    val buttonSize by animateDpAsState(
+                        targetValue = (revealState.offset.value.absoluteValue / 4).dp
+                    )
+
                     LaunchedEffect(revealState.progress) {
                         if (revealState.targetValue != RevealValue.Default)
                             onReveal(insulin)
@@ -89,12 +97,14 @@ fun InsulinSection(
                         hiddenContentStart = {
                             IconButton(
                                 modifier = Modifier
-                                    .padding(16.dp)
-                                    .size(36.dp)
-                                    .background(Color.Gray.copy(alpha = 0.5f), CircleShape),
+                                    .padding(8.dp)
+                                    .background(Color.Gray.copy(alpha = 0.5f), CircleShape)
+                                    .size(buttonSize),
                                 onClick = { editInsulin(insulin) }
                             ) {
                                 Icon(
+                                    modifier = Modifier
+                                        .padding(8.dp),
                                     imageVector = Icons.Filled.Edit,
                                     contentDescription = "",
                                     tint = Color.White
@@ -104,12 +114,14 @@ fun InsulinSection(
                         hiddenContentEnd = {
                             IconButton(
                                 modifier = Modifier
-                                    .padding(16.dp)
-                                    .size(36.dp)
-                                    .background(Color.Gray.copy(alpha = 0.5f), CircleShape),
+                                    .padding(8.dp)
+                                    .background(Color.Gray.copy(alpha = 0.5f), CircleShape)
+                                    .size(buttonSize),
                                 onClick = { deleteInsulin(insulin) }
                             ) {
                                 Icon(
+                                    modifier = Modifier
+                                        .padding(8.dp),
                                     imageVector = Icons.Filled.Delete,
                                     contentDescription = "",
                                     tint = Color.White
@@ -118,11 +130,10 @@ fun InsulinSection(
                         },
                         backgroundCardStartColor = Theme.colors.background,
                         backgroundCardEndColor = Theme.colors.background,
-                        closeOnContentClick = true,
-                        closeOnBackgroundClick = true
                     ) {
                         InsulinCard(
-                            modifier = Modifier,
+                            modifier = Modifier
+                                .clickable { editInsulin(insulin) },
                             insulin = insulin
                         )
                     }
