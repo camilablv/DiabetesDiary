@@ -57,6 +57,8 @@ dependencies {
     implementation "io.github.vanpra.compose-material-dialogs:color:0.9.0"
     implementation "com.marosseleng.android:compose-material3-datetime-pickers:0.7.2"
     implementation 'com.github.commandiron:WheelPickerCompose:1.1.11'
+    implementation 'de.charlex.compose:revealswipe:1.0.0'
+    implementation "dev.chrisbanes.snapper:snapper:0.3.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

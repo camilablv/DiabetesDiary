@@ -1,22 +1,26 @@
 package com.ca.settings.presentation
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.*
+import com.ca.designsystem.components.dialog.EditInsulinDialog
+import com.ca.designsystem.components.dialog.DiaryAlertDialog
+import com.ca.designsystem.components.settings.GlucoseUnitsSection
+import com.ca.designsystem.components.settings.InsulinSection
+import com.ca.designsystem.components.settings.LanguageSection
+import com.ca.designsystem.components.settings.ThemeSection
 import com.ca.designsystem.components.topbar.MainTopBar
-import com.ca.designsystem.theme.Theme
-import com.ca.model.Insulin
-import com.ca.settings.presentation.components.SettingsSectionCard
 
 @Composable
 fun SettingsScreen(
@@ -37,101 +41,61 @@ fun SettingsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(16.dp)
         ) {
+            item {
+                ThemeSection(
+                    isDarkThemeMode = viewState.darkMode,
+                    onCheckedChange = { viewModel.darkMode(it) }
+                )
+            }
 
             item {
-                SettingsSectionCard(
-                    modifier = Modifier,
-                    sectionTitle = "Choose glucose unit"
-                ) {
-                    GlucoseUnitsRadioButtons(
-                        modifier = Modifier,
-                        defaultUnit = viewState.glucoseUnits,
-                        onSelect = { viewModel.setGlucoseUnit(it) }
-                    )
-                }
+                LanguageSection(
+                    selectedLanguage = "English",
+                    onClick = {}
+                )
+            }
+
+            item {
+                GlucoseUnitsSection(
+                    selectedUnits = viewState.glucoseUnits,
+                    onSelect = { viewModel.setGlucoseUnit(it) }
+                )
             }
 
             item {
                 InsulinSection(
                     modifier = Modifier,
                     insulins = viewState.insulins,
+                    revealedInsulin = viewState.revealedInsulin,
+                    onReveal = { viewModel.setRevealedInsulin(it) },
                     addInsulin = {
-                        viewModel.setShowAddInsulinDialog(true)
+                        viewModel.setRevealedInsulin(null)
+                        viewModel.showEditInsulinDialog(true)
                     },
-                    deleteInsulin = { viewModel.deleteInsulin(it) },
-                    editInsulin = {}
+                    deleteInsulin = {
+                        viewModel.setRevealedInsulin(it)
+                        viewModel.deleteInsulin(it)
+                    },
+                    editInsulin = {
+                        viewModel.setRevealedInsulin(it)
+                        viewModel.showEditInsulinDialog(true)
+                    }
                 )
             }
-
         }
     }
 
-    AddInsulinDialog(
-        show = viewState.showAddInsulinDialog,
-        add = { name, color, dose -> viewModel.addInsulin(name, color, dose) },
-        onDismiss = { viewModel.setShowAddInsulinDialog(false) }
+    DiaryAlertDialog(
+        show = viewState.showDeleteInsulinDialog,
+        onDismiss = { viewModel.showDeleteInsulinDialog(false) },
+        onPositiveButtonClick = { viewModel.deleteInsulinWithReminders(viewState.revealedInsulin) },
+        positiveButtonText = "Delete"
     )
-}
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun InsulinSection(
-    modifier: Modifier,
-    insulins: List<Insulin>,
-    addInsulin: () -> Unit,
-    deleteInsulin: (String) -> Unit,
-    editInsulin: (String) -> Unit
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Insulin",
-                style = Theme.typography.headlineSmall,
-                modifier = Modifier,
-                color = Theme.colors.onSurface
-            )
-
-            Button(onClick = { addInsulin() }) {
-                Text(text = "Add")
-            }
-        }
-        Column(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            insulins.forEach { insulin ->
-                key(insulin.id) {
-                    val dismissState = rememberDismissState()
-
-                    if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                        deleteInsulin(insulin.id)
-                    }
-
-                    SwipeToDismiss(
-                        state = dismissState,
-                        modifier = Modifier,
-                        directions = setOf(DismissDirection.EndToStart),
-                        dismissThresholds = { FractionalThreshold(0.3f) },
-                        background = {}
-                    ) {
-
-                        InsulinCard(
-                            modifier = Modifier
-                                .clickable { editInsulin(insulin.id) },
-                            insulin = insulin
-                        )
-                    }
-                }
-
-            }
-        }
-    }
+    EditInsulinDialog(
+        show = viewState.showEditInsulinDialog,
+        edit = { id, name, color, dose -> viewModel.editInsulin(id, name, color, dose) },
+        onDismiss = { viewModel.showEditInsulinDialog(false) },
+        editableInsulin = viewState.revealedInsulin
+    )
 }

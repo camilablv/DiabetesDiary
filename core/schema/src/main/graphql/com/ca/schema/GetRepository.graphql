@@ -23,11 +23,12 @@ mutation CreateInsulin($name: String!, $color: String!, $defaultDose: Int!) {
     }
 }
 
-mutation UpdateInsulin($id: ID!, $name: String!, $color: String!) {
-    insulin: updateInsulin(id: $id, input: {name: $name, color: $color}) {
+mutation UpdateInsulin($id: ID!, $name: String!, $color: String!, $defaultDose: Int!) {
+    insulin: updateInsulin(id: $id, input: {name: $name, color: $color, defaultDose: $defaultDose}) {
         id
         name
         color
+        defaultDose
     }
 }
 
@@ -86,5 +87,17 @@ query InsulinRecords($cursor: String, $limit: Int!) {
         notes
         takenAt
         units
+    }
+}
+
+query Settings {
+    settings {
+        bloodGlucoseUnits
+        insulins {
+            id
+            name
+            color,
+            defaultDose
+        }
     }
 }

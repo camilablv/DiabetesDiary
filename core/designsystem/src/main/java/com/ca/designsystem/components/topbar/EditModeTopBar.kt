@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun HomeTopBar(
+fun EditModeTopBar(
     isInEditMode: Boolean,
     onEditClick: () -> Unit,
     onDeleteClick: () ->  Unit

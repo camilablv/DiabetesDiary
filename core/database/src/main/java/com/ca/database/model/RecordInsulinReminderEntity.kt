@@ -12,6 +12,7 @@ data class RecordInsulinReminderEntity(
     val iteration: ReminderIteration,
     @ColumnInfo(name = "insulin_id") val insulinId: String,
     val dose: Int,
+    val enabled: Boolean,
     @PrimaryKey (autoGenerate = true)
     val id: Int = 0
 )
@@ -21,7 +22,8 @@ fun RecordInsulinReminderEntity.asExternalModel() = RecordInsulinReminder(
     time = time,
     iteration = iteration,
     insulinId = insulinId,
-    dose = dose
+    dose = dose,
+    enabled = enabled
 )
 
 fun RecordInsulinReminder.asEntity() = RecordInsulinReminderEntity(
@@ -29,6 +31,7 @@ fun RecordInsulinReminder.asEntity() = RecordInsulinReminderEntity(
     time = time,
     iteration = iteration,
     insulinId = insulinId,
-    dose = dose
+    dose = dose,
+    enabled = enabled
 )
 

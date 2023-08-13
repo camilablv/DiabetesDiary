@@ -21,4 +21,7 @@ interface InsulinReminderDao {
 
     @Update
     fun update(reminder: RecordInsulinReminderEntity)
+
+    @Query("SELECT * FROM insulin_reminder WHERE insulin_id == :insulinId")
+    fun insulinRemindersByInsulinId(insulinId: String): List<RecordInsulinReminderEntity>
 }
