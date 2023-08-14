@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.home.presentation.HomeScreen
 import com.ca.insulinreminder.navigation.navigateToInsulinReminder
@@ -15,7 +16,6 @@ import com.ca.recordglucose.navigation.navigateToRecordGlucose
 import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 import com.ca.records.presentation.RecordsScreen
 import com.ca.reminders.presentation.RemindersScreen
-import com.ca.settings.presentation.SettingsScreen
 
 @Composable
 fun BottomBarMenuNavHost(
@@ -24,6 +24,11 @@ fun BottomBarMenuNavHost(
     val bottomMenuNavHostController = rememberNavController()
 
     Scaffold(
+        topBar = {
+             MainTopBar(title = "Diabetes Diary") {
+                 mainNavController.navigate(BottomBarRoute.Settings.route)
+             }
+        },
         bottomBar = { BottomBar(navController = bottomMenuNavHostController) },
     ) { innerPadding ->
         NavHost(
@@ -39,9 +44,6 @@ fun BottomBarMenuNavHost(
                     navigateToGlucoseReminder = { mainNavController.navigateToGlucoseReminder() },
                     addRecord = { mainNavController.navigate("sheet") }
                 )
-            }
-            composable(BottomBarRoute.Settings.route) {
-                SettingsScreen()
             }
             composable(BottomBarRoute.Records.route) {
                 RecordsScreen()

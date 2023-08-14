@@ -49,13 +49,13 @@ fun HomeScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = {
-            EditModeTopBar(
-                isInEditMode = editModeState.isInEditMode,
-                onEditClick = { navigateToEditItem(editModeState.selectedItem) },
-                onDeleteClick = { viewModel.removeItem(editModeState.selectedItem) }
-            )
-        },
+//        topBar = {
+//            EditModeTopBar(
+//                isInEditMode = editModeState.isInEditMode,
+//                onEditClick = { navigateToEditItem(editModeState.selectedItem) },
+//                onDeleteClick = { viewModel.removeItem(editModeState.selectedItem) }
+//            )
+//        },
         floatingActionButton = {
             NewRecordFab {
                 addRecord()

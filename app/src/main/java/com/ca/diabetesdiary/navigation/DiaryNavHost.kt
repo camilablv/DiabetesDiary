@@ -14,6 +14,7 @@ import com.ca.insulinreminder.navigation.insulinReminderGraph
 import com.ca.onboarding.presentation.OnBoardingScreen
 import com.ca.recordglucose.navigation.glucoseGraph
 import com.ca.recordinsulin.navigation.insulinGraph
+import com.ca.settings.presentation.SettingsScreen
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
@@ -49,6 +50,12 @@ fun MainNavHost(
                             popUpTo(MainRoute.OnBoarding.route) { inclusive = true }
                         }
                     }
+                )
+            }
+
+            composable(MainRoute.Settings.route) {
+                SettingsScreen(
+                    navigateBack = { navHostController.navigateBack() }
                 )
             }
 

@@ -2,42 +2,46 @@ package com.ca.designsystem.components.topbar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
 
 @Composable
-fun TopBar(
+fun MainTopBar(
     title: String,
-    onBackClick: () -> Unit
+    navigateToSettings: () -> Unit
 ) {
     TopAppBar(
-        backgroundColor = Color.White,
+        backgroundColor = Theme.colors.surface,
         elevation = Theme.elevations.default,
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onBackClick) {
-                Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "")
-            }
             Text(
+                modifier = Modifier
+                    .padding(start = 16.dp),
                 text = title,
-                style = Theme.typography.bodyLarge,
-                textAlign = TextAlign.Center
+                style = Theme.typography.bodyLarge
             )
+
+            IconButton(onClick = navigateToSettings) {
+                Icon(imageVector = Icons.Filled.Settings, contentDescription = "")
+            }
         }
 
     }
 }
-
