@@ -1,4 +1,4 @@
-package com.ca.designsystem.components.multifab
+package com.ca.designsystem.components.fab.multifab
 
 import androidx.annotation.DrawableRes
 import com.ca.designsystem.R

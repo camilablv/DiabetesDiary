@@ -4,14 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -20,22 +14,20 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.GlucoseRecordTimelineCard
-import com.ca.designsystem.components.GlucoseReminderTimelineCard
-import com.ca.designsystem.components.InsulinRecordTimelineCard
-import com.ca.designsystem.components.InsulinReminderTimelineCard
-import com.ca.designsystem.components.multifab.MultiFabItem
-import com.ca.designsystem.components.multifab.MultiFloatingActionButton
+import com.ca.designsystem.components.*
+import com.ca.designsystem.components.fab.NewRecordFab
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
 import com.ca.designsystem.components.topbar.EditModeTopBar
 import com.ca.model.*
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     navigateToRecordGlucose: (String?) -> Unit,
     navigateToRecordInsulin: () -> Unit,
     navigateToInsulinReminder: () -> Unit,
     navigateToGlucoseReminder: () -> Unit,
+    addRecord: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -65,15 +57,9 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            MultiFloatingActionButton(
-                modifier = Modifier,
-                onMenuItemClicked = {
-                    when(it) {
-                        MultiFabItem.RecordInsulin -> { navigateToRecordInsulin() }
-                        MultiFabItem.RecordGlucose -> { navigateToRecordGlucose(null) }
-                    }
-                }
-            )
+            NewRecordFab {
+                addRecord()
+            }
         },
         floatingActionButtonPosition = FabPosition.End,
     ) { paddingValues ->

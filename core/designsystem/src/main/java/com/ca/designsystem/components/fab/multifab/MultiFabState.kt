@@ -1,4 +1,4 @@
-package com.ca.designsystem.components.multifab
+package com.ca.designsystem.components.fab.multifab
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
