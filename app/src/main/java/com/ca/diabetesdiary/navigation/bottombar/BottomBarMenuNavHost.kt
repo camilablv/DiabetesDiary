@@ -20,9 +20,9 @@ fun BottomBarMenuNavHost(
     mainNavController: NavHostController,
     openRecordsMenuBottomSheet: () -> Unit,
     openInsulinRecordBottomSheet: (String) -> Unit,
-    openInsulinReminderBottomSheet: (String) -> Unit,
+    openInsulinReminderBottomSheet: (Int) -> Unit,
     openGlucoseRecordBottomSheet: (String) -> Unit,
-    openGlucoseReminderBottomSheet: (String) -> Unit
+    openGlucoseReminderBottomSheet: (Int) -> Unit
 ) {
     val bottomMenuNavHostController = rememberNavController()
 

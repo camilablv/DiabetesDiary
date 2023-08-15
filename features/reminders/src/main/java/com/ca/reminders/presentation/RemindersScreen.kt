@@ -35,8 +35,8 @@ fun RemindersScreen(
     viewModel: RemindersViewModel = hiltViewModel(),
     navigateToAddInsulinReminder: () -> Unit,
     navigateToAddGlucoseReminder: () -> Unit,
-    openInsulinReminderMenuBottomSheet: (String) -> Unit,
-    openGlucoseReminderMenuBottomSheet: (String) -> Unit
+    openInsulinReminderMenuBottomSheet: (Int) -> Unit,
+    openGlucoseReminderMenuBottomSheet: (Int) -> Unit
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -67,8 +67,8 @@ fun RemindersScreen(
             },
             onItemClick = {
                 when(it) {
-                    is RecordInsulinReminder -> { openInsulinReminderMenuBottomSheet(it.id.toString()) }
-                    is RecordGlucoseReminder -> { openGlucoseReminderMenuBottomSheet(it.id.toString()) }
+                    is RecordInsulinReminder -> { openInsulinReminderMenuBottomSheet(it.id) }
+                    is RecordGlucoseReminder -> { openGlucoseReminderMenuBottomSheet(it.id) }
                 }
             }
         )

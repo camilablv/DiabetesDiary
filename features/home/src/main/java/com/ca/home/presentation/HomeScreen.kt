@@ -30,9 +30,9 @@ import com.ca.model.*
 fun HomeScreen(
     openRecordsMenuBottomSheet: () -> Unit,
     openInsulinRecordBottomSheet: (String) -> Unit,
-    openInsulinReminderBottomSheet: (String) -> Unit,
+    openInsulinReminderBottomSheet: (Int) -> Unit,
     openGlucoseRecordBottomSheet: (String) -> Unit,
-    openGlucoseReminderBottomSheet: (String) -> Unit,
+    openGlucoseReminderBottomSheet: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -78,14 +78,14 @@ fun HomeScreen(
                                 onDoneClick = {
                                     viewModel.markInsulinReminderAsDone(it)
                                 },
-                                onClick = { openInsulinReminderBottomSheet(item.id.toString()) },
+                                onClick = { openInsulinReminderBottomSheet(item.id) },
                             )
                         }
                         is RecordGlucoseReminder -> {
                             GlucoseReminderTimelineCard(
                                 reminder = item,
                                 onAddClick = {  },
-                                onClick = { openGlucoseReminderBottomSheet(item.id.toString()) },
+                                onClick = { openGlucoseReminderBottomSheet(item.id) },
                             )
                         }
                         is InsulinRecord -> {

@@ -1,4 +1,4 @@
-package com.ca.diabetesdiary.navigation.bottomsheet
+package com.ca.editglucosereminderbottomsheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import com.ca.designsystem.components.BottomSheetMenuOption
 
 @Composable
 fun EditGlucoseReminderBottomSheet(
-    reminderId: String,
+    reminderId: Int,
     navigateToGlucoseReminder: () -> Unit,
     dismiss: () -> Unit
 ) {

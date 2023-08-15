@@ -1,4 +1,4 @@
-package com.ca.diabetesdiary.navigation.bottomsheet
+package com.ca.editglucoserecordbottomsheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,13 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.components.BottomSheetContainer
 import com.ca.designsystem.components.BottomSheetMenuOption
 
 @Composable
-fun EditRecordInsulinReminderBottomSheet(
-    reminderId: String,
-    navigateToEditInsulinReminder: () -> Unit,
+fun EditGlucoseRecordBottomSheet(
+    recordId: String,
+    navigateToEditGlucoseRecord: () -> Unit,
     dismiss: () -> Unit
 ) {
     BottomSheetContainer {
@@ -25,13 +26,11 @@ fun EditRecordInsulinReminderBottomSheet(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_delete, title = "Delete") {
-                dismiss()
+            BottomSheetMenuOption(icon = R.drawable.round_edit, title = "Edit") {
+                navigateToEditGlucoseRecord()
             }
-            BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_edit, title = "Edit") {
-                navigateToEditInsulinReminder()
-            }
-            BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_notifications_off, title = "Switch off") {
+
+            BottomSheetMenuOption(icon = R.drawable.round_delete, title = "Delete") {
                 dismiss()
             }
         }

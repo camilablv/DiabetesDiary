@@ -13,6 +13,14 @@ import com.ca.designsystem.components.RecordsMenuBottomSheet
 import com.ca.designsystem.theme.Theme
 import com.ca.diabetesdiary.navigation.bottombar.BottomBarMenuNavHost
 import com.ca.diabetesdiary.navigation.bottomsheet.*
+import com.ca.editglucoserecordbottomsheet.navigation.editGlucoseRecordBottomSheet
+import com.ca.editglucoserecordbottomsheet.navigation.navigateToGlucoseRecordBottomSheet
+import com.ca.editglucosereminderbottomsheet.navigation.editGlucoseReminderBottomSheet
+import com.ca.editglucosereminderbottomsheet.navigation.navigateToGlucoseReminderBottomSheet
+import com.ca.editinsulinrecordbottomsheet.navigation.editInsulinRecordBottomSheet
+import com.ca.editinsulinrecordbottomsheet.navigation.navigateToInsulinRecordBottomSheet
+import com.ca.editinsulinreminderbottomsheet.navigation.editInsulinReminderBottomSheet
+import com.ca.editinsulinreminderbottomsheet.navigation.navigateToInsulinReminderBottomSheet
 import com.ca.glucosereminder.navigation.glucoseReminderGraph
 import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.insulinreminder.navigation.insulinReminderGraph
@@ -55,16 +63,16 @@ fun MainNavHost(
                     mainNavController = navHostController,
                     openRecordsMenuBottomSheet = { navHostController.navigate(BottomSheetRoute.RecordsMenu.route) },
                     openInsulinRecordBottomSheet = {
-                        navHostController.navigate("${BottomSheetRoute.EditInsulinRecord.route}/$it")
+                        navHostController.navigateToInsulinRecordBottomSheet(it)
                     },
                     openInsulinReminderBottomSheet = {
-                        navHostController.navigate("${BottomSheetRoute.EditInsulinReminder.route}/$it")
+                        navHostController.navigateToInsulinReminderBottomSheet(it)
                     },
                     openGlucoseRecordBottomSheet = {
-                        navHostController.navigate("${BottomSheetRoute.EditGlucoseRecord.route}/$it")
+                        navHostController.navigateToGlucoseRecordBottomSheet(it)
                     },
                     openGlucoseReminderBottomSheet = {
-                        navHostController.navigate("${BottomSheetRoute.EditGlucoseReminder.route}/$it")
+                        navHostController.navigateToGlucoseReminderBottomSheet(it)
                     }
                 )
             }
@@ -118,53 +126,25 @@ fun MainNavHost(
                 )
             }
 
-            bottomSheet(
-                route = "${BottomSheetRoute.EditInsulinRecord.route}/{recordId}",
-                arguments = listOf(navArgument("recordId") { type = NavType.StringType })
-            ) {
-                val recordIdArgument = it.arguments?.getString("recordId") ?: ""
-                EditInsulinRecordBottomSheet(
-                    recordId = recordIdArgument,
-                    navigateToEditInsulinRecord = { navHostController.navigateToRecordInsulin(recordIdArgument) },
-                    dismiss = { navHostController.navigateBack() }
-                )
-            }
+            editInsulinRecordBottomSheet(
+                navigateToEditInsulinRecord = { navHostController.navigateToRecordInsulin(it) },
+                dismiss = { navHostController.navigateBack() }
+            )
 
-            bottomSheet(
-                route = "${BottomSheetRoute.EditInsulinReminder.route}/{reminderId}",
-                arguments = listOf(navArgument("reminderId") { type = NavType.StringType })
-            ) {
-                val reminderIdArgument = it.arguments?.getString("reminderId") ?: ""
-                EditRecordInsulinReminderBottomSheet(
-                    reminderId = reminderIdArgument,
-                    navigateToEditInsulinReminder = { navHostController.navigateToInsulinReminder() },
-                    dismiss = { navHostController.navigateBack() }
-                )
-            }
+            editInsulinReminderBottomSheet(
+                navigateToEditInsulinReminder = { navHostController.navigateToInsulinReminder() },
+                dismiss = { navHostController.navigateBack() }
+            )
 
-            bottomSheet(
-                route = "${BottomSheetRoute.EditGlucoseRecord.route}/{recordId}",
-                arguments = listOf(navArgument("recordId") { type = NavType.StringType })
-            ) {
-                val recordIdArgument = it.arguments?.getString("recordId") ?: ""
-                EditGlucoseRecordBottomSheet(
-                    recordId = recordIdArgument,
-                    navigateToEditGlucoseRecord = { navHostController.navigateToRecordGlucose(recordIdArgument) },
-                    dismiss = { navHostController.navigateBack() }
-                )
-            }
+            editGlucoseRecordBottomSheet(
+                navigateToEditGlucoseRecord = { navHostController.navigateToRecordGlucose(it) },
+                dismiss = { navHostController.navigateBack() }
+            )
 
-            bottomSheet(
-                route = "${BottomSheetRoute.EditGlucoseReminder.route}/{reminderId}",
-                arguments = listOf(navArgument("reminderId") { type = NavType.StringType })
-            ) {
-                val reminderIdArgument = it.arguments?.getString("reminderId") ?: ""
-                EditGlucoseReminderBottomSheet(
-                    reminderId = reminderIdArgument,
-                    navigateToGlucoseReminder = { navHostController.navigateToGlucoseReminder() },
-                    dismiss = { navHostController.navigateBack() }
-                )
-            }
+            editGlucoseReminderBottomSheet(
+                navigateToEditGlucoseReminder = { navHostController.navigateToGlucoseReminder() },
+                dismiss = { navHostController.navigateBack() }
+            )
         }
     }
 }
