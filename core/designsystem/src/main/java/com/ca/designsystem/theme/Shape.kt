@@ -9,14 +9,16 @@ import androidx.compose.ui.unit.dp
 val Shapes = DiaryShapes(
     small = RoundedCornerShape(4.dp),
     medium = RoundedCornerShape(8.dp),
-    large = RoundedCornerShape(12.dp)
+    large = RoundedCornerShape(12.dp),
+    bottomSheet = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
 )
 
 @Immutable
 data class DiaryShapes(
     val small: Shape,
     val medium: Shape,
-    val large: Shape
+    val large: Shape,
+    val bottomSheet: Shape
 )
 
 val LocalDiaryShapes = staticCompositionLocalOf<DiaryShapes> {

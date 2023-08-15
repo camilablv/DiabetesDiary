@@ -5,12 +5,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.GlucoseReminderCard
-import com.ca.model.ListItem
 import com.ca.model.RecordGlucoseReminder
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -18,11 +16,8 @@ import com.ca.model.RecordGlucoseReminder
 fun GlucoseRemindersPage(
     reminders: List<RecordGlucoseReminder>,
     onEnabledChange: (RecordGlucoseReminder, Boolean) -> Unit,
-    isItemSelected: (ListItem) -> Boolean,
-    onClick: (RecordGlucoseReminder) -> Unit,
-    onLongClick: (RecordGlucoseReminder) -> Unit
+    onClick: (RecordGlucoseReminder) -> Unit
 ) {
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -44,9 +39,7 @@ fun GlucoseRemindersPage(
                     ),
                 reminder = reminder,
                 onCheckedChanged = { enabled -> onEnabledChange(reminder, enabled) },
-                selected = isItemSelected(reminder),
-                onClick = { onClick(reminder) },
-                onLongClick = { onLongClick(reminder) }
+                onClick = { onClick(reminder) }
             )
         }
         item {

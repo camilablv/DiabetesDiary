@@ -1,14 +1,15 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,36 +17,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
-import com.ca.designsystem.theme.Purple100
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.RecordInsulinReminder
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InsulinReminderCard(
     modifier: Modifier,
     reminder: RecordInsulinReminder,
     onCheckedChanged: (Boolean) -> Unit,
-    selected: Boolean,
-    onClick: () -> Unit,
-    onLongClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    val background = if (selected) Purple100 else Theme.colors.background
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
 
     Card(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .combinedClickable(
+            .clickable(
                 onClick = onClick,
-                onLongClick = onLongClick,
                 indication = null,
-                interactionSource = MutableInteractionSource()
+                interactionSource = interactionSource
             ),
         shape = Theme.shapes.large,
         elevation = Theme.elevations.default,
-        backgroundColor = background
+        backgroundColor = Theme.colors.background
     ) {
         Column(
             modifier = modifier

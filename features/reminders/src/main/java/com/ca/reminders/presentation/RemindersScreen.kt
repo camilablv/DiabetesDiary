@@ -1,6 +1,5 @@
 package com.ca.reminders.presentation
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.ReminderFloatingActionButton
 import com.ca.designsystem.components.Tabs
-import com.ca.designsystem.components.topbar.EditModeTopBar
 import com.ca.model.ListItem
 import com.ca.model.RecordGlucoseReminder
 import com.ca.model.RecordInsulinReminder
@@ -36,34 +34,16 @@ import kotlinx.coroutines.launch
 fun RemindersScreen(
     viewModel: RemindersViewModel = hiltViewModel(),
     navigateToAddInsulinReminder: () -> Unit,
-    navigateToAddGlucoseReminder: () -> Unit
+    navigateToAddGlucoseReminder: () -> Unit,
+    openInsulinReminderMenuBottomSheet: (String) -> Unit,
+    openGlucoseReminderMenuBottomSheet: (String) -> Unit
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-    val editModeState by viewModel.editModeState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
-    fun navigateToEditReminder(item: ListItem?) {
-        when(item) {
-            is RecordGlucoseReminder -> { navigateToAddGlucoseReminder() }
-            is RecordInsulinReminder -> { navigateToAddInsulinReminder() }
-        }
-        viewModel.disableEditMode()
-    }
-
-    BackHandler(editModeState.isInEditMode) {
-        viewModel.disableEditMode()
-    }
-
     Scaffold(
-        topBar = {
-             EditModeTopBar(
-                 isInEditMode = editModeState.isInEditMode,
-                 onEditClick = { navigateToEditReminder(editModeState.selectedItem) },
-                 onDeleteClick = { viewModel.removeItem(editModeState.selectedItem) }
-             )
-        },
         floatingActionButton = {
            ReminderFloatingActionButton(
                pagerState = pagerState,
@@ -85,9 +65,12 @@ fun RemindersScreen(
             glucoseReminderEnabledChange = { reminder, enabled ->
                 viewModel.setGlucoseReminderEnabled(reminder, enabled)
             },
-            onItemClick = { viewModel.disableEditMode() },
-            onLongItemClick = { viewModel.enableEditMode(it) },
-            isItemSelected = { viewModel.isItemSelected(it) }
+            onItemClick = {
+                when(it) {
+                    is RecordInsulinReminder -> { openInsulinReminderMenuBottomSheet(it.id.toString()) }
+                    is RecordGlucoseReminder -> { openGlucoseReminderMenuBottomSheet(it.id.toString()) }
+                }
+            }
         )
     }
 }
@@ -101,9 +84,7 @@ private fun RemindersPager(
     viewState: RemindersViewState,
     insulinReminderEnabledChange: (RecordInsulinReminder, Boolean) -> Unit,
     glucoseReminderEnabledChange: (RecordGlucoseReminder, Boolean) -> Unit,
-    onItemClick: (ListItem) -> Unit,
-    onLongItemClick: (ListItem) -> Unit,
-    isItemSelected: (ListItem) -> Boolean
+    onItemClick: (ListItem) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -130,9 +111,7 @@ private fun RemindersPager(
                         onEnabledChange = { reminder, enabled ->
                             insulinReminderEnabledChange(reminder, enabled)
                         },
-                        onClick = { onItemClick(it) },
-                        onLongClick = { onLongItemClick(it) },
-                        isItemSelected = isItemSelected
+                        onClick = { onItemClick(it) }
                     )
                 }
                 RemindersPage.GlucoseRecords -> {
@@ -141,9 +120,7 @@ private fun RemindersPager(
                         onEnabledChange = { reminder, enabled ->
                             glucoseReminderEnabledChange(reminder, enabled)
                         },
-                        onClick = { onItemClick(it) },
-                        onLongClick = { onLongItemClick(it) },
-                        isItemSelected = isItemSelected
+                        onClick = { onItemClick(it) }
                     )
                 }
             }

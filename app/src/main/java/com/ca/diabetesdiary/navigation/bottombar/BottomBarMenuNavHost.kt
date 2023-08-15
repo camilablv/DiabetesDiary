@@ -12,14 +12,17 @@ import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.home.presentation.HomeScreen
 import com.ca.insulinreminder.navigation.navigateToInsulinReminder
-import com.ca.recordglucose.navigation.navigateToRecordGlucose
-import com.ca.recordinsulin.navigation.navigateToRecordInsulin
 import com.ca.records.presentation.RecordsScreen
 import com.ca.reminders.presentation.RemindersScreen
 
 @Composable
 fun BottomBarMenuNavHost(
-    mainNavController: NavHostController
+    mainNavController: NavHostController,
+    openRecordsMenuBottomSheet: () -> Unit,
+    openInsulinRecordBottomSheet: (String) -> Unit,
+    openInsulinReminderBottomSheet: (String) -> Unit,
+    openGlucoseRecordBottomSheet: (String) -> Unit,
+    openGlucoseReminderBottomSheet: (String) -> Unit
 ) {
     val bottomMenuNavHostController = rememberNavController()
 
@@ -29,7 +32,7 @@ fun BottomBarMenuNavHost(
                  mainNavController.navigate(BottomBarRoute.Settings.route)
              }
         },
-        bottomBar = { BottomBar(navController = bottomMenuNavHostController) },
+        bottomBar = { BottomBar(navController = bottomMenuNavHostController) }
     ) { innerPadding ->
         NavHost(
             navController = bottomMenuNavHostController,
@@ -38,11 +41,11 @@ fun BottomBarMenuNavHost(
         ) {
             composable(BottomBarRoute.Home.route) {
                 HomeScreen(
-                    navigateToRecordGlucose = { mainNavController.navigateToRecordGlucose(it) },
-                    navigateToRecordInsulin = { mainNavController.navigateToRecordInsulin() },
-                    navigateToInsulinReminder = { mainNavController.navigateToInsulinReminder() },
-                    navigateToGlucoseReminder = { mainNavController.navigateToGlucoseReminder() },
-                    addRecord = { mainNavController.navigate("sheet") }
+                    openRecordsMenuBottomSheet = openRecordsMenuBottomSheet,
+                    openInsulinRecordBottomSheet = { openInsulinRecordBottomSheet(it) },
+                    openInsulinReminderBottomSheet = { openInsulinReminderBottomSheet(it) },
+                    openGlucoseRecordBottomSheet = { openGlucoseRecordBottomSheet(it) },
+                    openGlucoseReminderBottomSheet = { openGlucoseReminderBottomSheet(it) }
                 )
             }
             composable(BottomBarRoute.Records.route) {
@@ -51,7 +54,9 @@ fun BottomBarMenuNavHost(
             composable(BottomBarRoute.Reminder.route) {
                 RemindersScreen(
                     navigateToAddInsulinReminder = { mainNavController.navigateToInsulinReminder() },
-                    navigateToAddGlucoseReminder = { mainNavController.navigateToGlucoseReminder() }
+                    navigateToAddGlucoseReminder = { mainNavController.navigateToGlucoseReminder() },
+                    openInsulinReminderMenuBottomSheet = { openInsulinReminderBottomSheet(it) },
+                    openGlucoseReminderMenuBottomSheet = { openGlucoseReminderBottomSheet(it) }
                 )
             }
         }
