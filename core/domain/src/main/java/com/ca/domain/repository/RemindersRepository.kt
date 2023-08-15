@@ -26,4 +26,5 @@ interface RemindersRepository {
     suspend fun updateGlucoseReminder(reminder: RecordGlucoseReminder)
     suspend fun insulinRemindersByInsulinId(insulinId: String): List<RecordInsulinReminder>
     suspend fun glucoseReminderById(id: Int): RecordGlucoseReminder
+    suspend fun insulinReminderById(id: Int): RecordInsulinReminder
 }

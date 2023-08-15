@@ -39,7 +39,7 @@ fun EditGlucoseReminderBottomSheet(
                 horizontalAlignment = Alignment.Start
             ) {
                 BottomSheetMenuOption(icon = R.drawable.round_delete, title = "Delete") {
-                    viewModel.removeItem(reminderId)
+                    viewModel.removeReminder()
                     dismiss()
                 }
                 BottomSheetMenuOption(icon = R.drawable.round_edit, title = "Edit") {
