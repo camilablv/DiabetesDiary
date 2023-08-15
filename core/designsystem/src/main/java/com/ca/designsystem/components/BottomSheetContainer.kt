@@ -9,11 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
@@ -41,11 +39,12 @@ fun BottomSheetContainer(
             Canvas(
                 modifier = Modifier
             ) {
-                drawRoundRect(
+                drawLine(
                     color = Color.Gray,
-                    cornerRadius = CornerRadius(60f, 60f),
-                    style = Stroke(width = 15f, cap = StrokeCap.Round),
-                    size = Size(width = 28.dp.toPx(), height = 1.dp.toPx()),
+                    start = Offset(-50f, 0f),
+                    end = Offset(50f, 0f),
+                    strokeWidth = 6.dp.toPx(),
+                    cap = StrokeCap.Round,
                     alpha = 0.3f
                 )
             }
