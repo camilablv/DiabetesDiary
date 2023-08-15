@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.ca.diabetesdiary.navigation.bottomsheet.EditInsulinRecordBottomSheet
+import com.ca.editinsulinrecordbottomsheet.EditInsulinRecordBottomSheet
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
 

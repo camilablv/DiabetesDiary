@@ -2,12 +2,14 @@ package com.ca.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ca.model.*
+import com.ca.model.GlucoseRecord
+import com.ca.model.MeasuringMark
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
-@Entity(tableName = "glucose_record")
+internal const val glucoseRecordsTableName = "glucose_record"
+
+@Entity(tableName = glucoseRecordsTableName)
 data class GlucoseRecordEntity(
     @PrimaryKey val id: String,
     val level: Double,

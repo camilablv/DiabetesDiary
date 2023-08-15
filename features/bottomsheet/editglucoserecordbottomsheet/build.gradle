@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -40,6 +41,7 @@ dependencies {
 
     implementation project(":core:designsystem")
     implementation project(":core:model")
+    implementation project(":core:domain")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -60,4 +62,9 @@ dependencies {
 
     //Accompanist
     implementation accompanist.navigationMaterial
+
+    // Hilt
+    implementation hiltDependencies.hilt
+    implementation hiltDependencies.navigationCompose
+    kapt hiltDependencies.kapt
 }

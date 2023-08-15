@@ -11,4 +11,5 @@ interface RecordGlucoseRepository {
     suspend fun records(): Flow<List<GlucoseRecord>>
     suspend fun recordsByDate(date: LocalDate): Flow<List<GlucoseRecord>>
     suspend fun delete(record: GlucoseRecord)
+    suspend fun recordById(id: String): GlucoseRecord
 }

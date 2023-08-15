@@ -4,10 +4,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.ca.authentication.navigation.authNavGraph
 import com.ca.designsystem.components.RecordsMenuBottomSheet
 import com.ca.designsystem.theme.Theme

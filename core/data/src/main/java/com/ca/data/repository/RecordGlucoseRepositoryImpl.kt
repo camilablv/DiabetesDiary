@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -63,5 +64,11 @@ class RecordGlucoseRepositoryImpl @Inject constructor(
 
     override suspend fun delete(record: GlucoseRecord) {
         glucoseRecordsDao.delete(record.asEntity())
+    }
+
+    override suspend fun recordById(id: String): GlucoseRecord {
+        return withContext(Dispatchers.IO) {
+            glucoseRecordsDao.recordById(id).asExternalModel()
+        }
     }
 }

@@ -23,7 +23,7 @@ fun NavGraphBuilder.editGlucoseRecordBottomSheet(
 ) {
     bottomSheet(
         route = "$glucoseRecordBottomSheetRoute/{$RECORD_ID}",
-        arguments = listOf(navArgument(RECORD_ID) { type = NavType.IntType })
+        arguments = listOf(navArgument(RECORD_ID) { type = NavType.StringType })
     ) {
         val recordIdArgument = it.arguments?.getString(RECORD_ID) ?: ""
         EditGlucoseRecordBottomSheet(
