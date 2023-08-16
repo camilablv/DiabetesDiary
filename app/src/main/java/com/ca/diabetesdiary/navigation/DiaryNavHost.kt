@@ -10,7 +10,6 @@ import com.ca.authentication.navigation.authNavGraph
 import com.ca.designsystem.components.RecordsMenuBottomSheet
 import com.ca.designsystem.theme.Theme
 import com.ca.diabetesdiary.navigation.bottombar.BottomBarMenuNavHost
-import com.ca.diabetesdiary.navigation.bottomsheet.*
 import com.ca.editglucoserecordbottomsheet.navigation.editGlucoseRecordBottomSheet
 import com.ca.editglucoserecordbottomsheet.navigation.navigateToGlucoseRecordBottomSheet
 import com.ca.editglucosereminderbottomsheet.navigation.editGlucoseReminderBottomSheet
@@ -59,7 +58,7 @@ fun MainNavHost(
             composable(MainRoute.Home.route) {
                 BottomBarMenuNavHost(
                     mainNavController = navHostController,
-                    openRecordsMenuBottomSheet = { navHostController.navigate(BottomSheetRoute.RecordsMenu.route) },
+                    openRecordsMenuBottomSheet = { navHostController.navigate("records_menu") },
                     openInsulinRecordBottomSheet = {
                         navHostController.navigateToInsulinRecordBottomSheet(it)
                     },
@@ -117,7 +116,7 @@ fun MainNavHost(
                 navigateBack = { navHostController.navigateBack() }
             )
 
-            bottomSheet(BottomSheetRoute.RecordsMenu.route) {
+            bottomSheet(route = "records_menu") {
                 RecordsMenuBottomSheet(
                     navigateToRecordGlucose = { navHostController.navigateToRecordGlucose() },
                     navigateToRecordInsulin = { navHostController.navigateToRecordInsulin() },
