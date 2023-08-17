@@ -29,6 +29,7 @@ fun GlucoseRecord.asEntity() = GlucoseRecordEntity(
 )
 
 fun GlucoseRecordEntity.asExternalModel() = GlucoseRecord(
+    cursor = id,
     id = id,
     level = level,
     date = date,
