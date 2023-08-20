@@ -9,7 +9,9 @@ import com.ca.model.InsulinRecord
 import java.time.LocalDate
 import java.time.LocalTime
 
-@Entity(tableName = "insulin_record")
+internal const val insulinRecordsTableName = "insulin_record"
+
+@Entity(tableName = insulinRecordsTableName)
 data class InsulinRecordEntity(
     val cursor: String,
     @PrimaryKey val id: String,

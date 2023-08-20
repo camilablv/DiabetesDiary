@@ -13,7 +13,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ca.designsystem.components.topbar.MainTopBar
 import com.ca.designsystem.components.Tabs
 import com.ca.records.glucose.presentation.GlucoseRecordsPage
 import com.ca.records.insulin.presentation.InsulinRecordsPage
@@ -26,9 +25,7 @@ fun RecordsScreen() {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
-    Scaffold(
-        topBar = { MainTopBar(title = "Diabetes Diary") }
-    ) { paddingValues ->
+    Scaffold() { paddingValues ->
         RecordsPager(
             modifier = Modifier
                 .padding(paddingValues),

@@ -4,6 +4,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -22,7 +23,7 @@ fun BottomBar(navController: NavHostController) {
             BottomNavigationItem(
                 selectedContentColor = Theme.colors.primary,
                 unselectedContentColor = Theme.colors.onBackground,
-                icon = { Icon(imageVector = screen.icon, contentDescription = null) },
+                icon = { Icon(painter = painterResource(id = screen.icon), contentDescription = null) },
                 label = { Text(text = screen.title) },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {

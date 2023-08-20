@@ -2,21 +2,21 @@ package com.ca.records.glucose.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ca.model.InsulinRecord
+import com.ca.model.GlucoseRecord
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.records
 
 class GlucoseRecordsPagingSource(
     private val networkClient: NetworkClient
-) : PagingSource<String, InsulinRecord>() {
+) : PagingSource<String, GlucoseRecord>() {
 
-    override fun getRefreshKey(state: PagingState<String, InsulinRecord>): String? {
+    override fun getRefreshKey(state: PagingState<String, GlucoseRecord>): String? {
         return state.lastItemOrNull()?.cursor
     }
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, InsulinRecord> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, GlucoseRecord> {
 
-        return networkClient.insulinRecords(params.key, params.loadSize).fold(
+        return networkClient.glucoseRecords(params.key, params.loadSize).fold(
             onSuccess = {
                 val result = it.records()
                 LoadResult.Page(

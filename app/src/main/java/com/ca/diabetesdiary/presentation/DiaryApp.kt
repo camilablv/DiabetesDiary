@@ -9,7 +9,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.theme.DiaryTheme
 import com.ca.diabetesdiary.navigation.MainNavHost
 import com.ca.diabetesdiary.presentation.state.rememberDiaryAppState
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun DiaryApp(
     viewModel: MainActivityViewModel
@@ -18,15 +20,14 @@ fun DiaryApp(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val appState = rememberDiaryAppState()
 
-    DiaryTheme(
-        viewState.darkMode
-    ) {
+    DiaryTheme(viewState.darkMode) {
         Scaffold(
             scaffoldState = appState.scaffoldState,
             snackbarHost = { appState.scaffoldState.snackbarHostState }
         ) { contentPadding ->
             MainNavHost(
                 navHostController = appState.navController,
+                bottomSheetNavigator = appState.bottomSheetNavigator,
                 startDestination = viewState.startDestination,
                 shouldShowOnBoarding = viewState.shouldShowOnBoarding,
                 modifier = Modifier.padding(contentPadding)

@@ -90,6 +90,17 @@ query InsulinRecords($cursor: String, $limit: Int!) {
     }
 }
 
+query GlucoseRecords($cursor: String, $limit: Int!) {
+    records: glucoseRecords(cursor: $cursor, limit: $limit) {
+        cursor
+        id
+        measuredAt
+        notes
+        status
+        units
+    }
+}
+
 query Settings {
     settings {
         bloodGlucoseUnits

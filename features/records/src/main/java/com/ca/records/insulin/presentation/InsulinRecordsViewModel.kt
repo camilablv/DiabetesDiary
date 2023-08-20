@@ -5,8 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ca.model.InsulinRecord
-import com.ca.records.di.InsulinRecordsRepository
-import com.ca.records.domain.repository.RecordsRepository
+import com.ca.records.domain.repository.InsulinRecordsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InsulinRecordsViewModel @Inject constructor(
-    @InsulinRecordsRepository private val repository: RecordsRepository
+    private val repository: InsulinRecordsRepository
 ) : ViewModel() {
 
     fun insulinRecords(): Flow<PagingData<InsulinRecord>> {

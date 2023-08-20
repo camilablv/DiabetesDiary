@@ -31,7 +31,7 @@ fun Tabs(
 ) {
     val indicatorOffset by animateDpAsState(
         targetValue = tabWidth * selectedTabIndex,
-        animationSpec = tween(easing = LinearEasing)
+        animationSpec = tween(durationMillis = 150, easing = LinearEasing)
     )
 
     Box(

@@ -1,8 +1,9 @@
 package com.ca.records.di
 
-import com.ca.records.insulin.data.repository.InsulinRecordsRepository
-import com.ca.records.domain.repository.RecordsRepository
-import com.ca.records.glucose.data.repository.GlucoseRecordsRepository
+import com.ca.records.domain.repository.GlucoseRecordsRepository
+import com.ca.records.domain.repository.InsulinRecordsRepository
+import com.ca.records.glucose.data.repository.GlucoseRecordsRepositoryImpl
+import com.ca.records.insulin.data.repository.InsulinRecordsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,10 +23,8 @@ annotation class GlucoseRecordsRepository
 internal interface RepositoryModule {
 
     @Binds
-    @com.ca.records.di.InsulinRecordsRepository
-    fun bindInsulinRecordsRepository(repositoryImpl: InsulinRecordsRepository): RecordsRepository
+    fun bindInsulinRecordsRepository(repositoryImpl: InsulinRecordsRepositoryImpl): InsulinRecordsRepository
 
     @Binds
-    @com.ca.records.di.GlucoseRecordsRepository
-    fun bindGlucoseRecordsRepository(repositoryImpl: GlucoseRecordsRepository): RecordsRepository
+    fun bindGlucoseRecordsRepository(repositoryImpl: GlucoseRecordsRepositoryImpl): GlucoseRecordsRepository
 }

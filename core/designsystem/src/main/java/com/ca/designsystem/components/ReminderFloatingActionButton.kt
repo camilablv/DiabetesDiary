@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -42,7 +42,7 @@ fun ReminderFloatingActionButton(
         }
     ) {
         Icon(
-            imageVector = Icons.Filled.Add,
+            painter = painterResource(id = R.drawable.round_notification_add),
             contentDescription = null,
             tint = Theme.colors.onSecondary
         )
