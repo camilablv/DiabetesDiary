@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinReminderCard
-import com.ca.model.ListItem
 import com.ca.model.RecordInsulinReminder
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -18,9 +17,7 @@ import com.ca.model.RecordInsulinReminder
 fun InsulinRemindersPage(
     reminders: List<RecordInsulinReminder>,
     onEnabledChange: (RecordInsulinReminder, Boolean) -> Unit,
-    isItemSelected: (ListItem) -> Boolean,
-    onClick: (RecordInsulinReminder) -> Unit,
-    onLongClick: (RecordInsulinReminder) -> Unit
+    onClick: (RecordInsulinReminder) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -45,9 +42,7 @@ fun InsulinRemindersPage(
                 onCheckedChanged = { enabled ->
                     onEnabledChange(reminder, enabled)
                 },
-                selected = isItemSelected(reminder),
-                onClick = { onClick(reminder) },
-                onLongClick = { onLongClick(reminder) }
+                onClick = { onClick(reminder) }
             )
         }
         item { 

@@ -45,6 +45,21 @@ fun InsulinRecordsQuery.Data.records(): List<InsulinRecord> {
     }
 }
 
+fun GlucoseRecordsQuery.Data.records(): List<GlucoseRecord> {
+    return records.map {
+        val dateTime = LocalDateTime.parse(it.measuredAt.toString())
+        GlucoseRecord(
+            cursor = it.cursor,
+            id = it.id,
+            level = it.units,
+            note = it.notes,
+            time = dateTime.toLocalTime(),
+            date = dateTime.toLocalDate(),
+            measuringMark = MeasuringMark.valueOf(it.status.name)
+        )
+    }
+}
+
 fun RecordInsulinMutation.Data.record(insulin: Insulin): InsulinRecord {
     return with(record) {
         val dateTime = LocalDateTime.parse(takenAt.toString())
@@ -64,6 +79,7 @@ fun RecordGlucoseMutation.Data.record(): GlucoseRecord {
     return with(record) {
         val dateTime = LocalDateTime.parse(measuredAt.toString())
         GlucoseRecord(
+            cursor = id,
             id = id,
             level = units,
             note = notes ?: "",

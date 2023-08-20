@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.RemoveItemUseCase
-import com.ca.model.ListItem
 import com.ca.model.RecordGlucoseReminder
 import com.ca.model.RecordInsulinReminder
-import com.ca.platform.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +19,7 @@ class RemindersViewModel @Inject constructor(
     private val reminderRepository: RemindersRepository,
     private val settingsRepository: SettingsRepository,
     private val removeItemUseCase: RemoveItemUseCase
-) : BaseViewModel() {
+) : ViewModel() {
 
     private val _viewState = MutableStateFlow(RemindersViewState())
     val viewState: StateFlow<RemindersViewState>
@@ -55,12 +53,5 @@ class RemindersViewModel @Inject constructor(
         viewModelScope.launch {
             reminderRepository.updateGlucoseReminder(reminder.copy(enabled = enabled))
         }
-    }
-
-    override fun removeItem(item: ListItem?) {
-        viewModelScope.launch {
-            item?.let { removeItemUseCase(item) }
-        }
-        disableEditMode()
     }
 }

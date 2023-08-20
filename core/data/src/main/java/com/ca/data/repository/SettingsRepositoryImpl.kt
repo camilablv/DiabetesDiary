@@ -1,6 +1,7 @@
 package com.ca.data.repository
 
 import android.util.Log
+import com.ca.data.di.IoDispatcher
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
 import com.ca.model.GlucoseUnits
@@ -9,6 +10,7 @@ import com.ca.model.Settings
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.insulin
 import com.ca.network.utils.unit
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,24 +20,29 @@ import javax.inject.Inject
 class SettingsRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
     private val userPreferencesDataStore: UserDataStore,
-    private val settingsDataStore: SettingsDataStore
+    private val settingsDataStore: SettingsDataStore,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : com.ca.domain.repository.SettingsRepository {
 
     override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits? {
-        return networkClient.updateGlucoseUnit(units).fold(
-            onSuccess = { settingsDataStore.updateGlucoseUnits(it.unit()) },
-            onFailure = { null }
-        )
+        return withContext(ioDispatcher) {
+            networkClient.updateGlucoseUnit(units).fold(
+                onSuccess = { settingsDataStore.updateGlucoseUnits(it.unit()) },
+                onFailure = { null }
+            )
+        }
     }
 
     override suspend fun addInsulin(name: String, color: String, defaultDose: Int): List<Insulin>? {
-        return networkClient.createInsulin(name, color, defaultDose).fold(
-            onSuccess = { settingsDataStore.addInsulin(it.insulin()) },
-            onFailure = {
-                Log.d("SettingsRepositoryImpl", it.message.toString())
-                null
-            }
-        )
+        return withContext(ioDispatcher) {
+            networkClient.createInsulin(name, color, defaultDose).fold(
+                onSuccess = { settingsDataStore.addInsulin(it.insulin()) },
+                onFailure = {
+                    Log.d("SettingsRepositoryImpl", it.message.toString())
+                    null
+                }
+            )
+        }
     }
 
     override suspend fun updateInsulin(
@@ -44,27 +51,34 @@ class SettingsRepositoryImpl @Inject constructor(
         color: String,
         defaultDosage: Int
     ) {
-        networkClient.updateInsulin(id, name, color, defaultDosage).fold(
-            onSuccess = { settingsDataStore.updateInsulin(it.insulin()) },
-            onFailure = {
-                Log.d("SettingsRepositoryImpl", "updateInsulin " + it.message.toString())
-            }
-        )
+        withContext(ioDispatcher) {
+            networkClient.updateInsulin(id, name, color, defaultDosage).fold(
+                onSuccess = { settingsDataStore.updateInsulin(it.insulin()) },
+                onFailure = {
+                    Log.d("SettingsRepositoryImpl", "updateInsulin " + it.message.toString())
+                }
+            )
+        }
     }
 
-    override suspend fun deleteInsulin(id: String): List<Insulin> {
+    override suspend fun deleteInsulin(id: String) {
         //todo add delayed sending to the server if there is no internet
-        networkClient.deleteInsulin(id)
-        return settingsDataStore.deleteInsulin(id)
+        return withContext(ioDispatcher) {
+            networkClient.deleteInsulin(id).fold(
+                onSuccess = {settingsDataStore.deleteInsulin(id) },
+                onFailure = {}
+            )
+        }
     }
 
-    override suspend fun insulins(): List<Insulin> = settingsDataStore.insulins()
-
-    override suspend fun settings(): Flow<Settings> {
-        return settingsDataStore.settings().flowOn(Dispatchers.IO)
+    override suspend fun insulins(): List<Insulin> = withContext(ioDispatcher) {
+        settingsDataStore.insulins()
     }
 
-    override suspend fun darkMode(darkMode: Boolean) {
+    override suspend fun settings(): Flow<Settings> =
+        settingsDataStore.settings().flowOn(Dispatchers.IO)
+
+    override suspend fun darkMode(darkMode: Boolean) = withContext(ioDispatcher) {
         settingsDataStore.setDarkMode(darkMode)
     }
 }

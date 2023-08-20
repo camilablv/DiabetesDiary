@@ -2,6 +2,7 @@ package com.ca.database.dao
 
 import androidx.room.*
 import com.ca.database.model.RecordInsulinReminderEntity
+import com.ca.database.model.insulinRemindersTableName
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -13,15 +14,18 @@ interface InsulinReminderDao {
     @Delete
     suspend fun delete(reminder: RecordInsulinReminderEntity)
 
-    @Query("SELECT * FROM insulin_reminder")
+    @Query("SELECT * FROM $insulinRemindersTableName")
     fun insulinReminders(): Flow<List<RecordInsulinReminderEntity>>
 
-    @Query("SELECT * FROM insulin_reminder")
+    @Query("SELECT * FROM $insulinRemindersTableName")
     fun insulinRemindersFlow(): Flow<RecordInsulinReminderEntity>
 
     @Update
     fun update(reminder: RecordInsulinReminderEntity)
 
-    @Query("SELECT * FROM insulin_reminder WHERE insulin_id == :insulinId")
+    @Query("SELECT * FROM $insulinRemindersTableName WHERE insulin_id == :insulinId")
     fun insulinRemindersByInsulinId(insulinId: String): List<RecordInsulinReminderEntity>
+
+    @Query("SELECT * FROM $insulinRemindersTableName WHERE id == :id")
+    suspend fun insulinReminderById(id: Int): RecordInsulinReminderEntity
 }

@@ -2,9 +2,9 @@ package com.ca.diabetesdiary.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.diabetesdiary.domain.repository.MainRepository
 import com.ca.diabetesdiary.navigation.MainRoute
 import com.ca.diabetesdiary.presentation.state.MainViewState
+import com.ca.domain.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

@@ -2,6 +2,7 @@ package com.ca.database.dao
 
 import androidx.room.*
 import com.ca.database.model.InsulinRecordEntity
+import com.ca.database.model.insulinRecordsTableName
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -13,12 +14,15 @@ interface InsulinRecordsDao {
     @Delete
     suspend fun delete(record: InsulinRecordEntity)
 
-    @Query("SELECT * FROM insulin_record")
+    @Query("SELECT * FROM $insulinRecordsTableName")
     fun insulinRecords(): Flow<List<InsulinRecordEntity>>
 
     @Update
     fun update(record: InsulinRecordEntity)
 
-    @Query("SELECT * FROM insulin_record WHERE date == :date")
+    @Query("SELECT * FROM $insulinRecordsTableName WHERE date == :date")
     fun recordsByDate(date: LocalDate): Flow<List<InsulinRecordEntity>>
+
+    @Query("SELECT * FROM $insulinRecordsTableName WHERE id == :id")
+    fun recordsById(id: String): InsulinRecordEntity
 }

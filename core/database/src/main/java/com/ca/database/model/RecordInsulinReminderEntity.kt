@@ -5,8 +5,9 @@ import com.ca.model.RecordInsulinReminder
 import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
+internal const val insulinRemindersTableName = "insulin_reminder"
 
-@Entity(tableName = "insulin_reminder")
+@Entity(tableName = insulinRemindersTableName)
 data class RecordInsulinReminderEntity(
     val time: LocalTime,
     val iteration: ReminderIteration,

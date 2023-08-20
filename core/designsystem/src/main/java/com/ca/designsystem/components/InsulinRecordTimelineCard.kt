@@ -1,8 +1,7 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -13,27 +12,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
-import com.ca.designsystem.theme.Purple100
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.InsulinRecord
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InsulinRecordTimelineCard(
     record: InsulinRecord,
-    selected: Boolean,
-    onClick: () -> Unit,
-    onLongClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    val backgroundColor = if (selected) Purple100 else Theme.colors.background
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .combinedClickable(
+            .clickable(
                 onClick = onClick,
-                onLongClick = onLongClick,
                 indication = null,
                 interactionSource = MutableInteractionSource()
             ),
@@ -49,7 +42,7 @@ fun InsulinRecordTimelineCard(
             modifier = Modifier,
             shape = Theme.shapes.large,
             elevation = Theme.elevations.default,
-            backgroundColor = backgroundColor
+            backgroundColor = Theme.colors.background
         ) {
             Column(
                 modifier = Modifier
@@ -95,7 +88,7 @@ fun InsulinRecordTimelineCard(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "UN",
+                                text = "IU",
                                 style = Theme.typography.bodySmall,
                             )
                         }

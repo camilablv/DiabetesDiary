@@ -2,12 +2,7 @@ package com.ca.diabetesdiary.di
 
 import android.app.Activity
 import android.content.Context
-import com.ca.authentication.FirebaseAuthProvider
-import com.ca.datastore.SettingsDataStore
-import com.ca.diabetesdiary.data.repository.MainRepositoryImpl
-import com.ca.diabetesdiary.domain.repository.MainRepository
 import com.ca.diabetesdiary.presentation.MainActivity
-import com.ca.network.api.NetworkClient
 import com.ca.notification.NotificationManager
 import dagger.Module
 import dagger.Provides
@@ -20,19 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class MainModule {
-
-    @Provides
-    fun provideMainRepository(
-        authProvider: FirebaseAuthProvider,
-        networkClient: NetworkClient,
-        settingsDataStore: SettingsDataStore
-    ): MainRepository {
-        return MainRepositoryImpl(
-            authProvider = authProvider,
-            networkClient = networkClient,
-            settingsDataStore = settingsDataStore
-        )
-    }
 
     @Provides
     fun provideActivityClass(): Class<out Activity> = MainActivity::class.java

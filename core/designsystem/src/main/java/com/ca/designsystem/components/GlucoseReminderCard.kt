@@ -1,7 +1,6 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -14,33 +13,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
-import com.ca.designsystem.theme.Purple100
 import com.ca.designsystem.theme.Theme
 import com.ca.model.RecordGlucoseReminder
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GlucoseReminderCard(
     modifier: Modifier,
     reminder: RecordGlucoseReminder,
     onCheckedChanged: (Boolean) -> Unit,
-    selected: Boolean,
-    onClick: () -> Unit,
-    onLongClick: () -> Unit
+    onClick: () -> Unit
 ) {
-    val background = if (selected) Purple100 else Theme.colors.background
-
     Card(
         modifier = modifier
-            .combinedClickable(
+            .clickable(
                 onClick = onClick,
-                onLongClick = onLongClick,
                 indication = null,
                 interactionSource = MutableInteractionSource()
             ),
         shape = Theme.shapes.large,
         elevation = Theme.elevations.default,
-        backgroundColor = background
+        backgroundColor = Theme.colors.background
     ) {
         Row(
             modifier = Modifier

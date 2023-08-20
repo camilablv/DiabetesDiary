@@ -14,16 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.components.dialog.DiaryAlertDialog
+import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.components.settings.GlucoseUnitsSection
 import com.ca.designsystem.components.settings.InsulinSection
 import com.ca.designsystem.components.settings.LanguageSection
 import com.ca.designsystem.components.settings.ThemeSection
-import com.ca.designsystem.components.topbar.MainTopBar
+import com.ca.designsystem.components.topbar.TopBar
 
 @Composable
 fun SettingsScreen(
+    navigateBack: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -31,7 +32,9 @@ fun SettingsScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { MainTopBar(title = "Diabetes Diary") }
+        topBar = { TopBar(title = "Settings") {
+            navigateBack()
+        } }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
