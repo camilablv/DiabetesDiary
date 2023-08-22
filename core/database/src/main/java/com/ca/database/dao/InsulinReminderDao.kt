@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface InsulinReminderDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(reminder: RecordInsulinReminderEntity)
+    suspend fun insert(reminder: RecordInsulinReminderEntity): Long
 
     @Delete
     suspend fun delete(reminder: RecordInsulinReminderEntity)

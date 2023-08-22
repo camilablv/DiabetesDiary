@@ -21,36 +21,45 @@ import kotlinx.coroutines.withContext
 import java.time.LocalTime
 import javax.inject.Inject
 
-class InsulinReminderRepositoryImpl @Inject constructor(
+class RemindersRepositoryImpl @Inject constructor(
     private val alarmManager: AlarmScheduler,
     private val insulinReminderDao: InsulinReminderDao,
     private val glucoseReminderDao: GlucoseReminderDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RemindersRepository {
 
-    override suspend fun addInsulinReminder(time: LocalTime, iteration: ReminderIteration, insulin: Insulin, dose: Int) {
-        val reminder = RecordInsulinReminderEntity(
-            time, iteration, insulin.id, dose, true
-        )
+    override suspend fun addInsulinReminder(
+        time: LocalTime,
+        iteration: ReminderIteration,
+        insulin: Insulin,
+        dose: Int
+    ) {
         withContext(ioDispatcher) {
-            insulinReminderDao.insert(reminder)
+            val reminderId = insulinReminderDao.insert(
+                RecordInsulinReminderEntity(
+                    time, iteration, insulin.id, dose, true
+                )
+            )
+            alarmManager.scheduleRecordInsulin(insulinReminderDao.insulinReminderById(reminderId.toInt()).asExternalModel())
         }
-        alarmManager.scheduleRecordInsulin(reminder.asExternalModel())
     }
+
+
 
     override suspend fun addRecordGlucoseReminder(time: LocalTime, iteration: ReminderIteration) {
         withContext(ioDispatcher) {
-            glucoseReminderDao.insert(
+            val reminderId = glucoseReminderDao.insert(
                 RecordGlucoseReminderEntity(time, iteration, true)
             )
+            alarmManager.scheduleGlucoseMeasuring(glucoseReminderDao.reminderById(reminderId.toInt()).asExternalModel())
         }
-        alarmManager.scheduleGlucoseMeasuring(time, iteration)
     }
 
     override suspend fun insulinReminders(): Flow<List<RecordInsulinReminder>> {
         return insulinReminderDao
             .insulinReminders()
-            .map { list -> list.map { it.asExternalModel() }
+            .map { list ->
+                list.map { it.asExternalModel() }
             }
             .flowOn(ioDispatcher)
     }
@@ -65,24 +74,28 @@ class InsulinReminderRepositoryImpl @Inject constructor(
     override suspend fun deleteGlucoseReminder(reminder: RecordGlucoseReminder) {
         withContext(ioDispatcher) {
             glucoseReminderDao.delete(reminder.asEntity())
+            alarmManager.cancelGlucoseMeasuringReminder(reminder.id)
         }
     }
 
     override suspend fun deleteInsulinReminder(reminder: RecordInsulinReminder) {
         withContext(ioDispatcher) {
             insulinReminderDao.delete(reminder.asEntity())
+            alarmManager.cancelRecordInsulinReminder(reminder.id)
         }
     }
 
     override suspend fun updateInsulinReminder(reminder: RecordInsulinReminder) {
         withContext(ioDispatcher) {
             insulinReminderDao.update(reminder.asEntity())
+            alarmManager.updateInsulinReminder(reminder)
         }
     }
 
     override suspend fun updateGlucoseReminder(reminder: RecordGlucoseReminder) {
         withContext(ioDispatcher) {
             glucoseReminderDao.update(reminder.asEntity())
+            alarmManager.updateGlucoseReminder(reminder)
         }
     }
 

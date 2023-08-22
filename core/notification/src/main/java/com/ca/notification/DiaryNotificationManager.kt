@@ -34,7 +34,7 @@ class DiaryNotificationManager @Inject constructor(
             CHANNEL_NAME,
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = "Description"
+            description = "Records reminders"
         }
         notificationManager.createNotificationChannel(channel)
     }

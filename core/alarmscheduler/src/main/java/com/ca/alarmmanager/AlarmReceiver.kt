@@ -20,8 +20,6 @@ class AlarmReceiver : BroadcastReceiver() {
         val dose = intent.getIntExtra(DOSE_KEY, 0)
         val reminderId = intent.getIntExtra(REMINDER_ID_KEY, 0)
 
-        notificationManager.createNotificationChannel()
-
         Log.d("EXTRA_MESSAGE", reminderId.toString())
 
         notificationManager.showRecordInsulinNotification(insulinId, dose, reminderId)

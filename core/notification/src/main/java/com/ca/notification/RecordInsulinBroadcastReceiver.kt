@@ -6,9 +6,7 @@ import android.content.Intent
 import android.util.Log
 import com.ca.domain.repository.RecordInsulinRepository
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -17,6 +15,7 @@ import javax.inject.Inject
 class RecordInsulinBroadcastReceiver : BroadcastReceiver() {
 
     @Inject lateinit var repository: RecordInsulinRepository
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d("RecordInsulinBroadcastReceiver", "onReceive")
@@ -25,12 +24,11 @@ class RecordInsulinBroadcastReceiver : BroadcastReceiver() {
             val insulinId = intent.getStringExtra(INSULIN_ID_KEY)
             val dose = intent.getIntExtra(DOSE_KEY, 0)
             Log.d("RecordInsulinBroadcastReceiver", insulinId.toString())
-            GlobalScope.launch(Dispatchers.IO) {
+            scope.launch {
                 if (insulinId != null) {
                     repository.recordInsulin(insulinId, "", LocalDate.now(), LocalTime.now(), dose)
                 }
             }
-
         }
     }
 

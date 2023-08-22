@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.ca.model.RecordGlucoseReminder
 import com.ca.model.RecordInsulinReminder
-import com.ca.model.ReminderIteration
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
@@ -27,10 +27,25 @@ internal class AlarmSchedulerImpl @Inject constructor(
             putExtra(AlarmReceiver.REMINDER_ID_KEY, reminder.id)
         }
 
-        schedule("insulin${reminder.id}", reminder.time)
+        schedule(INSULIN_REMINDER_ID_PREFIX + reminder.id, reminder.time)
     }
 
-    override fun scheduleGlucoseMeasuring(time: LocalTime, iteration: ReminderIteration) {}
+    override fun updateInsulinReminder(reminder: RecordInsulinReminder) {
+        cancelRecordInsulinReminder(reminder.id)
+        if (reminder.enabled) {
+            scheduleRecordInsulin(reminder)
+        }
+    }
+    override fun scheduleGlucoseMeasuring(reminder: RecordGlucoseReminder) {
+        schedule(GLUCOSE_REMINDER_ID_PREFIX + reminder.id, reminder.time)
+    }
+
+    override fun updateGlucoseReminder(reminder: RecordGlucoseReminder) {
+        cancelGlucoseMeasuringReminder(reminder.id)
+        if (reminder.enabled) {
+            scheduleGlucoseMeasuring(reminder)
+        }
+    }
 
     private fun schedule(reminderId: String, time: LocalTime) {
         val millis = ZonedDateTime.of(
@@ -46,6 +61,18 @@ internal class AlarmSchedulerImpl @Inject constructor(
         )
     }
 
+    override fun cancelRecordInsulinReminder(reminderId: Int) {
+        cancel(INSULIN_REMINDER_ID_PREFIX + reminderId)
+    }
+
+    override fun cancelGlucoseMeasuringReminder(reminderId: Int) {
+        cancel(GLUCOSE_REMINDER_ID_PREFIX + reminderId)
+    }
+
+    private fun cancel(reminderId: String) {
+        alarmManager.cancel(pendingIntent(reminderId.hashCode()))
+    }
+
     private fun pendingIntent(requestCode: Int): PendingIntent {
         return PendingIntent.getBroadcast(
             context,
@@ -53,5 +80,10 @@ internal class AlarmSchedulerImpl @Inject constructor(
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+    }
+
+    companion object {
+        private const val INSULIN_REMINDER_ID_PREFIX = "insulin"
+        private const val GLUCOSE_REMINDER_ID_PREFIX = "glucose"
     }
 }
