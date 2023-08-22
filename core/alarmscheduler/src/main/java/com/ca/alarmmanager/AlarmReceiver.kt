@@ -4,14 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.ca.notification.NotificationManager
+import com.ca.notification.DiaryNotificationManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlarmReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var notificationManager: NotificationManager
+    @Inject lateinit var notificationManager: DiaryNotificationManager
 
     override fun onReceive(context: Context?, intent: Intent) {
         Log.d("EXTRA_MESSAGE", "Received message")
@@ -24,7 +24,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         Log.d("EXTRA_MESSAGE", reminderId.toString())
 
-        notificationManager.createRecordInsulinNotification(insulinId, dose, reminderId)
+        notificationManager.showRecordInsulinNotification(insulinId, dose, reminderId)
     }
 
     companion object {

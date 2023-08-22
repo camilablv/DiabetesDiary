@@ -3,6 +3,7 @@ package com.ca.notification
 import android.Manifest
 import android.app.Activity
 import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -12,7 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import javax.inject.Inject
 
-class NotificationManager @Inject constructor(
+class DiaryNotificationManager @Inject constructor(
     private val context: Context,
     activityClass: Class<out Activity>
 ) {
@@ -25,20 +26,20 @@ class NotificationManager @Inject constructor(
         PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
-    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     fun createNotificationChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID,
             CHANNEL_NAME,
-            android.app.NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = "Description"
         }
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun createRecordInsulinNotification(
+    fun showRecordInsulinNotification(
         insulinId: String,
         dose: Int,
         notificationId: Int
