@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
 import javax.inject.Inject
 
 class DiaryNotificationManager @Inject constructor(
@@ -47,11 +48,9 @@ class DiaryNotificationManager @Inject constructor(
     }
 
     fun showRecordInsulinNotification(
-        insulinId: String,
-        dose: Int,
-        notificationId: Int
+        reminder: RecordInsulinReminder
     ) {
-        val recordInsulinPendingIntent = insulinActionPendingIntent(insulinId, dose, notificationId)
+        val recordInsulinPendingIntent = insulinActionPendingIntent(reminder.insulinId, reminder.dose, reminder.id)
 
         intent.apply {
             putExtra("start_type", "insulin_notification")
@@ -61,8 +60,8 @@ class DiaryNotificationManager @Inject constructor(
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .addAction(R.drawable.baseline_edit_24, "Done", recordInsulinPendingIntent),
             "Record insulin",
-            "It's time to take insulin: $dose UN",
-            notificationId
+            "It's time to take insulin: ${reminder.dose} UN",
+            reminder.id
         )
     }
 
@@ -110,11 +109,11 @@ class DiaryNotificationManager @Inject constructor(
         notificationId: Int
     ): PendingIntent? {
         val recordInsulinIntent =
-            Intent(context, RecordInsulinBroadcastReceiver::class.java).apply {
-                action = RecordInsulinBroadcastReceiver.ACTION_INSULIN_TAKEN
-                putExtra(RecordInsulinBroadcastReceiver.INSULIN_ID_KEY, insulinId)
-                putExtra(RecordInsulinBroadcastReceiver.DOSE_KEY, dose)
-                putExtra(RecordInsulinBroadcastReceiver.NOTIFICATION_ID, notificationId)
+            Intent(context, RecordInsulinReceiver::class.java).apply {
+                action = RecordInsulinReceiver.ACTION_INSULIN_TAKEN
+                putExtra(RecordInsulinReceiver.INSULIN_ID_KEY, insulinId)
+                putExtra(RecordInsulinReceiver.DOSE_KEY, dose)
+                putExtra(RecordInsulinReceiver.NOTIFICATION_ID, notificationId)
             }
         return PendingIntent.getBroadcast(
             context,

@@ -3,7 +3,6 @@ package com.ca.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.ca.domain.repository.RecordInsulinRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -12,7 +11,7 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RecordInsulinBroadcastReceiver : BroadcastReceiver() {
+class RecordInsulinReceiver : BroadcastReceiver() {
 
     @Inject lateinit var repository: RecordInsulinRepository
     @Inject lateinit var notificationManager: DiaryNotificationManager
@@ -27,8 +26,8 @@ class RecordInsulinBroadcastReceiver : BroadcastReceiver() {
                 notificationManager.cancelNotification(it)
             }
 
-            scope.launch {
-                if (insulinId != null) {
+            insulinId?.let {
+                scope.launch {
                     repository.recordInsulin(insulinId, "", LocalDate.now(), LocalTime.now(), dose)
                 }
             }
