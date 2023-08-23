@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.ca.alarmmanager.AlarmReceiver"/>
+        <receiver android:name="com.ca.alarmmanager.receivers.AlarmReceiver"/>
         
         <receiver android:name="com.ca.alarmmanager.receivers.BootCompletedReceiver"
             android:exported="true">

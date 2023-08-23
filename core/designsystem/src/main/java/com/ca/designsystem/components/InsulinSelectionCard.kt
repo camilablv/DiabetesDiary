@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.DiaryTheme
 import com.ca.designsystem.theme.Theme
-import com.ca.model.Insulin
+import com.ca.domain.model.Insulin
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

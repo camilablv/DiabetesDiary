@@ -7,9 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ca.common.utils.time
+import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.theme.Theme
-import com.ca.model.GlucoseRecord
+import com.ca.domain.model.GlucoseRecord
 
 @Composable
 fun GlucoseRecordCard(
@@ -34,7 +34,7 @@ fun GlucoseRecordCard(
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = record.time.toString(),
+                    text = record.time.timeOfHHmmPattern(),
                     style = Theme.typography.bodyMedium
                 )
                 Text(

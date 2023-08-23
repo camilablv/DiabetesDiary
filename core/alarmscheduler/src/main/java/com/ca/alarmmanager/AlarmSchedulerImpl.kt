@@ -4,12 +4,11 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
-import java.time.LocalDate
+import com.ca.alarmmanager.receivers.AlarmReceiver
+import com.ca.alarmmanager.utils.timeExactForAlarm
+import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
 import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import javax.inject.Inject
 
 internal class AlarmSchedulerImpl @Inject constructor(
@@ -48,15 +47,11 @@ internal class AlarmSchedulerImpl @Inject constructor(
     }
 
     private fun schedule(reminderId: String, time: LocalTime) {
-        val millis = ZonedDateTime.of(
-            LocalDate.now(),
-            time,
-            ZoneId.of(android.icu.util.TimeZone.getDefault().id)
-        ).toInstant().toEpochMilli()
+        val exactTime = timeExactForAlarm(time)
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            millis,
+            exactTime,
             pendingIntent(reminderId.hashCode())
         )
     }

@@ -2,7 +2,7 @@ package com.ca.records.glucose.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ca.model.GlucoseRecord
+import com.ca.domain.model.GlucoseRecord
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.records
 

@@ -2,8 +2,8 @@ package com.ca.recordglucose.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.model.MeasuringMark
 import com.ca.domain.repository.RecordGlucoseRepository
-import com.ca.model.MeasuringMark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

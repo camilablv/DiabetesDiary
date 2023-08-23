@@ -2,11 +2,10 @@ package com.ca.reminders.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
 import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
-import com.ca.domain.usecase.RemoveItemUseCase
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RemindersViewModel @Inject constructor(
     private val reminderRepository: RemindersRepository,
-    private val settingsRepository: SettingsRepository,
-    private val removeItemUseCase: RemoveItemUseCase
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(RemindersViewState())

@@ -1,8 +1,8 @@
 package com.ca.domain.usecase
 
+import com.ca.domain.model.RecordInsulinReminder
 import com.ca.domain.repository.RecordInsulinRepository
 import com.ca.domain.repository.RemindersRepository
-import com.ca.model.RecordInsulinReminder
 import java.time.LocalDate
 import javax.inject.Inject
 

@@ -2,8 +2,8 @@ package com.ca.editglucosereminderbottomsheet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.model.RecordGlucoseReminder
 import com.ca.domain.repository.RemindersRepository
-import com.ca.model.RecordGlucoseReminder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

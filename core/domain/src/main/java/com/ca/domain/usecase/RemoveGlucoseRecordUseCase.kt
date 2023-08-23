@@ -1,7 +1,7 @@
 package com.ca.domain.usecase
 
+import com.ca.domain.model.GlucoseRecord
 import com.ca.domain.repository.RecordGlucoseRepository
-import com.ca.model.GlucoseRecord
 import javax.inject.Inject
 
 class RemoveGlucoseRecordUseCase @Inject constructor(

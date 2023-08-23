@@ -2,8 +2,8 @@ package com.ca.glucosereminder.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.model.ReminderIteration
 import com.ca.domain.repository.RemindersRepository
-import com.ca.model.ReminderIteration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

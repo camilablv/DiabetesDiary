@@ -1,4 +1,4 @@
-package com.ca.alarmmanager
+package com.ca.alarmmanager.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context

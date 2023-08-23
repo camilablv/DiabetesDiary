@@ -24,7 +24,7 @@ import com.ca.designsystem.components.InsulinRecordTimelineCard
 import com.ca.designsystem.components.InsulinReminderTimelineCard
 import com.ca.designsystem.components.fab.NewRecordFab
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
-import com.ca.model.*
+import com.ca.domain.model.*
 
 @Composable
 fun HomeScreen(

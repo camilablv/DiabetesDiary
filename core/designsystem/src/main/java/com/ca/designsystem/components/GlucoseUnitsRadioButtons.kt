@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
-import com.ca.model.GlucoseUnits
+import com.ca.domain.model.GlucoseUnits
 
 @Composable
 fun GlucoseUnitsRadioButtons(

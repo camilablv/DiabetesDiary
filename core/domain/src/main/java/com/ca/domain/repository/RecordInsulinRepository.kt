@@ -1,7 +1,7 @@
 package com.ca.domain.repository
 
-import com.ca.model.Insulin
-import com.ca.model.InsulinRecord
+import com.ca.domain.model.Insulin
+import com.ca.domain.model.InsulinRecord
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.LocalTime

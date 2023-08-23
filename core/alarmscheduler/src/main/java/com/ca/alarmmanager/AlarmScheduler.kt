@@ -1,7 +1,7 @@
 package com.ca.alarmmanager
 
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
+import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
 
 interface AlarmScheduler {
     fun scheduleRecordInsulin(reminder: RecordInsulinReminder)

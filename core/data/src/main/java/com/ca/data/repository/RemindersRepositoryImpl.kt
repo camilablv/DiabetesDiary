@@ -8,11 +8,11 @@ import com.ca.database.model.RecordGlucoseReminderEntity
 import com.ca.database.model.RecordInsulinReminderEntity
 import com.ca.database.model.asEntity
 import com.ca.database.model.asExternalModel
+import com.ca.domain.model.Insulin
+import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
+import com.ca.domain.model.ReminderIteration
 import com.ca.domain.repository.RemindersRepository
-import com.ca.model.Insulin
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
-import com.ca.model.ReminderIteration
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -127,15 +127,13 @@ class RemindersRepositoryImpl @Inject constructor(
 
     private suspend fun rescheduleInsulinReminders() {
         insulinReminders().first().forEach {
-            if (it.enabled && it.time > LocalTime.now())
-                alarmManager.scheduleRecordInsulin(it)
+            if (it.enabled) alarmManager.scheduleRecordInsulin(it)
         }
     }
 
     private suspend fun rescheduleGlucoseReminders() {
         glucoseReminders().first().forEach {
-            if (it.enabled && it.time > LocalTime.now())
-                alarmManager.scheduleGlucoseMeasuring(it)
+            if (it.enabled) alarmManager.scheduleGlucoseMeasuring(it)
         }
     }
 }

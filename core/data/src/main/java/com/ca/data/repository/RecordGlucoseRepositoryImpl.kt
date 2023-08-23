@@ -4,8 +4,8 @@ import com.ca.data.di.IoDispatcher
 import com.ca.database.dao.GlucoseRecordsDao
 import com.ca.database.model.asEntity
 import com.ca.database.model.asExternalModel
+import com.ca.domain.model.GlucoseRecord
 import com.ca.domain.repository.RecordGlucoseRepository
-import com.ca.model.GlucoseRecord
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.record
 import kotlinx.coroutines.CoroutineDispatcher

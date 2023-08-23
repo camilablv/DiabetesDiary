@@ -1,6 +1,6 @@
 package com.ca.glucosereminder.presentation
 
-import com.ca.model.ReminderIteration
+import com.ca.domain.model.ReminderIteration
 import java.time.LocalTime
 
 data class GlucoseReminderViewState(

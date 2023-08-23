@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
-import com.ca.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordGlucoseReminder
 
 @Composable
 fun GlucoseReminderTimelineCard(

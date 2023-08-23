@@ -1,6 +1,6 @@
 package com.ca.recordinsulin.presentation
 
-import com.ca.model.Insulin
+import com.ca.domain.model.Insulin
 import java.time.LocalDate
 import java.time.LocalTime
 
