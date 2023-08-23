@@ -34,11 +34,17 @@
 
         <receiver android:name="com.ca.alarmmanager.AlarmReceiver"/>
         
-        <receiver android:name="com.ca.alarmmanager.BootCompletedReceiver"
-            android:enabled="false"
+        <receiver android:name="com.ca.alarmmanager.receivers.BootCompletedReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.ca.alarmmanager.receivers.TimeChangedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET"/>
             </intent-filter>
         </receiver>
 

@@ -15,6 +15,7 @@ import com.ca.model.RecordInsulinReminder
 import com.ca.model.ReminderIteration
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -116,6 +117,25 @@ class RemindersRepositoryImpl @Inject constructor(
     override suspend fun insulinReminderById(id: Int): RecordInsulinReminder {
         return withContext(ioDispatcher) {
             insulinReminderDao.insulinReminderById(id).asExternalModel()
+        }
+    }
+
+    override suspend fun rescheduleAll() {
+        rescheduleInsulinReminders()
+        rescheduleGlucoseReminders()
+    }
+
+    private suspend fun rescheduleInsulinReminders() {
+        insulinReminders().first().forEach {
+            if (it.enabled && it.time > LocalTime.now())
+                alarmManager.scheduleRecordInsulin(it)
+        }
+    }
+
+    private suspend fun rescheduleGlucoseReminders() {
+        glucoseReminders().first().forEach {
+            if (it.enabled && it.time > LocalTime.now())
+                alarmManager.scheduleGlucoseMeasuring(it)
         }
     }
 }
