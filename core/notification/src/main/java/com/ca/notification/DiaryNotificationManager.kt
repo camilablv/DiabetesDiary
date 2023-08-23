@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import com.ca.domain.model.RecordGlucoseReminder
 import javax.inject.Inject
 
@@ -77,15 +78,30 @@ class DiaryNotificationManager @Inject constructor(
     }
 
     fun postGlucoseMeasuringNotification(reminder: RecordGlucoseReminder) {
+        val remoteInput: RemoteInput =
+            RemoteInput.Builder(GlucoseMeasuringInputReceiver.INPUT_TEXT_KEY).run {
+                setLabel("Input")
+//                setAllowDataType()
+                build()
+            }
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val action = NotificationCompat.Action.Builder(
+            R.drawable.round_alarm_24,
+            "Input",
+            glucoseLevelUserInputPendingIntent(reminder.id)
+        )
+            .addRemoteInput(remoteInput)
+            .build()
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.round_alarm_24)
             .setContentTitle("Record glucose level")
             .setContentText("It's time to measure glucose level")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-//            .addAction(R.drawable.baseline_edit_24, "Done", recordInsulinPendingIntent)
+            .addAction(action)
+            .build()
 
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
@@ -93,7 +109,7 @@ class DiaryNotificationManager @Inject constructor(
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) return
-            notify(reminder.id, builder.build())
+            notify(reminder.id, notification)
         }
     }
 
@@ -101,7 +117,11 @@ class DiaryNotificationManager @Inject constructor(
         notificationManager.cancel(notificationId)
     }
 
-    private fun insulinActionPendingIntent(insulinId: String, dose: Int, notificationId: Int): PendingIntent? {
+    private fun insulinActionPendingIntent(
+        insulinId: String,
+        dose: Int,
+        notificationId: Int
+    ): PendingIntent? {
         val recordInsulinIntent =
             Intent(context, RecordInsulinBroadcastReceiver::class.java).apply {
                 action = RecordInsulinBroadcastReceiver.ACTION_INSULIN_TAKEN
@@ -114,6 +134,20 @@ class DiaryNotificationManager @Inject constructor(
             insulinId.hashCode(),
             recordInsulinIntent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
+    private fun glucoseLevelUserInputPendingIntent(reminderId: Int): PendingIntent? {
+        val intent = Intent(context, GlucoseMeasuringInputReceiver::class.java).apply {
+            action = GlucoseMeasuringInputReceiver.ACTION_GLUCOSE_MEASURED
+            putExtra(GlucoseMeasuringInputReceiver.NOTIFICATION_ID, reminderId)
+        }
+        return PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            0
+
         )
     }
 
