@@ -23,10 +23,16 @@ class DiaryNotificationManager @Inject constructor(
     }
 
     private val pendingIntent by lazy {
-        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
-    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     fun createNotificationChannel() {
         val channel = NotificationChannel(
@@ -44,7 +50,7 @@ class DiaryNotificationManager @Inject constructor(
         dose: Int,
         notificationId: Int
     ) {
-        val recordInsulinPendingIntent = insulinActionPendingIntent(insulinId, dose)
+        val recordInsulinPendingIntent = insulinActionPendingIntent(insulinId, dose, notificationId)
 
         intent.apply {
             putExtra("start_type", "insulin_notification")
@@ -69,13 +75,24 @@ class DiaryNotificationManager @Inject constructor(
         }
     }
 
-    private fun insulinActionPendingIntent(insulinId: String, dose: Int,): PendingIntent? {
-        val recordInsulinIntent = Intent(context, RecordInsulinBroadcastReceiver::class.java).apply {
-            action = RecordInsulinBroadcastReceiver.ACTION_INSULIN_TAKEN
-            putExtra(RecordInsulinBroadcastReceiver.INSULIN_ID_KEY, insulinId)
-            putExtra(RecordInsulinBroadcastReceiver.DOSE_KEY, dose)
-        }
-        return PendingIntent.getBroadcast(context, 0, recordInsulinIntent, 0)
+    fun cancelNotification(notificationId: Int) {
+        notificationManager.cancel(notificationId)
+    }
+
+    private fun insulinActionPendingIntent(insulinId: String, dose: Int, notificationId: Int): PendingIntent? {
+        val recordInsulinIntent =
+            Intent(context, RecordInsulinBroadcastReceiver::class.java).apply {
+                action = RecordInsulinBroadcastReceiver.ACTION_INSULIN_TAKEN
+                putExtra(RecordInsulinBroadcastReceiver.INSULIN_ID_KEY, insulinId)
+                putExtra(RecordInsulinBroadcastReceiver.DOSE_KEY, dose)
+                putExtra(RecordInsulinBroadcastReceiver.NOTIFICATION_ID, notificationId)
+            }
+        return PendingIntent.getBroadcast(
+            context,
+            insulinId.hashCode(),
+            recordInsulinIntent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     companion object {
