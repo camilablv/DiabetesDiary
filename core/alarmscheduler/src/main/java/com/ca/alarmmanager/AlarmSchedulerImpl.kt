@@ -21,9 +21,7 @@ internal class AlarmSchedulerImpl @Inject constructor(
 
     override fun scheduleRecordInsulin(reminder: RecordInsulinReminder) {
         intent.apply {
-            putExtra(AlarmReceiver.INSULIN_ID_KEY, reminder.insulinId)
-            putExtra(AlarmReceiver.DOSE_KEY, reminder.dose)
-            putExtra(AlarmReceiver.REMINDER_ID_KEY, reminder.id)
+            putExtra(AlarmReceiver.REMINDER_KEY, reminder)
         }
 
         schedule(INSULIN_REMINDER_ID_PREFIX + reminder.id, reminder.time)
@@ -36,6 +34,9 @@ internal class AlarmSchedulerImpl @Inject constructor(
         }
     }
     override fun scheduleGlucoseMeasuring(reminder: RecordGlucoseReminder) {
+        intent.apply {
+            putExtra(AlarmReceiver.REMINDER_KEY, reminder)
+        }
         schedule(GLUCOSE_REMINDER_ID_PREFIX + reminder.id, reminder.time)
     }
 

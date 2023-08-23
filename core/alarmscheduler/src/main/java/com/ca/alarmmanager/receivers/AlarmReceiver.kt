@@ -3,7 +3,11 @@ package com.ca.alarmmanager.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
+import com.ca.domain.model.ListItem
+import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
 import com.ca.notification.DiaryNotificationManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -16,18 +20,23 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
         Log.d("EXTRA_MESSAGE", "Received message")
 
-        val insulinId = intent.getStringExtra(INSULIN_ID_KEY)!!
-        val dose = intent.getIntExtra(DOSE_KEY, 0)
-        val reminderId = intent.getIntExtra(REMINDER_ID_KEY, 0)
+        val reminder = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(REMINDER_KEY)
+        } else {
+            intent.getParcelableExtra(REMINDER_KEY, ListItem::class.java)
+        }
 
-        Log.d("EXTRA_MESSAGE", reminderId.toString())
-
-        notificationManager.showRecordInsulinNotification(insulinId, dose, reminderId)
+        when(reminder) {
+            is RecordInsulinReminder -> {
+                notificationManager.showRecordInsulinNotification(reminder.insulinId, reminder.dose, reminder.id)
+            }
+            is RecordGlucoseReminder -> {
+                notificationManager.postGlucoseMeasuringNotification(reminder)
+            }
+        }
     }
 
     companion object {
-        const val INSULIN_ID_KEY = "insulin_id_key"
-        const val DOSE_KEY = "dose_key"
-        const val REMINDER_ID_KEY = "reminder_id_key"
+        const val REMINDER_KEY = "reminder_key"
     }
 }

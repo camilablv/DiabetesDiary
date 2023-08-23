@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.ca.domain.model.RecordGlucoseReminder
 import javax.inject.Inject
 
 class DiaryNotificationManager @Inject constructor(
@@ -72,6 +73,27 @@ class DiaryNotificationManager @Inject constructor(
                 ) != PackageManager.PERMISSION_GRANTED
             ) return
             notify(notificationId, builder.build())
+        }
+    }
+
+    fun postGlucoseMeasuringNotification(reminder: RecordGlucoseReminder) {
+
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.round_alarm_24)
+            .setContentTitle("Record glucose level")
+            .setContentText("It's time to measure glucose level")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+//            .addAction(R.drawable.baseline_edit_24, "Done", recordInsulinPendingIntent)
+
+        with(NotificationManagerCompat.from(context)) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) return
+            notify(reminder.id, builder.build())
         }
     }
 
