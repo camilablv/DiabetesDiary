@@ -48,7 +48,5 @@
         </receiver>
 
         <receiver android:name="com.ca.notification.RecordInsulinBroadcastReceiver"/>
-
-        <receiver android:name="com.ca.notification.GlucoseMeasuringInputReceiver"/>
     </application>
 </manifest>

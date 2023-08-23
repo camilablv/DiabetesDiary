@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.RemoteInput
 import com.ca.domain.model.RecordGlucoseReminder
 import javax.inject.Inject
 
@@ -58,49 +57,37 @@ class DiaryNotificationManager @Inject constructor(
             putExtra("start_type", "insulin_notification")
         }
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.round_alarm_24)
-            .setContentTitle("Record insulin")
-            .setContentText("It's time to take insulin: $dose UN")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .addAction(R.drawable.baseline_edit_24, "Done", recordInsulinPendingIntent)
-
-        with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) return
-            notify(notificationId, builder.build())
-        }
+        postReminderNotification(
+            NotificationCompat.Builder(context, CHANNEL_ID)
+                .addAction(R.drawable.baseline_edit_24, "Done", recordInsulinPendingIntent),
+            "Record insulin",
+            "It's time to take insulin: $dose UN",
+            notificationId
+        )
     }
 
     fun postGlucoseMeasuringNotification(reminder: RecordGlucoseReminder) {
-        val remoteInput: RemoteInput =
-            RemoteInput.Builder(GlucoseMeasuringInputReceiver.INPUT_TEXT_KEY).run {
-                setLabel("Input")
-//                setAllowDataType()
-                build()
-            }
-
-        val action = NotificationCompat.Action.Builder(
-            R.drawable.round_alarm_24,
-            "Input",
-            glucoseLevelUserInputPendingIntent(reminder.id)
+        postReminderNotification(
+            NotificationCompat.Builder(context, CHANNEL_ID),
+            "Record glucose level",
+            "It's time to measure glucose level",
+            reminder.id
         )
-            .addRemoteInput(remoteInput)
-            .build()
+    }
 
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+    private fun postReminderNotification(
+        notificationBuilder: NotificationCompat.Builder,
+        title: String,
+        text: String,
+        reminderId: Int
+    ) {
+        notificationBuilder
             .setSmallIcon(R.drawable.round_alarm_24)
-            .setContentTitle("Record glucose level")
-            .setContentText("It's time to measure glucose level")
+            .setContentTitle(title)
+            .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-            .addAction(action)
             .build()
 
         with(NotificationManagerCompat.from(context)) {
@@ -109,7 +96,7 @@ class DiaryNotificationManager @Inject constructor(
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) return
-            notify(reminder.id, notification)
+            notify(reminderId, notificationBuilder.build())
         }
     }
 
@@ -134,20 +121,6 @@ class DiaryNotificationManager @Inject constructor(
             insulinId.hashCode(),
             recordInsulinIntent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-        )
-    }
-
-    private fun glucoseLevelUserInputPendingIntent(reminderId: Int): PendingIntent? {
-        val intent = Intent(context, GlucoseMeasuringInputReceiver::class.java).apply {
-            action = GlucoseMeasuringInputReceiver.ACTION_GLUCOSE_MEASURED
-            putExtra(GlucoseMeasuringInputReceiver.NOTIFICATION_ID, reminderId)
-        }
-        return PendingIntent.getBroadcast(
-            context,
-            0,
-            intent,
-            0
-
         )
     }
 
