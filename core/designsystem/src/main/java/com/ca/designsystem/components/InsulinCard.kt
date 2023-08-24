@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,12 +18,15 @@ import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.domain.model.Insulin
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InsulinCard(
     modifier: Modifier,
-    insulin: Insulin
+    insulin: Insulin,
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier
             .height(72.dp)
             .fillMaxWidth(),

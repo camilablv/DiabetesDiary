@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -21,6 +22,7 @@ import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.domain.model.RecordInsulinReminder
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InsulinReminderCard(
     modifier: Modifier,
@@ -33,6 +35,7 @@ fun InsulinReminderCard(
     }
 
     Card(
+        onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()

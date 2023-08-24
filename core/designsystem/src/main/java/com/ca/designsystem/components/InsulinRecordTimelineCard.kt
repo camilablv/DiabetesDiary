@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,6 +17,7 @@ import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.domain.model.InsulinRecord
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InsulinRecordTimelineCard(
     record: InsulinRecord,
@@ -39,6 +41,7 @@ fun InsulinRecordTimelineCard(
         )
 
         Card(
+            onClick = onClick,
             modifier = Modifier,
             shape = Theme.shapes.large,
             elevation = Theme.elevations.default,

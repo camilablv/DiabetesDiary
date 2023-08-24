@@ -2,7 +2,6 @@ package com.ca.designsystem.components.settings
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -132,9 +131,9 @@ fun InsulinSection(
                         backgroundCardEndColor = Theme.colors.background,
                     ) {
                         InsulinCard(
-                            modifier = Modifier
-                                .clickable { editInsulin(insulin) },
-                            insulin = insulin
+                            modifier = Modifier,
+                            insulin = insulin,
+                            onClick = { editInsulin(insulin) }
                         )
                     }
 

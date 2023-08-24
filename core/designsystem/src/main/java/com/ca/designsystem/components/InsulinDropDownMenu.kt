@@ -63,7 +63,7 @@ fun InsulinDropDownMenu(
         }
 
         DropdownMenu(
-            modifier = Modifier.width(344.dp),
+            modifier = Modifier,
             expanded = expanded,
             onDismissRequest = onDismiss
         ) {
@@ -95,5 +95,4 @@ fun InsulinDropDownMenu(
             }
         }
     }
-    
 }
