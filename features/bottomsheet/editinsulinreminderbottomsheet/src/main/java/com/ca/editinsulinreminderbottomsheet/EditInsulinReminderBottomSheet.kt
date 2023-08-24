@@ -19,7 +19,7 @@ import com.ca.designsystem.components.BottomSheetMenuOption
 @Composable
 fun EditRecordInsulinReminderBottomSheet(
     reminderId: Int,
-    navigateToEditInsulinReminder: () -> Unit,
+    navigateToEditInsulinReminder: (Int) -> Unit,
     dismiss: () -> Unit,
     viewModel: InsulinReminderBottomSheetViewModel = hiltViewModel()
 ) {
@@ -43,7 +43,7 @@ fun EditRecordInsulinReminderBottomSheet(
                     dismiss()
                 }
                 BottomSheetMenuOption(icon = R.drawable.round_edit, title = "Edit") {
-                    navigateToEditInsulinReminder()
+                    navigateToEditInsulinReminder(reminderId)
                 }
                 if (reminder?.enabled!!) {
                     BottomSheetMenuOption(icon = R.drawable.round_notifications_off, title = "Turn off") {

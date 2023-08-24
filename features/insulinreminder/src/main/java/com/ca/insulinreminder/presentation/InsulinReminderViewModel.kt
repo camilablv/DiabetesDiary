@@ -56,8 +56,8 @@ class InsulinReminderViewModel @Inject constructor(
         _viewState.update { it.copy(selectedInsulin = insulin, insulinDropDownMenuExpanded = false) }
     }
 
-    fun setUnits(value: Int) {
-        _viewState.update { it.copy(units = value) }
+    fun setUnits(value: String) {
+        _viewState.update { it.copy(units = value.toInt()) }
     }
 
     fun incrementUnits() {
@@ -74,5 +74,20 @@ class InsulinReminderViewModel @Inject constructor(
 
     fun setIteration(iteration: ReminderIteration) {
         _viewState.update { it.copy(iteration = iteration) }
+    }
+
+    fun setupEditMode(reminderId: Int) {
+        viewModelScope.launch {
+            val reminder = reminderRepository.insulinReminderById(reminderId)
+            _viewState.update {
+                it.copy(
+                    editableReminder = reminder,
+                    selectedInsulin = reminder.insulin,
+                    units = reminder.dose,
+                    time = reminder.time,
+                    iteration = reminder.iteration
+                )
+            }
+        }
     }
 }

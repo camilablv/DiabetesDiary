@@ -129,7 +129,7 @@ fun MainNavHost(
             )
 
             editInsulinReminderBottomSheet(
-                navigateToEditInsulinReminder = { navHostController.navigateToInsulinReminder() },
+                navigateToEditInsulinReminder = { navHostController.navigateToInsulinReminder(it) },
                 dismiss = { navHostController.navigateBack() }
             )
 

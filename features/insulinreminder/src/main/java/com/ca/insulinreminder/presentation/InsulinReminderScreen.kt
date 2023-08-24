@@ -8,6 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,9 +25,14 @@ import com.ca.designsystem.theme.Theme
 
 @Composable
 fun InsulinReminderScreen(
+    reminderId: Int?,
     viewModel: InsulinReminderViewModel = hiltViewModel(),
     navigateBack: () -> Unit
 ) {
+
+    LaunchedEffect(reminderId != null) {
+        viewModel.setupEditMode(reminderId!!)
+    }
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
@@ -66,7 +72,7 @@ fun InsulinReminderScreen(
                     value = viewState.units,
                     increment = { viewModel.incrementUnits() },
                     decrement = { viewModel.decrementUnits() },
-                    onValueChanged = { viewModel.setUnits(it.toInt()) }
+                    onValueChanged = { viewModel.setUnits(it) }
                 )
             }
 
