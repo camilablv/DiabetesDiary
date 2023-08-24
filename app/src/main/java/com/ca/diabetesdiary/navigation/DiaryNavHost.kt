@@ -109,7 +109,8 @@ fun MainNavHost(
             )
 
             insulinReminderGraph(
-                navigateBack = { navHostController.navigateBack() }
+                navigateBack = { navHostController.navigateBack() },
+                navigateToSettings = { navHostController.navigate(MainRoute.Settings.route) }
             )
 
             glucoseReminderGraph(

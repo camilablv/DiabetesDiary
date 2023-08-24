@@ -16,7 +16,8 @@ fun NavController.navigateToInsulinReminder(reminderId: Int? = null) {
 }
 
 fun NavGraphBuilder.insulinReminderGraph(
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToSettings: () -> Unit
 ) {
     navigation(
         startDestination = "$insulinReminderRoute?$argumentName={$argumentName}",
@@ -26,10 +27,11 @@ fun NavGraphBuilder.insulinReminderGraph(
             route = "$insulinReminderRoute?$argumentName={$argumentName}",
             arguments = listOf(navArgument(argumentName) { nullable = true })
         ) {
-            val reminderId = it.arguments?.getString(argumentName)?.toInt()
+            val reminderId = it.arguments?.getString(argumentName)?.toIntOrNull()
             InsulinReminderScreen(
                 reminderId = reminderId,
-                navigateBack = navigateBack
+                navigateBack = navigateBack,
+                navigateToSettings = navigateToSettings
             )
         }
     }

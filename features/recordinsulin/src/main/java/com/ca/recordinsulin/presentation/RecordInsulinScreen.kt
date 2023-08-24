@@ -96,7 +96,7 @@ fun RecordInsulinScreen(
                 }
 
                 item {
-                    InsulinSelectionCard(
+                    InsulinDropDownMenu(
                         modifier = Modifier
                             .fillMaxWidth(),
                         expanded = viewState.insulinDropDownMenuExpanded,

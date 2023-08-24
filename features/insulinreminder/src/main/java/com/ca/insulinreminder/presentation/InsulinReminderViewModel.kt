@@ -53,7 +53,13 @@ class InsulinReminderViewModel @Inject constructor(
     }
 
     fun selectInsulin(insulin: Insulin) {
-        _viewState.update { it.copy(selectedInsulin = insulin, insulinDropDownMenuExpanded = false) }
+        _viewState.update {
+            it.copy(
+                selectedInsulin = insulin,
+                insulinDropDownMenuExpanded = false,
+                units = insulin.defaultDose
+            )
+        }
     }
 
     fun setUnits(value: String) {
