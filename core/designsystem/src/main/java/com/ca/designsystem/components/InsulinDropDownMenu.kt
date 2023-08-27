@@ -2,6 +2,7 @@ package com.ca.designsystem.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
@@ -61,34 +63,39 @@ fun InsulinDropDownMenu(
             )
         }
 
-        DropdownMenu(
-            modifier = Modifier,
-            expanded = expanded,
-            onDismissRequest = onDismiss
+        MaterialTheme(
+            shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(12.dp))
         ) {
-            options.forEach { 
-                DropdownMenuItem(
-                    modifier = Modifier,
-                    onClick = { onSelect(it) },
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically
+            DropdownMenu(
+                modifier = Modifier,
+                expanded = expanded,
+                onDismissRequest = onDismiss,
+                offset = DpOffset(0.dp, 4.dp)
+            ) {
+                options.forEach {
+                    DropdownMenuItem(
+                        modifier = Modifier,
+                        onClick = { onSelect(it) },
                     ) {
-                        Box(
+                        Row(
                             modifier = Modifier
-                                .size(36.dp)
-                                .background(colorFromHex(it.color), Theme.shapes.large)
-                                .aspectRatio(1f)
-                        )
-                        Text(
-                            modifier = Modifier
-                                .weight(7f)
-                                .padding(start = 8.dp),
-                            text = it.name,
-                            style = Theme.typography.bodyLarge
-                        )
+                                .fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .background(colorFromHex(it.color), Theme.shapes.large)
+                                    .aspectRatio(1f)
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .weight(7f)
+                                    .padding(start = 8.dp),
+                                text = it.name,
+                                style = Theme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
             }
