@@ -48,7 +48,7 @@ internal class AlarmSchedulerImpl @Inject constructor(
     }
 
     private fun schedule(reminderId: String, time: LocalTime) {
-        val exactTime = timeExactForAlarm(time)
+        val exactTime = timeExactForAlarm(time, INTERVAL_DAY)
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -81,5 +81,6 @@ internal class AlarmSchedulerImpl @Inject constructor(
     companion object {
         private const val INSULIN_REMINDER_ID_PREFIX = "insulin"
         private const val GLUCOSE_REMINDER_ID_PREFIX = "glucose"
+        private const val INTERVAL_DAY = 1
     }
 }

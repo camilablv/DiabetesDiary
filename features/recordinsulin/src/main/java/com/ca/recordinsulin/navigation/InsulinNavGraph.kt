@@ -13,7 +13,8 @@ fun NavController.navigateToRecordInsulin(recordId: String? = null) {
 }
 
 fun NavGraphBuilder.insulinGraph(
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToSettings: () -> Unit
 ) {
     navigation(
         startDestination = "$recordInsulinRoute?$argumentName={$argumentName}",
@@ -25,7 +26,8 @@ fun NavGraphBuilder.insulinGraph(
         ) {
             RecordInsulinScreen(
                 navArgument = it.arguments?.getString(argumentName),
-                onBackClick = { navigateBack() }
+                onBackClick = { navigateBack() },
+                navigateToSettings = { navigateToSettings() }
             )
         }
     }

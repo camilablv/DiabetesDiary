@@ -9,6 +9,7 @@ import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -26,9 +27,14 @@ class InsulinReminderViewModel @Inject constructor(
         get() = _viewState
 
     init {
-        runBlocking {
-            settingsRepository.insulins().let { insulins ->
-                _viewState.update { it.copy(insulins = insulins, selectedInsulin = insulins[0]) }
+        viewModelScope.launch {
+            settingsRepository.insulinsFlow().collect { insulins ->
+                _viewState.update {
+                    it.copy(
+                        insulins = insulins,
+                        selectedInsulin = insulins.getOrNull(0)
+                    )
+                }
             }
         }
     }
@@ -87,6 +93,7 @@ class InsulinReminderViewModel @Inject constructor(
             val reminder = reminderRepository.insulinReminderById(reminderId)
             _viewState.update {
                 it.copy(
+                    isInEditMode = true,
                     editableReminder = reminder,
                     selectedInsulin = reminder.insulin,
                     units = reminder.dose,

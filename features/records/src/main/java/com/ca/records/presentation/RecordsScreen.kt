@@ -25,7 +25,7 @@ fun RecordsScreen() {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 
-    Scaffold() { paddingValues ->
+    Scaffold { paddingValues ->
         RecordsPager(
             modifier = Modifier
                 .padding(paddingValues),

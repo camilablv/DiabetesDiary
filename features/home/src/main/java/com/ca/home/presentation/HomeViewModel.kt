@@ -61,7 +61,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun markInsulinReminderAsDone(reminder: RecordInsulinReminder) {

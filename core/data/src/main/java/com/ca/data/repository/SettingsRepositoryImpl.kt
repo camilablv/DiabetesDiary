@@ -75,6 +75,10 @@ class SettingsRepositoryImpl @Inject constructor(
         settingsDataStore.insulins()
     }
 
+    override suspend fun insulinsFlow(): Flow<List<Insulin>> {
+        return settingsDataStore.insulinsFlow()
+    }
+
     override suspend fun settings(): Flow<Settings> =
         settingsDataStore.settings().flowOn(Dispatchers.IO)
 

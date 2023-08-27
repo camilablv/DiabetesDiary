@@ -17,7 +17,7 @@ fun GlucoseUnitsSection(
     ) {
         GlucoseUnitsRadioButtons(
             modifier = Modifier,
-            defaultUnit = selectedUnits,
+            selectedOption = selectedUnits,
             onSelect = { onSelect(it) }
         )
     }

@@ -30,7 +30,8 @@ import com.ca.designsystem.theme.Theme
 fun RecordInsulinScreen(
     viewModel: RecordInsulinViewModel = hiltViewModel(),
     navArgument: String?,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    navigateToSettings: () -> Unit
 ) {
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -96,16 +97,20 @@ fun RecordInsulinScreen(
                 }
 
                 item {
-                    InsulinDropDownMenu(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        expanded = viewState.insulinDropDownMenuExpanded,
-                        onExpandedChange = { viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
-                        onSelect = { viewModel.selectInsulin(it) },
-                        onDismiss = { viewModel.setInsulinDropDownMenuExpanded(false) },
-                        selectedInsulin = viewState.selectedInsulin,
-                        options = viewState.insulins
-                    )
+                    if (viewState.insulins.isEmpty()) {
+                        AddInsulinButton { navigateToSettings() }
+                    } else {
+                        InsulinDropDownMenu(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            expanded = viewState.insulinDropDownMenuExpanded,
+                            onExpandedChange = { viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
+                            onSelect = { viewModel.selectInsulin(it) },
+                            onDismiss = { viewModel.setInsulinDropDownMenuExpanded(false) },
+                            selectedInsulin = viewState.selectedInsulin!!,
+                            options = viewState.insulins
+                        )
+                    }
                 }
 
                 item {

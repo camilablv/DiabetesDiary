@@ -11,6 +11,7 @@ interface SettingsDataStore {
     suspend fun deleteInsulin(id: String): List<Insulin>
     suspend fun updateInsulin(insulin: Insulin)
     suspend fun insulins(): List<Insulin>
+    suspend fun insulinsFlow(): Flow<List<Insulin>>
     suspend fun setDarkMode(darkMode: Boolean)
     suspend fun settings(): Flow<Settings>
     fun darkMode(): Flow<Boolean>

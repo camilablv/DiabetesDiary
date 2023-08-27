@@ -6,7 +6,9 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
@@ -24,42 +26,39 @@ fun InsulinDropDownMenu(
     selectedInsulin: Insulin?,
     options: List<Insulin>
 ) {
+    if (selectedInsulin == null) return
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth(),
         onClick = { onExpandedChange(true) },
-        shape = Theme.shapes.small,
+        shape = Theme.shapes.large,
         elevation = Theme.elevations.default
     ) {
-        if (selectedInsulin == null) {
-            Text(text = "Add Insulin")
-        } else {
-            Row(
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .background(colorFromHex(selectedInsulin.color), Theme.shapes.large)
-                        .aspectRatio(1f)
-                )
-                Text(
-                    modifier = Modifier
-                        .weight(7f)
-                        .padding(start = 8.dp),
-                    text = selectedInsulin.name,
-                    style = Theme.typography.bodyLarge
-                )
-                Icon(
-                    painter =
-                        if (expanded) painterResource(id = R.drawable.round_arrow_up)
-                        else painterResource(R.drawable.round_arrow_down),
-                    contentDescription = ""
-                )
-            }
-
+                    .size(36.dp)
+                    .background(colorFromHex(selectedInsulin.color), Theme.shapes.large)
+                    .aspectRatio(1f)
+            )
+            Text(
+                modifier = Modifier
+                    .weight(7f)
+                    .padding(start = 8.dp),
+                text = selectedInsulin.name,
+                style = Theme.typography.bodyLarge
+            )
+            Icon(
+                painter =
+                if (expanded) painterResource(id = R.drawable.round_arrow_up)
+                else painterResource(R.drawable.round_arrow_down),
+                contentDescription = ""
+            )
         }
 
         DropdownMenu(
@@ -94,5 +93,30 @@ fun InsulinDropDownMenu(
                 }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun AddInsulinButton(
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        onClick = onClick,
+        shape = Theme.shapes.large,
+        elevation = Theme.elevations.default
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp)
+                .wrapContentHeight(align = Alignment.CenterVertically),
+            text = "Add Insulin",
+            style = Theme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            color = Color.Gray,
+        )
     }
 }

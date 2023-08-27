@@ -26,7 +26,12 @@ class RecordInsulinViewModel @Inject constructor(
     init {
         runBlocking {
             repository.insulins().let { insulins ->
-                _viewState.update { it.copy(insulins = insulins, selectedInsulin = insulins[0]) }
+                _viewState.update {
+                    it.copy(
+                        insulins = insulins,
+                        selectedInsulin = insulins.getOrNull(0)
+                    )
+                }
             }
         }
     }

@@ -39,4 +39,18 @@ class GlucoseReminderViewModel @Inject constructor(
     fun setIteration(iteration: ReminderIteration) {
         _viewState.update { it.copy(iteration = iteration) }
     }
+
+    fun setupEditMode(reminderId: Int) {
+        viewModelScope.launch {
+            val reminder = reminderRepository.insulinReminderById(reminderId)
+            _viewState.update {
+                it.copy(
+                    isInEditMode = true,
+                    editableReminder = reminder,
+                    time = reminder.time,
+                    iteration = reminder.iteration
+                )
+            }
+        }
+    }
 }

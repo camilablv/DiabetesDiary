@@ -18,12 +18,14 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.components.AddInsulinButton
 import com.ca.designsystem.components.Counter
 import com.ca.designsystem.components.InsulinDropDownMenu
-import com.ca.designsystem.components.ReminderIterationOptions
+import com.ca.designsystem.components.Options
 import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
+import com.ca.domain.model.iterationOptions
 
 @Composable
 fun InsulinReminderScreen(
@@ -44,7 +46,7 @@ fun InsulinReminderScreen(
     Scaffold(
         topBar = {
             TopBar(
-                title = if (reminderId == null) "Add Reminder" else "Edit Reminder",
+                title = if (viewState.isInEditMode) "Edit Reminder" else "Add Reminder",
                 onBackClick = { navigateBack() }
             )
         }
@@ -67,17 +69,29 @@ fun InsulinReminderScreen(
                 verticalArrangement = Arrangement.spacedBy(18.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 item {
-                    val modifier = Modifier.clickable { if (viewState.insulins.isEmpty()) navigateToSettings() else viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) }
-                    InsulinDropDownMenu(
-                        modifier = modifier,
-                        expanded = viewState.insulinDropDownMenuExpanded,
-                        onExpandedChange = { viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
-                        onSelect = { viewModel.selectInsulin(it) },
-                        onDismiss = { viewModel.setInsulinDropDownMenuExpanded(false) },
-                        selectedInsulin = viewState.selectedInsulin,
-                        options = viewState.insulins
+                    TimeWheelPicker(
+                        modifier = Modifier,
+                        time = viewState.time,
+                        onSnappedTime = { viewModel.setTime(it) }
                     )
+                }
+                item {
+                    if (viewState.insulins.isEmpty()) {
+                        AddInsulinButton { navigateToSettings() }
+                    } else {
+                        InsulinDropDownMenu(
+                            modifier = Modifier
+                                .clickable { if (viewState.insulins.isEmpty()) navigateToSettings() },
+                            expanded = viewState.insulinDropDownMenuExpanded,
+                            onExpandedChange = { viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
+                            onSelect = { viewModel.selectInsulin(it) },
+                            onDismiss = { viewModel.setInsulinDropDownMenuExpanded(false) },
+                            selectedInsulin = viewState.selectedInsulin,
+                            options = viewState.insulins
+                        )
+                    }
                 }
 
                 item {
@@ -91,15 +105,9 @@ fun InsulinReminderScreen(
                 }
 
                 item {
-                    TimeWheelPicker(
+                    Options(
                         modifier = Modifier,
-                        time = viewState.time,
-                        onSnappedTime = { viewModel.setTime(it) }
-                    )
-                }
-
-                item {
-                    ReminderIterationOptions(
+                        options = iterationOptions,
                         selectedOption = viewState.iteration,
                         onSelect = { viewModel.setIteration(it) }
                     )
@@ -119,12 +127,11 @@ fun InsulinReminderScreen(
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = "Add Reminder",
+                    text = "Save",
                     color = Theme.colors.onSecondary
                 )
             }
         }
     }
-
-
 }
+

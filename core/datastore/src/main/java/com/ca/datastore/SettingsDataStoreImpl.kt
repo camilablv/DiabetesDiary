@@ -74,6 +74,10 @@ internal class SettingsDataStoreImpl @Inject constructor(
         return dataStore.data.first().insulins()
     }
 
+    override suspend fun insulinsFlow(): Flow<List<Insulin>> {
+        return dataStore.data.map { it.insulins() }
+    }
+
     override suspend fun setDarkMode(darkMode: Boolean) {
         dataStore.updateData {
             it.toBuilder()
