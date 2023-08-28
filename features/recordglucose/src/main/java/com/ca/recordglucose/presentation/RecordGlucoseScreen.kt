@@ -87,16 +87,14 @@ fun RecordGlucoseScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         DateCard(
-                            modifier = Modifier
-                                .width(120.dp)
-                                .clickable { viewModel.showDatePicker(true) },
-                            date = viewState.date.date()
+                            modifier = Modifier,
+                            date = viewState.date.date(),
+                            onClick = { viewModel.showDatePicker(true) }
                         )
                         TimeCard(
-                            modifier = Modifier
-                                .width(120.dp)
-                                .clickable { viewModel.showTimePicker(true) },
-                            time = viewState.time.timeOfHHmmPattern()
+                            modifier = Modifier,
+                            time = viewState.time.timeOfHHmmPattern(),
+                            onClick = { viewModel.showTimePicker(true) }
                         )
                     }
                 }

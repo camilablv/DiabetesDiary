@@ -8,8 +8,9 @@ import java.time.LocalTime
 
 interface RecordInsulinRepository {
     suspend fun insulins(): List<Insulin>
-    suspend fun recordInsulin(insulinId: String, note: String, date: LocalDate, time: LocalTime, dose: Int)
+    suspend fun createRecord(insulinId: String, note: String, date: LocalDate, time: LocalTime, dose: Int)
     suspend fun addRecord(record: InsulinRecord)
+    suspend fun updateRecord(record: InsulinRecord)
     suspend fun records(): Flow<List<InsulinRecord>>
     suspend fun recordsByDate(date: LocalDate): Flow<List<InsulinRecord>>
     suspend fun delete(record: InsulinRecord)

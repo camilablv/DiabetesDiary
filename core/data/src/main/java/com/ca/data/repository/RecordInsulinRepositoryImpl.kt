@@ -32,7 +32,7 @@ class RecordInsulinRepositoryImpl @Inject constructor(
         return dataStore.insulins()
     }
 
-    override suspend fun recordInsulin(
+    override suspend fun createRecord(
         insulinId: String,
         note: String,
         date: LocalDate,
@@ -52,6 +52,10 @@ class RecordInsulinRepositoryImpl @Inject constructor(
 
     override suspend fun addRecord(record: InsulinRecord) = withContext(ioDispatcher) {
         insulinRecordsDao.insert(record.asEntity())
+    }
+
+    override suspend fun updateRecord(record: InsulinRecord) = withContext(ioDispatcher) {
+        insulinRecordsDao.update(record.asEntity())
     }
 
     override suspend fun records(): Flow<List<InsulinRecord>> {

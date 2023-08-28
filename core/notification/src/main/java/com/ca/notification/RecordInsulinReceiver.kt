@@ -28,7 +28,7 @@ class RecordInsulinReceiver : BroadcastReceiver() {
 
             insulinId?.let {
                 scope.launch {
-                    repository.recordInsulin(insulinId, "", LocalDate.now(), LocalTime.now(), dose)
+                    repository.createRecord(insulinId, "", LocalDate.now(), LocalTime.now(), dose)
                 }
             }
         }

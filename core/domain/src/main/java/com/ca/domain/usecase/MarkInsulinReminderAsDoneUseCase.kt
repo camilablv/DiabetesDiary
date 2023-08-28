@@ -12,7 +12,7 @@ class MarkInsulinReminderAsDoneUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(reminder: RecordInsulinReminder) {
-        recordInsulinRepository.recordInsulin(
+        recordInsulinRepository.createRecord(
             reminder.insulinId,
             "",
             LocalDate.now(),
