@@ -10,6 +10,7 @@ import java.time.LocalDate
 fun DatePicker(
     expanded: Boolean,
     onDismiss: () -> Unit,
+    date: LocalDate,
     setDate: (LocalDate) -> Unit
 ) {
     if (!expanded) return
@@ -19,6 +20,6 @@ fun DatePicker(
             setDate(it)
             onDismiss()
         },
-        initialDate = LocalDate.now()
+        initialDate = date
     )
 }

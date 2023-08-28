@@ -28,18 +28,36 @@ class RecordGlucoseViewModel @Inject constructor(
         }
     }
 
+    fun updateRecord() {
+        with(_viewState.value) {
+            if (editableRecord == null) return
+            viewModelScope.launch {
+                repository.updateRecord(
+                    editableRecord.copy(
+                        level = glucoseLevel.toDouble(),
+                        time = time,
+                        date = date,
+                        note = note,
+                        measuringMark = measuringMark
+                    )
+                )
+            }
+        }
+    }
+
     private fun addRecord(time: LocalTime, date: LocalDate, note: String?, mark: MeasuringMark, glucoseLevel: Int) {
         viewModelScope.launch {
-            repository.recordGlucose(time, date, note, mark.name, glucoseLevel)
+            repository.createRecord(time, date, note, mark.name, glucoseLevel)
         }
     }
 
     fun setNote(text: String) {
+        if (text.count() > 140) return
         _viewState.update { it.copy(note = text) }
     }
 
-    fun setGlucoseLevel(value: Int) {
-        _viewState.update { it.copy(glucoseLevel = value) }
+    fun setGlucoseLevel(value: String) {
+        _viewState.update { it.copy(glucoseLevel = value.toInt()) }
     }
 
     fun incrementGlucoseLevel() {
@@ -68,5 +86,22 @@ class RecordGlucoseViewModel @Inject constructor(
 
     fun setMeasuringMark(mark: MeasuringMark) {
         _viewState.update { it.copy(measuringMark = mark) }
+    }
+
+    fun setupEditMode(recordId: String) {
+        viewModelScope.launch {
+        val record = repository.recordById(recordId)
+            _viewState.update {
+                it.copy(
+                    isInEditMode = true,
+                    editableRecord = record,
+                    glucoseLevel = record.level.toInt(),
+                    time = record.time,
+                    date = record.date,
+                    note = record.note ?: "",
+                    measuringMark = record.measuringMark
+                )
+            }
+        }
     }
 }

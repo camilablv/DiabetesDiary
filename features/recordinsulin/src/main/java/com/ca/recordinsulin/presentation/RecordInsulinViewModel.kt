@@ -68,6 +68,7 @@ class RecordInsulinViewModel @Inject constructor(
     }
 
     fun setNote(text: String) {
+        if (text.count() > 140) return
         _viewState.update { it.copy(note = text) }
     }
 

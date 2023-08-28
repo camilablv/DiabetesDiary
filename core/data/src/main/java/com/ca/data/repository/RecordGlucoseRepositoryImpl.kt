@@ -25,7 +25,7 @@ class RecordGlucoseRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RecordGlucoseRepository {
 
-    override suspend fun recordGlucose(
+    override suspend fun createRecord(
         time: LocalTime,
         date: LocalDate,
         note: String?,
@@ -45,6 +45,10 @@ class RecordGlucoseRepositoryImpl @Inject constructor(
 
     override suspend fun addRecord(record: GlucoseRecord) = withContext(ioDispatcher) {
         glucoseRecordsDao.insert(record.asEntity())
+    }
+
+    override suspend fun updateRecord(record: GlucoseRecord) = withContext(ioDispatcher) {
+        glucoseRecordsDao.update(record.asEntity())
     }
 
     override suspend fun records(): Flow<List<GlucoseRecord>> {

@@ -99,12 +99,14 @@ fun RecordInsulinScreen(
         TimePicker(
             expanded = viewState.showTimePicker,
             onDismiss = { showTimePicker(false) },
+            time = viewState.time,
             setTime = { setTime(it) }
         )
 
         DatePicker(
             expanded = viewState.showDatePicker,
             onDismiss = { showDatePicker(false) },
+            date = viewState.date,
             setDate = { setDate(it) }
         )
 
