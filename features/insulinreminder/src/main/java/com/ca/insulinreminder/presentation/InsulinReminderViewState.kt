@@ -11,7 +11,7 @@ data class RecordsInsulinReminderViewState(
     val insulins: List<Insulin> = listOf(),
     val units: Int = selectedInsulin?.defaultDose ?: 0,
     val time: LocalTime = LocalTime.now(),
-    val iteration: ReminderIteration = ReminderIteration.ONCE,
+    val iteration: ReminderIteration = ReminderIteration.DAILY,
     val insulinDropDownMenuExpanded: Boolean = false,
     val isInEditMode: Boolean = editableReminder != null
 )

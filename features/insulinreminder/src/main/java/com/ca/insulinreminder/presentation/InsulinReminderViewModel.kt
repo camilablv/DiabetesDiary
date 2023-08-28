@@ -9,10 +9,8 @@ import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -27,12 +25,18 @@ class InsulinReminderViewModel @Inject constructor(
         get() = _viewState
 
     init {
+        insulins()
+    }
+
+    private fun insulins() {
         viewModelScope.launch {
             settingsRepository.insulinsFlow().collect { insulins ->
                 _viewState.update {
+                    val selectedInsulin = insulins.getOrNull(0)
                     it.copy(
                         insulins = insulins,
-                        selectedInsulin = insulins.getOrNull(0)
+                        selectedInsulin = selectedInsulin,
+                        units = selectedInsulin?.defaultDose ?: 0
                     )
                 }
             }
@@ -69,6 +73,7 @@ class InsulinReminderViewModel @Inject constructor(
     }
 
     fun setUnits(value: String) {
+        if (value.isEmpty()) return
         _viewState.update { it.copy(units = value.toInt()) }
     }
 
@@ -91,11 +96,11 @@ class InsulinReminderViewModel @Inject constructor(
     fun setupEditMode(reminderId: Int) {
         viewModelScope.launch {
             val reminder = reminderRepository.insulinReminderById(reminderId)
-            _viewState.update {
-                it.copy(
+            _viewState.update { state ->
+                state.copy(
                     isInEditMode = true,
                     editableReminder = reminder,
-                    selectedInsulin = reminder.insulin,
+                    selectedInsulin = _viewState.value.insulins.find { it.id == reminder.insulinId },
                     units = reminder.dose,
                     time = reminder.time,
                     iteration = reminder.iteration
