@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.ca.insulinreminder.presentation.InsulinReminderScreen
+import com.ca.insulinreminder.presentation.InsulinReminderRoute
 
 private const val insulinReminderGraphRoute = "insulin_reminder_graph"
 private const val insulinReminderRoute = "insulin_reminder"
@@ -28,7 +28,7 @@ fun NavGraphBuilder.insulinReminderGraph(
             arguments = listOf(navArgument(argumentName) { nullable = true })
         ) {
             val reminderId = it.arguments?.getString(argumentName)?.toIntOrNull()
-            InsulinReminderScreen(
+            InsulinReminderRoute(
                 reminderId = reminderId,
                 navigateBack = navigateBack,
                 navigateToSettings = navigateToSettings

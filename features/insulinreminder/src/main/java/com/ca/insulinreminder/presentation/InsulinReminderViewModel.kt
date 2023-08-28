@@ -58,6 +58,23 @@ class InsulinReminderViewModel @Inject constructor(
         }
     }
 
+    fun updateReminder() {
+        with(_viewState.value) {
+            if (editableReminder == null) return
+            viewModelScope.launch {
+                reminderRepository.updateInsulinReminder(
+                    editableReminder.copy(
+                        time = time,
+                        iteration = iteration,
+                        insulinId = selectedInsulin?.id!!,
+                        dose = units,
+                        insulin = selectedInsulin
+                    )
+                )
+            }
+        }
+    }
+
     fun setInsulinDropDownMenuExpanded(expanded: Boolean) {
         _viewState.update { it.copy(insulinDropDownMenuExpanded = expanded) }
     }

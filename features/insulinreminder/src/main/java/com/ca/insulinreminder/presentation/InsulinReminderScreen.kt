@@ -25,10 +25,13 @@ import com.ca.designsystem.components.Options
 import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
+import com.ca.domain.model.Insulin
+import com.ca.domain.model.ReminderIteration
 import com.ca.domain.model.iterationOptions
+import java.time.LocalTime
 
 @Composable
-fun InsulinReminderScreen(
+fun InsulinReminderRoute(
     reminderId: Int?,
     viewModel: InsulinReminderViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
@@ -41,12 +44,45 @@ fun InsulinReminderScreen(
     }
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+
+    InsulinReminderScreen(
+        topBarTitle = if (viewState.isInEditMode) "Edit Reminder" else "Add Reminder",
+        navigateBack = navigateBack,
+        navigateToSettings = navigateToSettings,
+        viewState = viewState,
+        setTime = viewModel::setTime,
+        setInsulinDropDownMenuExpanded = viewModel::setInsulinDropDownMenuExpanded,
+        selectInsulin = viewModel::selectInsulin,
+        incrementUnits = viewModel::incrementUnits,
+        decrementUnits = viewModel::decrementUnits,
+        setUnits = viewModel::setUnits,
+        setIteration = viewModel::setIteration,
+        submit = if (viewState.isInEditMode) viewModel::updateReminder else viewModel::addReminder
+    )
+}
+
+@Composable
+fun InsulinReminderScreen(
+    topBarTitle: String,
+    navigateBack: () -> Unit,
+    navigateToSettings: () ->Unit,
+    viewState: RecordsInsulinReminderViewState,
+    setTime: (LocalTime) -> Unit,
+    setInsulinDropDownMenuExpanded: (Boolean) -> Unit,
+    selectInsulin: (Insulin) -> Unit,
+    incrementUnits: () -> Unit,
+    decrementUnits: () -> Unit,
+    setUnits: (String) -> Unit,
+    setIteration: (ReminderIteration) -> Unit,
+    submit: () -> Unit
+) {
+
     val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
             TopBar(
-                title = if (viewState.isInEditMode) "Edit Reminder" else "Add Reminder",
+                title = topBarTitle,
                 onBackClick = { navigateBack() }
             )
         }
@@ -74,7 +110,7 @@ fun InsulinReminderScreen(
                     TimeWheelPicker(
                         modifier = Modifier,
                         time = viewState.time,
-                        onSnappedTime = { viewModel.setTime(it) }
+                        onSnappedTime = { setTime(it) }
                     )
                 }
                 item {
@@ -85,9 +121,9 @@ fun InsulinReminderScreen(
                             modifier = Modifier
                                 .clickable { if (viewState.insulins.isEmpty()) navigateToSettings() },
                             expanded = viewState.insulinDropDownMenuExpanded,
-                            onExpandedChange = { viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
-                            onSelect = { viewModel.selectInsulin(it) },
-                            onDismiss = { viewModel.setInsulinDropDownMenuExpanded(false) },
+                            onExpandedChange = { setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
+                            onSelect = { selectInsulin(it) },
+                            onDismiss = { setInsulinDropDownMenuExpanded(false) },
                             selectedInsulin = viewState.selectedInsulin,
                             options = viewState.insulins
                         )
@@ -98,9 +134,9 @@ fun InsulinReminderScreen(
                     Counter(
                         modifier = Modifier,
                         value = viewState.units,
-                        increment = { viewModel.incrementUnits() },
-                        decrement = { viewModel.decrementUnits() },
-                        onValueChanged = { viewModel.setUnits(it) }
+                        increment = { incrementUnits() },
+                        decrement = { decrementUnits() },
+                        onValueChanged = { setUnits(it) }
                     )
                 }
 
@@ -109,14 +145,14 @@ fun InsulinReminderScreen(
                         modifier = Modifier,
                         options = iterationOptions,
                         selectedOption = viewState.iteration,
-                        onSelect = { viewModel.setIteration(it) }
+                        onSelect = { setIteration(it) }
                     )
                 }
             }
 
             Button(
                 onClick = {
-                    viewModel.addReminder()
+                    submit()
                     navigateBack()
                 },
                 colors = ButtonDefaults.buttonColors(
