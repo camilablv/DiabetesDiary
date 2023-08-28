@@ -32,6 +32,20 @@ class GlucoseReminderViewModel @Inject constructor(
         }
     }
 
+    fun updateReminder() {
+        with(_viewState.value) {
+            if (editableReminder == null) return
+            viewModelScope.launch {
+                reminderRepository.updateGlucoseReminder(
+                    editableReminder.copy(
+                        time = time,
+                        iteration = iteration
+                    )
+                )
+            }
+        }
+    }
+
     fun setTime(time: LocalTime) {
         _viewState.update { it.copy(time = time) }
     }
@@ -42,7 +56,7 @@ class GlucoseReminderViewModel @Inject constructor(
 
     fun setupEditMode(reminderId: Int) {
         viewModelScope.launch {
-            val reminder = reminderRepository.insulinReminderById(reminderId)
+            val reminder = reminderRepository.glucoseReminderById(reminderId)
             _viewState.update {
                 it.copy(
                     isInEditMode = true,

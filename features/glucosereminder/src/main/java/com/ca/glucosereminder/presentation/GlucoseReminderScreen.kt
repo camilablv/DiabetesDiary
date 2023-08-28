@@ -21,9 +21,11 @@ import com.ca.designsystem.components.ReminderIterationOptions
 import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
+import com.ca.domain.model.ReminderIteration
+import java.time.LocalTime
 
 @Composable
-fun GlucoseReminderScreen(
+fun GlucoseReminderRoute(
     reminderId: Int?,
     navigateBack: () -> Unit,
     viewModel: GlucoseReminderViewModel = hiltViewModel()
@@ -35,10 +37,29 @@ fun GlucoseReminderScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
+    GlucoseReminderScreen(
+        topBarTitle = if (viewState.isInEditMode) "Edit Reminder" else "Add Reminder",
+        navigateBack = navigateBack,
+        viewState = viewState,
+        setTime = viewModel::setTime,
+        setIteration = viewModel::setIteration,
+        submit = if (viewState.isInEditMode) viewModel::addReminder else viewModel::updateReminder
+    )
+}
+
+@Composable
+fun GlucoseReminderScreen(
+    topBarTitle: String,
+    navigateBack: () -> Unit,
+    viewState: GlucoseReminderViewState,
+    setTime: (LocalTime) -> Unit,
+    setIteration: (ReminderIteration) -> Unit,
+    submit: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopBar(
-                title = if (viewState.isInEditMode) "Edit Reminder" else "Add Reminder",
+                title = topBarTitle,
                 onBackClick = { navigateBack() }
             )
         }
@@ -67,21 +88,21 @@ fun GlucoseReminderScreen(
                     TimeWheelPicker(
                         modifier = Modifier,
                         time = viewState.time,
-                        onSnappedTime = { viewModel.setTime(it) }
+                        onSnappedTime = { setTime(it) }
                     )
                 }
 
                 item {
                     ReminderIterationOptions(
                         selectedOption = viewState.iteration,
-                        onSelect = { viewModel.setIteration(it) }
+                        onSelect = { setIteration(it) }
                     )
                 }
             }
 
             Button(
                 onClick = {
-                    viewModel.addReminder()
+                    submit()
                     navigateBack()
                 },
                 colors = ButtonDefaults.buttonColors(

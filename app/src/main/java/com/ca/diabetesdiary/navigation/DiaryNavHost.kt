@@ -141,7 +141,7 @@ fun MainNavHost(
             )
 
             editGlucoseReminderBottomSheet(
-                navigateToEditGlucoseReminder = { navHostController.navigateToGlucoseReminder() },
+                navigateToEditGlucoseReminder = { navHostController.navigateToGlucoseReminder(it) },
                 dismiss = { navHostController.navigateBack() }
             )
         }
