@@ -5,10 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -22,8 +19,7 @@ import com.ca.common.utils.date
 import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.components.*
 import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCards
-import com.ca.designsystem.components.pickers.DatePicker
-import com.ca.designsystem.components.pickers.TimePicker
+import com.ca.designsystem.components.pickers.*
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
 import com.ca.domain.model.MeasuringMark
@@ -92,14 +88,14 @@ fun RecordGlucoseScreen(
         }
     ) { paddingValues ->
 
-        TimePicker(
+        Material3TimePicker(
             expanded = viewState.showTimePicker,
             onDismiss = { showTimePicker(false) },
             time = viewState.time,
             setTime = { setTime(it) }
         )
 
-        DatePicker(
+        Material3DatePicker(
             expanded = viewState.showDatePicker,
             onDismiss = { showDatePicker(false) },
             date = viewState.date,
