@@ -1,12 +1,15 @@
 package com.ca.designsystem.components
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +32,9 @@ fun InsulinDropDownMenu(
     options: List<Insulin>
 ) {
     if (selectedInsulin == null) return
+
+    val animatedFloat by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
+
     Card(
         modifier = modifier
             .fillMaxWidth(),
@@ -56,9 +62,9 @@ fun InsulinDropDownMenu(
                 style = Theme.typography.bodyLarge
             )
             Icon(
-                painter =
-                if (expanded) painterResource(id = R.drawable.round_arrow_up)
-                else painterResource(R.drawable.round_arrow_down),
+                modifier = Modifier
+                    .rotate(animatedFloat),
+                painter = painterResource(R.drawable.round_arrow_down),
                 contentDescription = ""
             )
         }
