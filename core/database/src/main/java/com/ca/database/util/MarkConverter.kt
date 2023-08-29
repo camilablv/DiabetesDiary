@@ -1,7 +1,7 @@
 package com.ca.database.util
 
 import androidx.room.TypeConverter
-import com.ca.model.MeasuringMark
+import com.ca.domain.model.MeasuringMark
 
 class MarkConverter {
     @TypeConverter

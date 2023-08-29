@@ -95,7 +95,8 @@ fun MainNavHost(
             )
 
             insulinGraph(
-                navigateBack = { navHostController.navigateBack() }
+                navigateBack = { navHostController.navigateBack() },
+                navigateToSettings = { navHostController.navigate(MainRoute.Settings.route) }
             )
 
             authNavGraph(
@@ -109,7 +110,8 @@ fun MainNavHost(
             )
 
             insulinReminderGraph(
-                navigateBack = { navHostController.navigateBack() }
+                navigateBack = { navHostController.navigateBack() },
+                navigateToSettings = { navHostController.navigate(MainRoute.Settings.route) }
             )
 
             glucoseReminderGraph(
@@ -129,7 +131,7 @@ fun MainNavHost(
             )
 
             editInsulinReminderBottomSheet(
-                navigateToEditInsulinReminder = { navHostController.navigateToInsulinReminder() },
+                navigateToEditInsulinReminder = { navHostController.navigateToInsulinReminder(it) },
                 dismiss = { navHostController.navigateBack() }
             )
 
@@ -139,7 +141,7 @@ fun MainNavHost(
             )
 
             editGlucoseReminderBottomSheet(
-                navigateToEditGlucoseReminder = { navHostController.navigateToGlucoseReminder() },
+                navigateToEditGlucoseReminder = { navHostController.navigateToGlucoseReminder(it) },
                 dismiss = { navHostController.navigateBack() }
             )
         }

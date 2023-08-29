@@ -3,7 +3,7 @@ package com.ca.diabetesdiary.di
 import android.app.Activity
 import android.content.Context
 import com.ca.diabetesdiary.presentation.MainActivity
-import com.ca.notification.NotificationManager
+import com.ca.notification.DiaryNotificationManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ class MainModule {
     fun provideNotificationManager(
         @ApplicationContext context: Context,
         activityClass: Class<out Activity>
-    ): NotificationManager {
-        return NotificationManager(context, activityClass)
+    ): DiaryNotificationManager {
+        return DiaryNotificationManager(context, activityClass)
     }
 }

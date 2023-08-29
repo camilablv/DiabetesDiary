@@ -2,18 +2,23 @@ package com.ca.recordinsulin.navigation
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.ca.recordinsulin.presentation.RecordInsulinScreen
+import com.ca.recordinsulin.presentation.RecordInsulinRoute
 
 private const val recordInsulinGraphRoute = "insulin_graph"
 private const val recordInsulinRoute = "record_insulin"
 private const val argumentName = "recordId"
 
 fun NavController.navigateToRecordInsulin(recordId: String? = null) {
-    navigate("$recordInsulinRoute?$argumentName=$recordId")
+    var route = recordInsulinRoute
+    recordId?.let {
+        route = route.plus("?$argumentName=$it")
+    }
+    navigate(route)
 }
 
 fun NavGraphBuilder.insulinGraph(
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToSettings: () -> Unit
 ) {
     navigation(
         startDestination = "$recordInsulinRoute?$argumentName={$argumentName}",
@@ -23,9 +28,11 @@ fun NavGraphBuilder.insulinGraph(
             route = "$recordInsulinRoute?$argumentName={$argumentName}",
             arguments = listOf(navArgument(argumentName) { nullable = true })
         ) {
-            RecordInsulinScreen(
-                navArgument = it.arguments?.getString(argumentName),
-                onBackClick = { navigateBack() }
+            val recordId = it.arguments?.getString(argumentName)
+            RecordInsulinRoute(
+                recordId = recordId,
+                onBackClick = { navigateBack() },
+                navigateToSettings = { navigateToSettings() }
             )
         }
     }

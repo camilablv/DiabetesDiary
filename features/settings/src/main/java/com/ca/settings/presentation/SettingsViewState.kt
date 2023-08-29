@@ -1,7 +1,8 @@
 package com.ca.settings.presentation
 
-import com.ca.model.GlucoseUnits
-import com.ca.model.Insulin
+import com.ca.domain.model.GlucoseUnits
+import com.ca.domain.model.Insulin
+
 
 data class SettingsViewState(
     val glucoseUnits: GlucoseUnits = GlucoseUnits.MMOL_PER_L,

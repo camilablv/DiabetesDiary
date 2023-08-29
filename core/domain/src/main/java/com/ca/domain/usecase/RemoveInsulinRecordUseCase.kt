@@ -1,7 +1,7 @@
 package com.ca.domain.usecase
 
+import com.ca.domain.model.InsulinRecord
 import com.ca.domain.repository.RecordInsulinRepository
-import com.ca.model.InsulinRecord
 import javax.inject.Inject
 
 class RemoveInsulinRecordUseCase @Inject constructor(

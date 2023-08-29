@@ -58,7 +58,6 @@ dependencies {
     implementation project(":core:network")
     implementation project(":core:schema")
     implementation project(':core:alarmscheduler')
-    implementation project(':core:model')
     compileOnly project(':core:notification')
     compileOnly project(':core:domain')
     implementation project(":features:home")

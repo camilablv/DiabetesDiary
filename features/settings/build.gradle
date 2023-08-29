@@ -45,7 +45,6 @@ dependencies {
     implementation project(":core:schema")
     implementation project(':core:domain')
     implementation project(':core:data')
-    implementation project(':core:model')
 
     // Android X
     implementation androidxDependencies.coreKtx

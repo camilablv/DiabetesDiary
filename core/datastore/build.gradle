@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation project(':core:model')
+    implementation project(':core:domain')
 
     // DataStore
     implementation androidxDependencies.dataStore

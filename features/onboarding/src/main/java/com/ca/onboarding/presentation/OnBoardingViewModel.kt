@@ -2,10 +2,10 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.model.GlucoseUnits
 import com.ca.domain.usecase.AddInsulinUseCase
 import com.ca.domain.usecase.DeleteInsulinUseCase
 import com.ca.domain.usecase.UpdateGlucoseUnitUseCase
-import com.ca.model.GlucoseUnits
 import com.ca.onboarding.domain.repository.OnBoardingRepository
 import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

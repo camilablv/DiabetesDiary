@@ -2,7 +2,7 @@ package com.ca.recordinsulin.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.model.Insulin
+import com.ca.domain.model.Insulin
 import com.ca.domain.repository.RecordInsulinRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,7 +26,12 @@ class RecordInsulinViewModel @Inject constructor(
     init {
         runBlocking {
             repository.insulins().let { insulins ->
-                _viewState.update { it.copy(insulins = insulins, selectedInsulin = insulins[0]) }
+                _viewState.update {
+                    it.copy(
+                        insulins = insulins,
+                        selectedInsulin = insulins.getOrNull(0)
+                    )
+                }
             }
         }
     }
@@ -34,6 +39,23 @@ class RecordInsulinViewModel @Inject constructor(
     fun addRecord() {
         with(viewState.value) {
             addRecord(selectedInsulin?.id!!, note, date, time, units)
+        }
+    }
+
+    fun updateRecord() {
+        with(_viewState.value) {
+            if (editableInsulinRecord == null) return
+            viewModelScope.launch {
+                repository.updateRecord(
+                    editableInsulinRecord.copy(
+                        insulin = selectedInsulin!!,
+                        time = time,
+                        date = date,
+                        units = units.toDouble(),
+                        note = note
+                    )
+                )
+            }
         }
     }
 
@@ -46,11 +68,12 @@ class RecordInsulinViewModel @Inject constructor(
     }
 
     fun setNote(text: String) {
+        if (text.count() > 140) return
         _viewState.update { it.copy(note = text) }
     }
 
-    fun setUnits(value: Int) {
-        _viewState.update { it.copy(units = value) }
+    fun setUnits(value: String) {
+        _viewState.update { it.copy(units = value.toInt()) }
     }
 
     fun incrementUnits() {
@@ -79,7 +102,24 @@ class RecordInsulinViewModel @Inject constructor(
 
     private fun addRecord(insulinId: String, note: String, date: LocalDate, time: LocalTime, units: Int) {
         viewModelScope.launch {
-            repository.recordInsulin(insulinId, note, date, time, units)
+            repository.createRecord(insulinId, note, date, time, units)
+        }
+    }
+
+    fun setupEditMode(recordId: String) {
+        viewModelScope.launch {
+            val record = repository.recordById(recordId)
+            _viewState.update {
+                it.copy(
+                    isInEditMode = true,
+                    editableInsulinRecord = record,
+                    units = record.units.toInt(),
+                    time = record.time,
+                    date = record.date,
+                    selectedInsulin = record.insulin,
+                    note = record.note ?: ""
+                )
+            }
         }
     }
 }

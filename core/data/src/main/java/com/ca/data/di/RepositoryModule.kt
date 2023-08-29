@@ -16,7 +16,7 @@ internal interface RepositoryModule {
     fun bindSettingsRepository(settingsRepositoryImpl: SettingsRepositoryImpl): SettingsRepository
 
     @Binds
-    fun bindInsulinReminderRepository(repositoryImpl: InsulinReminderRepositoryImpl): RemindersRepository
+    fun bindInsulinReminderRepository(repositoryImpl: RemindersRepositoryImpl): RemindersRepository
 
     @Binds
     fun bindRecordInsulinRepository(recordInsulinRepository: RecordInsulinRepositoryImpl): RecordInsulinRepository

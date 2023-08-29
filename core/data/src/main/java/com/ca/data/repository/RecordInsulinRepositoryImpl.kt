@@ -5,9 +5,9 @@ import com.ca.database.dao.InsulinRecordsDao
 import com.ca.database.model.asEntity
 import com.ca.database.model.asExternalModel
 import com.ca.datastore.SettingsDataStore
+import com.ca.domain.model.Insulin
+import com.ca.domain.model.InsulinRecord
 import com.ca.domain.repository.RecordInsulinRepository
-import com.ca.model.Insulin
-import com.ca.model.InsulinRecord
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.record
 import kotlinx.coroutines.CoroutineDispatcher
@@ -32,7 +32,7 @@ class RecordInsulinRepositoryImpl @Inject constructor(
         return dataStore.insulins()
     }
 
-    override suspend fun recordInsulin(
+    override suspend fun createRecord(
         insulinId: String,
         note: String,
         date: LocalDate,
@@ -52,6 +52,10 @@ class RecordInsulinRepositoryImpl @Inject constructor(
 
     override suspend fun addRecord(record: InsulinRecord) = withContext(ioDispatcher) {
         insulinRecordsDao.insert(record.asEntity())
+    }
+
+    override suspend fun updateRecord(record: InsulinRecord) = withContext(ioDispatcher) {
+        insulinRecordsDao.update(record.asEntity())
     }
 
     override suspend fun records(): Flow<List<InsulinRecord>> {

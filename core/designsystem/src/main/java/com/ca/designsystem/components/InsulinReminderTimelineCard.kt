@@ -1,6 +1,5 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -14,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
-import com.ca.model.RecordInsulinReminder
+import com.ca.domain.model.RecordInsulinReminder
 
 @Composable
 fun InsulinReminderTimelineCard(
@@ -39,7 +38,8 @@ fun InsulinReminderTimelineCard(
         )
 
         ReminderCard(
-            backgroundColor = Theme.colors.background
+            backgroundColor = Theme.colors.background,
+            onClick = onClick
         ) {
             Column(
                 modifier = Modifier

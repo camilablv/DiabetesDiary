@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,9 +14,10 @@ import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCard
 import com.ca.designsystem.theme.Theme
-import com.ca.model.GlucoseRecord
+import com.ca.domain.model.GlucoseRecord
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun GlucoseRecordTimelineCard(
     record: GlucoseRecord,
@@ -38,6 +40,7 @@ fun GlucoseRecordTimelineCard(
         )
 
         Card(
+            onClick = onClick,
             modifier = Modifier,
             shape = Theme.shapes.large,
             elevation = Theme.elevations.default,

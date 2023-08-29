@@ -1,7 +1,7 @@
 package com.ca.database.util
 
 import androidx.room.TypeConverter
-import com.ca.model.ReminderIteration
+import com.ca.domain.model.ReminderIteration
 
 class ReminderIterationConverter {
     @TypeConverter

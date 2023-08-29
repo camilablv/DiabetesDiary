@@ -2,7 +2,7 @@ package com.ca.network.api
 
 import com.apollographql.apollo3.ApolloClient
 import com.ca.*
-import com.ca.model.GlucoseUnits
+import com.ca.domain.model.GlucoseUnits
 import com.ca.network.error.NetworkErrorHandler
 import com.ca.type.BloodGlucoseUnits
 import com.ca.type.GlucoseRecordStatus

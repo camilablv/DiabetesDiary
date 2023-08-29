@@ -1,7 +1,7 @@
 package com.ca.network.utils
 
 import com.ca.*
-import com.ca.model.*
+import com.ca.domain.model.*
 import java.time.LocalDateTime
 
 fun CreateInsulinMutation.Data.insulin(): Insulin {

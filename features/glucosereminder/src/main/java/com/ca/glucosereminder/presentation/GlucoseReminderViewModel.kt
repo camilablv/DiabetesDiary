@@ -2,8 +2,8 @@ package com.ca.glucosereminder.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ca.domain.model.ReminderIteration
 import com.ca.domain.repository.RemindersRepository
-import com.ca.model.ReminderIteration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,11 +32,39 @@ class GlucoseReminderViewModel @Inject constructor(
         }
     }
 
+    fun updateReminder() {
+        with(_viewState.value) {
+            if (editableReminder == null) return
+            viewModelScope.launch {
+                reminderRepository.updateGlucoseReminder(
+                    editableReminder.copy(
+                        time = time,
+                        iteration = iteration
+                    )
+                )
+            }
+        }
+    }
+
     fun setTime(time: LocalTime) {
         _viewState.update { it.copy(time = time) }
     }
 
     fun setIteration(iteration: ReminderIteration) {
         _viewState.update { it.copy(iteration = iteration) }
+    }
+
+    fun setupEditMode(reminderId: Int) {
+        viewModelScope.launch {
+            val reminder = reminderRepository.glucoseReminderById(reminderId)
+            _viewState.update {
+                it.copy(
+                    isInEditMode = true,
+                    editableReminder = reminder,
+                    time = reminder.time,
+                    iteration = reminder.iteration
+                )
+            }
+        }
     }
 }

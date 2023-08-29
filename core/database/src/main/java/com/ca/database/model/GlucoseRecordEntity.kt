@@ -2,8 +2,8 @@ package com.ca.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ca.model.GlucoseRecord
-import com.ca.model.MeasuringMark
+import com.ca.domain.model.GlucoseRecord
+import com.ca.domain.model.MeasuringMark
 import java.time.LocalDate
 import java.time.LocalTime
 

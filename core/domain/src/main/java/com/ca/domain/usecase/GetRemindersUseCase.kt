@@ -1,7 +1,7 @@
 package com.ca.domain.usecase
 
+import com.ca.domain.model.ListItem
 import com.ca.domain.repository.RemindersRepository
-import com.ca.model.ListItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
