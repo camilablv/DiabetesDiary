@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinCard
 import com.ca.designsystem.theme.Theme
 import com.ca.domain.model.Insulin
-import com.ca.onboarding.presentation.components.AddInsulinButton
+import com.ca.onboarding.presentation.components.AddInsulinLayout
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -65,6 +65,6 @@ fun AddInsulinPage(
                 }
             )
         }
-        AddInsulinButton(add = { name, color, dose ->  addInsulin(name, color, dose) })
+        AddInsulinLayout(add = { name, color, dose ->  addInsulin(name, color, dose) })
     }
 }

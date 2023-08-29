@@ -1,66 +1,61 @@
 package com.ca.onboarding.presentation.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
-import com.ca.designsystem.utils.toHex
-import com.ca.designsystem.components.ColorPickerButton
 import com.ca.designsystem.components.Counter
+import com.ca.designsystem.components.DiaryTextField
+import com.ca.designsystem.components.pickers.DiaryColorPicker
+import com.ca.designsystem.utils.toHex
 import com.vanpra.composematerialdialogs.color.ColorPalette
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 
 @Composable
-fun AddInsulinButton(
+fun AddInsulinLayout(
     add: (name: String, color: String, dose: Int) -> Unit
 ) {
     var insulinName by remember { mutableStateOf("") }
     var defaultDosage by remember { mutableStateOf(0) }
     var insulinColor by remember { mutableStateOf(ColorPalette.Primary[12]) }
-    val dialogState = rememberMaterialDialogState()
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    Box(
+        modifier = Modifier,
+        contentAlignment = Alignment.Center
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        Column(
+            modifier = Modifier
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            ColorPickerButton(
-                color = insulinColor,
-                modifier = Modifier
-                    .size(48.dp),
+            DiaryTextField(
+                value = insulinName,
+                onValueChange = {
+                    insulinName = it
+                },
+                modifier = Modifier,
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                placeholder = { Text(text = "Type insulin name..") },
+                onDoneAction = {
+
+                }
+            )
+
+            DiaryColorPicker(
+                selectedColor = insulinColor,
                 select = {
                     insulinColor = it
                 }
             )
 
-            OutlinedTextField(
-                value = insulinName,
-                onValueChange = {
-                    insulinName = it
-                },
-                modifier = Modifier
-                    .height(48.dp)
-                    .background(Color.White, CircleShape),
-                shape = CircleShape
-            )
-
-
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
             Counter(
                 value = defaultDosage,
                 increment = { defaultDosage++ },
