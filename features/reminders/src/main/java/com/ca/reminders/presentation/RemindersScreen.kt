@@ -19,9 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.ReminderFloatingActionButton
 import com.ca.designsystem.components.Tabs
-import com.ca.model.ListItem
-import com.ca.model.RecordGlucoseReminder
-import com.ca.model.RecordInsulinReminder
+import com.ca.domain.model.ListItem
+import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordInsulinReminder
 import com.ca.reminders.presentation.pages.GlucoseRemindersPage
 import com.ca.reminders.presentation.pages.InsulinRemindersPage
 import com.ca.reminders.presentation.pages.RemindersPage

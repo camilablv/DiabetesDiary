@@ -1,6 +1,5 @@
 package com.ca.designsystem.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -13,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
-import com.ca.model.RecordGlucoseReminder
+import com.ca.domain.model.RecordGlucoseReminder
 
 @Composable
 fun GlucoseReminderTimelineCard(
@@ -38,7 +37,8 @@ fun GlucoseReminderTimelineCard(
         )
 
         ReminderCard(
-            backgroundColor = Theme.colors.background
+            backgroundColor = Theme.colors.background,
+            onClick = onClick
         ) {
             Column(
                 modifier = Modifier

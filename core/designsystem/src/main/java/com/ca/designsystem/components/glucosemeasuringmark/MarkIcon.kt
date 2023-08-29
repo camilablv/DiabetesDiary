@@ -3,7 +3,7 @@ package com.ca.designsystem.components.glucosemeasuringmark
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import com.ca.designsystem.theme.*
-import com.ca.model.MeasuringMark
+import com.ca.domain.model.MeasuringMark
 
 sealed class MarkIcon(val mark: MeasuringMark, val backgroundColor: Color, @DrawableRes val icon: Int) {
     object General : MarkIcon(MeasuringMark.GENERAL, Grey100, com.ca.designsystem.R.drawable.person)

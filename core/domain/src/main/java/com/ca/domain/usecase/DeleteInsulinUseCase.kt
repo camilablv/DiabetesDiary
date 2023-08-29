@@ -1,6 +1,6 @@
 package com.ca.domain.usecase
 
-import com.ca.model.Insulin
+import com.ca.domain.model.Insulin
 import com.ca.domain.repository.SettingsRepository
 import javax.inject.Inject
 

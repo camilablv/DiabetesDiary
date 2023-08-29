@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,35 +25,89 @@ import com.ca.designsystem.components.pickers.DatePicker
 import com.ca.designsystem.components.pickers.TimePicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
+import com.ca.domain.model.Insulin
+import java.time.LocalDate
+import java.time.LocalTime
+
+@Composable
+fun RecordInsulinRoute(
+    viewModel: RecordInsulinViewModel = hiltViewModel(),
+    recordId: String?,
+    onBackClick: () -> Unit,
+    navigateToSettings: () -> Unit
+) {
+    LaunchedEffect(Unit) {
+        if (recordId == null) return@LaunchedEffect
+        viewModel.setupEditMode(recordId)
+    }
+
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+
+    RecordInsulinScreen(
+        topBarTitle = if (viewState.isInEditMode) "Edit Record" else "Add Record",
+        onBackClick = onBackClick,
+        navigateToSettings = navigateToSettings,
+        viewState = viewState,
+        showTimePicker = viewModel::showTimePicker,
+        setTime = viewModel::setTime,
+        showDatePicker = viewModel::showDatePicker,
+        setDate = viewModel::setDate,
+        setInsulinDropDownMenuExpanded = viewModel::setInsulinDropDownMenuExpanded,
+        selectInsulin = viewModel::selectInsulin,
+        incrementUnits = viewModel::incrementUnits,
+        decrementUnits = viewModel::decrementUnits,
+        setUnits = viewModel::setUnits,
+        setNote = viewModel::setNote,
+        submit = if (viewState.isInEditMode) viewModel::updateRecord else viewModel::addRecord
+    )
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RecordInsulinScreen(
-    viewModel: RecordInsulinViewModel = hiltViewModel(),
-    navArgument: String?,
-    onBackClick: () -> Unit
+    topBarTitle: String,
+    onBackClick: () -> Unit,
+    navigateToSettings: () -> Unit,
+    viewState: RecordInsulinViewState,
+    showTimePicker: (Boolean) -> Unit,
+    setTime: (LocalTime) -> Unit,
+    showDatePicker: (Boolean) -> Unit,
+    setDate: (LocalDate) -> Unit,
+    setInsulinDropDownMenuExpanded: (Boolean) -> Unit,
+    selectInsulin: (Insulin) -> Unit,
+    incrementUnits: () -> Unit,
+    decrementUnits: () -> Unit,
+    setUnits: (String) -> Unit,
+    setNote: (String) -> Unit,
+    submit: () -> Unit
 ) {
 
-    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopBar(title = "Record Insulin", onBackClick = onBackClick) }
+        topBar = {
+            TopBar(
+                title = topBarTitle,
+                onBackClick = onBackClick
+            )
+        }
     ) { paddingValues ->
 
         TimePicker(
             expanded = viewState.showTimePicker,
-            onDismiss = { viewModel.showTimePicker(false) },
-            setTime = { viewModel.setTime(it) }
+            onDismiss = { showTimePicker(false) },
+            time = viewState.time,
+            setTime = { setTime(it) }
         )
 
         DatePicker(
             expanded = viewState.showDatePicker,
-            onDismiss = { viewModel.showDatePicker(false) },
-            setDate = { viewModel.setDate(it) }
+            onDismiss = { showDatePicker(false) },
+            date = viewState.date,
+            setDate = { setDate(it) }
         )
 
         Column(
@@ -81,52 +136,54 @@ fun RecordInsulinScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         DateCard(
-                            modifier = Modifier
-                                .width(120.dp)
-                                .clickable { viewModel.showDatePicker(true) },
-                            date = viewState.date.date()
+                            modifier = Modifier,
+                            date = viewState.date.date(),
+                            onClick = { showDatePicker(true) }
                         )
                         TimeCard(
-                            modifier = Modifier
-                                .width(120.dp)
-                                .clickable { viewModel.showTimePicker(true) },
-                            time = viewState.time.timeOfHHmmPattern()
+                            modifier = Modifier,
+                            time = viewState.time.timeOfHHmmPattern(),
+                            onClick = { showTimePicker(true) }
                         )
                     }
                 }
 
                 item {
-                    InsulinSelectionCard(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        expanded = viewState.insulinDropDownMenuExpanded,
-                        onExpandedChange = { viewModel.setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
-                        onSelect = { viewModel.selectInsulin(it) },
-                        onDismiss = { viewModel.setInsulinDropDownMenuExpanded(false) },
-                        selectedInsulin = viewState.selectedInsulin,
-                        options = viewState.insulins
-                    )
+                    if (viewState.insulins.isEmpty()) {
+                        AddInsulinButton { navigateToSettings() }
+                    } else {
+                        InsulinDropDownMenu(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            expanded = viewState.insulinDropDownMenuExpanded,
+                            onExpandedChange = { setInsulinDropDownMenuExpanded(!viewState.insulinDropDownMenuExpanded) },
+                            onSelect = { selectInsulin(it) },
+                            onDismiss = { setInsulinDropDownMenuExpanded(false) },
+                            selectedInsulin = viewState.selectedInsulin!!,
+                            options = viewState.insulins
+                        )
+                    }
                 }
 
                 item {
                     Counter(
                         modifier = Modifier,
                         value = viewState.units,
-                        increment = { viewModel.incrementUnits() },
-                        decrement = { viewModel.decrementUnits() },
-                        onValueChanged = { viewModel.setUnits(it.toInt()) }
+                        increment = { incrementUnits() },
+                        decrement = { decrementUnits() },
+                        onValueChanged = { setUnits(it) }
                     )
                 }
 
                 item {
                     NoteTextField(
                         value = viewState.note,
-                        onValueChange = { viewModel.setNote(it) },
+                        onValueChange = { setNote(it) },
                         modifier = Modifier,
                         expanded = viewState.noteTextFieldExpanded,
                         placeholder = { Text(text = "Type note..", color = Color.Gray) },
                         onDoneAction = {
-                            viewModel.setNote(it)
+                            setNote(it)
                             keyboardController?.hide()
                             focusManager.clearFocus(true)
                         },
@@ -138,19 +195,19 @@ fun RecordInsulinScreen(
 
             Button(
                 onClick = {
-                    viewModel.addRecord()
+                    submit()
                     onBackClick()
                 },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Theme.colors.primary
+                    backgroundColor = Theme.colors.secondary
                 ),
                 shape = Theme.shapes.large,
                 modifier = Modifier
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = "Add Record",
-                    color = Theme.colors.onPrimary
+                    text = "Save",
+                    color = Theme.colors.onSecondary
                 )
             }
         }

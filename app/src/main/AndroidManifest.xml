@@ -23,7 +23,6 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.DiabetesDiary"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -32,17 +31,22 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.ca.alarmmanager.AlarmReceiver"/>
+        <receiver android:name="com.ca.alarmmanager.receivers.AlarmReceiver"/>
         
-        <receiver android:name="com.ca.alarmmanager.BootCompletedReceiver"
-            android:enabled="false"
+        <receiver android:name="com.ca.alarmmanager.receivers.BootCompletedReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.ca.notification.RecordInsulinBroadcastReceiver"/>
-    </application>
+        <receiver android:name="com.ca.alarmmanager.receivers.TimeChangedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET"/>
+            </intent-filter>
+        </receiver>
 
+        <receiver android:name="com.ca.notification.RecordInsulinReceiver"/>
+    </application>
 </manifest>

@@ -10,6 +10,7 @@ import java.time.LocalTime
 fun TimePicker(
     expanded: Boolean,
     onDismiss: () -> Unit,
+    time: LocalTime,
     setTime: (LocalTime) -> Unit
 ) {
     if (!expanded) return
@@ -19,6 +20,6 @@ fun TimePicker(
             setTime(it)
             onDismiss()
         },
-        initialTime = LocalTime.now()
+        initialTime = time
     )
 }

@@ -1,7 +1,8 @@
 package com.ca.onboarding.presentation
 
-import com.ca.model.GlucoseUnits
-import com.ca.model.Insulin
+import com.ca.domain.model.GlucoseUnits
+import com.ca.domain.model.Insulin
+
 
 data class OnBoardingViewState(
     val units: GlucoseUnits = GlucoseUnits.MMOL_PER_L,

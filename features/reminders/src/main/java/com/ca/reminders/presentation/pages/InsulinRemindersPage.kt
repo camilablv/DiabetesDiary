@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinReminderCard
-import com.ca.model.RecordInsulinReminder
+import com.ca.domain.model.RecordInsulinReminder
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

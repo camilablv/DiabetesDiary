@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinCard
 import com.ca.designsystem.theme.Theme
-import com.ca.model.Insulin
+import com.ca.domain.model.Insulin
 import com.ca.onboarding.presentation.components.AddInsulinButton
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -56,7 +56,8 @@ fun AddInsulinPage(
                     ) {
                         InsulinCard(
                             modifier = Modifier,
-                            insulin = insulins[index]
+                            insulin = insulins[index],
+                            onClick = {}
                         )
                     }
 

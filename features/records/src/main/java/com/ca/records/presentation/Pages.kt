@@ -1,6 +1,7 @@
 package com.ca.records.presentation
 
-import com.ca.model.Page
+import com.ca.domain.model.Page
+
 
 sealed class RecordsPage(override val text: String) : Page {
     object InsulinRecords : RecordsPage("Insulin")

@@ -1,15 +1,11 @@
 package com.ca.recordglucose.presentation
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -23,43 +19,87 @@ import com.ca.common.utils.date
 import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.components.*
 import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCards
-import com.ca.designsystem.components.pickers.DatePicker
-import com.ca.designsystem.components.pickers.TimePicker
+import com.ca.designsystem.components.pickers.*
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
+import com.ca.domain.model.MeasuringMark
+import java.time.LocalDate
+import java.time.LocalTime
+
+@Composable
+fun RecordGlucoseRoute(
+    viewModel: RecordGlucoseViewModel = hiltViewModel(),
+    recordId: String?,
+    onBackClick: () -> Unit
+) {
+
+    LaunchedEffect(Unit) {
+        if (recordId == null) return@LaunchedEffect
+        viewModel.setupEditMode(recordId)
+    }
+
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+
+    RecordGlucoseScreen(
+        topBarTitle = if (viewState.isInEditMode) "Edit Record" else "Add Record",
+        onBackClick = onBackClick,
+        viewState = viewState,
+        showTimePicker = viewModel::showTimePicker,
+        setTime = viewModel::setTime,
+        showDatePicker = viewModel::showDatePicker,
+        setDate = viewModel::setDate,
+        setMeasuringMark = viewModel::setMeasuringMark,
+        incrementGlucoseLevel = viewModel::incrementGlucoseLevel,
+        decrementGlucoseLevel = viewModel::decrementGlucoseLevel,
+        setGlucoseLevel = viewModel::setGlucoseLevel,
+        setNote = viewModel::setNote,
+        submit = if (viewState.isInEditMode) viewModel::updateRecord else viewModel::addRecord
+    )
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RecordGlucoseScreen(
-    viewModel: RecordGlucoseViewModel = hiltViewModel(),
-    navArgument: String?,
-    onBackClick: () -> Unit
+    topBarTitle: String,
+    onBackClick: () -> Unit,
+    viewState: RecordGlucoseViewState,
+    showTimePicker: (Boolean) -> Unit,
+    setTime: (LocalTime) -> Unit,
+    showDatePicker: (Boolean) -> Unit,
+    setDate: (LocalDate) -> Unit,
+    setMeasuringMark: (MeasuringMark) -> Unit,
+    incrementGlucoseLevel: () -> Unit,
+    decrementGlucoseLevel: () -> Unit,
+    setGlucoseLevel: (String) -> Unit,
+    setNote: (String) -> Unit,
+    submit: () -> Unit
 ) {
-
-    LaunchedEffect(true) {
-        Log.d("NavArgument", navArgument.toString())
-    }
-
-    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopBar(title = "Record Glucose", onBackClick = onBackClick) }
+        topBar = {
+            TopBar(
+                title = topBarTitle,
+                onBackClick = onBackClick
+            )
+        }
     ) { paddingValues ->
 
-        TimePicker(
+        Material3TimePicker(
             expanded = viewState.showTimePicker,
-            onDismiss = { viewModel.showTimePicker(false) },
-            setTime = { viewModel.setTime(it) }
+            onDismiss = { showTimePicker(false) },
+            time = viewState.time,
+            setTime = { setTime(it) }
         )
 
-        DatePicker(
+        Material3DatePicker(
             expanded = viewState.showDatePicker,
-            onDismiss = { viewModel.showDatePicker(false) },
-            setDate = { viewModel.setDate(it) }
+            onDismiss = { showDatePicker(false) },
+            date = viewState.date,
+            setDate = { setDate(it) }
         )
 
         Column(
@@ -87,16 +127,14 @@ fun RecordGlucoseScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         DateCard(
-                            modifier = Modifier
-                                .width(120.dp)
-                                .clickable { viewModel.showDatePicker(true) },
-                            date = viewState.date.date()
+                            modifier = Modifier,
+                            date = viewState.date.date(),
+                            onClick = { showDatePicker(true) }
                         )
                         TimeCard(
-                            modifier = Modifier
-                                .width(120.dp)
-                                .clickable { viewModel.showTimePicker(true) },
-                            time = viewState.time.timeOfHHmmPattern()
+                            modifier = Modifier,
+                            time = viewState.time.timeOfHHmmPattern(),
+                            onClick = { showTimePicker(true) }
                         )
                     }
                 }
@@ -105,21 +143,21 @@ fun RecordGlucoseScreen(
                     Counter(
                         modifier = Modifier,
                         value = viewState.glucoseLevel,
-                        increment = { viewModel.incrementGlucoseLevel() },
-                        decrement = { viewModel.decrementGlucoseLevel() },
-                        onValueChanged = { viewModel.setGlucoseLevel(it.toInt()) }
+                        increment = { incrementGlucoseLevel() },
+                        decrement = { decrementGlucoseLevel() },
+                        onValueChanged = { setGlucoseLevel(it) }
                     )
                 }
 
                 item {
                     NoteTextField(
                         value = viewState.note,
-                        onValueChange = { viewModel.setNote(it) },
+                        onValueChange = { setNote(it) },
                         modifier = Modifier,
                         expanded = viewState.noteTextFieldExpanded,
                         placeholder = { Text(text = "Type note..", color = Color.Gray) },
                         onDoneAction = {
-                            viewModel.setNote(it)
+                            setNote(it)
                             keyboardController?.hide()
                             focusManager.clearFocus(true)
                         },
@@ -131,14 +169,14 @@ fun RecordGlucoseScreen(
                 item {
                     MeasuringMarkCards(
                         selectedMark = viewState.measuringMark,
-                        onSelect = { viewModel.setMeasuringMark(it) }
+                        onSelect = { setMeasuringMark(it) }
                     )
                 }
             }
 
             Button(
                 onClick = {
-                    viewModel.addRecord()
+                    submit()
                     onBackClick()
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -149,10 +187,10 @@ fun RecordGlucoseScreen(
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = "Add Record",
+                    text = "Save",
                     color = Theme.colors.onSecondary
                 )
             }
         }
     }
-} 
+}

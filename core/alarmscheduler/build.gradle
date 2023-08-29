@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation project(':core:notification')
-    implementation project(':core:model')
+    implementation project(":core:domain")
 
     // Android X
     implementation androidxDependencies.coreKtx
