@@ -1,5 +1,6 @@
 package com.ca.onboarding.presentation
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.theme.*
 import com.ca.onboarding.presentation.onboardingpages.*
 import kotlinx.coroutines.launch
@@ -29,8 +31,7 @@ fun OnBoardingScreen(
     navigateToHome: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    val pagerState = rememberPagerState()
-
+    val pagerState = rememberPagerState(initialPage = 1)
 
     Scaffold { paddingValues ->
         OnBoardingPager(
@@ -60,7 +61,7 @@ fun OnBoardingPager(
 
     Column(
         modifier = modifier
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -85,10 +86,14 @@ fun OnBoardingPager(
                 Page.AddInsulin -> {
                     AddInsulinPage(
                         viewState.insulins,
-                        addInsulin = { name, color, dose ->
-                            viewModel.addInsulin(name, color, dose)
-                        },
-                        deleteInsulin = { viewModel.deleteInsulin(it) }
+                        revealedInsulin = viewState.revealedInsulin,
+                        setRevealedInsulin = viewModel::setRevealedInsulin,
+                        addInsulin = { viewModel.showEditInsulinDialog(true) },
+                        deleteInsulin = { viewModel.deleteInsulin(it) },
+                        editInsulin = {
+                            viewModel.showEditInsulinDialog(true)
+                            viewModel.setRevealedInsulin(it)
+                        }
                     )
                 }
                 Page.GlucoseUnits -> {
@@ -116,7 +121,9 @@ fun OnBoardingPager(
             state = pagerState,
             modifier = Modifier
                 .weight(1f)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp),
             toHome = {
                 viewModel.completeOnBoarding()
                 toHome()
@@ -128,6 +135,13 @@ fun OnBoardingPager(
             }
         )
     }
+
+    EditInsulinDialog(
+        show = viewState.showEditInsulinDialog,
+        edit = { id, name, color, dose -> viewModel.editInsulin(id, name, color, dose) },
+        onDismiss = { viewModel.showEditInsulinDialog(false) },
+        editableInsulin = viewState.revealedInsulin
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -170,24 +184,31 @@ fun PagerIndicator(
     modifier: Modifier
 ) {
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
             .padding(top = 20.dp)
     ) {
         repeat(size) {
-            Indicator(selected = it <= currentPage)
+            Indicator(
+                selected = it <= currentPage,
+                currentPage = it == currentPage
+            )
         }
     }
 }
 
 @Composable
-fun Indicator(selected: Boolean) {
+fun Indicator(
+    selected: Boolean,
+    currentPage: Boolean
+) {
+    val animatedWidth by animateDpAsState(targetValue = if (currentPage) 24.dp else 8.dp)
+
     Box(
         modifier = Modifier
-            .width(64.dp)
-            .padding(4.dp)
+            .width(animatedWidth)
             .height(8.dp)
             .clip(CircleShape)
-            .background(if (selected) Purple200 else Color.Gray.copy(0.5f))
+            .background(Color.Gray.copy(alpha = 0.3f))
     )
 }

@@ -17,7 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.dialog.DiaryAlertDialog
 import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.components.settings.GlucoseUnitsSection
-import com.ca.designsystem.components.settings.InsulinSection
+import com.ca.designsystem.components.settings.InsulinsSection
 import com.ca.designsystem.components.settings.LanguageSection
 import com.ca.designsystem.components.settings.ThemeSection
 import com.ca.designsystem.components.topbar.TopBar
@@ -66,7 +66,7 @@ fun SettingsScreen(
             }
 
             item {
-                InsulinSection(
+                InsulinsSection(
                     modifier = Modifier,
                     insulins = viewState.insulins,
                     revealedInsulin = viewState.revealedInsulin,

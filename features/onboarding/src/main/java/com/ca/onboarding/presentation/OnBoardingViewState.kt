@@ -6,5 +6,7 @@ import com.ca.domain.model.Insulin
 
 data class OnBoardingViewState(
     val units: GlucoseUnits = GlucoseUnits.MMOL_PER_L,
-    val insulins: List<Insulin> = listOf()
+    val insulins: List<Insulin> = listOf(),
+    val showEditInsulinDialog: Boolean = false,
+    val revealedInsulin: Insulin? = null
 )
