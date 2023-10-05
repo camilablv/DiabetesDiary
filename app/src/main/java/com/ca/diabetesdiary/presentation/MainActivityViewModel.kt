@@ -32,7 +32,7 @@ class MainActivityViewModel @Inject constructor(
             else if (!isOnBoardingShowed) MainRoute.OnBoarding.route
             else MainRoute.Home.route
 
-            _viewState.update { it.copy(startDestination = MainRoute.OnBoarding.route) }
+            _viewState.update { it.copy(startDestination = startDestination) }
         }
     }
 

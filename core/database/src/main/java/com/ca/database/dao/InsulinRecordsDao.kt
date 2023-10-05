@@ -9,10 +9,10 @@ import java.time.LocalDate
 @Dao
 interface InsulinRecordsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(record: InsulinRecordEntity)
+    fun insert(record: InsulinRecordEntity)
 
     @Delete
-    suspend fun delete(record: InsulinRecordEntity)
+    fun delete(record: InsulinRecordEntity)
 
     @Query("SELECT * FROM $insulinRecordsTableName")
     fun insulinRecords(): Flow<List<InsulinRecordEntity>>

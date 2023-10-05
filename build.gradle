@@ -1,25 +1,25 @@
 buildscript {
     ext {
-        kotlinVersion = "1.8.0"
-        composeVersion = '1.4.3'
-        composeCompilerVersion = '1.4.0'
+        kotlinVersion = "1.9.10"
+        composeVersion = '1.5.3'
+        composeCompilerVersion = '1.5.3'
         apolloVersion = "3.6.2"
-        hiltVersion = "2.44"
+        hiltVersion = "2.48"
         composeNavigationVersion = "2.5.3"
         lifecycleVersion = "2.5.0"
-        pagingVersion = "3.1.1"
+        pagingVersion = "3.2.1"
         roomVersion = "2.5.2"
-        accompanistVersion = "0.30.1"
+        accompanistVersion = "0.32.0"
 
         gradleDependencies = [
-                compileSdk: 33,
-                targetSdk : 33,
+                compileSdk: 34,
+                targetSdk : 34,
                 minSdk    : 28
         ]
         androidxDependencies = [
                 coreKtx          : "androidx.core:core-ktx:1.10.1",
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
-                viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0",
+                viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
                 dataStore        : "androidx.datastore:datastore:1.0.0",
                 splashScreen     : "androidx.core:core-splashscreen:1.0.0",
                 paging           : "androidx.paging:paging-runtime:$pagingVersion"
@@ -37,7 +37,7 @@ buildscript {
                 navigation       : "androidx.navigation:navigation-compose:$composeNavigationVersion",
                 constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1",
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.0",
-                material3        : "androidx.compose.material3:material3:1.1.0",
+                material3        : "androidx.compose.material3:material3:1.1.2",
                 paging           : "androidx.paging:paging-compose:3.2.0-rc01"
         ]
         hiltDependencies = [
@@ -59,7 +59,7 @@ buildscript {
                 navigationMaterial: "com.google.accompanist:accompanist-navigation-material:$accompanistVersion"
         ]
         protobufDependencies = [
-                protobuf: "com.google.protobuf:protobuf-javalite:3.18.0"
+                protobuf: "com.google.protobuf:protobuf-javalite:3.24.3"
         ]
         playServicesDependencies = [
                 auth: "com.google.android.gms:play-services-auth:20.5.0"
@@ -80,15 +80,16 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.8'
+        classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
     }
 }
 
 plugins {
-    id 'com.android.application' version '7.4.1' apply false
-    id 'com.android.library' version '7.4.1' apply false
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
-    id 'com.google.dagger.hilt.android' version '2.44' apply false
-    id 'org.jetbrains.kotlin.jvm' version '1.8.0' apply false
+    id 'com.google.dagger.hilt.android' version '2.48' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.9.10' apply false
+    id "com.google.protobuf" version "0.9.4" apply false
 }

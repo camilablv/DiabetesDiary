@@ -31,7 +31,10 @@ fun OnBoardingScreen(
     navigateToHome: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    val pagerState = rememberPagerState(initialPage = 1)
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount = { pages.size }
+    )
 
     Scaffold { paddingValues ->
         OnBoardingPager(
@@ -73,7 +76,6 @@ fun OnBoardingPager(
         )
 
         HorizontalPager(
-            pageCount = pages.size,
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
@@ -153,7 +155,8 @@ fun PagerButtons(
     onNext: () -> Unit
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -163,16 +166,24 @@ fun PagerButtons(
             Text(text = "Skip")
         }
 
-        IconButton(
-            onClick = if (state.canScrollForward) onNext else toHome
-        ) {
-            Icon(
-                painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),
-                contentDescription = "",
-                tint = Theme.colors.secondary,
+        if (state.canScrollForward) {
+            IconButton(
                 modifier = Modifier
-                    .size(64.dp)
-            )
+                    .size(64.dp),
+                onClick = onNext
+            ) {
+                Icon(
+                    painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),
+                    contentDescription = "",
+                    tint = Theme.colors.secondary,
+                    modifier = Modifier
+//                        .size(64.dp)
+                )
+            }
+        } else {
+            Button(onClick = toHome) {
+                Text(text = "Get Started")
+            }
         }
     }
 }
@@ -186,7 +197,6 @@ fun PagerIndicator(
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
-            .padding(top = 20.dp)
     ) {
         repeat(size) {
             Indicator(

@@ -16,7 +16,6 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 fun DiaryApp(
     viewModel: MainActivityViewModel
 ) {
-
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val appState = rememberDiaryAppState()
 
