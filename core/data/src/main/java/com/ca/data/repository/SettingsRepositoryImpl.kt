@@ -65,7 +65,7 @@ class SettingsRepositoryImpl @Inject constructor(
         //todo add delayed sending to the server if there is no internet
         return withContext(ioDispatcher) {
             networkClient.deleteInsulin(id).fold(
-                onSuccess = {settingsDataStore.deleteInsulin(id) },
+                onSuccess = { settingsDataStore.deleteInsulin(id) },
                 onFailure = {}
             )
         }

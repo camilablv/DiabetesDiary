@@ -31,7 +31,10 @@ fun SingleRowCalendar(
     selectedDay: LocalDate,
     onSelectedDayChange: (LocalDate) -> Unit = {}
 ) {
-    val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE)
+    val pagerState = rememberPagerState(
+        initialPage = Int.MAX_VALUE,
+        pageCount = { Int.MAX_VALUE }
+    )
     val scope = rememberCoroutineScope()
     val visibleDate = remember { mutableStateOf(LocalDate.now()) }
 

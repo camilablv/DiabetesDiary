@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 interface InsulinReminderDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(reminder: RecordInsulinReminderEntity): Long
+    fun insert(reminder: RecordInsulinReminderEntity): Long
 
     @Delete
-    suspend fun delete(reminder: RecordInsulinReminderEntity)
+    fun delete(reminder: RecordInsulinReminderEntity)
 
     @Query("SELECT * FROM $insulinRemindersTableName")
     fun insulinReminders(): Flow<List<RecordInsulinReminderEntity>>
@@ -27,5 +27,5 @@ interface InsulinReminderDao {
     fun insulinRemindersByInsulinId(insulinId: String): List<RecordInsulinReminderEntity>
 
     @Query("SELECT * FROM $insulinRemindersTableName WHERE id == :id")
-    suspend fun insulinReminderById(id: Int): RecordInsulinReminderEntity
+    fun insulinReminderById(id: Int): RecordInsulinReminderEntity
 }

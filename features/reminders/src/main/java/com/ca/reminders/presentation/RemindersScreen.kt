@@ -41,7 +41,7 @@ fun RemindersScreen(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { pages.size })
 
     Scaffold(
         floatingActionButton = {
@@ -101,7 +101,6 @@ private fun RemindersPager(
 
         HorizontalPager(
             state = pagerState,
-            pageCount = pages.size,
             beyondBoundsPageCount = pages.size
         ) { page ->
             when(pages[page]) {
