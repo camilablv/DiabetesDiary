@@ -1,5 +1,6 @@
 package com.ca.diabetesdiary.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -37,7 +38,7 @@ fun NavController.navigateBack() {
     popBackStack()
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun MainNavHost(
     navHostController: NavHostController,

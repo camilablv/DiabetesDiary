@@ -27,6 +27,6 @@ fun InsulinRecordsPage(
             records[it]?.let { record ->
                 InsulinRecordCard(record = record)
             }
-        }
+        } 
     }
 }

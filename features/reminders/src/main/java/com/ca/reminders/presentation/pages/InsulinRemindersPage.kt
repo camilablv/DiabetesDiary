@@ -19,6 +19,10 @@ fun InsulinRemindersPage(
     onEnabledChange: (RecordInsulinReminder, Boolean) -> Unit,
     onClick: (RecordInsulinReminder) -> Unit
 ) {
+    if(reminders.isEmpty()) {
+        EmptyReminderScreen(modifier = Modifier)
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),

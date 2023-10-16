@@ -43,7 +43,7 @@ fun GlucoseReminderRoute(
         viewState = viewState,
         setTime = viewModel::setTime,
         setIteration = viewModel::setIteration,
-        submit = if (viewState.isInEditMode) viewModel::addReminder else viewModel::updateReminder
+        submit = if (viewState.isInEditMode) viewModel::updateReminder else viewModel::addReminder
     )
 }
 
