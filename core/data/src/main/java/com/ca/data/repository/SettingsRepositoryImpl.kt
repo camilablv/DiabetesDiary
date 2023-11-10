@@ -4,9 +4,9 @@ import android.util.Log
 import com.ca.data.di.IoDispatcher
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.Settings
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
+import com.ca.model.Settings
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.insulin
 import com.ca.network.utils.unit

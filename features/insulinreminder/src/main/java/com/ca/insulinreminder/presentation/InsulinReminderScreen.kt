@@ -25,9 +25,9 @@ import com.ca.designsystem.components.Options
 import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.ReminderIteration
-import com.ca.domain.model.iterationOptions
+import com.ca.model.Insulin
+import com.ca.model.ReminderIteration
+import com.ca.model.iterationOptions
 import java.time.LocalTime
 
 @Composable

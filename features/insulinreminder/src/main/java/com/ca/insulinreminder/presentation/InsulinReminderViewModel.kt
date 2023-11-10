@@ -2,8 +2,8 @@ package com.ca.insulinreminder.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.Insulin
+import com.ca.model.ReminderIteration
 import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

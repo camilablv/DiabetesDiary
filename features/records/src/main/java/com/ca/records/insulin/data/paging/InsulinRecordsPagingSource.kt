@@ -2,7 +2,7 @@ package com.ca.records.insulin.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.InsulinRecord
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.records
 

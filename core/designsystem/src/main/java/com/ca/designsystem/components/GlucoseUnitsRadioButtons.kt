@@ -2,7 +2,7 @@ package com.ca.designsystem.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ca.domain.model.GlucoseUnits
+import com.ca.model.GlucoseUnits
 
 @Composable
 fun GlucoseUnitsRadioButtons(

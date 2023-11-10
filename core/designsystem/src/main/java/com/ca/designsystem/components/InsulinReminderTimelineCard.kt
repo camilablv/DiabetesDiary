@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
-import com.ca.domain.model.RecordInsulinReminder
+import com.ca.model.RecordInsulinReminder
 
 @Composable
 fun InsulinReminderTimelineCard(

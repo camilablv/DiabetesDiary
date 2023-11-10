@@ -1,9 +1,9 @@
 package com.ca.datastore
 
 import androidx.datastore.core.DataStore
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.Settings
+import com.ca.model.GlucoseUnits
+import com.ca.model.Settings
+import com.ca.model.Insulin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

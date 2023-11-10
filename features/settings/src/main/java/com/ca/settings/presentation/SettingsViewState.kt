@@ -1,7 +1,7 @@
 package com.ca.settings.presentation
 
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
 
 
 data class SettingsViewState(

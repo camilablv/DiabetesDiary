@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.InsulinList
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.Insulin
+import com.ca.model.Insulin
 
 @Composable
 fun AddInsulinPage(

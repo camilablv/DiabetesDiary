@@ -22,7 +22,7 @@ import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCards
 import com.ca.designsystem.components.pickers.*
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.MeasuringMark
+import com.ca.model.MeasuringMark
 import java.time.LocalDate
 import java.time.LocalTime
 

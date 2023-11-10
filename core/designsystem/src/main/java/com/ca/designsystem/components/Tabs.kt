@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.Page
+import com.ca.model.Page
 
 @Composable
 fun Tabs(

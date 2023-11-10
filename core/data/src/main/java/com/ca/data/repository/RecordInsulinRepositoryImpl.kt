@@ -5,8 +5,8 @@ import com.ca.database.dao.InsulinRecordsDao
 import com.ca.database.model.asEntity
 import com.ca.database.model.asExternalModel
 import com.ca.datastore.SettingsDataStore
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.Insulin
+import com.ca.model.InsulinRecord
 import com.ca.domain.repository.RecordInsulinRepository
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.record

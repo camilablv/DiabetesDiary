@@ -17,7 +17,7 @@ import com.ca.designsystem.theme.DiaryTheme
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.designsystem.utils.toHex
-import com.ca.domain.model.Insulin
+import com.ca.model.Insulin
 import com.vanpra.composematerialdialogs.color.ColorPalette
 
 @Composable
@@ -127,7 +127,7 @@ fun EditInsulinDialog(
 @Preview
 @Composable
 fun EditInsulinDialogPreview() {
-    val lambda: (String?, String, String, Int) -> Unit = { p1, p2, p3, p4 -> }
+    val lambda: (String?, String, String, Int) -> Unit = { _, _, _, _ -> }
     DiaryTheme {
         EditInsulinDialog(
             show = true,

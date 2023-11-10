@@ -1,9 +1,9 @@
 package com.ca.domain.repository
 
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.RecordGlucoseReminder
-import com.ca.domain.model.RecordInsulinReminder
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.Insulin
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 

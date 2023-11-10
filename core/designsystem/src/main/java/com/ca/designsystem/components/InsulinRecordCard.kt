@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.InsulinRecord
 
 @Composable
 fun InsulinRecordCard(record: InsulinRecord) {

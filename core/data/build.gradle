@@ -23,11 +23,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
 
@@ -37,6 +37,7 @@ dependencies {
     implementation project(":core:authentication")
     implementation project(":core:network")
     implementation project(":core:schema")
+    implementation project(':core:model')
     implementation project(':core:domain')
     implementation project(':core:alarmscheduler')
     implementation project(":core:database")
@@ -58,4 +59,8 @@ dependencies {
 
     // Room
     implementation roomDependencies.runtime
+
+    //Test
+    implementation testDependencies.junit
+    implementation testDependencies.espresso
 }

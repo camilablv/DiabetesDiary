@@ -2,7 +2,7 @@ package com.ca.editinsulinrecordbottomsheet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.InsulinRecord
 import com.ca.domain.repository.RecordInsulinRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

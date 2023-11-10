@@ -2,8 +2,8 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.UpdateGlucoseUnitUseCase
 import com.ca.onboarding.domain.repository.OnBoardingRepository

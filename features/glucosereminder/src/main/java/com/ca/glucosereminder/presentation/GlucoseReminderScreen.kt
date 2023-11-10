@@ -21,7 +21,7 @@ import com.ca.designsystem.components.ReminderIterationOptions
 import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 @Composable

@@ -3,7 +3,7 @@ package com.ca.designsystem.components.settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.ca.designsystem.components.GlucoseUnitsRadioButtons
-import com.ca.domain.model.GlucoseUnits
+import com.ca.model.GlucoseUnits
 import com.ca.settings.presentation.components.SettingsSectionCard
 
 @Composable

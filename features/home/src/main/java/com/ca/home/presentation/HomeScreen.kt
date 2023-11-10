@@ -1,6 +1,12 @@
 package com.ca.home.presentation
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FabPosition
@@ -10,7 +16,6 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -24,7 +29,10 @@ import com.ca.designsystem.components.InsulinRecordTimelineCard
 import com.ca.designsystem.components.InsulinReminderTimelineCard
 import com.ca.designsystem.components.fab.NewRecordFab
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
-import com.ca.domain.model.*
+import com.ca.model.GlucoseRecord
+import com.ca.model.InsulinRecord
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 
 @Composable
 fun HomeScreen(
@@ -39,7 +47,6 @@ fun HomeScreen(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

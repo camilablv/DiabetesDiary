@@ -25,7 +25,7 @@ import com.ca.designsystem.components.pickers.DatePicker
 import com.ca.designsystem.components.pickers.TimePicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.Insulin
+import com.ca.model.Insulin
 import java.time.LocalDate
 import java.time.LocalTime
 

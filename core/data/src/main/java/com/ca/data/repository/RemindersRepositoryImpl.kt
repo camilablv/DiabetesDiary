@@ -8,10 +8,10 @@ import com.ca.database.model.RecordGlucoseReminderEntity
 import com.ca.database.model.RecordInsulinReminderEntity
 import com.ca.database.model.asEntity
 import com.ca.database.model.asExternalModel
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.RecordGlucoseReminder
-import com.ca.domain.model.RecordInsulinReminder
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.Insulin
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import com.ca.domain.repository.RemindersRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

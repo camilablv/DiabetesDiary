@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.GlucoseRecord
+import com.ca.model.GlucoseRecord
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

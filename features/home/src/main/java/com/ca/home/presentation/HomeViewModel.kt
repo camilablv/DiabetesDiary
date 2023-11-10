@@ -2,7 +2,7 @@ package com.ca.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.RecordInsulinReminder
+import com.ca.model.RecordInsulinReminder
 import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.GetRecordsByDateUseCase
 import com.ca.domain.usecase.GetRemindersUseCase
