@@ -48,21 +48,21 @@ dependencies {
     implementation composeDependencies.runtime
     implementation composeDependencies.foundation
     implementation composeDependencies.foundationLayout
-    implementation composeDependencies.activity
+    implementation 'androidx.activity:activity-compose:1.8.0'
     implementation composeDependencies.viewModel
     implementation composeDependencies.navigation
     implementation composeDependencies.constraintLayout
-    implementation composeDependencies.lifecycleRuntime
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.2'
     implementation composeDependencies.material3
     implementation "io.github.vanpra.compose-material-dialogs:color:0.9.0"
     implementation "com.marosseleng.android:compose-material3-datetime-pickers:0.7.2"
     implementation 'com.github.commandiron:WheelPickerCompose:1.1.11'
-    implementation 'de.charlex.compose:revealswipe:1.0.0'
+    implementation 'de.charlex.compose:revealswipe:1.2.0'
     implementation "dev.chrisbanes.snapper:snapper:0.3.0"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

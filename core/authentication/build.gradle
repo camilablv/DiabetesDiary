@@ -39,11 +39,7 @@ dependencies {
 
     implementation project(':core:datastore')
 
-    // Firebase
-    implementation firebaseDependencies.analytics
-    implementation firebaseDependencies.crashlytics
-    implementation firebaseDependencies.auth
-
+    // Jetpack Compose
     implementation composeDependencies.activity
 
     // Play Services
@@ -55,6 +51,11 @@ dependencies {
     // Hilt
     implementation hiltDependencies.hilt
     kapt hiltDependencies.kapt
+
+    // Firebase
+    implementation firebaseDependencies.analytics
+    implementation firebaseDependencies.crashlytics
+    implementation firebaseDependencies.auth
 
     //Test
     implementation testDependencies.junit

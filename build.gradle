@@ -1,14 +1,14 @@
 buildscript {
     ext {
         kotlinVersion = "1.9.10"
-        composeVersion = '1.5.3'
+        composeVersion = '1.5.4'
         composeCompilerVersion = '1.5.3'
         apolloVersion = "3.6.2"
-        hiltVersion = "2.48"
-        composeNavigationVersion = "2.5.3"
-        lifecycleVersion = "2.5.0"
+        hiltVersion = '2.48.1'
+        composeNavigationVersion = '2.7.5'
+        lifecycleVersion = '2.6.2'
         pagingVersion = "3.2.1"
-        roomVersion = "2.5.2"
+        roomVersion = '2.6.0'
         accompanistVersion = "0.32.0"
 
         gradleDependencies = [
@@ -17,13 +17,13 @@ buildscript {
                 minSdk    : 28
         ]
         androidxDependencies = [
-                coreKtx          : "androidx.core:core-ktx:1.10.1",
+                coreKtx          : "androidx.core:core-ktx:1.12.0",
                 lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion",
-                viewModel        : "androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion",
-                viewModelKtx     : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
+                viewModel        : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
                 dataStore        : "androidx.datastore:datastore:1.0.0",
-                splashScreen     : "androidx.core:core-splashscreen:1.0.0",
-                paging           : "androidx.paging:paging-runtime:$pagingVersion"
+                splashScreen     : "androidx.core:core-splashscreen:1.0.1",
+                paging           : "androidx.paging:paging-runtime:$pagingVersion",
+                appcompat        : "androidx.appcompat:appcompat:1.6.1"
         ]
         composeDependencies = [
                 ui               : "androidx.compose.ui:ui:$composeVersion",
@@ -33,11 +33,11 @@ buildscript {
                 runtime          : "androidx.compose.runtime:runtime:$composeVersion",
                 foundation       : "androidx.compose.foundation:foundation:$composeVersion",
                 foundationLayout : "androidx.compose.foundation:foundation-layout:$composeVersion",
-                activity         : "androidx.activity:activity-compose:1.7.2",
+                activity         : "androidx.activity:activity-compose:1.8.0",
                 viewModel        : "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion",
                 navigation       : "androidx.navigation:navigation-compose:$composeNavigationVersion",
                 constraintLayout : "androidx.constraintlayout:constraintlayout-compose:1.0.1",
-                lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.0",
+                lifecycleRuntime : "androidx.lifecycle:lifecycle-runtime-compose:2.6.2",
                 material3        : "androidx.compose.material3:material3:1.1.2",
                 paging           : "androidx.paging:paging-compose:3.2.0-rc01"
         ]
@@ -51,9 +51,9 @@ buildscript {
                 apolloApi        : "com.apollographql.apollo3:apollo-api:$apolloVersion"
         ]
         firebaseDependencies = [
-                analytics        : "com.google.firebase:firebase-analytics-ktx:21.3.0",
-                crashlytics      : "com.google.firebase:firebase-crashlytics-ktx:18.3.7",
-                auth             : "com.google.firebase:firebase-auth-ktx:22.0.0"
+                analytics        : "com.google.firebase:firebase-analytics-ktx:21.5.0",
+                crashlytics      : "com.google.firebase:firebase-crashlytics-ktx:18.5.1",
+                auth             : "com.google.firebase:firebase-auth-ktx:22.2.0"
         ]
         accompanist = [
                 systemUiController: "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion",
@@ -63,7 +63,7 @@ buildscript {
                 protobuf: "com.google.protobuf:protobuf-javalite:3.24.3"
         ]
         playServicesDependencies = [
-                auth: "com.google.android.gms:play-services-auth:20.5.0"
+                auth: "com.google.android.gms:play-services-auth:20.7.0"
         ]
         roomDependencies = [
                 runtime : "androidx.room:room-runtime:$roomVersion",
