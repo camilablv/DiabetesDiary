@@ -33,7 +33,6 @@ fun GlucoseRecordCard(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-//                Icon(painter = painterResource(id = record.measuringMark.icon), contentDescription = "")
                 Text(
                     modifier = Modifier
                         .weight(2f),

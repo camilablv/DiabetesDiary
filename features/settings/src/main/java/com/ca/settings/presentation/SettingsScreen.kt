@@ -11,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.R
 import com.ca.designsystem.components.dialog.DiaryAlertDialog
 import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.components.settings.GlucoseUnitsSection
@@ -32,7 +34,7 @@ fun SettingsScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopBar(title = "Settings") {
+        topBar = { TopBar(title = stringResource(id = R.string.settings)) {
             navigateBack()
         } }
     ) { paddingValues ->
@@ -53,7 +55,7 @@ fun SettingsScreen(
 
             item {
                 LanguageSection(
-                    selectedLanguage = "English",
+                    selectedLanguage = "English", 
                     onClick = {}
                 )
             }
@@ -92,7 +94,7 @@ fun SettingsScreen(
         show = viewState.showDeleteInsulinDialog,
         onDismiss = { viewModel.showDeleteInsulinDialog(false) },
         onPositiveButtonClick = { viewModel.deleteInsulinWithReminders(viewState.revealedInsulin) },
-        positiveButtonText = "Delete"
+        positiveButtonText = stringResource(id = R.string.delete)
     )
 
     EditInsulinDialog(

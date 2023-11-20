@@ -5,7 +5,9 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.components.InsulinList
 import com.ca.designsystem.theme.Theme
 import com.ca.model.Insulin
@@ -31,7 +33,7 @@ fun InsulinsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Insulin",
+                text = stringResource(id = R.string.insulin),
                 style = Theme.typography.headlineSmall,
                 modifier = Modifier,
                 color = Theme.colors.onSurface
@@ -45,7 +47,7 @@ fun InsulinsSection(
                 )
             ) {
                 Text(
-                    text = "Add",
+                    text = stringResource(id = R.string.add),
                     color = Theme.colors.onSecondary
                 )
             }

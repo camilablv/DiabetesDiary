@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
@@ -22,7 +23,7 @@ fun ThemeSection(
 ) {
     SettingsSectionCard(
         modifier = Modifier,
-        sectionTitle = "Theme"
+        sectionTitle = stringResource(id = R.string.theme)
     ) {
         Row(
             modifier = Modifier
@@ -31,7 +32,7 @@ fun ThemeSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Dark Mode",
+                text = stringResource(id = R.string.dark_mode),
                 modifier = Modifier,
                 style = Theme.typography.bodyLarge,
                 color = Theme.colors.onBackground,

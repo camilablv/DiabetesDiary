@@ -83,7 +83,7 @@ fun NoteTextField(
         }
 
         Text(
-            text = "${value.count()} from 140",
+            text = "${value.count()} from 140", //todo replace max character value to constant
             color = Color.Gray
         )
     }

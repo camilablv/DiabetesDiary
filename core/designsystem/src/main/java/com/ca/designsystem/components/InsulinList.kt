@@ -41,7 +41,8 @@ fun InsulinList(
                 val revealState = rememberRevealState()
 
                 val buttonSize by animateDpAsState(
-                    targetValue = (revealState.offset.value.absoluteValue / 4).dp
+                    targetValue = (revealState.offset.value.absoluteValue / 4).dp,
+                    label = ""
                 )
 
                 LaunchedEffect(revealState.progress) {

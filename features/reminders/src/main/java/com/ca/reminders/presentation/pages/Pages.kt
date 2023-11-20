@@ -3,8 +3,8 @@ package com.ca.reminders.presentation.pages
 import com.ca.model.Page
 
 sealed class RemindersPage(override val text: String) : Page {
-    object InsulinRecords : RemindersPage("Insulin")
-    object GlucoseRecords : RemindersPage("Glucose")
+    data object InsulinRecords : RemindersPage("Insulin")
+    data object GlucoseRecords : RemindersPage("Glucose")
 }
 
 val pages = listOf(

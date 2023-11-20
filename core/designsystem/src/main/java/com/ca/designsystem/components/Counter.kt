@@ -38,7 +38,7 @@ fun Counter(
     decrement: () -> Unit,
     onValueChanged: (String) -> Unit
 ) {
-    val previousValueState = remember { mutableStateOf(value) }
+    val previousValueState = remember { mutableIntStateOf(value) }
 
     Row(
         modifier = modifier
@@ -46,7 +46,7 @@ fun Counter(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         CounterButton {
-            previousValueState.value = value
+            previousValueState.intValue = value
             decrement()
         }
 
@@ -60,7 +60,7 @@ fun Counter(
         }
 
         CounterButton {
-            previousValueState.value = value
+            previousValueState.intValue = value
             increment()
         }
     }

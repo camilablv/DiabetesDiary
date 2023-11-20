@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.R
 import com.ca.designsystem.components.dialog.EditInsulinDialog
 import com.ca.designsystem.theme.*
 import com.ca.onboarding.presentation.onboardingpages.*
@@ -163,7 +165,7 @@ fun PagerButtons(
         TextButton(
             onClick = toHome
         ) {
-            Text(text = "Skip")
+            Text(text = stringResource(id = R.string.skip))
         }
 
         if (state.canScrollForward) {
@@ -173,16 +175,15 @@ fun PagerButtons(
                 onClick = onNext
             ) {
                 Icon(
-                    painter = painterResource(id = com.ca.designsystem.R.drawable.arrow_right),
+                    painter = painterResource(id = R.drawable.arrow_right),
                     contentDescription = "",
                     tint = Theme.colors.secondary,
                     modifier = Modifier
-//                        .size(64.dp)
                 )
             }
         } else {
             Button(onClick = toHome) {
-                Text(text = "Get Started")
+                Text(text = stringResource(id = R.string.get_started))
             }
         }
     }
@@ -212,7 +213,7 @@ fun Indicator(
     selected: Boolean,
     currentPage: Boolean
 ) {
-    val animatedWidth by animateDpAsState(targetValue = if (currentPage) 24.dp else 8.dp)
+    val animatedWidth by animateDpAsState(targetValue = if (currentPage) 24.dp else 8.dp, label = "")
 
     Box(
         modifier = Modifier

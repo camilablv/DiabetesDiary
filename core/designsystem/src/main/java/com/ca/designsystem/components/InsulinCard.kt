@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.Insulin
@@ -38,7 +40,10 @@ fun InsulinCard(
         Column {
             Box(
                 modifier = Modifier
-                    .background(colorFromHex(insulin.color), RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+                    .background(
+                        colorFromHex(insulin.color),
+                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                    )
                     .fillMaxWidth()
                     .weight(2f)
             )
@@ -63,7 +68,7 @@ fun InsulinCard(
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = "${insulin.defaultDose} IU",
+                    text = insulin.defaultDose.toString().plus(" ").plus(stringResource(id = R.string.international_unit)),
                     style = Theme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = Color.Gray,

@@ -15,11 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.common.utils.date
 import com.ca.common.utils.timeOfHHmmPattern
+import com.ca.designsystem.R
 import com.ca.designsystem.components.*
 import com.ca.designsystem.components.pickers.DatePicker
 import com.ca.designsystem.components.pickers.TimePicker
@@ -44,7 +46,7 @@ fun RecordInsulinRoute(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     RecordInsulinScreen(
-        topBarTitle = if (viewState.isInEditMode) "Edit Record" else "Add Record",
+        topBarTitle = if (viewState.isInEditMode) stringResource(id = R.string.edit_record) else stringResource(id = R.string.add_record),
         onBackClick = onBackClick,
         navigateToSettings = navigateToSettings,
         viewState = viewState,
@@ -181,7 +183,7 @@ fun RecordInsulinScreen(
                         onValueChange = { setNote(it) },
                         modifier = Modifier,
                         expanded = viewState.noteTextFieldExpanded,
-                        placeholder = { Text(text = "Type note..", color = Color.Gray) },
+                        placeholder = { Text(text = stringResource(id = R.string.type_note), color = Color.Gray) },
                         onDoneAction = {
                             setNote(it)
                             keyboardController?.hide()
@@ -206,7 +208,7 @@ fun RecordInsulinScreen(
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = "Save",
+                    text = stringResource(id = R.string.save),
                     color = Theme.colors.onSecondary
                 )
             }

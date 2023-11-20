@@ -9,9 +9,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ca.designsystem.R
 import com.ca.designsystem.components.BottomSheetContainer
 import com.ca.designsystem.components.BottomSheetMenuOption
 import com.ca.editinsulinrecordbottomsheet.InsulinRecordBottomSheetViewModel
@@ -38,11 +40,11 @@ fun EditInsulinRecordBottomSheet(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_edit, title = "Edit") {
+                BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_edit, title = stringResource(id = R.string.edit)) {
                     navigateToEditInsulinRecord()
                 }
 
-                BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_delete, title = "Delete") {
+                BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_delete, title = stringResource(id = R.string.delete)) {
                     viewModel.removeRecord()
                     dismiss()
                 }

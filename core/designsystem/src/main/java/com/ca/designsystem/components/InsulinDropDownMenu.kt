@@ -33,7 +33,7 @@ fun InsulinDropDownMenu(
 ) {
     if (selectedInsulin == null) return
 
-    val animatedFloat by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
+    val animatedFloat by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
 
     Card(
         modifier = modifier

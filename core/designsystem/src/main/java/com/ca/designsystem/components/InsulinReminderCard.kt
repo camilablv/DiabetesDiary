@@ -14,10 +14,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
 import com.ca.model.RecordInsulinReminder
@@ -108,7 +110,7 @@ fun InsulinReminderCard(
                 Text(
                     modifier = Modifier
                         .weight(2f),
-                    text = "${reminder.dose} IU",
+                    text = reminder.dose.toString().plus("").plus(stringResource(id = R.string.international_unit)),
                     style = Theme.typography.headlineSmall,
                     textAlign = TextAlign.Center,
                     color = Color.Gray
