@@ -27,6 +27,7 @@ import com.ca.designsystem.components.topbar.TopBar
 @Composable
 fun SettingsScreen(
     navigateBack: () -> Unit,
+    setLocaleBottomSheet: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -56,7 +57,7 @@ fun SettingsScreen(
             item {
                 LanguageSection(
                     selectedLanguage = "English", 
-                    onClick = {}
+                    onClick = setLocaleBottomSheet
                 )
             }
 

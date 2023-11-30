@@ -55,7 +55,7 @@ fun BottomSheetContainer(
 
 @Composable
 fun BottomSheetMenuOption(
-    icon: Int,
+    icon: Int? = null,
     title: String,
     onClick: () -> Unit
 ) {
@@ -66,7 +66,7 @@ fun BottomSheetMenuOption(
             },
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Icon(painter = painterResource(id = icon), contentDescription = "")
+        icon?.let { Icon(painter = painterResource(id = icon), contentDescription = "") }
         Text(text = title)
     }
 }

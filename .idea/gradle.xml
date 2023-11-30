@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/features/bottomsheet/editglucosereminderbottomsheet" />
             <option value="$PROJECT_DIR$/features/bottomsheet/editinsulinrecordbottomsheet" />
             <option value="$PROJECT_DIR$/features/bottomsheet/editinsulinreminderbottomsheet" />
+            <option value="$PROJECT_DIR$/features/bottomsheet/setlocalebottomsheet" />
             <option value="$PROJECT_DIR$/features/glucosereminder" />
             <option value="$PROJECT_DIR$/features/home" />
             <option value="$PROJECT_DIR$/features/insulinreminder" />
