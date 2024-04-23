@@ -99,12 +99,11 @@ fun SettingsQuery.Insulin.insulin(): Insulin {
     )
 }
 
-fun SettingsQuery.Data.settings(): Settings {
+fun SettingsQuery.Data.settings(): TreatmentPreferences {
     return with(settings) {
-        Settings(
+        TreatmentPreferences(
             glucoseUnits = GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!),
-            insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() },
-            darkMode = false //TODO fix local model
+            insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() }
         )
     }
 }

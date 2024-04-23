@@ -31,4 +31,7 @@
     <string name="dark_mode">Темний режим</string>
     <string name="language">Мова</string>
     <string name="add">Додати</string>
+    <string name="dismiss">Відхилити</string>
+    <string name="delete_insulin_title">Видалити інсулін</string>
+    <string name="delete_insulin_text">Ви впевнені, що хочете видалити? У вас є нагадування, пов’язане з цим інсуліном, і якщо ви його видалите, нагадування також буде видалено</string>
 </resources>

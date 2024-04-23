@@ -1,7 +1,6 @@
 package com.ca.diabetesdiary.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -28,8 +27,6 @@ import com.ca.recordglucose.navigation.glucoseGraph
 import com.ca.recordglucose.navigation.navigateToRecordGlucose
 import com.ca.recordinsulin.navigation.insulinGraph
 import com.ca.recordinsulin.navigation.navigateToRecordInsulin
-import com.ca.setlocalebottomsheet.navigation.navigateToSetLocaleBottomSheet
-import com.ca.setlocalebottomsheet.navigation.setLocaleReminderBottomSheet
 import com.ca.settings.presentation.SettingsScreen
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -40,7 +37,7 @@ fun NavController.navigateBack() {
     popBackStack()
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun MainNavHost(
     navHostController: NavHostController,
@@ -89,8 +86,7 @@ fun MainNavHost(
 
             composable(MainRoute.Settings.route) {
                 SettingsScreen(
-                    navigateBack = { navHostController.navigateBack() },
-                    setLocaleBottomSheet = { navHostController.navigateToSetLocaleBottomSheet() }
+                    navigateBack = { navHostController.navigateBack() }
                 )
             }
 
@@ -146,10 +142,6 @@ fun MainNavHost(
 
             editGlucoseReminderBottomSheet(
                 navigateToEditGlucoseReminder = { navHostController.navigateToGlucoseReminder(it) },
-                dismiss = { navHostController.navigateBack() }
-            )
-
-            setLocaleReminderBottomSheet(
                 dismiss = { navHostController.navigateBack() }
             )
         }

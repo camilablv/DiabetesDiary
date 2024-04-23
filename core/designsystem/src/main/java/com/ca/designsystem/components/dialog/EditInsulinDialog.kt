@@ -32,7 +32,7 @@ fun EditInsulinDialog(
         onDismissRequest = onDismiss
     ) {
         var insulinName by remember { mutableStateOf(editableInsulin?.name ?: "") }
-        var defaultDosage by remember { mutableStateOf(editableInsulin?.defaultDose ?: 0) }
+        var defaultDosage by remember { mutableIntStateOf(editableInsulin?.defaultDose ?: 0) }
         var insulinColor by remember {
             mutableStateOf(
                 if (editableInsulin?.color != null) colorFromHex(editableInsulin.color)

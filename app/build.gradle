@@ -22,6 +22,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        resourceConfigurations += ["en", "uk"]
     }
 
     buildTypes {
@@ -47,9 +49,6 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
-    }
-    androidResources {
-        generateLocaleConfig true
     }
 }
 
@@ -77,7 +76,6 @@ dependencies {
     implementation project(":features:bottomsheet:editinsulinrecordbottomsheet")
     implementation project(":features:bottomsheet:editglucosereminderbottomsheet")
     implementation project(":features:bottomsheet:editinsulinreminderbottomsheet")
-    implementation project(":features:bottomsheet:setlocalebottomsheet")
 
     // Android X
     implementation androidxDependencies.coreKtx
@@ -85,6 +83,8 @@ dependencies {
     implementation androidxDependencies.viewModel
     implementation androidxDependencies.dataStore
     implementation androidxDependencies.splashScreen
+    implementation androidxDependencies.appcompat
+    implementation androidxDependencies.appcompatResources
 
     // Jetpack Compose
     implementation composeDependencies.ui

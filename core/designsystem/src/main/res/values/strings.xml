@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="done">Done</string>
     <string name="international_unit">IU</string>
     <string name="reminder_taking_insulin">Reminder: Taking insulin</string>
@@ -31,4 +31,9 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="language">Language</string>
     <string name="add">Add</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="delete_insulin_title">Delete insulin</string>
+    <string name="delete_insulin_text">Are you sure you want to delete? You have a reminder associated with this insulin and if you delete it, the reminder will also be deleted</string>
+    <string name="en" tools:ignore="ExtraTranslation" translatable="false">English</string>
+    <string name="uk" tools:ignore="ExtraTranslation" translatable="false">Українська</string>
 </resources>

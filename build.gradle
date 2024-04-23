@@ -23,7 +23,8 @@ buildscript {
                 dataStore        : "androidx.datastore:datastore:1.0.0",
                 splashScreen     : "androidx.core:core-splashscreen:1.0.1",
                 paging           : "androidx.paging:paging-runtime:$pagingVersion",
-                appcompat        : "androidx.appcompat:appcompat:1.6.1"
+                appcompat        : "androidx.appcompat:appcompat:1.6.1",
+                appcompatResources : "androidx.appcompat:appcompat-resources:1.6.1"
         ]
         composeDependencies = [
                 ui               : "androidx.compose.ui:ui:$composeVersion",
