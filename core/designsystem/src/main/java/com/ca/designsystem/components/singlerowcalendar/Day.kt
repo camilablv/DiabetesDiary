@@ -15,13 +15,15 @@ import androidx.compose.ui.unit.dp
 import com.ca.common.utils.dayName
 import com.ca.designsystem.theme.Theme
 import java.time.LocalDate
+import java.util.Locale
 
 @Composable
 internal fun Day(
     date: LocalDate,
     onClick: (LocalDate) -> Unit,
     modifier: Modifier,
-    isSelected: Boolean
+    isSelected: Boolean,
+    locale: Locale
 ) {
     val textColor = if (isSelected) Theme.colors.onSecondary else Theme.colors.onBackground
     
@@ -39,7 +41,7 @@ internal fun Day(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = date.dayName(),
+            text = date.dayName(locale),
             style = Theme.typography.bodyMedium,
             color = Theme.colors.onBackground,
             textAlign = TextAlign.Center

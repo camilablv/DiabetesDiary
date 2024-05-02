@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,6 +48,9 @@ fun HomeScreen(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val focusRequester = FocusRequester()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+
+    fun currentLocale() = context.resources.configuration.locales[0]
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -68,7 +72,8 @@ fun HomeScreen(
                 selectedDay = viewState.selectedDate,
                 onSelectedDayChange = {
                     viewModel.selectDate(it)
-                }
+                },
+                locale = currentLocale()
             )
             LazyColumn(
                 modifier = Modifier,

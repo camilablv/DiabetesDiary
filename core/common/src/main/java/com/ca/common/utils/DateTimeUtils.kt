@@ -7,22 +7,22 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-fun LocalDate.dayOfddPattern(): String = format(DateTimeFormatter.ofPattern("dd"))
+fun LocalDate.dayOfddPattern(): String = format(formatter("dd"))
 
-fun LocalDate.monthOfMMMPattern(): String = format(DateTimeFormatter.ofPattern("MMM"))
+fun LocalDate.monthOfMMMPattern(): String = format(formatter("MMM"))
 
-fun LocalTime.timeOfHHmmPattern(): String = format(DateTimeFormatter.ofPattern("HH:mm"))
+fun LocalTime.timeOfHHmmPattern(): String = format(formatter("HH:mm"))
 
 fun LocalDate.date(): String {
     return "${dayOfddPattern()} ${monthOfMMMPattern()}"
 }
 
-fun LocalDateTime.time(): String = format(DateTimeFormatter.ofPattern("hh:mm"))
+fun LocalDateTime.time(): String = format(formatter("hh:mm"))
 
-fun LocalDate.dayName(): String =
-    format(DateTimeFormatter.ofPattern("E"))
+fun LocalDate.dayName(locale: Locale): String =
+    format(formatter("E", locale))
 
-fun LocalDate.formatMonthYear(): String = format(DateTimeFormatter.ofPattern("MMMM y")).replaceFirstChar {
+fun LocalDate.formatMonthYear(locale: Locale): String = format(formatter("MMMM y", locale)).replaceFirstChar {
     if (it.isLowerCase()) it.titlecase(
         Locale.getDefault()
     ) else it.toString()
@@ -43,3 +43,7 @@ fun LocalDate.getPrevDates(weeksFromCurrentDate: Int): List<LocalDate> {
     }
     return dates
 }
+
+private fun formatter(pattern: String, locale: Locale) = DateTimeFormatter.ofPattern(pattern, locale)
+
+private fun formatter(pattern: String) = DateTimeFormatter.ofPattern(pattern)
