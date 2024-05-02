@@ -15,6 +15,6 @@ interface SettingsRepository {
     suspend fun insulinsFlow(): Flow<List<Insulin>>
     suspend fun settings(): Flow<Settings>
     suspend fun darkMode(darkMode: Boolean)
-    suspend fun currentLocale(): Locale
+    fun defaultLocale(): Locale
     suspend fun setLocale(locale: Locale)
 }

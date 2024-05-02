@@ -90,7 +90,7 @@ class SettingsRepositoryImpl @Inject constructor(
         settingsDataStore.setDarkMode(darkMode)
     }
 
-    override suspend fun currentLocale(): Locale = localeDataSource.currentLocale()
+    override fun defaultLocale(): Locale = localeDataSource.defaultLocale()
 
     override suspend fun setLocale(locale: Locale) {
         localeDataSource.setLocale(locale)

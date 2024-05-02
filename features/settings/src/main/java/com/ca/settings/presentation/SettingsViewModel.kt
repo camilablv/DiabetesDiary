@@ -21,13 +21,10 @@ class SettingsViewModel @Inject constructor(
     private val remindersRepository: RemindersRepository
 ) : ViewModel() {
 
-    private var _viewState = MutableStateFlow(SettingsViewState())
+    private var _viewState = MutableStateFlow(SettingsViewState(currentLocale = repository.defaultLocale()))
     val viewState: StateFlow<SettingsViewState> = _viewState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            _viewState.update { it.copy(currentLocale = repository.currentLocale()) }
-        }
         settings()
     }
 

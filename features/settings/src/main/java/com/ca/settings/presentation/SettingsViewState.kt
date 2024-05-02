@@ -9,7 +9,7 @@ data class SettingsViewState(
     val glucoseUnits: GlucoseUnits = GlucoseUnits.MMOL_PER_L,
     val insulins: List<Insulin> = listOf(),
     val darkMode: Boolean = false,
-    val currentLocale: Locale = Locale("en"),
+    val currentLocale: Locale,
     val showEditInsulinDialog: Boolean = false,
     val showDeleteInsulinDialog: Boolean = false,
     val showSetLocaleDialog: Boolean = false,

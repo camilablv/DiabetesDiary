@@ -1,8 +1,5 @@
 package com.ca.settings.presentation
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,11 +35,14 @@ fun SettingsScreen(
 ) {
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
     val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
 
     val localeOptions = mapOf(
         "en" to R.string.en,
         "uk" to R.string.uk
     ).mapValues { stringResource(it.value) }
+
+    fun currentLocale() = context.resources.configuration.locales[0]
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -67,7 +67,7 @@ fun SettingsScreen(
 
             item {
                 LanguageSection(
-                    selectedLanguage = localeOptions.getValue(viewState.currentLocale.language),
+                    selectedLanguage = localeOptions.getValue(currentLocale().language),
                     onClick = { viewModel.showSetLocaleDialog(true) }
                 )
             }
@@ -124,7 +124,7 @@ fun SettingsScreen(
         show = viewState.showSetLocaleDialog,
         onDismiss = { viewModel.showSetLocaleDialog(false) },
         locales = mapOf("en" to "English", "uk" to "Українська"),
-        selectedLocale = viewState.currentLocale,
+        selectedLocale = currentLocale(),
         selectLocale = {
             scope.launch {
                 viewModel.showSetLocaleDialog(false)

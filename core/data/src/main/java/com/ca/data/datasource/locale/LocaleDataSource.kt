@@ -7,7 +7,7 @@ import java.util.Locale
 
 class LocaleDataSource {
 
-    fun currentLocale(): Locale = LocaleList.getDefault()[0]
+    fun defaultLocale(): Locale = LocaleList.getDefault()[0]
 
     fun setLocale(locale: Locale) {
         AppCompatDelegate.setApplicationLocales(LocaleListCompat.create(locale))
