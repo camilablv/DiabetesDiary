@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ca.authentication.GoogleAuthResultContract
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 
 @Composable
@@ -51,7 +53,7 @@ fun AuthScreen(
             Button(
                 onClick = { googleAuthLauncher.launch(Unit) }
             ) {
-                Text("Sign In With Google")
+                Text(stringResource(id = R.string.sign_in_with_google))
             }
         }
     }

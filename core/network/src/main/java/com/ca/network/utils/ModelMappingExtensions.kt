@@ -1,7 +1,7 @@
 package com.ca.network.utils
 
 import com.ca.*
-import com.ca.domain.model.*
+import com.ca.model.*
 import java.time.LocalDateTime
 
 fun CreateInsulinMutation.Data.insulin(): Insulin {
@@ -99,12 +99,11 @@ fun SettingsQuery.Insulin.insulin(): Insulin {
     )
 }
 
-fun SettingsQuery.Data.settings(): Settings {
+fun SettingsQuery.Data.settings(): TreatmentPreferences {
     return with(settings) {
-        Settings(
+        TreatmentPreferences(
             glucoseUnits = GlucoseUnits.valueOf(settings.bloodGlucoseUnits?.name!!),
-            insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() },
-            darkMode = false //TODO fix local model
+            insulins = if (insulins.isEmpty()) listOf() else insulins.map { it!!.insulin() }
         )
     }
 }

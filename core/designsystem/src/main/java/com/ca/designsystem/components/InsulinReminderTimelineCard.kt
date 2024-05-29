@@ -8,12 +8,13 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
-import com.ca.domain.model.RecordInsulinReminder
+import com.ca.model.RecordInsulinReminder
 
 @Composable
 fun InsulinReminderTimelineCard(
@@ -46,7 +47,7 @@ fun InsulinReminderTimelineCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = "Reminder: Taking insulin",
+                    text = stringResource(id = R.string.reminder_taking_insulin),
                     style = Theme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -81,14 +82,14 @@ fun InsulinReminderTimelineCard(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "IU",
+                                text = stringResource(id = R.string.international_unit),
                                 style = Theme.typography.bodySmall,
                             )
                         }
                     }
 
                     TextButton(onClick = { onDoneClick(reminder) }) {
-                        Text(text = "Done")
+                        Text(text = stringResource(id = R.string.done))
                     }
                 }
             }

@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.components.GlucoseReminderCard
-import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.model.RecordGlucoseReminder
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -18,6 +18,10 @@ fun GlucoseRemindersPage(
     onEnabledChange: (RecordGlucoseReminder, Boolean) -> Unit,
     onClick: (RecordGlucoseReminder) -> Unit
 ) {
+    if(reminders.isEmpty()) {
+        EmptyReminderScreen(modifier = Modifier)
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),

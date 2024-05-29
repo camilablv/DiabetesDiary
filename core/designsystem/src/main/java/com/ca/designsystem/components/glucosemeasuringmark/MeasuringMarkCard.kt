@@ -2,7 +2,7 @@ package com.ca.designsystem.components.glucosemeasuringmark
 
 import androidx.compose.runtime.Composable
 import com.ca.designsystem.components.FilledIcon
-import com.ca.domain.model.MeasuringMark
+import com.ca.model.MeasuringMark
 
 @Composable
 fun MeasuringMarkCard(mark: MeasuringMark) {

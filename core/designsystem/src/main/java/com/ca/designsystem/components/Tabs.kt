@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.Page
+import com.ca.model.Page
 
 @Composable
 fun Tabs(
@@ -31,7 +31,7 @@ fun Tabs(
 ) {
     val indicatorOffset by animateDpAsState(
         targetValue = tabWidth * selectedTabIndex,
-        animationSpec = tween(durationMillis = 150, easing = LinearEasing)
+        animationSpec = tween(durationMillis = 150, easing = LinearEasing), label = ""
     )
 
     Box(
@@ -88,7 +88,7 @@ private fun TabItem(
 ) {
     val textColor by animateColorAsState(
         targetValue = if (selected) Theme.colors.onSecondary else Theme.colors.onBackground,
-        animationSpec = tween(easing = LinearEasing)
+        animationSpec = tween(easing = LinearEasing), label = ""
     )
 
     Text(

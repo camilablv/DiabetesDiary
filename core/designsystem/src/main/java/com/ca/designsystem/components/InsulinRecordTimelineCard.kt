@@ -10,12 +10,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.InsulinRecord
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -52,7 +54,7 @@ fun InsulinRecordTimelineCard(
                     .padding(8.dp),
             ) {
                 Text(
-                    text = "Insulin",
+                    text = stringResource(id = R.string.insulin),
                     style = Theme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -91,7 +93,7 @@ fun InsulinRecordTimelineCard(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "IU",
+                                text = stringResource(id = R.string.international_unit),
                                 style = Theme.typography.bodySmall,
                             )
                         }

@@ -2,12 +2,11 @@ package com.ca.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.usecase.AddInsulinUseCase
-import com.ca.domain.usecase.DeleteInsulinUseCase
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
+import com.ca.domain.repository.SettingsRepository
 import com.ca.domain.usecase.UpdateGlucoseUnitUseCase
 import com.ca.onboarding.domain.repository.OnBoardingRepository
-import com.ca.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,8 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val updateGlucoseUnitUseCase: UpdateGlucoseUnitUseCase,
-    private val addInsulinUseCase: AddInsulinUseCase,
-    private val deleteInsulinUseCase: DeleteInsulinUseCase,
     private val settingsRepository: SettingsRepository,
     private val onBoardingRepository: OnBoardingRepository
 ) : ViewModel() {
@@ -29,7 +26,9 @@ class OnBoardingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _viewState.update { it.copy(insulins = settingsRepository.insulins()) }
+            settingsRepository.insulinsFlow().collect { list ->
+                _viewState.update { it.copy(insulins = list) }
+            }
         }
     }
 
@@ -43,21 +42,36 @@ class OnBoardingViewModel @Inject constructor(
 
     fun addInsulin(name: String, color: String, defaultDose: Int) {
         viewModelScope.launch {
-            val insulins = addInsulinUseCase.invoke(name, color, defaultDose)
-            insulins?.let { _viewState.update { _viewState.value.copy(insulins = insulins) } }
+            settingsRepository.addInsulin(name, color, defaultDose)
         }
     }
 
-    fun deleteInsulin(id: String) {
+    fun deleteInsulin(insulin: Insulin) {
         viewModelScope.launch {
-            val insulins = deleteInsulinUseCase.invoke(id)
-            _viewState.update { _viewState.value.copy(insulins = insulins) }
+            settingsRepository.deleteInsulin(insulin.id)
         }
     }
 
     fun completeOnBoarding() {
         viewModelScope.launch {
             onBoardingRepository.onBoardingCompleted()
+        }
+    }
+
+    fun setRevealedInsulin(insulin: Insulin?) {
+        _viewState.update { it.copy(revealedInsulin = insulin) }
+    }
+
+    fun showEditInsulinDialog(value: Boolean) {
+        if (!value) setRevealedInsulin(null)
+        _viewState.update { it.copy(showEditInsulinDialog = value) }
+    }
+
+    fun editInsulin(id: String?, name: String, color: String, defaultDose: Int) {
+        setRevealedInsulin(null)
+        viewModelScope.launch {
+            if (id == null) settingsRepository.addInsulin(name, color, defaultDose)
+            else settingsRepository.updateInsulin(id, name, color, defaultDose)
         }
     }
 }

@@ -23,7 +23,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun RecordsScreen() {
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        pageCount = { pages.size }
+    )
 
     Scaffold { paddingValues ->
         RecordsPager(
@@ -57,7 +59,6 @@ private fun RecordsPager(
 
         HorizontalPager(
             state = pagerState,
-            pageCount = pages.size,
             beyondBoundsPageCount = pages.size
         ) {
             when (pages[it]) {

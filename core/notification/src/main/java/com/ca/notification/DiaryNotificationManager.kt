@@ -11,8 +11,8 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.ca.domain.model.RecordGlucoseReminder
-import com.ca.domain.model.RecordInsulinReminder
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 import javax.inject.Inject
 
 class DiaryNotificationManager @Inject constructor(

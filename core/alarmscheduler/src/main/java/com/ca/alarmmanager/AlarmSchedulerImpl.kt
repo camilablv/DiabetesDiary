@@ -5,9 +5,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.ca.alarmmanager.receivers.AlarmReceiver
+import com.ca.alarmmanager.receivers.ReminderId
 import com.ca.alarmmanager.utils.timeExactForAlarm
-import com.ca.domain.model.RecordGlucoseReminder
-import com.ca.domain.model.RecordInsulinReminder
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -20,8 +21,9 @@ internal class AlarmSchedulerImpl @Inject constructor(
     private val intent = Intent(context, AlarmReceiver::class.java)
 
     override fun scheduleRecordInsulin(reminder: RecordInsulinReminder) {
+        val id = ReminderId.InsulinReminderId(reminder.id)
         intent.apply {
-            putExtra(AlarmReceiver.REMINDER_KEY, reminder)
+            putExtra(AlarmReceiver.REMINDER_KEY, id)
         }
 
         schedule(INSULIN_REMINDER_ID_PREFIX + reminder.id, reminder.time)
@@ -34,8 +36,9 @@ internal class AlarmSchedulerImpl @Inject constructor(
         }
     }
     override fun scheduleGlucoseMeasuring(reminder: RecordGlucoseReminder) {
+        val id = ReminderId.GlucoseReminderId(reminder.id)
         intent.apply {
-            putExtra(AlarmReceiver.REMINDER_KEY, reminder)
+            putExtra(AlarmReceiver.REMINDER_KEY, id)
         }
         schedule(GLUCOSE_REMINDER_ID_PREFIX + reminder.id, reminder.time)
     }
@@ -47,13 +50,13 @@ internal class AlarmSchedulerImpl @Inject constructor(
         }
     }
 
-    private fun schedule(reminderId: String, time: LocalTime) {
+    private fun schedule(requestCode: String, time: LocalTime) {
         val exactTime = timeExactForAlarm(time, INTERVAL_DAY)
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             exactTime,
-            pendingIntent(reminderId.hashCode())
+            pendingIntent(requestCode.hashCode())
         )
     }
 

@@ -8,11 +8,13 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Grey100
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.RecordGlucoseReminder
+import com.ca.model.RecordGlucoseReminder
 
 @Composable
 fun GlucoseReminderTimelineCard(
@@ -45,7 +47,7 @@ fun GlucoseReminderTimelineCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = "Reminder: Measuring glucose level",
+                    text = stringResource(id = R.string.reminder_glucose_measuring),
                     style = Theme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -63,10 +65,10 @@ fun GlucoseReminderTimelineCard(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        FilledIcon(backgroundColor = Grey100, icon = com.ca.designsystem.R.drawable.blood_filled)
+                        FilledIcon(backgroundColor = Grey100, icon = R.drawable.blood_filled)
 
                         Text(
-                            text = "Glucose measuring",
+                            text = stringResource(id = R.string.glucose_measuring),
                             style = Theme.typography.bodyLarge
                         )
                     }
@@ -75,7 +77,7 @@ fun GlucoseReminderTimelineCard(
                         onAddClick(reminder)
                     }
                     ) {
-                        Text(text = "Add")
+                        Text(text = stringResource(id = R.string.done))
                     }
                 }
             }

@@ -7,4 +7,6 @@ enum class GlucoseUnits(val unit: String) {
     companion object {
         val units: List<GlucoseUnits> = listOf(MG_PER_DL, MMOL_PER_L)
     }
+
+    override fun toString(): String = unit
 }

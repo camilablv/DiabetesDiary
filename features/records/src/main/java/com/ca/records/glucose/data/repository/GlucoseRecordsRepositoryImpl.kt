@@ -3,7 +3,7 @@ package com.ca.records.glucose.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.ca.domain.model.GlucoseRecord
+import com.ca.model.GlucoseRecord
 import com.ca.network.api.NetworkClient
 import com.ca.records.domain.repository.GlucoseRecordsRepository
 import com.ca.records.glucose.data.paging.GlucoseRecordsPagingSource

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
 import com.ca.designsystem.utils.colorFromHex
-import com.ca.domain.model.Insulin
+import com.ca.model.Insulin
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -33,7 +33,7 @@ fun InsulinDropDownMenu(
 ) {
     if (selectedInsulin == null) return
 
-    val animatedFloat by animateFloatAsState(targetValue = if (expanded) 180f else 0f)
+    val animatedFloat by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
 
     Card(
         modifier = modifier

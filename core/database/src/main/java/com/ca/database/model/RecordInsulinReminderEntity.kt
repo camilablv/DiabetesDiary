@@ -3,8 +3,8 @@ package com.ca.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ca.domain.model.RecordInsulinReminder
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 internal const val insulinRemindersTableName = "insulin_reminder"

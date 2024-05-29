@@ -1,6 +1,5 @@
 package com.ca.designsystem.components
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -84,7 +83,7 @@ fun NoteTextField(
         }
 
         Text(
-            text = "${value.count()} from 140",
+            text = "${value.count()} from 140", //todo replace max character value to constant
             color = Color.Gray
         )
     }

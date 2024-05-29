@@ -21,7 +21,7 @@ fun LanguageSection(
 ) {
     SettingsSectionCard(
         modifier = Modifier,
-        sectionTitle = "Language"
+        sectionTitle = stringResource(id = R.string.language)
     ) {
         Row(
             modifier = Modifier
@@ -31,7 +31,7 @@ fun LanguageSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Language",
+                text = stringResource(id = R.string.language),
                 modifier = Modifier,
                 style = Theme.typography.bodyLarge,
                 color = Theme.colors.onBackground,

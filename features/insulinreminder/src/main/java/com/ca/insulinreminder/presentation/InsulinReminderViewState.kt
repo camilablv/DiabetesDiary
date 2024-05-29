@@ -1,8 +1,8 @@
 package com.ca.insulinreminder.presentation
 
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.RecordInsulinReminder
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.Insulin
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 data class RecordsInsulinReminderViewState(

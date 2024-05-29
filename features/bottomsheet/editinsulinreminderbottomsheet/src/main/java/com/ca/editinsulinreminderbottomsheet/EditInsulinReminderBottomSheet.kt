@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,20 +39,24 @@ fun EditRecordInsulinReminderBottomSheet(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                BottomSheetMenuOption(icon = R.drawable.round_delete, title = "Delete") {
+                BottomSheetMenuOption(icon = R.drawable.round_delete, title = stringResource(id = R.string.delete)) {
                     viewModel.removeReminder()
                     dismiss()
                 }
-                BottomSheetMenuOption(icon = R.drawable.round_edit, title = "Edit") {
+                BottomSheetMenuOption(icon = R.drawable.round_edit, title = stringResource(id = R.string.edit)) {
                     navigateToEditInsulinReminder(reminderId)
                 }
                 if (reminder?.enabled!!) {
-                    BottomSheetMenuOption(icon = R.drawable.round_notifications_off, title = "Turn off") {
+                    BottomSheetMenuOption(icon = R.drawable.round_notifications_off, title = stringResource(
+                        id = R.string.turn_off
+                    )) {
                         viewModel.turnOffReminder()
                         dismiss()
                     }
                 } else {
-                    BottomSheetMenuOption(icon = R.drawable.round_notifications_active, title = "Turn on") {
+                    BottomSheetMenuOption(icon = R.drawable.round_notifications_active, title = stringResource(
+                        id = R.string.turn_on
+                    )) {
                         viewModel.turnOnReminder()
                         dismiss()
                     }

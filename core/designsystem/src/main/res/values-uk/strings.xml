@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="done">Зроблено</string>
+    <string name="international_unit">МО</string>
+    <string name="reminder_taking_insulin">Нагадування: Прийняти інсулін</string>
+    <string name="reminder_glucose_measuring">Нагадування: Виміряти рівень глюкози</string>
+    <string name="glucose_measuring">Вимір глюкози</string>
+    <string name="glucose">Глюкоза</string>
+    <string name="insulin">Інсулін</string>
+    <string name="mmolL">ммоль/л</string>
+    <string name="mgdL">мг/дл</string>
+    <string name="settings">Налаштування</string>
+    <string name="edit">Рудагувати</string>
+    <string name="turn_off">Вимкнути</string>
+    <string name="turn_on">Увімкнути</string>
+    <string name="delete">Видалити</string>
+    <string name="no_reminders">Немає нагадувань</string>
+    <string name="edit_record">Рудагувати запис</string>
+    <string name="add_record">Додати запис</string>
+    <string name="type_note">Нотатка</string>
+    <string name="save">Зберегти</string>
+    <string name="skip">Пропустити</string>
+    <string name="get_started">Почати</string>
+    <string name="add_insulin">Додати інсулін</string>
+    <string name="choose_glucose_units">Виберіть одиниці глюкози</string>
+    <string name="welcome">Ласкаво просимо!</string>
+    <string name="edit_reminder">Редагувати нагадування</string>
+    <string name="add_reminder">Додати нагадування</string>
+    <string name="sign_in_with_google">Увійти за допомогою Google</string>
+    <string name="theme">Тема</string>
+    <string name="dark_mode">Темний режим</string>
+    <string name="language">Мова</string>
+    <string name="add">Додати</string>
+    <string name="dismiss">Відхилити</string>
+    <string name="delete_insulin_title">Видалити інсулін</string>
+    <string name="delete_insulin_text">Ви впевнені, що хочете видалити? У вас є нагадування, пов’язане з цим інсуліном, і якщо ви його видалите, нагадування також буде видалено</string>
+</resources>

@@ -22,6 +22,7 @@ import com.ca.designsystem.components.singlerowcalendar.*
 import com.ca.designsystem.theme.Theme
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.util.Locale
 import kotlin.math.absoluteValue
 
 
@@ -29,9 +30,13 @@ import kotlin.math.absoluteValue
 @Composable
 fun SingleRowCalendar(
     selectedDay: LocalDate,
-    onSelectedDayChange: (LocalDate) -> Unit = {}
+    onSelectedDayChange: (LocalDate) -> Unit = {},
+    locale: Locale
 ) {
-    val pagerState = rememberPagerState(initialPage = Int.MAX_VALUE)
+    val pagerState = rememberPagerState(
+        initialPage = Int.MAX_VALUE,
+        pageCount = { Int.MAX_VALUE }
+    )
     val scope = rememberCoroutineScope()
     val visibleDate = remember { mutableStateOf(LocalDate.now()) }
 
@@ -52,7 +57,7 @@ fun SingleRowCalendar(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CalendarHeader(
-                title = visibleDate.value.formatMonthYear(),
+                title = visibleDate.value.formatMonthYear(locale),
                 onBackClick = {
                     scope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage - 1)
@@ -81,7 +86,8 @@ fun SingleRowCalendar(
                                 onSelectedDayChange(date)
                             },
                             modifier = Modifier,
-                            isSelected = it == selectedDay
+                            isSelected = it == selectedDay,
+                            locale = locale
                         )
                     }
                 }

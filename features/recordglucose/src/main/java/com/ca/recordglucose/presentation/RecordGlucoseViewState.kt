@@ -1,7 +1,7 @@
 package com.ca.recordglucose.presentation
 
-import com.ca.domain.model.GlucoseRecord
-import com.ca.domain.model.MeasuringMark
+import com.ca.model.GlucoseRecord
+import com.ca.model.MeasuringMark
 import java.time.LocalDate
 import java.time.LocalTime
 

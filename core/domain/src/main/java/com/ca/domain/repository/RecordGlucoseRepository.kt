@@ -1,6 +1,6 @@
 package com.ca.domain.repository
 
-import com.ca.domain.model.GlucoseRecord
+import com.ca.model.GlucoseRecord
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.LocalTime

@@ -29,8 +29,8 @@ class MainActivityViewModel @Inject constructor(
         viewModelScope.launch {
             val isOnBoardingShowed = checkIfOnBoardingShowed()
             val startDestination = if (!repository.isUserSignedIn) MainRoute.Auth.route
-            else if (!isOnBoardingShowed) MainRoute.OnBoarding.route
-            else MainRoute.Home.route
+                else if (!isOnBoardingShowed) MainRoute.OnBoarding.route
+                else MainRoute.Home.route
 
             _viewState.update { it.copy(startDestination = startDestination) }
         }

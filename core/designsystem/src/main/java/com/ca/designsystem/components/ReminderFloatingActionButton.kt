@@ -27,7 +27,7 @@ fun ReminderFloatingActionButton(
         animationSpec = tween(
             durationMillis = 150,
             easing = LinearOutSlowInEasing
-        )
+        ), label = ""
     )
 
     FloatingActionButton(

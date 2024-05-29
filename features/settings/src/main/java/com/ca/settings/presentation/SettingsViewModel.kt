@@ -2,13 +2,17 @@ package com.ca.settings.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
 import com.ca.domain.repository.RemindersRepository
 import com.ca.domain.repository.SettingsRepository
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,7 +21,7 @@ class SettingsViewModel @Inject constructor(
     private val remindersRepository: RemindersRepository
 ) : ViewModel() {
 
-    private var _viewState = MutableStateFlow(SettingsViewState())
+    private var _viewState = MutableStateFlow(SettingsViewState(currentLocale = repository.defaultLocale()))
     val viewState: StateFlow<SettingsViewState> = _viewState.asStateFlow()
 
     init {
@@ -87,6 +91,11 @@ class SettingsViewModel @Inject constructor(
         _viewState.update { it.copy(showDeleteInsulinDialog = value) }
     }
 
+    fun showSetLocaleDialog(value: Boolean) {
+        if (!value) setRevealedInsulin(null)
+        _viewState.update { it.copy(showSetLocaleDialog = value) }
+    }
+
     fun setRevealedInsulin(insulin: Insulin?) {
         _viewState.update { it.copy(revealedInsulin = insulin) }
     }
@@ -95,5 +104,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             repository.darkMode(darkMode)
         }
+    }
+
+    suspend fun selectLocale(locale: Locale) {
+        _viewState.update { it.copy(currentLocale = locale) }
+        repository.setLocale(locale)
     }
 }

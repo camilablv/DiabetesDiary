@@ -4,12 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Parcelable
 import android.util.Log
 import com.ca.alarmmanager.AlarmScheduler
-import com.ca.domain.model.ListItem
-import com.ca.domain.model.RecordGlucoseReminder
-import com.ca.domain.model.RecordInsulinReminder
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.ReminderIteration
 import com.ca.domain.repository.RemindersRepository
 import com.ca.notification.DiaryNotificationManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +17,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 import javax.inject.Inject
+
+@Parcelize
+sealed class ReminderId : Parcelable {
+    data class InsulinReminderId(val id: Int) : ReminderId()
+    data class GlucoseReminderId(val id: Int) : ReminderId()
+}
 
 @AndroidEntryPoint
 class AlarmReceiver : BroadcastReceiver() {
@@ -33,21 +40,28 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
         Log.d("EXTRA_MESSAGE", "Received message")
 
-        val reminder = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        val reminderId = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(REMINDER_KEY)
         } else {
-            intent.getParcelableExtra(REMINDER_KEY, ListItem::class.java)
+            intent.getParcelableExtra(REMINDER_KEY, ReminderId::class.java)
         }
 
-        when (reminder) {
-            is RecordInsulinReminder -> {
-                notificationManager.showRecordInsulinNotification(reminder)
-                handleInsulinReminder(reminder)
+        when (reminderId) {
+            is ReminderId.InsulinReminderId -> {
+                scope.launch {
+                    val reminder = remindersRepository.insulinReminderById(reminderId.id)
+                    notificationManager.showRecordInsulinNotification(reminder)
+                    handleInsulinReminder(reminder)
+                }
             }
-            is RecordGlucoseReminder -> {
-                notificationManager.postGlucoseMeasuringNotification(reminder)
-                handleGlucoseReminder(reminder)
+            is ReminderId.GlucoseReminderId -> {
+                scope.launch {
+                    val reminder = remindersRepository.glucoseReminderById(reminderId.id)
+                    notificationManager.postGlucoseMeasuringNotification(reminder)
+                    handleGlucoseReminder(reminder)
+                }
             }
+            else -> {}
         }
     }
 

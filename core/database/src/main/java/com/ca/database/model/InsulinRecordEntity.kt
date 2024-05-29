@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.Insulin
+import com.ca.model.InsulinRecord
 import java.time.LocalDate
 import java.time.LocalTime
 

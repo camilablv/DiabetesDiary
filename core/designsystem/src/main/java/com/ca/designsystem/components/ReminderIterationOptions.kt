@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.ReminderIteration
-import com.ca.domain.model.iterationOptions
+import com.ca.model.ReminderIteration
+import com.ca.model.iterationOptions
 
 @Composable
 fun ReminderIterationOptions(

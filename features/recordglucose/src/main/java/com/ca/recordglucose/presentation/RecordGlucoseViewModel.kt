@@ -2,7 +2,7 @@ package com.ca.recordglucose.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.domain.model.MeasuringMark
+import com.ca.model.MeasuringMark
 import com.ca.domain.repository.RecordGlucoseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -90,7 +90,7 @@ class RecordGlucoseViewModel @Inject constructor(
 
     fun setupEditMode(recordId: String) {
         viewModelScope.launch {
-        val record = repository.recordById(recordId)
+            val record = repository.recordById(recordId)
             _viewState.update {
                 it.copy(
                     isInEditMode = true,

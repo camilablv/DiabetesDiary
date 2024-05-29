@@ -1,7 +1,7 @@
 package com.ca.reminders.presentation
 
-import com.ca.domain.model.RecordGlucoseReminder
-import com.ca.domain.model.RecordInsulinReminder
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
 
 data class RemindersViewState(
     val insulinReminders: List<RecordInsulinReminder> = listOf(),
