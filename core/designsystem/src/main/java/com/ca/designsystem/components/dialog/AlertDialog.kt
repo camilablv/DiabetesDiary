@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
+import com.ca.designsystem.R
 
 @Composable
 fun DiaryAlertDialog(
     show: Boolean,
+    title: String,
+    text: String,
     onDismiss: () -> Unit,
     onPositiveButtonClick: () -> Unit,
     positiveButtonText: String
@@ -20,8 +24,8 @@ fun DiaryAlertDialog(
     if (!show) return
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Delete insulin") },
-        text = { Text(text = "Are you sure you want to delete? You have a reminder associated with this insulin and if you delete it, the reminder will also be deleted") },
+        title = { Text(text = title) },
+        text = { Text(text = text) },
         buttons = {
             Row(
                 modifier = Modifier
@@ -31,7 +35,7 @@ fun DiaryAlertDialog(
             ) {
                 TextButton(onClick = onDismiss) {
                     Text(
-                        text = "Dismiss",
+                        text = stringResource(id = R.string.dismiss),
                         color = Theme.colors.secondary
                     )
                 }

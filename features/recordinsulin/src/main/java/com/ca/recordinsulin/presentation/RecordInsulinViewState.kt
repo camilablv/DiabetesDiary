@@ -1,7 +1,7 @@
 package com.ca.recordinsulin.presentation
 
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.InsulinRecord
+import com.ca.model.Insulin
+import com.ca.model.InsulinRecord
 import java.time.LocalDate
 import java.time.LocalTime
 

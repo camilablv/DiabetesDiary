@@ -9,12 +9,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ca.common.utils.timeOfHHmmPattern
+import com.ca.designsystem.R
 import com.ca.designsystem.components.glucosemeasuringmark.MeasuringMarkCard
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.GlucoseRecord
+import com.ca.model.GlucoseRecord
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -51,7 +53,7 @@ fun GlucoseRecordTimelineCard(
                     .padding(8.dp),
             ) {
                 Text(
-                    text = "Glucose",
+                    text = stringResource(id = R.string.glucose),
                     style = Theme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -85,7 +87,7 @@ fun GlucoseRecordTimelineCard(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "mmol/L",
+                                text = stringResource(id = R.string.mmolL),
                                 style = Theme.typography.bodySmall,
                             )
                         }

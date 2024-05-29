@@ -53,7 +53,7 @@ fun Material3DatePicker(
             selectedDayContainerColor = Theme.colors.secondary
         )
     ) {
-        androidx.compose.material3.DatePicker(state = state)
+        DatePicker(state = state)
     }
 }
 

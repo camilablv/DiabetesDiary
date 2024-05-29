@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.R
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.GlucoseUnits
+import com.ca.model.GlucoseUnits
 
 @Composable
 fun ChooseGlucoseUnitsPage(
@@ -31,7 +33,7 @@ fun ChooseGlucoseUnitsPage(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Choose Glucose Units",
+            text = stringResource(id = R.string.choose_glucose_units),
             style = Theme.typography.headlineLarge
         )
 

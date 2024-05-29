@@ -1,7 +1,7 @@
 package com.ca.domain.usecase
 
-import com.ca.domain.model.GlucoseUnits
 import com.ca.domain.repository.SettingsRepository
+import com.ca.model.GlucoseUnits
 import javax.inject.Inject
 
 class UpdateGlucoseUnitUseCase @Inject constructor(

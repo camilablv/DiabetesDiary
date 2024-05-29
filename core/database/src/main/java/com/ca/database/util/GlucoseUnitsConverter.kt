@@ -1,7 +1,7 @@
 package com.ca.database.util
 
 import androidx.room.TypeConverter
-import com.ca.domain.model.GlucoseUnits
+import com.ca.model.GlucoseUnits
 
 class GlucoseUnitsConverter {
     @TypeConverter

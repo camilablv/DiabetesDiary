@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,7 +22,7 @@ import com.ca.designsystem.components.ReminderIterationOptions
 import com.ca.designsystem.components.pickers.TimeWheelPicker
 import com.ca.designsystem.components.topbar.TopBar
 import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.ReminderIteration
+import com.ca.model.ReminderIteration
 import java.time.LocalTime
 
 @Composable
@@ -38,12 +39,12 @@ fun GlucoseReminderRoute(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     GlucoseReminderScreen(
-        topBarTitle = if (viewState.isInEditMode) "Edit Reminder" else "Add Reminder",
+        topBarTitle = if (viewState.isInEditMode) stringResource(id = R.string.edit_reminder) else stringResource(id = R.string.add_reminder),
         navigateBack = navigateBack,
         viewState = viewState,
         setTime = viewModel::setTime,
         setIteration = viewModel::setIteration,
-        submit = if (viewState.isInEditMode) viewModel::addReminder else viewModel::updateReminder
+        submit = if (viewState.isInEditMode) viewModel::updateReminder else viewModel::addReminder
     )
 }
 
@@ -113,7 +114,7 @@ fun GlucoseReminderScreen(
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = "Save",
+                    text = stringResource(id = R.string.save),
                     color = Theme.colors.onSecondary
                 )
             }

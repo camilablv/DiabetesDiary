@@ -1,25 +1,20 @@
 package com.ca.designsystem.components
 
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.ca.designsystem.theme.Theme
-import com.ca.domain.model.Insulin
+import com.ca.model.Insulin
 import de.charlex.compose.*
-import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -40,10 +35,6 @@ fun InsulinList(
             key(insulin.id) {
                 val revealState = rememberRevealState()
 
-                val buttonSize by animateDpAsState(
-                    targetValue = (revealState.offset.value.absoluteValue / 4).dp
-                )
-
                 LaunchedEffect(revealState.progress) {
                     if (revealState.targetValue != RevealValue.Default)
                         onReveal(insulin)
@@ -56,47 +47,42 @@ fun InsulinList(
 
                 RevealSwipe(
                     state = revealState,
-                    modifier = Modifier.padding(vertical = 5.dp),
+                    modifier = Modifier,
                     directions = setOf(
                         RevealDirection.StartToEnd,
                         RevealDirection.EndToStart
                     ),
+                    shape = RoundedCornerShape(12.dp),
                     hiddenContentStart = {
-                        IconButton(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .background(Color.Gray.copy(alpha = 0.5f), CircleShape)
-                                .size(buttonSize),
-                            onClick = { editInsulin(insulin) }
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .padding(8.dp),
-                                imageVector = Icons.Filled.Edit,
-                                contentDescription = "",
-                                tint = Color.White
-                            )
-                        }
+                            IconButton(
+                                modifier = Modifier,
+                                onClick = { editInsulin(insulin) }
+                            ) {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(28.dp),
+                                    imageVector = Icons.Filled.Edit,
+                                    contentDescription = "",
+                                    tint = Color.White
+                                )
+                            }
                     },
                     hiddenContentEnd = {
                         IconButton(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .background(Color.Gray.copy(alpha = 0.5f), CircleShape)
-                                .size(buttonSize),
+                            modifier = Modifier,
                             onClick = { deleteInsulin(insulin) }
                         ) {
                             Icon(
                                 modifier = Modifier
-                                    .padding(8.dp),
+                                    .size(28.dp),
                                 imageVector = Icons.Filled.Delete,
                                 contentDescription = "",
                                 tint = Color.White
                             )
                         }
                     },
-                    backgroundCardStartColor = Theme.colors.background,
-                    backgroundCardEndColor = Theme.colors.background,
+                    backgroundCardStartColor = Color.Gray.copy(alpha = 0.3f),
+                    backgroundCardEndColor = Color.Gray.copy(alpha = 0.3f),
                 ) {
                     InsulinCard(
                         modifier = Modifier,

@@ -1,5 +1,6 @@
 package com.ca.diabetesdiary.navigation.bottombar
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import com.ca.insulinreminder.navigation.navigateToInsulinReminder
 import com.ca.records.presentation.RecordsScreen
 import com.ca.reminders.presentation.RemindersScreen
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BottomBarMenuNavHost(
     mainNavController: NavHostController,

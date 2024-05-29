@@ -1,12 +1,14 @@
 package com.ca.data.repository
 
 import android.util.Log
+import com.ca.data.datasource.locale.LocaleDataSource
 import com.ca.data.di.IoDispatcher
 import com.ca.datastore.SettingsDataStore
 import com.ca.datastore.UserDataStore
-import com.ca.domain.model.GlucoseUnits
-import com.ca.domain.model.Insulin
-import com.ca.domain.model.Settings
+import com.ca.domain.repository.SettingsRepository
+import com.ca.model.GlucoseUnits
+import com.ca.model.Insulin
+import com.ca.model.Settings
 import com.ca.network.api.NetworkClient
 import com.ca.network.utils.insulin
 import com.ca.network.utils.unit
@@ -15,14 +17,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
     private val userPreferencesDataStore: UserDataStore,
     private val settingsDataStore: SettingsDataStore,
+    private val localeDataSource: LocaleDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : com.ca.domain.repository.SettingsRepository {
+) : SettingsRepository {
 
     override suspend fun updateGlucoseUnits(units: GlucoseUnits): GlucoseUnits? {
         return withContext(ioDispatcher) {
@@ -84,5 +88,11 @@ class SettingsRepositoryImpl @Inject constructor(
 
     override suspend fun darkMode(darkMode: Boolean) = withContext(ioDispatcher) {
         settingsDataStore.setDarkMode(darkMode)
+    }
+
+    override fun defaultLocale(): Locale = localeDataSource.defaultLocale()
+
+    override suspend fun setLocale(locale: Locale) {
+        localeDataSource.setLocale(locale)
     }
 }
