@@ -10,6 +10,7 @@ val Shapes = DiaryShapes(
     small = RoundedCornerShape(4.dp),
     medium = RoundedCornerShape(8.dp),
     large = RoundedCornerShape(12.dp),
+    round = RoundedCornerShape(50),
     bottomSheet = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
 )
 
@@ -18,6 +19,7 @@ data class DiaryShapes(
     val small: Shape,
     val medium: Shape,
     val large: Shape,
+    val round: Shape,
     val bottomSheet: Shape
 )
 

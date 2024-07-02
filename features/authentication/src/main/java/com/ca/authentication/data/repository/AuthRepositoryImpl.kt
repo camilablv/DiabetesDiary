@@ -19,7 +19,7 @@ class AuthRepositoryImpl @Inject constructor(
             onSuccess()
 
             data.session.let { session ->
-                Log.d("AuthRepositoryImpl", session.token.toString())
+                Log.d("AuthRepositoryImpl", session.token)
                 dataStore.updateData { prefs ->
                     prefs.toBuilder()
                         .setAuthToken(session.token)

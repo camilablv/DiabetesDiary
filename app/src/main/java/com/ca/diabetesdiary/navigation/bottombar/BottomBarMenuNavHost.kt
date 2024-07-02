@@ -38,7 +38,7 @@ fun BottomBarMenuNavHost(
     ) { innerPadding ->
         NavHost(
             navController = bottomMenuNavHostController,
-            startDestination = BottomBarRoute.Home.route,
+            startDestination = BottomBarRoute.Records.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomBarRoute.Home.route) {
