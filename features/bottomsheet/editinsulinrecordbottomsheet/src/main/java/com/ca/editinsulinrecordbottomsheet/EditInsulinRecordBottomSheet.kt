@@ -40,11 +40,11 @@ fun EditInsulinRecordBottomSheet(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_edit, title = stringResource(id = R.string.edit)) {
+                BottomSheetMenuOption(icon = R.drawable.round_edit, title = stringResource(id = R.string.edit)) {
                     navigateToEditInsulinRecord()
                 }
 
-                BottomSheetMenuOption(icon = com.ca.designsystem.R.drawable.round_delete, title = stringResource(id = R.string.delete)) {
+                BottomSheetMenuOption(icon = R.drawable.round_delete, title = stringResource(id = R.string.delete)) {
                     viewModel.removeRecord()
                     dismiss()
                 }

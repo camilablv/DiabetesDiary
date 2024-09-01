@@ -70,7 +70,8 @@ buildscript {
                 runtime : "androidx.room:room-runtime:$roomVersion",
                 compiler: "androidx.room:room-compiler:$roomVersion",
                 ktx     : "androidx.room:room-ktx:$roomVersion",
-                common  : "androidx.room:room-common:$roomVersion"
+                common  : "androidx.room:room-common:$roomVersion",
+                paging  : "androidx.room:room-paging:$roomVersion"
         ]
         testDependencies = [
                junit : "androidx.test.ext:junit:1.1.5",

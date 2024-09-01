@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.ca.designsystem.components.FilterItem
+import com.ca.model.DateFilterItem
 import com.ca.model.InsulinRecord
 import com.ca.records.domain.repository.InsulinRecordsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +31,7 @@ class InsulinRecordsViewModel @Inject constructor(
         }
     }
 
-    fun selectDateFilter(filterItem: FilterItem) {
+    fun selectDateFilter(filterItem: DateFilterItem) {
         _viewState.update { it.copy(selectedDateFilter = filterItem) }
     }
 }

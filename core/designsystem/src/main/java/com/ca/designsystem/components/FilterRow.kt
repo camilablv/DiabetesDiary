@@ -16,28 +16,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ca.designsystem.theme.Theme
-import java.util.Date
-
-enum class FilterItem(val text: String, val range: Date) {
-    ALL("All", Date()),
-    TODAY("Today", Date()),
-    WEEK("Week", Date()),
-    MONTH("Month", Date()),
-    YEAR("Year", Date()),
-}
+import com.ca.model.DateFilterItem
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FilterRow(
-    selectedFilter: FilterItem,
-    filter: (FilterItem) -> Unit
+    selectedFilter: DateFilterItem,
+    filter: (DateFilterItem) -> Unit
 ) {
     FlowRow(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        FilterItem.entries.forEach {
+        DateFilterItem.entries.forEach {
             DateFilterItem(
                 text = it.text,
                 selected = it == selectedFilter

@@ -15,7 +15,8 @@ class AuthRepositoryImpl @Inject constructor(
     ) : AuthRepository {
 
     override suspend fun createSession(idToken: String, onSuccess: suspend () -> Unit) {
-        networkClient.createSession(idToken).onSuccess { data ->
+        networkClient.createSession(idToken)
+            .onSuccess { data ->
             onSuccess()
 
             data.session.let { session ->
@@ -28,6 +29,9 @@ class AuthRepositoryImpl @Inject constructor(
                 }
             }
         }
+            .onFailure { exception ->
+                Log.d("AuthRepositoryImpl", exception.cause.toString())
+            }
     }
 
     override suspend fun signInWithGoogle(token: String) {

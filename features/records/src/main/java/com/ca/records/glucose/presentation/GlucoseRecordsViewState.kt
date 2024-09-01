@@ -1,7 +1,7 @@
 package com.ca.records.glucose.presentation
 
-import com.ca.designsystem.components.FilterItem
+import com.ca.model.DateFilterItem
 
 data class GlucoseRecordsViewState(
-    val selectedDateFilter: FilterItem = FilterItem.ALL
+    val selectedDateFilter: DateFilterItem = DateFilterItem.ALL
 )

@@ -39,6 +39,7 @@ dependencies {
     // Android X
     implementation androidxDependencies.coreKtx
     implementation androidxDependencies.appcompat
+    implementation androidxDependencies.paging
 
     // Hilt
     implementation hiltDependencies.hilt
@@ -49,6 +50,7 @@ dependencies {
     kapt roomDependencies.compiler
     implementation roomDependencies.ktx
     implementation roomDependencies.common
+    implementation roomDependencies.paging
 
     //Test
     implementation testDependencies.junit
