@@ -26,7 +26,7 @@ class NetworkModule {
             .build()
 
         return ApolloClient.Builder()
-            .serverUrl("https://pchpsky-diary.fly.dev/graph")
+            .serverUrl("http://192.168.0.105:4000/graph")
             .okHttpClient(okHttpClient)
             .build()
     }

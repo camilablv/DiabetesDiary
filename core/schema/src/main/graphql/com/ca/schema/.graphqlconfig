@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://pchpsky-diary.fly.dev/graph",
+        "url": "http://192.168.0.105:4000/graph",
         "headers": {
           "user-agent": "JS GraphQL"
         },

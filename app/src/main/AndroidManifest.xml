@@ -20,7 +20,8 @@
         android:theme="@style/Theme.DiabetesDiary"
         tools:targetApi="33"
         android:name=".DiaryApplication"
-        android:localeConfig="@xml/locales_config">
+        android:localeConfig="@xml/locales_config"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
