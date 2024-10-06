@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.*
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -59,7 +59,7 @@ private fun RecordsPager(
 
         HorizontalPager(
             state = pagerState,
-            beyondBoundsPageCount = pages.size
+            beyondViewportPageCount = pages.size
         ) {
             when (pages[it]) {
                 RecordsPage.InsulinRecords -> {

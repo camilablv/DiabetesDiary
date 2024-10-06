@@ -4,7 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -76,12 +76,10 @@ fun RecordGlucoseScreen(
     setNote: (String) -> Unit,
     submit: () -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = topBarTitle,
@@ -182,7 +180,7 @@ fun RecordGlucoseScreen(
                     onBackClick()
                 },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Theme.colors.secondary
+                    containerColor = Theme.colors.secondary
                 ),
                 shape = Theme.shapes.large,
                 modifier = Modifier

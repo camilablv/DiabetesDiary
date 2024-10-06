@@ -1,7 +1,7 @@
 package com.ca.network.di
 
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.network.okHttpClient
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.network.okHttpClient
 import com.ca.authentication.token.JWTService
 import com.ca.network.error.NetworkErrorHandler
 import com.ca.network.interceptor.AuthInterceptor

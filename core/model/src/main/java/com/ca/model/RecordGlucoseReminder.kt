@@ -7,4 +7,4 @@ data class RecordGlucoseReminder(
     override val time: LocalTime,
     val iteration: ReminderIteration,
     val enabled: Boolean,
-): ListItem
+): Reminder

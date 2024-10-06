@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,9 +18,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ca.designsystem.components.ReminderFloatingActionButton
 import com.ca.designsystem.components.Tabs
-import com.ca.model.ListItem
+import com.ca.model.Record
 import com.ca.model.RecordGlucoseReminder
 import com.ca.model.RecordInsulinReminder
+import com.ca.model.Reminder
 import com.ca.reminders.presentation.pages.GlucoseRemindersPage
 import com.ca.reminders.presentation.pages.InsulinRemindersPage
 import com.ca.reminders.presentation.pages.RemindersPage
@@ -29,7 +29,6 @@ import com.ca.reminders.presentation.pages.pages
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RemindersScreen(
     viewModel: RemindersViewModel = hiltViewModel(),
@@ -84,7 +83,7 @@ private fun RemindersPager(
     viewState: RemindersViewState,
     insulinReminderEnabledChange: (RecordInsulinReminder, Boolean) -> Unit,
     glucoseReminderEnabledChange: (RecordGlucoseReminder, Boolean) -> Unit,
-    onItemClick: (ListItem) -> Unit
+    onItemClick: (Reminder) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -101,7 +100,7 @@ private fun RemindersPager(
 
         HorizontalPager(
             state = pagerState,
-            beyondBoundsPageCount = pages.size
+            beyondViewportPageCount = pages.size
         ) { page ->
             when(pages[page]) {
                 RemindersPage.InsulinRecords -> {

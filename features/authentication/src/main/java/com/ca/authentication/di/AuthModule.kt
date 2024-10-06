@@ -1,7 +1,7 @@
 package com.ca.authentication.di
 
 import androidx.datastore.core.DataStore
-import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo.ApolloClient
 import com.ca.authentication.FirebaseAuthProvider
 import com.ca.authentication.data.repository.AuthRepositoryImpl
 import com.ca.datastore.UserPreferences

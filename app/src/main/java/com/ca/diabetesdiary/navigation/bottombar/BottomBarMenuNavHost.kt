@@ -16,7 +16,6 @@ import com.ca.insulinreminder.navigation.navigateToInsulinReminder
 import com.ca.records.presentation.RecordsScreen
 import com.ca.reminders.presentation.RemindersScreen
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BottomBarMenuNavHost(
     mainNavController: NavHostController,
@@ -38,7 +37,7 @@ fun BottomBarMenuNavHost(
     ) { innerPadding ->
         NavHost(
             navController = bottomMenuNavHostController,
-            startDestination = BottomBarRoute.Records.route,
+            startDestination = BottomBarRoute.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BottomBarRoute.Home.route) {
