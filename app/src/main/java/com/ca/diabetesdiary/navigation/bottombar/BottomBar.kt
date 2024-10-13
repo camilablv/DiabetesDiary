@@ -1,12 +1,12 @@
 package com.ca.diabetesdiary.navigation.bottombar
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.BottomNavigationDefaults
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material3.*
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -18,6 +18,7 @@ import com.ca.designsystem.theme.Theme
 fun BottomBar(navController: NavHostController) {
     BottomAppBar(
         containerColor = Theme.colors.background,
+        tonalElevation = BottomNavigationDefaults.Elevation
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -37,9 +38,7 @@ fun BottomBar(navController: NavHostController) {
                         restoreState = true
                     }
                 }
-
             )
-
         }
     }
 }
