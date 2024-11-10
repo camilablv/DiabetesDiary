@@ -1,6 +1,6 @@
 package com.ca.network.api
 
-import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo.ApolloClient
 import com.ca.*
 import com.ca.model.GlucoseUnits
 import com.ca.network.error.NetworkErrorHandler
@@ -110,14 +110,14 @@ class NetworkClient @Inject constructor(
     }
 
     suspend fun insulinRecords(cursor: String?, limit: Int): Result<InsulinRecordsQuery.Data> {
-        val optional = com.apollographql.apollo3.api.Optional.present(cursor)
+        val optional = com.apollographql.apollo.api.Optional.present(cursor)
         return errorHandler.withErrorHandler {
             return@withErrorHandler apolloClient.query(InsulinRecordsQuery(optional, limit)).execute()
         }
     }
 
     suspend fun glucoseRecords(cursor: String?, limit: Int): Result<GlucoseRecordsQuery.Data> {
-        val optional = com.apollographql.apollo3.api.Optional.present(cursor)
+        val optional = com.apollographql.apollo.api.Optional.present(cursor)
         return errorHandler.withErrorHandler {
             return@withErrorHandler apolloClient.query(GlucoseRecordsQuery(optional, limit)).execute()
         }

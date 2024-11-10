@@ -14,7 +14,7 @@ internal fun CalendarPager(
 
     HorizontalPager(
         state = pagerState,
-        beyondBoundsPageCount = 1
+        beyondViewportPageCount = 1
     ) { page ->
         content(page)
     }

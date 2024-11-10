@@ -3,31 +3,26 @@ package com.ca.recordglucose.navigation
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.ca.recordglucose.presentation.RecordGlucoseRoute
+import kotlinx.serialization.Serializable
 
-private const val recordGlucoseGraphRoute = "glucose_graph"
-private const val recordGlucoseRoute = "record_glucose"
-private const val argumentName = "recordId"
+@Serializable
+data object RecordGlucoseGraph {
+    @Serializable
+    data class RecordGlucose(val recordId: String? = null)
+}
 
-fun NavController.navigateToRecordGlucose(recordId: String? = null) {
-    var route = recordGlucoseRoute
-    recordId?.let {
-        route = route.plus("?$argumentName=$it")
-    }
-    navigate(route)
+fun NavController.navigateToRecordGlucose(recordId: String?) {
+    navigate(RecordGlucoseGraph.RecordGlucose(recordId))
 }
 
 fun NavGraphBuilder.glucoseGraph(
     navigateBack: () -> Unit
 ) {
-    navigation(
-        startDestination = "$recordGlucoseRoute?$argumentName={$argumentName}",
-        route = recordGlucoseGraphRoute
+    navigation<RecordGlucoseGraph>(
+        startDestination = RecordGlucoseGraph.RecordGlucose(),
     ) {
-        composable(
-            route = "$recordGlucoseRoute?$argumentName={$argumentName}",
-            arguments = listOf(navArgument(argumentName) { nullable = true })
-        ) {
-            val recordId = it.arguments?.getString(argumentName)
+        composable<RecordGlucoseGraph.RecordGlucose> {
+            val recordId = it.toRoute<RecordGlucoseGraph.RecordGlucose>().recordId
             RecordGlucoseRoute(
                 recordId = recordId,
                 onBackClick = navigateBack

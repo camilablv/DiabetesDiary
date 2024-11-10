@@ -1,36 +1,23 @@
 package com.ca.diabetesdiary.presentation
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ca.designsystem.theme.DiaryTheme
 import com.ca.diabetesdiary.navigation.MainNavHost
-import com.ca.diabetesdiary.presentation.state.rememberDiaryAppState
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.ca.diabetesdiary.presentation.state.DiaryAppState
+import com.ca.model.TopLevelDestination
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun DiaryApp(
-    viewModel: MainActivityViewModel
+    appState: DiaryAppState,
+    startDestination: TopLevelDestination
 ) {
-    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-    val appState = rememberDiaryAppState()
-
-    DiaryTheme(viewState.darkMode) {
-        Scaffold(
-            scaffoldState = appState.scaffoldState,
-            snackbarHost = { appState.scaffoldState.snackbarHostState }
-        ) { contentPadding ->
-            MainNavHost(
-                navHostController = appState.navController,
-                bottomSheetNavigator = appState.bottomSheetNavigator,
-                startDestination = viewState.startDestination,
-                shouldShowOnBoarding = viewState.shouldShowOnBoarding,
-                modifier = Modifier.padding(contentPadding)
-            )
-        }
+    Scaffold { contentPadding ->
+        MainNavHost(
+            navHostController = appState.navController,
+            startDestination = startDestination,
+            modifier = Modifier.padding(contentPadding)
+        )
     }
 }

@@ -11,4 +11,4 @@ data class GlucoseRecord(
     override val time: LocalTime,
     val date: LocalDate,
     val measuringMark: MeasuringMark
-) : ListItem
+) : Record

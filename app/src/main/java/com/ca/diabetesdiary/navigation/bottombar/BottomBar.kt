@@ -1,7 +1,10 @@
 package com.ca.diabetesdiary.navigation.bottombar
 
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.BottomNavigationDefaults
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
@@ -14,8 +17,8 @@ import com.ca.designsystem.theme.Theme
 @Composable
 fun BottomBar(navController: NavHostController) {
     BottomAppBar(
-        backgroundColor = Theme.colors.background,
-        cutoutShape = CircleShape
+        containerColor = Theme.colors.background,
+        tonalElevation = BottomNavigationDefaults.Elevation
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -25,7 +28,7 @@ fun BottomBar(navController: NavHostController) {
                 unselectedContentColor = Theme.colors.onBackground,
                 icon = { Icon(painter = painterResource(id = screen.icon), contentDescription = null) },
                 label = { Text(text = screen.title) },
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                selected = currentDestination?.hierarchy?.any { it == screen } == true,
                 onClick = {
                     navController.navigate(screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -35,9 +38,7 @@ fun BottomBar(navController: NavHostController) {
                         restoreState = true
                     }
                 }
-
             )
-
         }
     }
 }

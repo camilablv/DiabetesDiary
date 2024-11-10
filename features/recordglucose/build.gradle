@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlinx-serialization'
+    id 'org.jetbrains.kotlin.plugin.compose' version '2.0.20'
 }
 
 android {
@@ -23,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '21'
     }
     buildFeatures {
         compose true
@@ -55,7 +57,7 @@ dependencies {
     implementation composeDependencies.ui
     implementation composeDependencies.uiTooling
     implementation composeDependencies.uiToolingPreview
-    implementation composeDependencies.material
+    implementation composeDependencies.material3
     implementation composeDependencies.runtime
     implementation composeDependencies.foundation
     implementation composeDependencies.foundationLayout
@@ -73,4 +75,7 @@ dependencies {
     //Test
     implementation testDependencies.junit
     implementation testDependencies.espresso
+
+    //Serialization
+    implementation serialization.serialization
 }

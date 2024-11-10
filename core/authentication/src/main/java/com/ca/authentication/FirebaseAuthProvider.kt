@@ -1,5 +1,6 @@
 package com.ca.authentication
 
+import android.util.Log
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GetTokenResult
@@ -19,12 +20,13 @@ class FirebaseAuthProvider(private val auth: FirebaseAuth) {
 
     fun signInWithGoogle(token: String) {
         val credential = credential(token)
-        auth.signInWithCredential(credential).addOnCompleteListener {
-
+        checkAndRefreshTokenIfNeeded()
+        auth.signInWithCredential(credential).addOnCompleteListener { result ->
+            Log.d("FirebaseAuthProvider", result.result.toString())
         }
     }
 
-    fun checkAndRefreshTokenIfNeeded() {
+    private fun checkAndRefreshTokenIfNeeded() {
         if (isUserSignedIn) {
             auth.currentUser?.getIdToken(true)
                 ?.addOnCompleteListener { task ->
@@ -34,7 +36,7 @@ class FirebaseAuthProvider(private val auth: FirebaseAuth) {
                         val currentTime = Calendar.getInstance().timeInMillis
                         val thirtyMinutesInMillis = 30 * 60 * 1000
                         if (expirationTimestamp - currentTime <= thirtyMinutesInMillis) {
-
+                            Log.d("FirebaseAuthProvider", task.result.toString())
                         }
                     }
                 }

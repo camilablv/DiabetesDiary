@@ -4,10 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -158,7 +155,7 @@ fun InsulinReminderScreen(
                     navigateBack()
                 },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Theme.colors.secondary
+                    containerColor = Theme.colors.secondary
                 ),
                 shape = Theme.shapes.large,
                 modifier = Modifier

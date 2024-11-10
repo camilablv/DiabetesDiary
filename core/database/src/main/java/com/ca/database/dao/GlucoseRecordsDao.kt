@@ -25,4 +25,7 @@ interface GlucoseRecordsDao {
 
     @Query("SELECT * FROM $glucoseRecordsTableName WHERE id == :id")
     fun recordById(id: String): GlucoseRecordEntity
+
+//    @Query("SELECT * FROM $glucoseRecordsTableName WHERE date BETWEEN :from AND :to")
+//    fun recordsByRange(from: LocalDate, to: LocalDate): PagingSource<Int, GlucoseRecordEntity>
 }

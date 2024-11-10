@@ -11,4 +11,4 @@ data class InsulinRecord(
     val date: LocalDate,
     val units: Double,
     val note: String?
-) : ListItem
+) : Record

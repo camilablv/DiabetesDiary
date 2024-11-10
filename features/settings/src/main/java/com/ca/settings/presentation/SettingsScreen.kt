@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,7 +33,6 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val viewState: SettingsViewState by viewModel.viewState.collectAsStateWithLifecycle()
-    val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
 
     val localeOptions = mapOf(
@@ -45,7 +43,6 @@ fun SettingsScreen(
     fun currentLocale() = context.resources.configuration.locales[0]
 
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = { TopBar(title = stringResource(id = R.string.settings)) {
             navigateBack()
         } }

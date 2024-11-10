@@ -4,7 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -84,12 +84,10 @@ fun RecordInsulinScreen(
     submit: () -> Unit
 ) {
 
-    val scaffoldState = rememberScaffoldState()
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             TopBar(
                 title = topBarTitle,
@@ -201,7 +199,7 @@ fun RecordInsulinScreen(
                     onBackClick()
                 },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Theme.colors.secondary
+                    containerColor = Theme.colors.secondary
                 ),
                 shape = Theme.shapes.large,
                 modifier = Modifier

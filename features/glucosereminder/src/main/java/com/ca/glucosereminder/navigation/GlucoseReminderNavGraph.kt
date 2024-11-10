@@ -4,25 +4,29 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.ca.glucosereminder.presentation.GlucoseReminderRoute
+import kotlinx.serialization.Serializable
 
-private const val glucoseReminderGraphRoute = "glucose_reminder_graph"
-private const val glucoseReminderRoute = "glucose_reminder_route"
-private const val argumentName = "reminderId"
+
+@Serializable
+object GlucoseReminderGraph {
+    @Serializable
+    data class GlucoseReminder(val reminderId: Int? = null)
+}
 
 fun NavController.navigateToGlucoseReminder(reminderId: Int? = null) {
-    navigate("$glucoseReminderRoute?$argumentName=$reminderId")
+    navigate(GlucoseReminderGraph.GlucoseReminder(reminderId))
 }
 
 fun NavGraphBuilder.glucoseReminderGraph(
     navigateBack: () -> Unit
 ) {
-    navigation(
-        startDestination = "$glucoseReminderRoute?$argumentName={$argumentName}",
-        route = glucoseReminderGraphRoute
+    navigation<GlucoseReminderGraph>(
+        startDestination = GlucoseReminderGraph.GlucoseReminder(),
     ) {
-        composable("$glucoseReminderRoute?$argumentName={$argumentName}") {
-            val reminderId = it.arguments?.getString(argumentName)?.toIntOrNull()
+        composable<GlucoseReminderGraph.GlucoseReminder> {
+            val reminderId = it.toRoute<GlucoseReminderGraph.GlucoseReminder>().reminderId
             GlucoseReminderRoute(
                 navigateBack = navigateBack,
                 reminderId = reminderId
