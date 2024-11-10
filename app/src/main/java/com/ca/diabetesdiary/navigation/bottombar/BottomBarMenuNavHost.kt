@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ca.designsystem.components.topbar.MainTopBar
+import com.ca.diabetesdiary.navigation.MainGraph
 import com.ca.glucosereminder.navigation.navigateToGlucoseReminder
 import com.ca.home.presentation.HomeScreen
 import com.ca.insulinreminder.navigation.navigateToInsulinReminder
@@ -29,17 +30,17 @@ fun BottomBarMenuNavHost(
     Scaffold(
         topBar = {
              MainTopBar(title = "Diabetes Diary") {
-                 mainNavController.navigate(BottomBarRoute.Settings.route)
+                 mainNavController.navigate(MainGraph.Settings)
              }
         },
         bottomBar = { BottomBar(navController = bottomMenuNavHostController) }
     ) { innerPadding ->
         NavHost(
             navController = bottomMenuNavHostController,
-            startDestination = BottomBarRoute.Home.route,
+            startDestination = BottomBarRoute.Home,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomBarRoute.Home.route) {
+            composable<BottomBarRoute.Home> {
                 HomeScreen(
                     openRecordsMenuBottomSheet = openRecordsMenuBottomSheet,
                     openInsulinRecordBottomSheet = { openInsulinRecordBottomSheet(it) },
@@ -48,10 +49,10 @@ fun BottomBarMenuNavHost(
                     openGlucoseReminderBottomSheet = { openGlucoseReminderBottomSheet(it) }
                 )
             }
-            composable(BottomBarRoute.Records.route) {
+            composable<BottomBarRoute.Records> {
                 RecordsScreen()
             }
-            composable(BottomBarRoute.Reminder.route) {
+            composable<BottomBarRoute.Reminders> {
                 RemindersScreen(
                     navigateToAddInsulinReminder = { mainNavController.navigateToInsulinReminder() },
                     navigateToAddGlucoseReminder = { mainNavController.navigateToGlucoseReminder() },

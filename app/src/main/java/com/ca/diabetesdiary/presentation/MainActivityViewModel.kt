@@ -2,7 +2,8 @@ package com.ca.diabetesdiary.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ca.diabetesdiary.navigation.MainRoute
+import com.ca.authentication.navigation.AuthGraph
+import com.ca.diabetesdiary.navigation.MainGraph
 import com.ca.diabetesdiary.presentation.state.MainViewState
 import com.ca.domain.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,19 +19,22 @@ class MainActivityViewModel @Inject constructor(
 
     private val _viewState = MutableStateFlow(MainViewState())
     val viewState: StateFlow<MainViewState> = _viewState
-
-    init {
-        setStartDestination()
-        setTheme()
-        setUserSettings()
-    }
+        .onStart {
+            setStartDestination()
+            setTheme()
+            setUserSettings()
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            MainViewState()
+        )
 
     private fun setStartDestination() {
         viewModelScope.launch {
             val isOnBoardingShowed = checkIfOnBoardingShowed()
-            val startDestination = if (!repository.isUserSignedIn) MainRoute.Auth.route
-                else if (!isOnBoardingShowed) MainRoute.OnBoarding.route
-                else MainRoute.Home.route
+            val startDestination = if (!repository.isUserSignedIn) AuthGraph
+                else if (!isOnBoardingShowed) MainGraph.OnBoarding
+                else MainGraph.Home
 
             _viewState.update { it.copy(startDestination = startDestination) }
         }

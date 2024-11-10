@@ -1,9 +1,13 @@
 package com.ca.diabetesdiary.navigation.bottombar
 
+import kotlinx.serialization.Serializable
 
-sealed class BottomBarRoute(val route: String) {
-    object Home : BottomBarRoute("home")
-    object Reminder : BottomBarRoute("reminder")
-    object Settings : BottomBarRoute("settings")
-    object Records: BottomBarRoute("records")
+@Serializable
+sealed class BottomBarRoute {
+    @Serializable
+    data object Home : BottomBarRoute()
+    @Serializable
+    data object Reminders : BottomBarRoute()
+    @Serializable
+    data object Records: BottomBarRoute()
 }

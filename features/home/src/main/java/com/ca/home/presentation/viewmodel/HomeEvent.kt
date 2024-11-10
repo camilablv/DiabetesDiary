@@ -8,6 +8,6 @@ sealed interface HomeEvent {
     data class FetchRecordsByDate(val date: LocalDate) : HomeEvent
     data class EditGlucoseReminder(val id: Int) : HomeEvent
     data class EditInsulinReminder(val id: Int) : HomeEvent
-    data class EditGlucoseRecord(val id: Int) : HomeEvent
-    data class EditInsulinRecord(val id: Int) : HomeEvent
+    data class EditGlucoseRecord(val id: String) : HomeEvent
+    data class EditInsulinRecord(val id: String) : HomeEvent
 }

@@ -15,9 +15,19 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.ca.designsystem.components.GlucoseRecordTimelineCard
+import com.ca.designsystem.components.GlucoseReminderTimelineCard
+import com.ca.designsystem.components.InsulinRecordTimelineCard
+import com.ca.designsystem.components.InsulinReminderTimelineCard
 import com.ca.designsystem.components.singlerowcalendar.SingleRowCalendar
 import com.ca.home.presentation.viewmodel.HomeEvent
 import com.ca.home.presentation.viewmodel.HomeViewState
+import com.ca.model.GlucoseRecord
+import com.ca.model.InsulinRecord
+import com.ca.model.Record
+import com.ca.model.RecordGlucoseReminder
+import com.ca.model.RecordInsulinReminder
+import com.ca.model.Reminder
 
 @Composable
 fun HomeContent(
@@ -47,46 +57,90 @@ fun HomeContent(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-//            items(viewState.reminders) { reminder ->
-//                when(reminder) {
-//                    is RecordInsulinReminder -> {
-//                        InsulinReminderTimelineCard(
-//                            reminder = reminder,
-//                            onDoneClick = {},
-//                            onClick = { onEvent(HomeEvent.EditInsulinReminder(reminder.id)) },
-//                        )
-//                    }
-//                    is RecordGlucoseReminder -> {
-//                        GlucoseReminderTimelineCard(
-//                            reminder = reminder,
-//                            onAddClick = {  },
-//                            onClick = { onEvent(HomeEvent.EditGlucoseReminder(reminder.id)) },
-//                        )
-//                    }
-//                }
-//            }
-//
-//            items(viewState.recordsByDate) { record ->
-//                when(record) {
-//                    is InsulinRecord -> {
-//                        InsulinRecordTimelineCard(
-//                            record = record,
-//                            onClick = { onEvent(HomeEvent.EditInsulinRecord(record.id)) },
-//                        )
-//                    }
-//                    is GlucoseRecord -> {
-//                        GlucoseRecordTimelineCard(
-//                            record = record,
-//                            onClick = { onEvent(HomeEvent.EditGlucoseRecord(record.id)) },
-//                        )
-//                    }
-//                }
-//            }
+            item {
+                Reminders(
+                    modifier = Modifier,
+                    reminders = viewState.reminders,
+                    editInsulinReminder = { onEvent(HomeEvent.EditInsulinReminder(it)) },
+                    editGlucoseReminder = { onEvent(HomeEvent.EditGlucoseReminder(it)) },
+                    onDoneInsulin = {},
+                    onDoneGlucose = {}
+                )
+            }
+
+            item {
+                Records(
+                    modifier = Modifier,
+                    records = viewState.recordsByDate,
+                    editInsulinRecord = { onEvent(HomeEvent.EditInsulinRecord(it)) },
+                    editGlucoseRecord = { onEvent(HomeEvent.EditGlucoseRecord(it)) }
+                )
+            }
 
             item {
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(76.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun Reminders(
+    modifier: Modifier,
+    reminders: List<Reminder>,
+    editInsulinReminder: (Int) -> Unit,
+    editGlucoseReminder: (Int) -> Unit,
+    onDoneInsulin: (Int) -> Unit,
+    onDoneGlucose: (Int) -> Unit,
+) {
+    Column {
+        reminders.forEach { reminder ->
+            when(reminder) {
+                is RecordInsulinReminder -> {
+                    InsulinReminderTimelineCard(
+                        reminder = reminder,
+                        onDoneClick = { onDoneInsulin(reminder.id) },
+                        onClick = { editInsulinReminder(reminder.id) },
+                    )
+                }
+                is RecordGlucoseReminder -> {
+                    GlucoseReminderTimelineCard(
+                        reminder = reminder,
+                        onAddClick = { onDoneGlucose(reminder.id) },
+                        onClick = { editGlucoseReminder(reminder.id) },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Records(
+    modifier: Modifier,
+    records: List<Record>,
+    editInsulinRecord: (String) -> Unit,
+    editGlucoseRecord: (String) -> Unit
+) {
+    Column(
+        modifier = modifier
+    ) {
+        records.forEach { record ->
+            when(record) {
+                is InsulinRecord -> {
+                    InsulinRecordTimelineCard(
+                        record = record,
+                        onClick = { editInsulinRecord(record.id) },
+                    )
+                }
+                is GlucoseRecord -> {
+                    GlucoseRecordTimelineCard(
+                        record = record,
+                        onClick = { editGlucoseRecord(record.id) },
+                    )
+                }
             }
         }
     }

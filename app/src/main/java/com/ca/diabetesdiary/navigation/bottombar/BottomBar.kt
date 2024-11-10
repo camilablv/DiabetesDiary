@@ -28,7 +28,7 @@ fun BottomBar(navController: NavHostController) {
                 unselectedContentColor = Theme.colors.onBackground,
                 icon = { Icon(painter = painterResource(id = screen.icon), contentDescription = null) },
                 label = { Text(text = screen.title) },
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                selected = currentDestination?.hierarchy?.any { it == screen } == true,
                 onClick = {
                     navController.navigate(screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {

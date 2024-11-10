@@ -5,6 +5,8 @@ plugins {
     id 'com.google.firebase.crashlytics'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
+    id 'kotlinx-serialization'
+    id 'org.jetbrains.kotlin.plugin.compose' version '2.0.20'
 }
 
 android {
@@ -59,6 +61,7 @@ dependencies {
     implementation project(":core:authentication")
     implementation project(":core:network")
     implementation project(":core:schema")
+    implementation project(":core:model")
     implementation project(':core:alarmscheduler')
     compileOnly project(':core:notification')
     compileOnly project(':core:domain')
@@ -123,4 +126,7 @@ dependencies {
     //Test
     implementation testDependencies.junit
     implementation testDependencies.espresso
+
+    //Serialization
+    implementation serialization.serialization
 }

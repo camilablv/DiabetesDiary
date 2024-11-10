@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository,
     private val getRemindersUseCase: GetRemindersUseCase,
     private val getRecordsUseCase: GetRecordsByDateUseCase,
     private val markInsulinReminderAsDoneUseCase: MarkInsulinReminderAsDoneUseCase
