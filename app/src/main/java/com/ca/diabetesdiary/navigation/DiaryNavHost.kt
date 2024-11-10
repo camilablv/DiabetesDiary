@@ -31,7 +31,6 @@ fun NavController.navigateBack() {
 fun MainNavHost(
     navHostController: NavHostController,
     startDestination: TopLevelDestination,
-    shouldShowOnBoarding: Boolean,
     modifier: Modifier
 ) {
     NavHost(
@@ -85,8 +84,7 @@ fun MainNavHost(
 
         authNavGraph(
             onComplete = {
-                val nextDestination = if (shouldShowOnBoarding) MainGraph.OnBoarding else MainGraph.Home
-                navHostController.navigate(nextDestination) {
+                navHostController.navigate(MainGraph.Home) {
                     popUpTo(AuthGraph.Login) { inclusive = true }
                 }
             }
